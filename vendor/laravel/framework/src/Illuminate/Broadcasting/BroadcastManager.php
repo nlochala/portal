@@ -21,7 +21,7 @@ class BroadcastManager implements FactoryContract
     /**
      * The application instance.
      *
-     * @var \Illuminate\Foundation\Application
+     * @var \Illuminate\Contracts\Foundation\Application
      */
     protected $app;
 
@@ -42,7 +42,7 @@ class BroadcastManager implements FactoryContract
     /**
      * Create a new manager instance.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @return void
      */
     public function __construct($app)
@@ -176,10 +176,6 @@ class BroadcastManager implements FactoryContract
     {
         $config = $this->getConfig($name);
 
-        if (is_null($config)) {
-            throw new InvalidArgumentException("Broadcaster [{$name}] is not defined.");
-        }
-
         if (isset($this->customCreators[$config['driver']])) {
             return $this->callCustomCreator($config);
         }
@@ -269,7 +265,11 @@ class BroadcastManager implements FactoryContract
      */
     protected function getConfig($name)
     {
-        return $this->app['config']["broadcasting.connections.{$name}"];
+        if (! is_null($name) && $name !== 'null') {
+            return $this->app['config']["broadcasting.connections.{$name}"];
+        }
+
+        return ['driver' => 'null'];
     }
 
     /**

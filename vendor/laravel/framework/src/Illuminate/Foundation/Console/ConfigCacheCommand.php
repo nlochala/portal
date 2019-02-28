@@ -56,6 +56,7 @@ class ConfigCacheCommand extends Command
         $this->call('config:clear');
 
         $config = $this->getFreshConfiguration();
+
         $configPath = $this->laravel->getCachedConfigPath();
 
         $this->files->put(
@@ -81,6 +82,8 @@ class ConfigCacheCommand extends Command
     protected function getFreshConfiguration()
     {
         $app = require $this->laravel->bootstrapPath().'/app.php';
+
+        $app->useStoragePath($this->laravel->storagePath());
 
         $app->make(ConsoleKernelContract::class)->bootstrap();
 

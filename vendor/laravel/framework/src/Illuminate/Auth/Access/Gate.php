@@ -58,6 +58,20 @@ class Gate implements GateContract
     protected $afterCallbacks = [];
 
     /**
+     * All of the defined abilities using class@method notation.
+     *
+     * @var array
+     */
+    protected $stringCallbacks = [];
+
+    /**
+     * The callback to be used to guess policy names.
+     *
+     * @var callable|null
+     */
+    protected $guessPolicyNamesUsingCallback;
+
+    /**
      * Create a new gate instance.
      *
      * @param  \Illuminate\Contracts\Container\Container  $container
@@ -112,6 +126,8 @@ class Gate implements GateContract
         if (is_callable($callback)) {
             $this->abilities[$ability] = $callback;
         } elseif (is_string($callback)) {
+            $this->stringCallbacks[$ability] = $callback;
+
             $this->abilities[$ability] = $this->buildAbilityCallback($ability, $callback);
         } else {
             throw new InvalidArgumentException("Callback must be a callable or a 'Class@method' string.");
@@ -484,6 +500,14 @@ class Gate implements GateContract
             return $callback;
         }
 
+        if (isset($this->stringCallbacks[$ability])) {
+            [$class, $method] = Str::parseCallback($this->stringCallbacks[$ability]);
+
+            if ($this->canBeCalledWithUser($user, $class, $method ?: '__invoke')) {
+                return $this->abilities[$ability];
+            }
+        }
+
         if (isset($this->abilities[$ability]) &&
             $this->canBeCalledWithUser($user, $this->abilities[$ability])) {
             return $this->abilities[$ability];
@@ -514,11 +538,47 @@ class Gate implements GateContract
             return $this->resolvePolicy($this->policies[$class]);
         }
 
+        foreach ($this->guessPolicyName($class) as $guessedPolicy) {
+            if (class_exists($guessedPolicy)) {
+                return $this->resolvePolicy($guessedPolicy);
+            }
+        }
+
         foreach ($this->policies as $expected => $policy) {
             if (is_subclass_of($class, $expected)) {
                 return $this->resolvePolicy($policy);
             }
         }
+    }
+
+    /**
+     * Guess the policy name for the given class.
+     *
+     * @param  string  $class
+     * @return array
+     */
+    protected function guessPolicyName($class)
+    {
+        if ($this->guessPolicyNamesUsingCallback) {
+            return Arr::wrap(call_user_func($this->guessPolicyNamesUsingCallback, $class));
+        }
+
+        $classDirname = str_replace('/', '\\', dirname(str_replace('\\', '/', $class)));
+
+        return [$classDirname.'\\Policies\\'.class_basename($class).'Policy'];
+    }
+
+    /**
+     * Specify a callback to be used to guess policy names.
+     *
+     * @param  callable  $callback
+     * @return $this
+     */
+    public function guessPolicyNamesUsing(callable $callback)
+    {
+        $this->guessPolicyNamesUsingCallback = $callback;
+
+        return $this;
     }
 
     /**
