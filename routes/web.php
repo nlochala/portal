@@ -11,14 +11,12 @@
 |
 */
 
-// Example Routes
 Route::view('/', 'landing');
-Route::match(['get', 'post'], '/dashboard', function(){
-    return view('dashboard');
+Route::get('/teacher_dashboard', 'TeacherDashboardController@index');
+
+Route::match(['get', 'post'], '/login', function(){
+    return redirect()->to('/login/microsoft');
 });
+
 Route::view('/examples/plugin', 'examples.plugin');
 Route::view('/examples/blank', 'examples.blank');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,21 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedBigInteger('person_id')->nullable();
-            $table->string('username')->nullable();
-            $table->text('email')->nullable();
-            $table->text('display_name')->nullable();
-            $table->text('given_name')->nullable();
-            $table->text('family_name')->nullable();
-            $table->string('azure_id')->nullable();
-            $table->rememberToken();
+        Schema::create('files', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('file_extension_id')->nullable();
+            $table->text('path')->nullable();
+            $table->text('size')->nullable();
+            $table->text('name')->nullable();
+            $table->boolean('is_private')->default(true);
+            $table->integer('download_count')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();
             $table->string('user_updated_ip')->nullable();
             $table->integer('user_updated_id')->nullable();
             $table->softDeletes();
+
         });
     }
 
@@ -39,6 +38,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('files');
     }
 }

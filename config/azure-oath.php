@@ -21,7 +21,7 @@ return [
     ],
 
     // The route to redirect the user to upon login.
-    'redirect_on_login' => '/home',
+    'redirect_on_login' => '/dashboard',
 
     // The User Eloquent class.
     'user_class' => '\\App\\User',

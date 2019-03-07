@@ -20,6 +20,38 @@ class Helpers
     }
 
     /**
+     * This method will convert a CSV file relative to document root
+     * to an associative array.
+     *
+     * @param $file_path
+     * @param bool $remove_first_row
+     * @return array
+     */
+    public static function parseCsv($file_path, $remove_first_row = true)
+    {
+        $return_array = [];
+
+        // Open the file for reading
+        if (($handle = fopen("{$file_path}", "r")) !== FALSE) {
+            // Each line in the file is converted into an individual array that we call $data
+            // The items of the array are comma separated
+            $x = 0;
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if($remove_first_row && $x == 0){
+                    $x++;
+                    continue;
+                }
+                // Each individual array is being pushed into the nested array
+                $return_array[] = $data;
+            }
+            // Close the file
+            fclose($handle);
+        }
+
+        return $return_array;
+    }
+
+    /**
      * Set the DB Audit Fields
      *
      * @param $model

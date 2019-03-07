@@ -62,9 +62,5 @@
     @include('layouts._panels_end_row')
 
 
-{{ get_class(new Request) }}
-
-
-
     @include('layouts._content_end')
 @endsection
