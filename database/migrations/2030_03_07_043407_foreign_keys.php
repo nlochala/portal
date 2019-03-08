@@ -132,6 +132,34 @@ class ForeignKeys extends Migration
             $table->foreign('person_id')
                 ->references('id')->on('persons');
         });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: EMPLOYEES
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('employees', function (Blueprint $table) {
+            $table->foreign('position_id')
+                ->references('id')->on('positions');
+            $table->foreign('person_id')
+                ->references('id')->on('persons');
+            $table->foreign('status_id')
+                ->references('id')->on('employee_statuses');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: JOBS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('positions', function (Blueprint $table) {
+            $table->foreign('type_id')
+                ->references('id')->on('position_types');
+            $table->foreign('classification_id')
+                ->references('id')->on('position_classifications');
+            $table->foreign('status_id')
+                ->references('id')->on('employee_statuses');
+        });
     }
 
     /**

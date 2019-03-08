@@ -32,20 +32,24 @@
     {{--</li>--}}
 
 
-    @include('layouts._sidebar_heading', ['header' => 'Various'])
+    @include('layouts._sidebar_heading', ['header' => 'Management'])
     @include('layouts._sidebar_menu_nested_submenu', [
-    'uri_parent' => 'examples',
-    'section_title' => 'Examples',
-    'section_icon' => 'si si-bulb',
+    'uri_parent' => '',
+    'section_title' => 'People',
+    'section_icon' => 'si si-user',
     'submenu_array' =>
         [
             [
-                'title' => 'Page 1',
-                'uri'   => 'page1'
+                'title' => 'Employee',
+                'uri'   => 'employee/lookup'
             ],
             [
-                'title' => 'Page 2',
-                'uri'   => 'page2'
+                'title' => 'Students',
+                'uri'   => 'student/lookup'
+            ],
+            [
+                'title' => 'Parents',
+                'uri'   => 'parent/lookup'
             ]
         ]
     ])

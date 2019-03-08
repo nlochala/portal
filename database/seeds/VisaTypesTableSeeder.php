@@ -21,9 +21,10 @@ class VisaTypesTableSeeder extends Seeder
 
         foreach($visa_types as $type){
             $model = new VisaType();
-            $model->name = $type[0];
-            $model->description = $type[1];
-            $model->residency = $type[2];
+            $model->code = $type[0];
+            $model->name = $type[1];
+            $model->description = $type[2];
+            $model->residency = $type[3];
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

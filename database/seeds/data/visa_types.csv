@@ -1,17 +1,17 @@
-﻿name,description,residency
-C,"Foreign crew members of means of international transportation, including aircraft, trains and ships, or motor vehicle drivers engaged in cross-border transport activities, or to the accompanying family members of the crew members of the above-mentioned ships.",Non-Resident
-D,Foreigners who intend to reside in China permanently.,Resident
-F,"Foreigners who intend to go to China for exchanges, visits, study tours and other non-business activities.",Non-Resident
-G,Foreigners who intend to transit through China.,Non-Resident
-J1,Resident foreign journalists of foreign news organizations stationed in China. The intended duration of stay in China exceeds 180 days.,Resident
-J2,Foreign journalists who intend to go to China for short-term news coverage. The intended duration of stay in China is no more than 180 days.,Non-Resident
-L,Foreigners who intend to go to China as a tourist.,Non-Resident
-M,Foreigners who intend to go to China for commercial and trade activities.,Non-Resident
-Q1,"Foreigners who are family members* of Chinese citizens or of foreigners with Chinese permanent residence and intend to go to China for family reunion, or to those who intend to go to China for the purpose of foster care. The intended duration of stay in China exceeds 180 days.",Resident
-Q2,Foreigners who intend to visit their relatives who are Chinese citizens residing in China or foreigners with permanent residence in China. The intended duration of stay in China is no more than 180 days.,Non-Resident
-R,Foreigners who are high-level talents or whose skills are urgently needed in China.,Non-Resident
-S1,"Foreigners who intend to go to China to visit the foreigners working or studying in China to whom they are spouses, parents, sons or daughters under the age of 18 or parents-in-law, or to those who intend to go to China for other private affairs. The intended duration of stay in China exceeds 180 days.",Resident
-S2,"Foreigners who intend to visit their family members* who are foreigners working or studying in China, or to those who intend to go to China for other private matters. The intended duration of stay in China is no more than 180 days.",Non-Resident
-X1,Foreigners who intend to study in China for a period of more than 180 days.,Resident
-X2,Foreigners who intend to study in China for a period of no more than 180 days.,Non-Resident
-Z,Foreigners who intend to work in China.,Resident
+﻿code,name,description,residency
+C,Crew Members,"Foreign crew members of means of international transportation, including aircraft, trains and ships, or motor vehicle drivers engaged in cross-border transport activities, or to the accompanying family members of the crew members of the above-mentioned ships.",Non-Resident
+D,Permanent Residents,Foreigners who intend to reside in China permanently.,Resident
+F,Non-Professional Exchanges,"Foreigners who intend to go to China for exchanges, visits, study tours and other non-business activities.",Non-Resident
+G,Transit,Foreigners who intend to transit through China.,Non-Resident
+J1,Journalists (More Than 180 Days),Resident foreign journalists of foreign news organizations stationed in China. The intended duration of stay in China exceeds 180 days.,Resident
+J2,Journalists (Less Than 180 Days),Foreign journalists who intend to go to China for short-term news coverage. The intended duration of stay in China is no more than 180 days.,Non-Resident
+L,Tourist,Foreigners who intend to go to China as a tourist.,Non-Resident
+M,Commercial and Trade,Foreigners who intend to go to China for commercial and trade activities.,Non-Resident
+Q1,Spouse or Family Member (More Than 180 Days),"Foreigners who are family members of Chinese citizens or of foreigners with Chinese permanent residence and intend to go to China for family reunion, or to those who intend to go to China for the purpose of foster care. The intended duration of stay in China exceeds 180 days.",Resident
+Q2,Spouse or Family Member (Less Than 180 Days),Foreigners who intend to visit their relatives who are Chinese citizens residing in China or foreigners with permanent residence in China. The intended duration of stay in China is no more than 180 days.,Non-Resident
+R,Highly Skilled and Talented,Foreigners who are high-level talents or whose skills are urgently needed in China.,Non-Resident
+S1,Visiting Family Members (More Than 180 Days),"Foreigners who intend to go to China to visit the foreigners working or studying in China to whom they are spouses, parents, sons or daughters under the age of 18 or parents-in-law, or to those who intend to go to China for other private affairs. The intended duration of stay in China exceeds 180 days.",Resident
+S2,Visiting Family Members (Less Than 180 Days),"Foreigners who intend to visit their family members who are foreigners working or studying in China, or to those who intend to go to China for other private matters. The intended duration of stay in China is no more than 180 days.",Non-Resident
+X1,Student (More Than 180 Days),Foreigners who intend to study in China for a period of more than 180 days.,Resident
+X2,Student (Less Than 180 Days),Foreigners who intend to study in China for a period of no more than 180 days.,Non-Resident
+Z,Work,Foreigners who intend to work in China.,Resident

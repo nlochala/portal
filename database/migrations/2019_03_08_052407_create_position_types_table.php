@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVisaTypesTable extends Migration
+class CreatePositionTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateVisaTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('visa_types', function (Blueprint $table) {
+        Schema::create('position_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('code')->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();
-            $table->text('residency')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();
@@ -35,6 +33,6 @@ class CreateVisaTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visa_types');
+        Schema::dropIfExists('position_types');
     }
 }
