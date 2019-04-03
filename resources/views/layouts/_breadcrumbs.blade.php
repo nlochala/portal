@@ -14,7 +14,7 @@ $breadcrumbs = [['page_name' = name in the breadcrumb, 'page_uri'],[...]
                         @if($loop->last)
                             active font-w600" aria-current="page
                         @endif
-                           "><a href="{{ $crumb['page_uri'] }}">{{ $crumb['page_name'] }}</a></li>
+                           ">{{ link_to($crumb['page_uri'], $crumb['page_name']) }}</li>
                     @endforeach
                 </ol>
             </nav>

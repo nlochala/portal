@@ -2,84 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
+use App\Helpers\Helpers;
 use App\Phone;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PhoneController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Destroy the Phone Number
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Phone  $phone
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Phone $phone)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Phone  $phone
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Phone $phone)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Phone  $phone
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Phone $phone)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Phone  $phone
-     * @return \Illuminate\Http\Response
+     * @param Phone $phone
+     * @return bool|null
+     * @throws Exception
      */
     public function destroy(Phone $phone)
     {
-        //
+        $phone->user_updated_id = auth()->id();
+        $phone->user_updated_ip = Helpers::getUserIp();
+
+        if ($phone->save()) {
+            return $phone->delete();
+        }
+
+        return false;
+    }
+
+    /**
+     * Delete the given item.
+     *
+     * @param Phone $phone
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function profileDestroy(Phone $phone)
+    {
+        if($this->destroy($phone)){
+            Helpers::flashAlert(
+                'success',
+                'The phone number has been successfully deleted.',
+                'fa fa-check mr-1');
+            return redirect()->back();
+        }
+        Helpers::flashAlert(
+            'danger',
+            'There was a problem deleting the phone. Please try again.',
+            'fa fa-info-circle mr-1');
+        return redirect()->back();
     }
 }

@@ -15,12 +15,15 @@ class CreateVisasTable extends Migration
     {
         Schema::create('visas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('person_id')->nullable();
+            $table->unsignedBigInteger('passport_id')->nullable();
             $table->unsignedBigInteger('visa_type_id')->nullable();
             $table->unsignedBigInteger('image_file_id')->nullable();
+            $table->boolean('is_active')->nullable()->default(true);
             $table->text('number')->nullable();
-            $table->dateTime('issue_date')->nullabel();
-            $table->dateTime('expiration_date')->nullabel();
+            $table->dateTime('issue_date')->nullable();
+            $table->dateTime('expiration_date')->nullable();
+            $table->unsignedBigInteger('visa_entry_id')->nullable();
+            $table->integer('entry_duration')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();

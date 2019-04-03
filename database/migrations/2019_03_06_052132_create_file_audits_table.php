@@ -17,7 +17,7 @@ class CreateFileAuditsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('file_id')->nullable();
             $table->unsignedBigInteger('person_id')->nullable();
-            $table->dateTime('download_date')->nullabel();
+            $table->dateTime('download_date')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->text('given_name')->nullable();
             $table->text('family_name')->nullable();
             $table->string('azure_id')->nullable();
+            $table->unsignedBigInteger('thumbnail_file_id')->default(2);
             $table->rememberToken();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();

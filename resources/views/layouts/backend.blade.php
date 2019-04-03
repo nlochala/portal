@@ -14,6 +14,7 @@
 
             <!-- Main Container -->
             <main id="main-container">
+                @yield('side_content')
                 @yield('content')
             </main>
             <!-- END Main Container -->
@@ -24,12 +25,8 @@
         </div>
         <!-- END Page Container -->
 
-        <!-- Dashmix Core JS -->
-        <script src="{{ mix('js/dashmix.app.js') }}"></script>
-
-        <!-- Laravel Scaffolding JS -->
-        <script src="{{ mix('js/laravel.app.js') }}"></script>
+    @include('layouts._js')
 
         @yield('js_after')
-    </body>
+   </body>
 </html>

@@ -2,7 +2,7 @@
 <div class="dropdown d-inline-block">
     <button type="button" class="btn btn-dual" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-fw fa-user d-sm-none"></i>
-        <span class="d-none d-sm-inline-block">{{ auth()->user()->display_name }} ({{ auth()->user()->username }})</span>
+        <span class="d-none d-sm-inline-block"><img class="img-avatar img-avatar32 img-avatar-thumb" src="{{ auth()->user()->displayThumbnail() }}">  {{ auth()->user()->display_name }} ({{ auth()->user()->username }})</span>
         <i class="fa fa-fw fa-angle-down ml-1 d-none d-sm-inline-block"></i>
     </button>
     <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
@@ -10,7 +10,7 @@
             User Options
         </div>
         <div class="p-2">
-            <a class="dropdown-item" href="javascript:void(0)">
+            <a class="dropdown-item" href="{{ '/employee/' . auth()->user()->person->employee->id . '/profile'}}">
                 <i class="far fa-fw fa-user mr-1"></i> Profile
             </a>
             <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">

@@ -1,7 +1,7 @@
 <?php
 
 use App\EmployeeStatus;
-use App\Helpers;
+use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
 class EmployeeStatusesTableSeeder extends Seeder

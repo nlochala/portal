@@ -15,11 +15,13 @@ class DatabaseSeeder extends Seeder
         $this->call(CountriesTableSeeder::class);
         $this->call(AddressTypesTableSeeder::class);
         $this->call(FileExtensionsTableSeeder::class);
+        $this->call(FilesTableSeeder::class);
         $this->call(PhoneTypesTableSeeder::class);
         $this->call(VisaTypesTableSeeder::class);
         $this->call(EthnicitiesTableSeeder::class);
         $this->call(PositionTypesTableSeeder::class);
         $this->call(PositionClassificationsTableSeeder::class);
         $this->call(EmployeeStatusesTableSeeder::class);
+        $this->call(VisaEntryTableSeeder::class);
     }
 }

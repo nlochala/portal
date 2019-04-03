@@ -1,7 +1,7 @@
 <?php
 
 use App\Ethnicity as Ethnicities;
-use App\Helpers;
+use App\Helpers\Helpers;
 use App\Ethnicity;
 use Illuminate\Database\Seeder;
 

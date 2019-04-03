@@ -21,8 +21,8 @@ class CreateIdCardsTable extends Migration
             $table->text('number')->nullable();
             $table->text('family_name')->nullable();
             $table->text('given_name')->nullable();
-            $table->dateTime('issue_date')->nullabel();
-            $table->dateTime('expiration_date')->nullabel();
+            $table->dateTime('issue_date')->nullable();
+            $table->dateTime('expiration_date')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();

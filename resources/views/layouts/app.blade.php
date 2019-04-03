@@ -76,5 +76,7 @@
             @yield('content')
         </main>
     </div>
+@include('layouts._js')
+@yield('js')
 </body>
 </html>

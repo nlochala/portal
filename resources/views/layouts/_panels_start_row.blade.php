@@ -8,4 +8,4 @@ $has_uniform_length = true or false
     @if($has_uniform_length)
         row-deck
     @endif
-">
+justify-content-center ">

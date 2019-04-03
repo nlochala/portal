@@ -16,6 +16,8 @@ class CreateFileExtensionsTable extends Migration
         Schema::create('file_extensions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('name')->nullable();
+            $table->text('mime_apache')->nullable();
+            $table->text('mime_nginx')->nullable();
             $table->text('description')->nullable();
             $table->text('type')->nullable();
             $table->timestamps();

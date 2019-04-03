@@ -1,7 +1,7 @@
 <?php
 
 use App\AddressType;
-use App\Helpers;
+use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
 class AddressTypesTableSeeder extends Seeder

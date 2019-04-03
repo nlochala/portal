@@ -22,8 +22,9 @@ class CreatePersonTable extends Migration
             $table->text('name_in_chinese')->nullable();
             $table->text('gender')->nullable();
             $table->timestamp('dob')->nullable();
-            $table->text('email')->nullable();
-            $table->text('email_alternative')->nullable();
+            $table->text('email_school')->nullable();
+            $table->text('email_primary')->nullable();
+            $table->text('email_secondary')->nullable();
             $table->unsignedBigInteger('image_file_id')->nullable();
             $table->text('website')->nullable();
             $table->unsignedBigInteger('language_primary_id')->nullable();

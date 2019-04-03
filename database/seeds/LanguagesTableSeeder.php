@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers;
+use App\Helpers\Helpers;
 use App\Language;
 use Illuminate\Database\Seeder;
 

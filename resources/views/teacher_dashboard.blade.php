@@ -19,47 +19,78 @@
 
 <!--
     panel.row
+    panel.column
     panel.panel
     panel.panel
+
+    ---------------
+    panel.row
+    panel.column
+    panel.panel
+    panel.column
+    panel.panel
+
+    |--------------||--------------|
+    |              ||              |
+    |--------------||--------------|
+
 -->
+
     @include('layouts._panels_start_row',['has_uniform_length' => true])
+    @include('layouts._panels_start_column', ['size' => 12])
     <!-------------------------------------------------------------------------------->
-    <!------------------------------New Panel --------------------------------->
-    @include('layouts._panels_start_panel', ['title' => 'Test 1', 'size' => 12])
-    {{-- START BLOCK OPTIONS --}}
-    <div class="block-options">
-        <button type="button" class="btn-block-option">
-            <i class="fa fa-fw fa-pencil-alt"></i>
-        </button>
-    </div>
-    {{-- END BLOCK OPTIONS --}}
+    <!----------------------------------New Panel ------------------------------------>
+    @include('layouts._panels_start_panel', ['title' => 'Test'])
+    {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
+    <!-- START FORM----------------------------------------------------------------------------->
+    {!! Form::open(['id' => 'admin-form','url' => 'person/create']) !!}
+    @include('layouts._forms._heading',['title' => 'New Person Type'])
+    @include('layouts._forms._row_start', ['size' => 12])
 
-    Hello Content!!
+{{--    @include('person._create_form')--}}
+
+    @include('layouts._forms._row_end')
+    @include('layouts._forms._form_close')
+    <!-- END FORM----------------------------------------------------------------------------->
 
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->
     <!-------------------------------------------------------------------------------->
-    <!-------------------------------------------------------------------------------->
-    <!------------------------------New Panel --------------------------------->
-    @include('layouts._panels_start_panel', ['title' => 'Test 2', 'size' => 12])
-    {{-- START BLOCK OPTIONS --}}
-    <div class="block-options">
-        <button type="button" class="btn-block-option">
-            <i class="fa fa-fw fa-pencil-alt"></i>
-        </button>
-    </div>
-    {{-- END BLOCK OPTIONS --}}
-    @include('layouts._panels_start_content')
+{{--    @include('layouts._panels_end_column')--}}
+{{--    @include('layouts._panels_start_column', ['size' => 6])--}}
+{{--    <!-------------------------------------------------------------------------------->--}}
+{{--    <!----------------------------------New Panel ------------------------------------>--}}
+{{--    @include('layouts._panels_start_panel', ['title' => 'Test 2'])--}}
+{{--    --}}{{-- START BLOCK OPTIONS panel.block --}}
+{{--    @include('layouts._panels_start_content')--}}
 
-    Hello Right Content!
+{{--    Blah Blah!--}}
 
-    @include('layouts._panels_end_content')
-    @include('layouts._panels_end_panel')
-    <!-------------------------------------------------------------------------------->
-    <!-------------------------------------------------------------------------------->
+{{--    @include('layouts._panels_end_content')--}}
+{{--    @include('layouts._panels_end_panel')--}}
+{{--    <!-------------------------------------------------------------------------------->--}}
+{{--    <!-------------------------------------------------------------------------------->--}}
+{{--    @include('layouts._panels_end_column')--}}
+{{--    @include('layouts._panels_start_column', ['size' => 12])--}}
+{{--    <!-------------------------------------------------------------------------------->--}}
+{{--    <!----------------------------------New Panel ------------------------------------>--}}
+{{--    @include('layouts._panels_start_panel', ['title' => 'Test 3'])--}}
+{{--    --}}{{-- START BLOCK OPTIONS panel.block --}}
+{{--    @include('layouts._panels_start_content')--}}
+
+{{--    Blah Blah!--}}
+
+{{--    @include('layouts._panels_end_content')--}}
+{{--    @include('layouts._panels_end_panel')--}}
+{{--    <!-------------------------------------------------------------------------------->--}}
+{{--    <!-------------------------------------------------------------------------------->--}}
+    @include('layouts._panels_end_column')
     @include('layouts._panels_end_row')
+
+
+
 
 
     @include('layouts._content_end')

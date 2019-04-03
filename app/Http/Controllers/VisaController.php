@@ -2,84 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helpers;
 use App\Visa;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class VisaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Require users to have been authenticated before reaching this page.
      *
-     * @return \Illuminate\Http\Response
+     * UserController constructor.
      */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Cancel the given visa.
      *
-     * @return \Illuminate\Http\Response
+     * @param Visa $visa
+     * @return RedirectResponse
      */
-    public function create()
+    public function cancel(Visa $visa)
     {
-        //
+        $visa->is_active = false;
+        $visa = Helpers::dbAddAudit($visa);
+        $visa->save()
+            ?
+            Helpers::flashAlert(
+                'success',
+                'The visa has been cancelled.',
+                'fa fa-check mr-1')
+            :
+            Helpers::flashAlert(
+                'danger',
+                'There was an issue cancelling the visa. Please try again.',
+                'fa fa-info-circle mr-1');
+
+        return redirect()->back();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Delete the given visa
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Visa $visa
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function delete(Visa $visa)
     {
-        //
-    }
+        $visa->is_active = false;
+        $visa = Helpers::dbAddAudit($visa);
+        $visa->delete()
+            ?
+            Helpers::flashAlert(
+                'success',
+                'The visa has been deleted.',
+                'fa fa-check mr-1')
+            :
+            Helpers::flashAlert(
+                'danger',
+                'There was an issue deleting the visa. Please try again.',
+                'fa fa-info-circle mr-1');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Visa  $visa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Visa $visa)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Visa  $visa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Visa $visa)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Visa  $visa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Visa $visa)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Visa  $visa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Visa $visa)
-    {
-        //
+        return redirect()->back();
     }
 }

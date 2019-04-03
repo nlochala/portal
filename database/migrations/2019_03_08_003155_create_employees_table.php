@@ -18,8 +18,8 @@ class CreateEmployeesTable extends Migration
             $table->unsignedBigInteger('person_id')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
             $table->unsignedBigInteger('status_id')->nullable();
-            $table->dateTime('start_date')->nullabel();
-            $table->dateTime('end_date')->nullabel();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();

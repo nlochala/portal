@@ -41,6 +41,8 @@ class ForeignKeys extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('person_id')
                 ->references('id')->on('persons');
+            $table->foreign('thumbnail_file_id')
+                ->references('id')->on('files');
         });
 
         /*
@@ -89,12 +91,14 @@ class ForeignKeys extends Migration
         |--------------------------------------------------------------------------
         */
         Schema::table('visas', function (Blueprint $table) {
-            $table->foreign('person_id')
-                ->references('id')->on('persons');
+            $table->foreign('passport_id')
+                ->references('id')->on('passports');
             $table->foreign('image_file_id')
                 ->references('id')->on('files');
             $table->foreign('visa_type_id')
                 ->references('id')->on('visa_types');
+            $table->foreign('visa_entry_id')
+                ->references('id')->on('visa_entries');
         });
 
         /*
@@ -119,6 +123,8 @@ class ForeignKeys extends Migration
         Schema::table('files', function (Blueprint $table) {
             $table->foreign('file_extension_id')
                 ->references('id')->on('file_extensions');
+            $table->foreign('original_file_id')
+                ->references('id')->on('files');
         });
 
         /*
@@ -169,8 +175,5 @@ class ForeignKeys extends Migration
      */
     public function down()
     {
-        Schema::table('persons', function (Blueprint $table) {
-            //
-        });
     }
 }

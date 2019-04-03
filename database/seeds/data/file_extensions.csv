@@ -1,46 +1,36 @@
-gibbonFileExtensionID,type,extension,name
-0001,Document,doc,"Microsoft Word 97/2000/XP"
-0002,Document,docx,"Microsoft Word 2007+"
-0003,Document,pages,"Apple Pages"
-0004,Document,odt,"OpenOffice Text"
-0005,Document,txt,"Plain Text"
-0006,Document,rtf,"Rich Text Format"
-0007,Spreadsheet,xls,"Microsoft Excel 97/2000/XP"
-0008,Spreadsheet,xlsx,"Microsoft Excel 2007+"
-0009,Spreadsheet,ods,"OpenOffice SpreadSheet"
-0010,Spreadsheet,numbers,"Apple Numbers"
-0011,Spreadsheet,csv,"Comma Seperate Values"
-0012,Presentation,ppt,"Microsoft PowerPoint 97/2000/XP"
-0013,Presentation,pptx,"Microsoft PowerPoint 2007+"
-0014,Presentation,key,"Apple Keynote"
-0015,Audio,mp3,"MPEG Audio"
-0016,Audio,mp4,"MPEG Audio"
-0017,Audio,m4a,"MPEG Audio"
-0018,Audio,wma,"Windows Media Audio"
-0019,Audio,ogg,"Vorbis Ogg"
-0020,Audio,aac,"MPEG Audio"
-0021,Graphics/Design,png,"Portable Network Graphics"
-0022,Graphics/Design,jpg,"Joint Picture Expert Group"
-0023,Graphics/Design,gif,"Graphics Interchange Format"
-0024,Graphics/Design,acorn,Acorn
-0025,Graphics/Design,ai,"Adobe Illustrator"
-0026,Graphics/Design,psd,"Adobe Photoshop"
-0028,Graphics/Design,xcf,"GIMP eXperimental Computing Facility"
-0029,Video,avi,"Audio Video Interleave"
-0030,Video,wmv,"Windows Media Video"
-0031,Video,mpg,"MPEG Video"
-0032,Video,mov,"QuickTime Movie"
-0033,Video,flv,"Adobe Flash Video"
-0034,Other,fla,"Adobe Flash"
-0035,Video,swf,"Adobe Flash"
-0036,Graphics/Design,skp,"Google SketchUp"
-0037,Document,pdf,"Portable Document Format"
-0038,Graphics/Design,jpeg,"Joint Picture Expert Group"
-0039,Video,mpeg,"MPEG Video"
-0040,Other,sb,Scratch
-0041,Video,m4v,"MPG Varient"
-0042,Other,zip,"ZIP Compressed Archive"
-0043,Document,htm,"HyperText Marrkup Language"
-0044,Document,html,"HyperText Marrkup Language"
-0045,Video,3gp,"3rd Generation Partnership Video"
-0046,Other,sb2,"Scratch 2"
+doc,application/msword,application/msword,Microsoft Word 97/2000/XP,Document
+pdf,application/pdf,application/pdf,Portable Document Format,Document
+ai,application/postscript,application/postscript,Adobe Illustrator,Design
+psd,image/vnd.adobe.photoshop,application/postscript,Adobe Photoshop,Design
+rtf,application/rtf,application/rtf,Rich Text Format,Document
+xls,application/vnd.ms-excel,application/vnd.ms-excel,Microsoft Excel 97/2000/XP,Spreadsheet
+ppt,application/vnd.ms-powerpoint,application/vnd.ms-powerpoint,Microsoft PowerPoint 97/2000/XP,Presentation
+ods,application/vnd.oasis.opendocument.spreadsheet,application/vnd.oasis.opendocument.spreadsheet,OpenOffice SpreadSheet,Spreadsheet
+odt,application/vnd.oasis.opendocument.text,application/vnd.oasis.opendocument.text,OpenOffice Text,Document
+pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.presentationml.presentation,Microsoft PowerPoint 2007+,Presentation
+xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+",Microsoft Excel 2007+,Spreadsheet
+docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.document,Microsoft Word 2007+,Document
+swf,application/x-shockwave-flash,application/x-shockwave-flash,Adobe Flash,Video
+zip,application/zip,application/zip,ZIP Compressed Archive,Other
+aac,audio/x-aac,audio/mp4,MPEG Audio,Audio
+mp3,audio/mpeg,audio/mpeg,MPEG Audio,Audio
+m4a,audio/mp4,audio/x-m4a,MPEG Audio,Audio
+wma,audio/x-ms-wma,audio/x-ms-wma,Windows Media Audio,Audio
+gif,image/gif,image/gif,Graphics Interchange Format,Graphics
+jpg,image/jpeg,image/jpeg,Joint Picture Expert Group,Graphics
+jpeg,image/jpeg,image/jpeg,Joint Picture Expert Group,Graphics
+png,image/png,image/png,Portable Network Graphics,Graphics
+csv,text/csv,text/csv,Comma Seperate Values,Spreadsheet
+htm,text/html,text/html,HyperText Marrkup Language,Document
+html,text/html,text/html,HyperText Marrkup Language,Document
+txt,text/plain,text/plain,Plain Text,Document
+3gp,video/3gpp,video/3gpp,3rd Generation Partnership Video,Video
+mp4,audio/mp4,video/mp4,MPEG Audio,Audio
+mpg,video/mpeg,video/mpeg,MPEG Video,Video
+mpeg,video/mpeg,video/mpeg,MPEG Video,Video
+mov,video/quicktime,video/quicktime,QuickTime Movie,Video
+flv,video/x-flv,video/x-flv,Adobe Flash Video,Video
+m4v,video/x-m4v,video/x-m4v,MPG Varient,Video
+wmv,video/x-ms-wmv,video/x-ms-wmv,Windows Media Video,Video
+avi,video/x-msvideo,video/x-msvideo,Audio Video Interleave,Video
