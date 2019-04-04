@@ -15,6 +15,7 @@ class CreateFileAuditsTable extends Migration
     {
         Schema::create('file_audits', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->unsignedBigInteger('file_id')->nullable();
             $table->unsignedBigInteger('person_id')->nullable();
             $table->dateTime('download_date')->nullable();

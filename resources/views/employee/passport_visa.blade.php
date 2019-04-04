@@ -4,7 +4,7 @@
     <!-- Add Content Title Here b.breadcrumbs -->
     @include('person._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">{{ auth()->user()->person->preferredName() }}'s
+    <h1 class="font-w400" style="text-align: center">{{ $employee->person->preferredName() }}'s
         Passports and Visas</h1>
     <!--
     panel.row

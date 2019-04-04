@@ -17,7 +17,7 @@ class EmployeePassportVisaController extends EmployeeController
     public function passportVisa(Employee $employee)
     {
         if ($employee->person->passports->isEmpty()) {
-            return redirect()->to('/employee/' . $employee->id . '/create_passport');
+            return redirect()->to('/employee/' . $employee->uuid . '/create_passport');
         }
 
         $visa_type_dropdown = VisaType::getDropdown();
@@ -86,7 +86,7 @@ class EmployeePassportVisaController extends EmployeeController
                 'The passport has been updated.',
                 'fa fa-check mr-1');
 
-            return redirect()->to("/employee/$employee->id/passports_visas");
+            return redirect()->to("/employee/$employee->uuid/passports_visas");
         }
 
         Helpers::flashAlert(
@@ -136,14 +136,18 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->back();
         }
 
-        $resized_image = File::saveAndResizeImage($values['image_file']);
+        if(!$resized_image = File::saveAndResizeImage($values['image_file'])){
+//            return redirect()->back()->withInput($values);
+            return redirect()->back();
+        }
+
         $values['image_file_id'] = $resized_image->id;
         $values['person_id'] = $employee->person->id;
 
         /** @noinspection PhpUndefinedMethodInspection */
         Helpers::flash(Passport::create($values), 'passport');
 
-        return redirect()->to('/employee/' . $employee->id . '/passports_visas');
+        return redirect()->to('/employee/' . $employee->uuid . '/passports_visas');
     }
 
     /**

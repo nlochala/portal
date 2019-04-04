@@ -14,8 +14,8 @@
 Route::view('/', 'landing');
 Route::get('/teacher_dashboard/{id}', 'TeacherDashboardController@index');
 Route::get('/dashboard', function () {
-    if ($id = auth()->user()->id) {
-        return redirect()->to('teacher_dashboard/' . $id);
+    if ($uuid = auth()->user()->uuid ) {
+        return redirect()->to('teacher_dashboard/' . $uuid);
     }
 });
 
@@ -84,6 +84,19 @@ Route::get('visa/{visa}/delete', 'VisaController@delete');
 
 /*
 |--------------------------------------------------------------------------
+| ID CARDS
+|--------------------------------------------------------------------------
+*/
+
+/*
+|--------------------------------------------------------------------------
+| ADDRESS
+|--------------------------------------------------------------------------
+*/
+Route::get('address/{address}/delete', 'AddressController@delete');
+
+/*
+|--------------------------------------------------------------------------
 | EMPLOYEE
 |--------------------------------------------------------------------------
 */
@@ -97,7 +110,7 @@ Route::get('employee/{employee}/contact', 'EmployeeContactController@contact');
 Route::post('employee/{employee}/profile/store_phone', 'EmployeeContactController@storePhone');
 Route::post('employee/{employee}/profile/store_address', 'EmployeeContactController@storeAddress');
 Route::patch('employee/{employee}/profile/store_email', 'EmployeeContactController@storeEmail');
-Route::patch('address/{edit_address}/{employee}/edit', 'EmployeeContactController@updateAddress');
+Route::patch('employee/{employee}/address/{address}/update_address', 'EmployeeContactController@updateAddress');
 
 //Passports and Visas
 Route::get('employee/{employee}/passports_visas', 'EmployeePassportVisaController@passportVisa');
@@ -107,6 +120,13 @@ Route::post('employee/{employee}/passport/{passport}/create_visa', 'EmployeePass
 Route::patch('employee/{employee}/visa/{visa}/update_visa', 'EmployeePassportVisaController@updateVisa');
 Route::patch('employee/{employee}/passport/{passport}/update_passport', 'EmployeePassportVisaController@updatePassport');
 Route::get('employee/{employee}/passport/{passport}/update_passport', 'EmployeePassportVisaController@updatePassportForm');
+
+//ID Cards
+Route::get('employee/{employee}/id_card', 'EmployeeIdCardController@idCard');
+Route::get('employee/{employee}/create_id_card', 'EmployeeIdCardController@createForm');
+Route::post('employee/{employee}/create_id_card', 'EmployeeIdCardController@store');
+Route::get('employee/{employee}/update_id_card', 'EmployeeIdCardController@editForm');
+Route::patch('employee/{employee}/update_id_card', 'EmployeeIdCardController@update');
 
 //Official Documents
 Route::get('employee/{employee}/official_documents', 'EmployeeController@officialDocuments');

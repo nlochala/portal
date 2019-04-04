@@ -15,6 +15,7 @@ class CreateAdGroupsUsersPivotTable extends Migration
     {
         Schema::create('ad_groups_users_pivot', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid')->nullable();
             $table->integer('user_id')->nullable();
             $table->integer('ad_group_id')->nullable();
             $table->timestamps();

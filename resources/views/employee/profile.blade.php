@@ -4,7 +4,7 @@
     <!-- Add Content Title Here b.breadcrumbs -->
     @include('person._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">{{ auth()->user()->person->preferredName()}}'s Profile</h1>
+    <h1 class="font-w400" style="text-align: center">{{ $employee->person->preferredName()}}'s Profile</h1>
     <!--
     panel.row
     panel.column
@@ -59,7 +59,7 @@
     <div class="col-md-12 animated fadeIn" style="padding-bottom: 20px">
         @if($image_data)
         <div class="options-container" style="text-align: center">
-            <img class="img-fluid options-item" src="{{ $image_data }}" alt="">
+            <img class="img-fluid options-item rounded border border-2x border-dark" src="{{ $image_data }}" alt="">
             <div class="options-overlay bg-black-75">
                 <div class="options-overlay-content">
                     <h3 class="h4 text-white mb-2">Profile Image</h3>

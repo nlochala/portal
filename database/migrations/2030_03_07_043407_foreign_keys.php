@@ -81,7 +81,9 @@ class ForeignKeys extends Migration
         Schema::table('id_cards', function (Blueprint $table) {
             $table->foreign('person_id')
                 ->references('id')->on('persons');
-            $table->foreign('image_file_id')
+            $table->foreign('front_image_file_id')
+                ->references('id')->on('files');
+            $table->foreign('back_image_file_id')
                 ->references('id')->on('files');
         });
 

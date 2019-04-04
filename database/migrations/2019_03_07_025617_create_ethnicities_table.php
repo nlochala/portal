@@ -15,6 +15,7 @@ class CreateEthnicitiesTable extends Migration
     {
         Schema::create('ethnicities', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->text('name')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();

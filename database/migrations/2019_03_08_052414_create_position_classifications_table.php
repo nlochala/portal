@@ -15,6 +15,7 @@ class CreatePositionClassificationsTable extends Migration
     {
         Schema::create('position_classifications', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

@@ -15,6 +15,7 @@ class CreateVisasTable extends Migration
     {
         Schema::create('visas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->unsignedBigInteger('passport_id')->nullable();
             $table->unsignedBigInteger('visa_type_id')->nullable();
             $table->unsignedBigInteger('image_file_id')->nullable();

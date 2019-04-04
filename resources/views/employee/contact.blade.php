@@ -5,7 +5,7 @@
 
     @include('person._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">{{ auth()->user()->person->preferredName() }}'s Contact
+    <h1 class="font-w400" style="text-align: center">{{ $employee->person->preferredName() }}'s Contact
         Information</h1>
 
     @include('layouts._content_start')
@@ -115,7 +115,7 @@
                 <td class="text-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
-                                onclick="window.location.href='/phone/{{ $phone->id }}/profile/delete'">
+                                onclick="window.location.href='/phone/{{ $phone->uuid }}/profile/delete'">
                             <i class="fa fa-times"></i>
                         </button>
                     </div>
@@ -178,7 +178,7 @@
                             <i class="fa fa-pen"></i>
                         </button>
                         <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
-                                onclick="window.location.href='/address/{{ $address->id }}/profile/delete'">
+                                onclick="window.location.href='/address/{{ $address->uuid }}/delete'">
                             <i class="fa fa-times"></i>
                         </button>
                     </div>

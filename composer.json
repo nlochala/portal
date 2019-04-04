@@ -15,7 +15,8 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
-        "metrogistics/laravel-azure-ad-oauth": "^1.2"
+        "metrogistics/laravel-azure-ad-oauth": "^1.2",
+        "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

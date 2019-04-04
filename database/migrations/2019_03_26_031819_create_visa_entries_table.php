@@ -15,6 +15,7 @@ class CreateVisaEntriesTable extends Migration
     {
         Schema::create('visa_entries', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->text('name')->nullable();
             $table->integer('number_of_entries')->nullable();
             $table->timestamps();

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Webpatser\Uuid\Uuid;
 
 class Passport extends Model
 {
@@ -19,6 +20,29 @@ class Passport extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = (string) Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    /** @noinspection PhpMissingParentCallCommonInspection */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+
 
     /**
      * Add mass-assignment to model.
@@ -26,6 +50,7 @@ class Passport extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'person_id',
         'country_id',
         'image_file_id',
@@ -66,37 +91,6 @@ class Passport extends Model
     {
         /** @noinspection PhpUndefinedMethodInspection */
         return File::where('name', 'sample-passport')->first()->renderImage();
-    }
-
-    /**
-     * Return the proper badge for the expiration date
-     *
-     * @return string
-     */
-    public function getExpirationBadge()
-    {
-        if($this->expiration_date->isPast()){
-           return '<span class="badge badge-dark"><i class="fa fa-pause-circle"></i> EXPIRED</span>';
-        }
-
-        switch ($x = $this->expiration_date->diffInDays()) {
-            case $x < 180:
-                $color = 'danger';
-                $icon = 'fa fa-calendar-times';
-                break;
-            case $x < 365:
-                $color = 'warning';
-                $icon = 'fa fa-exclamation-circle';
-                break;
-            default:
-                $color = 'primary';
-                $icon = 'fa fa-check';
-                break;
-        }
-
-        return '<span class="badge badge-'
-            . $color . '"><i class="' . $icon . '"></i> Passport expires '
-            . $this->expiration_date->diffForHumans() . '!</span>';
     }
 
     /*

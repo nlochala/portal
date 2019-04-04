@@ -1,5 +1,5 @@
 <!-- START FORM----------------------------------------------------------------------------->
-{!! Form::model($visa,['method' => 'PATCH','files' => true, 'id' => "visa-edit-form-$visa->id",'url' => "/employee/$employee->id/visa/$visa->id/update_visa"]) !!}
+{!! Form::model($visa,['method' => 'PATCH','files' => true, 'id' => "visa-edit-form-$visa->uuid",'url' => "/employee/$employee->uuid/visa/$visa->uuid/update_visa"]) !!}
 <!----------------------------------------------------------------------------->
 <!---------------------------New is_active dropdown----------------------------->
 @include('layouts._forms._input_dropdown',[

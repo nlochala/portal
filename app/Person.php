@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Webpatser\Uuid\Uuid;
 
 class Person extends Model
 {
@@ -21,6 +22,32 @@ class Person extends Model
      * @var string
      */
     protected $table = 'persons';
+
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(/**
+         * @param $model
+         */ function ($model) {
+            $model->uuid = (string) Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    /** @noinspection PhpMissingParentCallCommonInspection */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+
 
     /**
      * This populates the dropdown for title
@@ -134,6 +161,7 @@ class Person extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'title',
         'given_name',
         'family_name',
@@ -233,6 +261,16 @@ class Person extends Model
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+    /**
+     *  This person has many idCards
+     *
+     * @return HasMany
+     */
+    public function idCards()
+    {
+        return $this->hasMany('App\IdCard','person_id');
+    }
+
     /**
      *  This person has many passports
      *

@@ -15,6 +15,7 @@ class CreateVisaTypesTable extends Migration
     {
         Schema::create('visa_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->text('code')->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();

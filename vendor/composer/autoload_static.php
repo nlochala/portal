@@ -419,6 +419,13 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
     );
 
     public static $prefixesPsr0 = array (
+        'W' => 
+        array (
+            'Webpatser\\Uuid' => 
+            array (
+                0 => __DIR__ . '/..' . '/webpatser/laravel-uuid/src',
+            ),
+        ),
         'P' => 
         array (
             'Prophecy\\' => 
@@ -486,6 +493,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Http\\Controllers\\CountryController' => __DIR__ . '/../..' . '/app/Http/Controllers/CountryController.php',
         'App\\Http\\Controllers\\EmployeeContactController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeeContactController.php',
         'App\\Http\\Controllers\\EmployeeController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeeController.php',
+        'App\\Http\\Controllers\\EmployeeIdCardController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeeIdCardController.php',
         'App\\Http\\Controllers\\EmployeePassportVisaController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeePassportVisaController.php',
         'App\\Http\\Controllers\\EmployeeProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeeProfileController.php',
         'App\\Http\\Controllers\\EmployeeStatusController' => __DIR__ . '/../..' . '/app/Http/Controllers/EmployeeStatusController.php',
@@ -505,6 +513,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Http\\Controllers\\PositionTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/PositionTypeController.php',
         'App\\Http\\Controllers\\TeacherDashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/TeacherDashboardController.php',
         'App\\Http\\Controllers\\VisaController' => __DIR__ . '/../..' . '/app/Http/Controllers/VisaController.php',
+        'App\\Http\\Controllers\\VisaEntryController' => __DIR__ . '/../..' . '/app/Http/Controllers/VisaEntryController.php',
         'App\\Http\\Controllers\\VisaTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/VisaTypeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -4556,6 +4565,8 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'VisaEntryTableSeeder' => __DIR__ . '/../..' . '/database/seeds/VisaEntryTableSeeder.php',
         'VisaTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/VisaTypesTableSeeder.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
+        'Webpatser\\Uuid\\Uuid' => __DIR__ . '/..' . '/webpatser/laravel-uuid/src/Webpatser/Uuid/Uuid.php',
+        'Webpatser\\Uuid\\UuidServiceProvider' => __DIR__ . '/..' . '/webpatser/laravel-uuid/src/Webpatser/Uuid/UuidServiceProvider.php',
         'Whoops\\Exception\\ErrorException' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/ErrorException.php',
         'Whoops\\Exception\\Formatter' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/Formatter.php',
         'Whoops\\Exception\\Frame' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/Frame.php',

@@ -56,10 +56,7 @@ class PersonController extends Controller
      */
     public function store()
     {
-        $values = request()->all();
-        $values['dob'] = Carbon::createFromFormat('d-m-Y', $values['dob']);
-        $values['user_created_id'] = auth()->id();
-        $values['user_created_ip'] = Helpers::getUserIp();
+        $values = Helpers::dbAddAudit(request()->all());
         $values['title'] = Person::getTitle($values['title']);
         $values['gender'] = Person::getGender($values['gender']);
         $values['type'] = Person::getType($values['type']);
@@ -86,7 +83,7 @@ class PersonController extends Controller
                     return redirect()->back();
                 }
                 Helpers::flashAlert('success', 'The employee has been successfully created.', 'fa fa-check mr-1');
-                return redirect()->to('employee/' . $employee->id . '/profile');
+                return redirect()->to('employee/' . $employee->uuid . '/profile');
             default:
                 Helpers::flashAlert('danger', 'Not sure what type of person you are trying to create... Please try again.', 'fa fa-info-circle mr-1');
                 return redirect()->back();

@@ -4,10 +4,35 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Webpatser\Uuid\Uuid;
 
 class AdGroup extends Model
 {
     use SoftDeletes;
+
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = (string) Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    /** @noinspection PhpMissingParentCallCommonInspection */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -21,6 +46,7 @@ class AdGroup extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'azure_id',
         'name',
         'email',

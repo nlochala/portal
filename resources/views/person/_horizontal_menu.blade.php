@@ -21,7 +21,7 @@ h.item
 
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [
-    'url' => 'employee/' . $employee->id . '/profile',
+    'url' => 'employee/' . $employee->uuid . '/profile',
     'icon' => 'fa fa-address-card',
     'title' => 'Overview',
     'badge_number' => null,
@@ -31,7 +31,7 @@ h.item
 
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [
-    'url' => 'employee/' . $employee->id . '/contact',
+    'url' => 'employee/' . $employee->uuid . '/contact',
     'icon' => 'fa fa-warehouse',
     'title' => 'Contact Information',
     'badge_number' => null,
@@ -45,7 +45,7 @@ h.item
     'title' => 'Government Documents'
 ])
 @include('layouts._horizontal_menu_item', [
-    'url' => 'employee/' . $employee->id . '/passports_visas',
+    'url' => 'employee/' . $employee->uuid . '/passports_visas',
     'icon' => 'fa fa-passport',
     'title' => 'Passport and Visas',
     'badge_number' => null,
@@ -54,7 +54,7 @@ h.item
 @include('layouts._horizontal_menu_item_end')
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [
-    'url' => 'employee/',
+    'url' => "employee/$employee->uuid/id_card",
     'icon' => 'fa fa-id-card',
     'title' => 'Chinese ID Cards',
     'badge_number' => null,
@@ -65,7 +65,7 @@ h.item
 
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [
-    'url' => 'employee/' . $employee->id . '/official_documents',
+    'url' => 'employee/' . $employee->uuid . '/official_documents',
     'icon' => 'fa fa-paperclip',
     'title' => 'Official Documents',
     'badge_number' => null,
@@ -75,7 +75,7 @@ h.item
 
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [
-    'url' => 'employee/' . $employee->id . '/position',
+    'url' => 'employee/' . $employee->uuid . '/position',
     'icon' => 'fa fa-chalkboard-teacher',
     'title' => 'Employment Details',
     'badge_number' => null,

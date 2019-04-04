@@ -54,8 +54,8 @@
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
 
-    <div class="options-container" style="text-align: center">
-        <img class="img-fluid options-item" src="{{ $image_data }}" alt="">
+    <div class="options-container" style="text-align: center; padding-bottom: 20px">
+        <img class="img-fluid options-item rounded border border-2x border-dark" src="{{ $image_data }}" alt="">
     </div>
 
     @include('layouts._panels_end_content')

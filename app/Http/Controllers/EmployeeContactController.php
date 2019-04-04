@@ -93,6 +93,7 @@ class EmployeeContactController extends EmployeeController
         $values['user_created_ip'] = Helpers::getUserIp();
         $values['person_id'] = $employee->person->id;
         $values['country_id'] = $values['country_id_phone'];
+        /** @noinspection PhpUndefinedMethodInspection */
         Phone::create($values)
             ?
             Helpers::flashAlert(
@@ -120,6 +121,7 @@ class EmployeeContactController extends EmployeeController
         $values['user_created_id'] = auth()->id();
         $values['user_created_ip'] = Helpers::getUserIp();
         $values['person_id'] = $employee->person->id;
+        /** @noinspection PhpUndefinedMethodInspection */
         Address::create($values)
             ?
             Helpers::flashAlert(
@@ -138,21 +140,21 @@ class EmployeeContactController extends EmployeeController
     /**
      * Update the given address
      *
-     * @param Address $edit_address
      * @param Employee $employee
+     * @param Address $address
      * @return RedirectResponse
      */
-    public function updateAddress(Address $edit_address, Employee $employee)
+    public function updateAddress(Employee $employee, Address $address)
     {
         $values = request()->all();
-        $edit_address->user_updated_id = auth()->id();
-        $edit_address->user_updated_ip = Helpers::getUserIp();
-        $edit_address->country_id = $values['country_id_' . $edit_address->id];
-        $edit_address->address_type_id = $values['address_type_id_' . $edit_address->id];
-        $edit_address->update($values);
+        $address->user_updated_id = auth()->id();
+        $address->user_updated_ip = Helpers::getUserIp();
+        $address->country_id = $values['country_id_' . $address->id];
+        $address->address_type_id = $values['address_type_id_' . $address->id];
+        $address->update($values);
 
-        Helpers::flash($edit_address->update($values),'address','updated');
+        Helpers::flash($address->update($values), 'address', 'updated');
 
-        return redirect()->to('/employee/' . $employee->id . '/contact');
+        return redirect()->to('/employee/' . $employee->uuid . '/contact');
     }
 }

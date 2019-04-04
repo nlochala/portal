@@ -1,6 +1,6 @@
 <!-- START FORM----------------------------------------------------------------------------->
 
-{!! Form::open(['files' => false, 'id' => 'phone-form','url' => '/employee/' . $employee->id . '/profile/store_phone']) !!}
+{!! Form::open(['files' => false, 'id' => 'phone-form','url' => '/employee/' . $employee->uuid . '/profile/store_phone']) !!}
 @include('layouts._forms._row_start', ['size' => 12])
 <!----------------------------------------------------------------------------->
 <!---------------------------New phone_type_id dropdown----------------------------->

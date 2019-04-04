@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
 use Storage;
+use Webpatser\Uuid\Uuid;
 
 class User extends Authenticatable
 {
@@ -36,11 +37,35 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
     /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = (string) Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    /** @noinspection PhpMissingParentCallCommonInspection */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'name',
         'email',
         'password',

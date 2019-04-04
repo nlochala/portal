@@ -47,7 +47,7 @@ class EmployeeProfileController extends EmployeeController
             $image_created = $employee->person->image->created_at;
 
             $original_image_size = Helpers::formatBytes($employee->person->image->originalFile->size);
-            $original_image_url = '/download_file/' . $employee->person->image->originalFile->id;
+            $original_image_url = '/download_file/' . $employee->person->image->originalFile->uuid;
         }
 
         return view('employee.profile', compact(
@@ -88,10 +88,12 @@ class EmployeeProfileController extends EmployeeController
         }
 
         if (request()->hasFile('profile_image')) {
-            $resized_file = File::saveAndResizeImage($values['profile_image'], 'profile_images', 'profile_images/originals');
+            if(!$resized_file = File::saveAndResizeImage($values['profile_image'], 'profile_images', 'profile_images/originals')){
+                return redirect()->back();
+            }
             $employee->person->update(['image_file_id' => $resized_file->id]);
 
-            return redirect()->to('/employee/' . $employee->id . '/profile');
+            return redirect()->to('/employee/' . $employee->uuid . '/profile');
         }
 
         $values['dob'] = Carbon::createFromFormat('Y-m-d', $values['dob']);
@@ -103,7 +105,7 @@ class EmployeeProfileController extends EmployeeController
         Helpers::flash($employee->person->update($values), 'employee profile', 'updated');
 
 
-        return redirect()->to('/employee/' . $employee->id . '/profile');
+        return redirect()->to('/employee/' . $employee->uuid . '/profile');
     }
 
     /*

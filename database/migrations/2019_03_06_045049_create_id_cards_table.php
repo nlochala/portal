@@ -16,11 +16,11 @@ class CreateIdCardsTable extends Migration
         Schema::create('id_cards', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('person_id')->nullable();
-            $table->unsignedBigInteger('image_file_id')->nullable();
-            $table->text('region')->nullable();
+            $table->unsignedBigInteger('front_image_file_id')->nullable();
+            $table->unsignedBigInteger('back_image_file_id')->nullable();
+            $table->boolean('is_active')->nullable()->default(false);
             $table->text('number')->nullable();
-            $table->text('family_name')->nullable();
-            $table->text('given_name')->nullable();
+            $table->text('name')->nullable();
             $table->dateTime('issue_date')->nullable();
             $table->dateTime('expiration_date')->nullable();
             $table->timestamps();

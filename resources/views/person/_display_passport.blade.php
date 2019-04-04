@@ -21,22 +21,22 @@
 @include('layouts._content_column_start', ['size' => 8, 'class' => '', 'style' => ''])
 @if($passport->is_active)
 <button type="button"
-        class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->id/create_passport") !!}>
+        class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/create_passport") !!}>
     <i class="fa fa-plus fa-plus mr-1"></i> Add New Passport
 </button>
 @endif
 <button type="button"
-        class="btn btn-outline-primary mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->id/passport/$passport->id/update_passport") !!}>
+        class="btn btn-outline-primary mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/passport/$passport->uuid/update_passport") !!}>
     <i class="fa fa-fw fa-pen mr-1"></i> Update Passport
 </button>
 @if($passport->is_active)
     <button type="button"
-            class="btn btn-outline-dark mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/passport/$passport->id/cancel") !!}>
+            class="btn btn-outline-dark mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/passport/$passport->uuid/cancel") !!}>
         <i class="fa fa-pause-circle mr-1"></i> Cancel Passport
     </button>
 @else
     <button type="button"
-            class="btn btn-outline-danger mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/passport/$passport->id/delete") !!}>
+            class="btn btn-outline-danger mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/passport/$passport->uuid/delete") !!}>
         <i class="fa fa-trash mr-1"></i> Delete Passport
     </button>
 @endif
@@ -63,7 +63,8 @@
 </tr>
 <tr>
     <td><strong>Expiration Date: </strong></td>
-    <td>{{ $passport->expiration_date->format('Y-m-d') }} <br/> {!! $passport->getExpirationBadge() !!}
+    <td>{{ $passport->expiration_date->format('Y-m-d') }} <br/>
+        {!! \App\Helpers\Helpers::getExpirationBadge($passport->expiration_date, 'Passport') !!}
     </td>
 </tr>
 @include('_tables.end-new-table')
@@ -116,7 +117,9 @@
                 @endif
             </td>
             <td>{{ $visa->issue_date->format('Y-m-d') }}</td>
-            <td>{{ $visa->expiration_date->format('Y-m-d') }}</td>
+            <td>{{ $visa->expiration_date->format('Y-m-d') }}<br />
+           {!! \App\Helpers\Helpers::getExpirationBadge($visa->expiration_date,null,30,180) !!}
+            </td>
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-info" data-toggle="tooltip"
@@ -130,7 +133,7 @@
                     </button>
                     @if($visa->is_active)
                         <button type="button" class="btn btn-sm btn-outline-dark" data-toggle="tooltip" title="Cancel"
-                                onclick="window.location.href='/visa/{{ $visa->id }}/cancel'">
+                                onclick="window.location.href='/visa/{{ $visa->uuid }}/cancel'">
                             <i class="fa fa-pause-circle"></i>
                         </button>
                     @endif
@@ -138,7 +141,7 @@
                 @if(!$visa->is_active)
                     <div class="btn-group" style="float: right">
                         <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
-                                onclick="window.location.href='/visa/{{ $visa->id }}/delete'">
+                                onclick="window.location.href='/visa/{{ $visa->uuid }}/delete'">
                             <i class="fa fa-times"></i>
                         </button>
                     </div>

@@ -1,5 +1,5 @@
 <!-- START FORM----------------------------------------------------------------------------->
-{!! Form::model($person,['method' => 'PATCH','id' => 'email-form','url' => '/employee/' . $employee->id . '/profile/store_email']) !!}
+{!! Form::model($person,['method' => 'PATCH','id' => 'email-form','url' => '/employee/' . $employee->uuid . '/profile/store_email']) !!}
 <!----------------------------------------------------------------------------->
 <!---------------------------New email_primary text field----------------------------->
 @include('layouts._forms._input_text',[

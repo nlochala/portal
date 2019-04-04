@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
 use Storage;
+use Webpatser\Uuid\Uuid;
 
 class File extends Model
 {
@@ -26,6 +26,29 @@ class File extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = (string) Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    /** @noinspection PhpMissingParentCallCommonInspection */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+
 
     /**
      * Add mass-assignment to model.
@@ -33,6 +56,7 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'file_extension_id',
         'path',
         'size',
@@ -54,7 +78,7 @@ class File extends Model
      */
     public function downloadUrl()
     {
-       return url('/download_file/' . $this->id);
+       return url('/download_file/' . $this->uuid);
     }
 
     /**

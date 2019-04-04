@@ -15,6 +15,7 @@ class CreateAddressTypesTable extends Migration
     {
         Schema::create('address_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

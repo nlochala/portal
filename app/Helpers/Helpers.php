@@ -25,6 +25,45 @@ class Helpers
     }
 
     /**
+     * Return the proper badge for the expiration date
+     *
+     * @param Carbon $expiration_date
+     * @param string $item_name
+     * @param int $danger
+     * @param int $warning
+     * @return string
+     */
+    public static function getExpirationBadge(Carbon $expiration_date, $item_name = null, int $danger = 180, int $warning = 365)
+    {
+        if($expiration_date->isPast()){
+            return '<span class="badge badge-dark"><i class="fa fa-pause-circle"></i> EXPIRED</span>';
+        }
+
+        switch ($x = $expiration_date->diffInDays()) {
+            case $x < $danger:
+                $color = 'danger';
+                $icon = 'fa fa-calendar-times';
+                break;
+            case $x < $warning:
+                $color = 'warning';
+                $icon = 'fa fa-exclamation-circle';
+                break;
+            default:
+                $color = 'primary';
+                $icon = 'fa fa-check';
+                break;
+        }
+
+        if($item_name){
+            $item_name = "$item_name expires ";
+        }
+
+        return '<span class="badge badge-'
+            . $color . '"><i class="' . $icon . '"></i> ' . $item_name
+            . $expiration_date->diffForHumans() . '.</span>';
+    }
+
+    /**
      * This function returns the maximum files size that can be uploaded
      * in PHP
      *
@@ -68,19 +107,19 @@ class Helpers
      *
      * @param        $result
      * @param string $item
-     * @param string $updated_or_created
+     * @param string $action
      */
-    public static function flash($result, $item = 'form', $updated_or_created = 'created')
+    public static function flash($result, $item = 'form', $action = 'created')
     {
         if($result){
             Helpers::flashAlert(
                 'success',
-                'The ' . $item . ' was ' . $updated_or_created . ' successfully!',
+                'The ' . $item . ' was ' . $action . ' successfully!',
                 'fa fa-check mr-1');
         }else{
             Helpers::flashAlert(
                 'danger',
-                'The ' . $item . ' did not ' . $updated_or_created . ' successfully. Please try again.',
+                'The ' . $item . ' did not ' . $action . ' successfully. Please try again.',
                 'fa fa-info-circle mr-1');
             return;
         }
@@ -223,7 +262,7 @@ class Helpers
         }
 
         /** @noinspection PhpUndefinedMethodInspection */
-        if ($model->exists && $model->isDirty()) {
+        if ($model->exists) {
             $model->user_updated_id = $user_id;
             $model->user_updated_ip = static::getUserIp();
         } elseif (!$model->exists) {

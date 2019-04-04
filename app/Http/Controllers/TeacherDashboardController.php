@@ -12,10 +12,10 @@ class TeacherDashboardController extends Controller
     /**
      * Return the teacher dashboard
      *
-     * @param User $id
+     * @param User $user
      * @return Factory|View
      */
-    public function index(User $id)
+    public function index(User $user)
     {
         return view('teacher_dashboard');
     }

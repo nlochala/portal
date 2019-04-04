@@ -10,7 +10,7 @@
             User Options
         </div>
         <div class="p-2">
-            <a class="dropdown-item" href="{{ '/employee/' . auth()->user()->person->employee->id . '/profile'}}">
+            <a class="dropdown-item" href="{{ '/employee/' . auth()->user()->person->employee->uuid . '/profile'}}">
                 <i class="far fa-fw fa-user mr-1"></i> Profile
             </a>
             <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">

@@ -15,6 +15,7 @@ class CreateAdGroupsTable extends Migration
     {
         Schema::create('ad_groups', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid')->nullable();
             $table->text('azure_id')->nullable();
             $table->text('name')->nullable();
             $table->text('email')->nullable();

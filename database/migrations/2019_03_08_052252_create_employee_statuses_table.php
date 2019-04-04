@@ -15,6 +15,7 @@ class CreateEmployeeStatusesTable extends Migration
     {
         Schema::create('employee_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

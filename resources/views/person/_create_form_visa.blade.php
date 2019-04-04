@@ -1,6 +1,6 @@
 <!-- START FORM----------------------------------------------------------------------------->
 
-{!! Form::open(['files' => true, 'id' => 'visa-form-' . $passport->id,'url' => "/employee/$employee->id/passport/$passport->id/create_visa"]) !!}
+{!! Form::open(['files' => true, 'id' => 'visa-form-' . $passport->uuid,'url' => "/employee/$employee->uuid/passport/$passport->uuid/create_visa"]) !!}
 <!----------------------------------------------------------------------------->
 <!---------------------------New is_active dropdown----------------------------->
 @include('layouts._forms._input_dropdown',[

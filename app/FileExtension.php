@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Webpatser\Uuid\Uuid;
 
 class FileExtension extends Model
 {
@@ -17,6 +18,28 @@ class FileExtension extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+    /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = (string) Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    /** @noinspection PhpMissingParentCallCommonInspection */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
 
     /**
      * The database table (file_extensions) used by the model.
@@ -31,6 +54,7 @@ class FileExtension extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
         'name',
         'description',
         'type',
