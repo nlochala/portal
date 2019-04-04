@@ -192,7 +192,7 @@ class Helpers
      */
     public static function displayImage(File $file, $height = null, $width = null, $is_constraint = true)
     {
-        $contents = Storage::get($file->getFullPath());
+        $contents = Storage::disk($file->driver)->get($file->getFullPath());
         $extension = $file->extension->name;
 
         if ($height || $width) {

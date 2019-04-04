@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
@@ -17,7 +18,7 @@ class AdGroup extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -64,7 +65,6 @@ class AdGroup extends Model
     */
 
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -80,11 +80,11 @@ class AdGroup extends Model
     /**
      * Many ad_groups belongs to many users
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function users()
     {
         // belongsToMany('class','pivot_table','current_models_id','foreign_id')->withTimestamps()
-        return $this->belongsToMany('App\AdGroup','ad_groups_users_pivot','ad_group_id','user_id')->withTimestamps();
+        return $this->belongsToMany('App\AdGroup', 'ad_groups_users_pivot', 'ad_group_id', 'user_id')->withTimestamps();
     }
 }

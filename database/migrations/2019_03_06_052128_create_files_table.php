@@ -21,7 +21,7 @@ class CreateFilesTable extends Migration
             $table->text('size')->nullable();
             $table->text('name')->nullable();
             $table->text('public_name')->nullable();
-            $table->boolean('is_private')->default(true);
+            $table->text('driver')->nullable();
             $table->integer('download_count')->nullable();
             $table->unsignedBigInteger('original_file_id')->nullable();
             $table->timestamps();

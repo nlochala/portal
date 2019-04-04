@@ -1,5 +1,7 @@
 <?php
 
+use Intervention\Image\Facades\Image;
+
 return [
 
     /*
@@ -224,7 +226,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Helpers' => App\Helpers::class,
-        'Image' => \Intervention\Image\Facades\Image::class
+        'Image' => Image::class
 
     ],
 

@@ -33,7 +33,7 @@ class File extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -49,7 +49,6 @@ class File extends Model
     }
 
 
-
     /**
      * Add mass-assignment to model.
      *
@@ -63,7 +62,7 @@ class File extends Model
         'name',
         'public_name',
         'original_file_id',
-        'is_private',
+        'drive',
         'download_count',
         'user_created_id',
         'user_created_ip',
@@ -78,7 +77,7 @@ class File extends Model
      */
     public function downloadUrl()
     {
-       return url('/download_file/' . $this->uuid);
+        return url('/download_file/' . $this->uuid);
     }
 
     /**
@@ -221,7 +220,7 @@ class File extends Model
      */
     public function renderImage()
     {
-        $img = Image::make(Storage::get($this->getFullPath()));
+        $img = Image::make(Storage::disk($this->driver)->get($this->getFullPath()));
         $type = $this->extension->name;
         $img->encode($type);
         return 'data:image/' . $type . ';base64,' . base64_encode($img);
@@ -261,20 +260,20 @@ class File extends Model
      *
      * @param UploadedFile $file
      * @param $path
-     * @param bool $is_private
+     * @param string $driver
+     * @param null $filename
      * @return bool
      */
-    public static function saveFile(UploadedFile $file, $path, $is_private = true)
+    public static function saveFile(UploadedFile $file, $driver = 'private', $filename = null, $path = '')
     {
-        $filename = Str::slug(explode('.', $file->getClientOriginalName())[0]);
-        $path_original = $file->store($path);
-        $name_original = static::getFileNameFromPath($path_original);
+        $filename ?: $filename = Str::slug(explode('.', $file->getClientOriginalName())[0]);
 
-//        dd([$file->getClientOriginalExtension(), $file->clientExtension(), $file->getExtension(), $name_original]);
+        $fullpath = $file->store($path);
+        $local_name = static::getFileNameFromPath($fullpath);
 
         $extension = $file->getClientOriginalExtension();
 
-        if($file->getClientOriginalExtension() !== $file->clientExtension()){
+        if ($file->getClientOriginalExtension() !== $file->clientExtension()) {
             $extension = $file->clientExtension();
         }
 
@@ -282,16 +281,16 @@ class File extends Model
         /** @noinspection PhpUndefinedMethodInspection */
         $file_model->file_extension_id = FileExtension::where('name', $extension)->first()->id;
         $file_model->path = $path;
-        $file_model->size = Storage::size($path_original);
-        $file_model->name = $name_original;
+        $file_model->size = Storage::disk($driver)->size($fullpath);
+        $file_model->name = $local_name;
         $file_model->public_name = $filename;
-        $file_model->is_private = $is_private;
+        $file_model->driver = $driver;
         $file_model = Helpers::dbAddAudit($file_model);
-        if ($file_model->save()) {
-            return $file_model;
+        if (!$file_model->save()) {
+            return false;
         }
 
-        return false;
+        return $file_model;
     }
 
     /**
@@ -301,19 +300,19 @@ class File extends Model
      * @param $path
      * @param $width
      * @param $height
-     * @param bool $is_private
+     * @param string $driver
      * @return bool
      * @throws FileNotFoundException
      */
-    protected static function saveResizedImage(File $file, $path, $width, $height, $is_private = true)
+    protected static function saveResizedImage(File $file, $path, $width, $height, $driver = 'private')
     {
         $new_name = $file->name . time();
 
-        $img = Image::make(Storage::get($file->getFullPath()))->resize($width, $height, function (Constraint $constraint) {
+        $img = Image::make(Storage::disk($driver)->get($file->getFullPath()))->resize($width, $height, function (Constraint $constraint) {
             $constraint->aspectRatio();
         });
 
-        if (!Storage::put("$path/$new_name." . $file->extension->name, $img->encode($file->extension->name))) {
+        if (!Storage::disk($driver)->put("$path/$new_name." . $file->extension->name, $img->encode($file->extension->name))) {
             Helpers::flashAlert(
                 'danger',
                 'There was an issue processing your image. Please try again.',
@@ -328,7 +327,7 @@ class File extends Model
         $file_model->path = $path;
         $file_model->name = $new_name;
         $file_model->public_name = $file->public_name;
-        $file_model->is_private = $is_private;
+        $file_model->driver = $driver;
         $file_model = Helpers::dbAddAudit($file_model);
         if (!$file_model->save()) {
             Helpers::flashAlert(
@@ -346,21 +345,16 @@ class File extends Model
      * the resized model.
      *
      * @param UploadedFile $file
+     * @param null $filename
      * @param string $path
      * @param string $original_path
      * @param int $width
      * @param int $height
-     * @param bool $is_private
+     * @param string $driver
      * @return bool
      * @throws FileNotFoundException
      */
-    public static function saveAndResizeImage(
-        UploadedFile $file,
-        $path = 'documents',
-        $original_path = 'documents',
-        $width = 300,
-        $height = 400,
-        $is_private = true)
+    public static function saveAndResizeImage(UploadedFile $file, $filename = null, $path = '', $original_path = '', $width = 300, $height = 400, $driver = 'private')
     {
         if (!File::validateImage($file)) {
             Helpers::flashAlert(
@@ -370,7 +364,7 @@ class File extends Model
             return false;
         }
 
-        if(!$original_file = static::saveFile($file, $original_path)){
+        if (!$original_file = static::saveFile($file, $driver, $filename, $original_path)) {
             Helpers::flashAlert(
                 'danger',
                 'There was a problem saving the original file. Please try again.',
@@ -379,9 +373,9 @@ class File extends Model
         }
 
         /** @noinspection PhpParamsInspection */
-        $resized_file = static::saveResizedImage($original_file, $path, $width, $height, $is_private);
+        $resized_file = static::saveResizedImage($original_file, $path, $width, $height, $driver);
 
-        if (!$original_file || !$resized_file) {
+        if (!$resized_file) {
             Helpers::flashAlert(
                 'danger',
                 'The file uploaded was not processed correctly. Please try again.',

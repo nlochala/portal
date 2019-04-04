@@ -82,7 +82,7 @@
     classes = classes.split(/\s+/);
 
     for (i = 0, length = classes.length; i < length; i++) {
-      _class = classes[i]
+      _class = classes[i];
 
       if (isNotHighlighted(_class) || getLanguage(_class)) {
         return _class;
@@ -352,7 +352,7 @@
     function buildSpan(classname, insideSpan, leaveOpen, noPrefix) {
       var classPrefix = noPrefix ? '' : options.classPrefix,
           openSpan    = '<span class="' + classPrefix,
-          closeSpan   = leaveOpen ? '' : spanEndTag
+          closeSpan   = leaveOpen ? '' : spanEndTag;
 
       openSpan += classname + '">';
 
@@ -1530,7 +1530,7 @@ function(hljs) {
     var ID_REGEX = '[A-Za-z](_?[A-Za-z0-9.])*';
 
     // bad chars, only allowed in literals
-    var BAD_CHARS = '[]{}%#\'\"'
+    var BAD_CHARS = '[]{}%#\'\"';
 
     // Ada doesn't have block comments, only line comments
     var COMMENTS = hljs.COMMENT('--', '$');
@@ -8036,7 +8036,7 @@ hljs.registerLanguage('javascript', function(hljs) {
     TEMPLATE_STRING,
     NUMBER,
     hljs.REGEXP_MODE
-  ]
+  ];
   var PARAMS_CONTAINS = SUBST.contains.concat([
     hljs.C_BLOCK_COMMENT_MODE,
     hljs.C_LINE_COMMENT_MODE
@@ -11964,7 +11964,7 @@ hljs.registerLanguage('pony', function(hljs) {
       hljs.TITLE_MODE,
       hljs.C_LINE_COMMENT_MODE
     ]
-  }
+  };
 
   var FUNCTION = {
     className: 'function',
@@ -11986,7 +11986,7 @@ hljs.registerLanguage('pony', function(hljs) {
       },
       hljs.C_LINE_COMMENT_MODE
     ]
-  }
+  };
 
   return {
     keywords: KEYWORDS,

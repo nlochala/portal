@@ -3,12 +3,10 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Storage;
 use Webpatser\Uuid\Uuid;
 
 class IdCard extends Model
@@ -71,7 +69,6 @@ class IdCard extends Model
      *
      * @param $type
      * @return bool
-     * @throws FileNotFoundException
      */
     public static function sampleImage($type)
     {
@@ -80,8 +77,6 @@ class IdCard extends Model
             /** @noinspection PhpUndefinedMethodInspection */
             return $image->renderImage();
         }
-
-        Storage::get('');
 
         return false;
     }

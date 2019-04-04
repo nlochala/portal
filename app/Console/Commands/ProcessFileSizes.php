@@ -45,7 +45,7 @@ class ProcessFileSizes extends Command
         }
 
         foreach($files as $file) {
-            $file->update(['size' => Storage::size($file->getFullPath())]);
+            $file->update(['size' => Storage::disk($file->driver)->size($file->getFullPath())]);
         }
 
         return;

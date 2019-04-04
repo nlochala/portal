@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\{Country, Employee, File, Helpers\Helpers, Passport, Visa, VisaEntry, VisaType};
-use Illuminate\{Contracts\Filesystem\FileNotFoundException, Contracts\View\Factory, Http\RedirectResponse, View\View};
+use Illuminate\{Contracts\Filesystem\FileNotFoundException,
+    Contracts\View\Factory,
+    Http\RedirectResponse,
+    Support\Str,
+    View\View};
 use Symfony\Component\Console\Helper\Helper;
 
 class EmployeePassportVisaController extends EmployeeController
@@ -66,9 +70,10 @@ class EmployeePassportVisaController extends EmployeeController
     public function updatePassport(Employee $employee, Passport $passport)
     {
         $values = request()->all();
+        $filename = Str::slug('passport ' . $employee->person->fullName(true));
 
         if(request()->hasFile('image_file')){
-            if(!$resized_image = File::saveAndResizeImage($values['image_file'])){
+            if(!$resized_image = File::saveAndResizeImage($values['image_file'], $filename)){
                 Helpers::flashAlert(
                     'danger',
                     'There was an error processing your image. Please try again.',
@@ -127,6 +132,7 @@ class EmployeePassportVisaController extends EmployeeController
     public function storePassport(Employee $employee)
     {
         $values = Helpers::dbAddAudit(request()->all());
+        $filename = Str::slug('passport ' . $employee->person->fullName(true));
 
         if (!request()->hasFile('image_file')) {
             Helpers::flashAlert(
@@ -136,7 +142,7 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->back();
         }
 
-        if(!$resized_image = File::saveAndResizeImage($values['image_file'])){
+        if(!$resized_image = File::saveAndResizeImage($values['image_file'], $filename)){
 //            return redirect()->back()->withInput($values);
             return redirect()->back();
         }
@@ -163,6 +169,8 @@ class EmployeePassportVisaController extends EmployeeController
         $old_values = Helpers::dbAddAudit(request()->all());
         $values = [];
 
+        $filename = Str::slug('visa ' . $employee->person->fullName(true));
+
         foreach($old_values as $key => $value){
             $values[explode('__' . $passport->id, $key)[0]] = $value;
         }
@@ -175,7 +183,7 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->back();
         }
 
-        if(!$resized_image = File::saveAndResizeImage($values['image_file_id'])){
+        if(!$resized_image = File::saveAndResizeImage($values['image_file_id'], $filename)){
             return redirect()->back();
         }
 
@@ -200,8 +208,10 @@ class EmployeePassportVisaController extends EmployeeController
     {
         $values = request()->all();
 
+        $filename = Str::slug('visa ' . $employee->person->fullName(true));
+
         if(request()->hasFile('image_file_id')){
-            if(!$resized_image = File::saveAndResizeImage($values['image_file_id'])){
+            if(!$resized_image = File::saveAndResizeImage($values['image_file_id'], $filename)){
                 Helpers::flashAlert(
                     'danger',
                     'There was an error processing your image. Please try again.',

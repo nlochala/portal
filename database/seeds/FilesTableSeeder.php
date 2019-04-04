@@ -25,7 +25,7 @@ class FilesTableSeeder extends Seeder
             $model->path = $type[1];
             $model->size = $type[2];
             $model->name = $type[3];
-            $model->is_private = $type[4];
+            $model->driver = $type[4];
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

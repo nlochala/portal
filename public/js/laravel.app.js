@@ -565,7 +565,7 @@ function defaultClearTimeout () {
     } catch (e) {
         cachedClearTimeout = defaultClearTimeout;
     }
-} ())
+} ());
 function runTimeout(fun) {
     if (cachedSetTimeout === setTimeout) {
         //normal enviroments in sane situations
@@ -702,7 +702,7 @@ process.emit = noop;
 process.prependListener = noop;
 process.prependOnceListener = noop;
 
-process.listeners = function (name) { return [] }
+process.listeners = function (name) { return [] };
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -1078,17 +1078,9 @@ if (token) {
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
- * @license
- * Lodash <https://lodash.com/>
- * Copyright JS Foundation and other contributors <https://js.foundation/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-;(function() {
-
-  /** Used as a safe reference for `undefined` in pre-ES5 environments. */
+/* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;
+            (function () {
+                /** Used as a safe reference for `undefined` in pre-ES5 environments. */
   var undefined;
 
   /** Used as the semantic version number. */
@@ -18297,7 +18289,7 @@ module.exports.default = axios;
 // Object.prototype.constructor. Remove this eventually
 module.exports = function (obj) {
   return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
+};
 
 function isBuffer (obj) {
   return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
@@ -19977,7 +19969,7 @@ methodsToPatch.forEach(function (method) {
       case 'push':
       case 'unshift':
         inserted = args;
-        break
+        break;
       case 'splice':
         inserted = args.slice(2);
         break
@@ -25709,14 +25701,14 @@ function parseFilters (exp) {
       }
     } else {
       switch (c) {
-        case 0x22: inDouble = true; break         // "
-        case 0x27: inSingle = true; break         // '
-        case 0x60: inTemplateString = true; break // `
-        case 0x28: paren++; break                 // (
-        case 0x29: paren--; break                 // )
-        case 0x5B: square++; break                // [
-        case 0x5D: square--; break                // ]
-        case 0x7B: curly++; break                 // {
+        case 0x22: inDouble = true; break;         // "
+        case 0x27: inSingle = true; break;         // '
+        case 0x60: inTemplateString = true; break; // `
+        case 0x28: paren++; break;                 // (
+        case 0x29: paren--; break;                 // )
+        case 0x5B: square++; break;                // [
+        case 0x5D: square--; break;                // ]
+        case 0x7B: curly++; break;                 // {
         case 0x7D: curly--; break                 // }
       }
       if (c === 0x2f) { // /

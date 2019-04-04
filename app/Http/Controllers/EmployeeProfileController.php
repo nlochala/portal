@@ -88,7 +88,7 @@ class EmployeeProfileController extends EmployeeController
         }
 
         if (request()->hasFile('profile_image')) {
-            if(!$resized_file = File::saveAndResizeImage($values['profile_image'], 'profile_images', 'profile_images/originals')){
+            if(!$resized_file = File::saveAndResizeImage($values['profile_image'])){
                 return redirect()->back();
             }
             $employee->person->update(['image_file_id' => $resized_file->id]);

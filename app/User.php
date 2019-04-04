@@ -128,53 +128,21 @@ class User extends Authenticatable
     | HELPERS
     |--------------------------------------------------------------------------
     */
-    public function saveProfileThumbnail()
-    {
-        // Get new name and attributes
-        $img = $this->person->image;
-        $new_name = $this->id . '-' . time();
-        $new_fullname = $this->id . '-' . time() . '.' . $img->extension->name;
-        $new_path = $img->path . '/thumbnails';
-        $new_fullpath = $new_path . '/' . $new_fullname;
-
-        // Process to thumbnail size
-        $img_thumbnail = Image::make(Storage::get($img->getFullPath()))->resize(32, 32,
-            function (Constraint $constraint) {
-                $constraint->aspectRatio();
-            });
-        Storage::put($new_fullpath, $img_thumbnail->encode($img->extension->name));
-
-        // Save the record of the new file
-        $new_file = new File();
-        $new_file->file_extension_id = $img->extension->id;
-        $new_file->path = $new_path;
-        $new_file->size = Storage::size($new_fullpath);
-        $new_file->name = $new_name;
-        $new_file->public_name = $new_name;
-        $new_file->is_private = false;
-        $new_file = Helpers::dbAddAudit($new_file);
-        $new_file->save();
-
-        $this->thumbnail_file_id = $new_file->id;
-        $this->save();
-
-        return true;
-    }
-
-    protected function renderThumbnail()
-    {
-        $img = Image::make(Storage::get($this->thumbnail->getFullPath()));
-        $type = $this->thumbnail->extension->name;
-        $img->encode($type);
-        return 'data:image/' . $type . ';base64,' . base64_encode($img);
-    }
-
+    /**
+     * Display a user's thumbnail image.
+     *
+     * @return mixed
+     */
     public function displayThumbnail()
     {
-//        if ($this->person && $this->person->image && $this->thumbnail->id < 3) {
-//            $this->saveProfileThumbnail();
-//        }
+        if(isset($this->person->gender)){
+            $gender = strtolower($this->person->gender);
+            if($file = File::where('name',"default-$gender")->first()){
+                return $file->renderImage();
+            }
+        }
 
-        return $this->renderThumbnail();
+        $file = File::where('name','default-male')->first();
+        return $file->renderImage();
     }
 }
