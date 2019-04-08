@@ -4,7 +4,7 @@
     <!-- Add Content Title Here b.breadcrumbs -->
     @include('person._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">New ID Card</h1>
+    <h1 class="font-w400" style="text-align: center">ID Card #xxxxxx{{ substr($id_card->number, -4) }}</h1>
     <!--
     panel.row
     panel.column
@@ -33,9 +33,8 @@
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
     <!-- START FORM----------------------------------------------------------------------------->
-
-    {!! Form::open(['files' => true, 'id' => 'id_card-form','url' => request()->getRequestUri()]) !!}
-    @include('person._create_form_idcard')
+    {!! Form::model($id_card,['method' => 'PATCH','files' => true, 'id' => 'id_card-form','url' => request()->getRequestUri()]) !!}
+    @include('person._edit_form_id_card')
     @include('layouts._forms._form_close')
     <!-- END FORM----------------------------------------------------------------------------->
     @include('layouts._panels_end_content')
@@ -46,20 +45,18 @@
     @include('layouts._panels_start_column', ['size' => 4])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
-    @include('layouts._panels_start_panel', ['title' => 'ID Card Example', 'with_block' => false])
+    @include('layouts._panels_start_panel', ['title' => 'ID Card Images', 'with_block' => false])
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
-
-    <h4>Front Example</h4>
-        <div class="options-container" style="text-align: center">
-            <img class="img-fluid options-item rounded border border-2x border-dark" src="{{ App\IdCard::sampleImage('front')->renderImage() }}" alt="">
-        </div>
-    <hr />
-    <h4>Back Example</h4>
-        <div class="options-container" style="text-align: center; padding-bottom: 25px">
-            <img class="img-fluid options-item rounded border border-2x border-dark" src="{{ App\IdCard::sampleImage('back')->renderImage() }}" alt="">
-        </div>
-
+    <div class="options-container" style="text-align: center">
+        <img class="img-fluid options-item rounded border border-2x border-dark"
+             src="{{ $id_card->frontImage->renderImage() }}" alt="">
+    </div>
+    <hr/>
+    <div class="options-container" style="text-align: center; padding-bottom: 25px">
+        <img class="img-fluid options-item rounded border border-2x border-dark"
+             src="{{ $id_card->backImage->renderImage() }}" alt="">
+    </div>
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->
@@ -82,12 +79,6 @@
             jQuery('#id_card-form').validate({
                 ignore: [],
                 rules: {
-                    'front_image_file_id': {
-                        required: true
-                    },
-                    'back_image_file_id': {
-                        required: true
-                    },
                     'is_active': {
                         required: true
                     },

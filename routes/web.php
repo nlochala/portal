@@ -87,6 +87,8 @@ Route::get('visa/{visa}/delete', 'VisaController@delete');
 | ID CARDS
 |--------------------------------------------------------------------------
 */
+Route::get('id_card/{id_card}/cancel', 'IdCardController@cancel');
+Route::get('id_card/{id_card}/delete', 'IdCardController@delete');
 
 /*
 |--------------------------------------------------------------------------
@@ -125,8 +127,8 @@ Route::get('employee/{employee}/passport/{passport}/update_passport', 'EmployeeP
 Route::get('employee/{employee}/id_card', 'EmployeeIdCardController@idCard');
 Route::get('employee/{employee}/create_id_card', 'EmployeeIdCardController@createForm');
 Route::post('employee/{employee}/create_id_card', 'EmployeeIdCardController@store');
-Route::get('employee/{employee}/update_id_card', 'EmployeeIdCardController@editForm');
-Route::patch('employee/{employee}/update_id_card', 'EmployeeIdCardController@update');
+Route::get('employee/{employee}/id_card/{id_card}/update_id_card', 'EmployeeIdCardController@editForm');
+Route::patch('employee/{employee}/id_card/{id_card}/update_id_card', 'EmployeeIdCardController@update');
 
 //Official Documents
 Route::get('employee/{employee}/official_documents', 'EmployeeController@officialDocuments');

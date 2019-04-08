@@ -3,8 +3,10 @@
 namespace App\Helpers;
 
 use App\File;
+use App\Person;
 use Carbon\Carbon;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Str;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
 use Storage;

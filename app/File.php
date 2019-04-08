@@ -87,7 +87,8 @@ class File extends Model
      */
     public function getFullPath()
     {
-        return $this->path . '/' . $this->getFileName();
+        $this->path ? $path = $this->path . '/' : $path = '';
+        return $path . $this->getFileName();
     }
 
     /**
@@ -98,6 +99,16 @@ class File extends Model
     public function getFileName()
     {
         return $this->name . '.' . $this->extension->name;
+    }
+
+    /**
+     * Return the file's native storage url.
+     *
+     * @return string
+     */
+    public function fileUrl()
+    {
+        return Storage::url($this->getFullPath());
     }
 
     /*

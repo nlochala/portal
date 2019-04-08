@@ -26,9 +26,10 @@
     |--------------||--------------|
 
 -->
-    @foreach($id_cards as $id_card)
-
+    @foreach($id_cards->sortByDesc('is_active') as $id_card)
+        @include('person._display_id_card',['id_card' => $id_card])
     @endforeach
+
     @include('layouts._content_end')
 @endsection
 

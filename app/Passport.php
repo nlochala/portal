@@ -4,10 +4,10 @@ namespace App;
 
 use Carbon\Carbon;
 use Collective\Html\Eloquent\FormAccessible;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\{Database\Eloquent\Model,
+    Database\Eloquent\Relations\BelongsTo,
+    Database\Eloquent\Relations\HasMany,
+    Database\Eloquent\SoftDeletes};
 use Webpatser\Uuid\Uuid;
 
 class Passport extends Model
@@ -27,7 +27,7 @@ class Passport extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -41,8 +41,6 @@ class Passport extends Model
     {
         return 'uuid';
     }
-
-
 
     /**
      * Add mass-assignment to model.
@@ -175,13 +173,11 @@ class Passport extends Model
     */
 
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
-
     /**
      *  This passport has many visas
      *

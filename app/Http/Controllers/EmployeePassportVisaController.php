@@ -143,7 +143,6 @@ class EmployeePassportVisaController extends EmployeeController
         }
 
         if(!$resized_image = File::saveAndResizeImage($values['image_file'], $filename)){
-//            return redirect()->back()->withInput($values);
             return redirect()->back();
         }
 

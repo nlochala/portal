@@ -66,6 +66,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\IdCard' => $baseDir . '/app/IdCard.php',
     'App\\Language' => $baseDir . '/app/Language.php',
+    'App\\OfficialDocument' => $baseDir . '/app/OfficialDocument.php',
     'App\\Passport' => $baseDir . '/app/Passport.php',
     'App\\Person' => $baseDir . '/app/Person.php',
     'App\\Phone' => $baseDir . '/app/Phone.php',

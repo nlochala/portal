@@ -525,6 +525,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\IdCard' => __DIR__ . '/../..' . '/app/IdCard.php',
         'App\\Language' => __DIR__ . '/../..' . '/app/Language.php',
+        'App\\OfficialDocument' => __DIR__ . '/../..' . '/app/OfficialDocument.php',
         'App\\Passport' => __DIR__ . '/../..' . '/app/Passport.php',
         'App\\Person' => __DIR__ . '/../..' . '/app/Person.php',
         'App\\Phone' => __DIR__ . '/../..' . '/app/Phone.php',

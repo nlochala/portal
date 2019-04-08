@@ -15,6 +15,7 @@ class CreateIdCardsTable extends Migration
     {
         Schema::create('id_cards', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable();
             $table->unsignedBigInteger('person_id')->nullable();
             $table->unsignedBigInteger('front_image_file_id')->nullable();
             $table->unsignedBigInteger('back_image_file_id')->nullable();

@@ -6,10 +6,10 @@
 <div class="block-options" style="float: left">
     @if($passport->is_active)
         <button type="button" class="btn btn-hero-sm btn-hero-success">
-            <i class="fa fa-check-circle"></i> ACTIVE PASSPORT
+            <i class="fa fa-check-circle"></i> ACTIVE
             @else
                 <button type="button" class="btn btn-hero-sm btn-hero-light">
-                    <i class="fa fa-pause-circle"></i> CANCELLED PASSPORT
+                    <i class="fa fa-pause-circle"></i> CANCELLED
                     @endif
                 </button>
 </div>

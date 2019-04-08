@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -12,6 +13,7 @@ use Webpatser\Uuid\Uuid;
 class IdCard extends Model
 {
     use SoftDeletes;
+    use FormAccessible;
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +27,7 @@ class IdCard extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -40,11 +42,6 @@ class IdCard extends Model
         return 'uuid';
     }
 
-
-
-// table name
-
-// fillable
     /**
      * Add mass-assignment to model.
      *
@@ -52,7 +49,14 @@ class IdCard extends Model
      */
     protected $fillable = [
         'uuid',
+        'person_id',
+        'front_image_file_id',
+        'back_image_file_id',
+        'is_active',
+        'number',
         'name',
+        'issue_date',
+        'expiration_date',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
@@ -75,7 +79,7 @@ class IdCard extends Model
         /** @noinspection PhpUndefinedMethodInspection */
         if ($image = File::where('name', "sample-idcard-$type")->first()) {
             /** @noinspection PhpUndefinedMethodInspection */
-            return $image->renderImage();
+            return $image;
         }
 
         return false;
@@ -86,6 +90,30 @@ class IdCard extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+    /**
+     * Set issue_date to carbon object
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getIssueDateAttribute($value)
+    {
+        return Carbon::parse($value);
+    }
+
+    /**
+     * Set expiration_date to carbon object
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getExpirationDateAttribute($value)
+    {
+        return Carbon::parse($value);
+    }
+
     /**
      * Set created_at to Carbon Object
      *
@@ -108,6 +136,28 @@ class IdCard extends Model
     public function getUpdatedAtAttribute($value)
     {
         return Carbon::parse($value)->toFormattedDateString();
+    }
+
+    /**
+     * Get the passport's IssueDate for forms.
+     *
+     * @param string $value
+     * @return string
+     */
+    public function formIssueDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    /**
+     * Get the passport's ExpirationDate for forms.
+     *
+     * @param string $value
+     * @return string
+     */
+    public function formExpirationDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
     }
 
 
