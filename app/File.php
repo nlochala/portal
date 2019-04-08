@@ -192,7 +192,7 @@ class File extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User', 'user_created_by', 'id');
+        return $this->belongsTo('App\User', 'user_created_id', 'id');
     }
 
     /**
@@ -202,7 +202,7 @@ class File extends Model
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User', 'user_updated_by', 'id');
+        return $this->belongsTo('App\User', 'user_updated_id', 'id');
     }
 
     /*
@@ -288,9 +288,18 @@ class File extends Model
             $extension = $file->clientExtension();
         }
 
+        if(!$extension = FileExtension::where('name', $extension)->first()){
+            Helpers::flashAlert(
+                'danger',
+                'The type of file you are trying to upload is not recognized. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return false;
+        }
+
         $file_model = new File();
         /** @noinspection PhpUndefinedMethodInspection */
-        $file_model->file_extension_id = FileExtension::where('name', $extension)->first()->id;
+        $file_model->file_extension_id = $extension->id;
         $file_model->path = $path;
         $file_model->size = Storage::disk($driver)->size($fullpath);
         $file_model->name = $local_name;

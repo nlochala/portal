@@ -131,7 +131,10 @@ Route::get('employee/{employee}/id_card/{id_card}/update_id_card', 'EmployeeIdCa
 Route::patch('employee/{employee}/id_card/{id_card}/update_id_card', 'EmployeeIdCardController@update');
 
 //Official Documents
-Route::get('employee/{employee}/official_documents', 'EmployeeController@officialDocuments');
+Route::get('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@officialDocuments');
+Route::post('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@store');
+Route::post('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@store');
+Route::get('employee/{employee}/official_documents/{document}/delete', 'EmployeeOfficialDocumentsController@delete');
 
 //Employment Details
 Route::get('employee/{employee}/position', 'EmployeeController@position');

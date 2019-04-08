@@ -238,6 +238,16 @@ class Person extends Model
     |--------------------------------------------------------------------------
     */
     /**
+     *  This person has many officialDocuments
+     *
+     * @return HasMany
+     */
+    public function officialDocuments()
+    {
+        return $this->hasMany('App\OfficialDocument','person_id');
+    }
+
+    /**
      *  This person has many idCards
      *
      * @return HasMany
