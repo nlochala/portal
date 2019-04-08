@@ -9,6 +9,7 @@ use App\File;
 use App\Helpers\Helpers;
 use App\Language;
 use App\Person;
+use App\PersonType;
 use Carbon\Carbon;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\RedirectResponse;
@@ -27,7 +28,6 @@ class EmployeeProfileController extends EmployeeController
     {
         $menu_list = Employee::getProfileMenu($employee);
         $title_dropdown = Person::$titleDropdown;
-        $type_dropdown = Person::$typeRadio;
         $gender_dropdown = Person::$genderRadio;
         $language_dropdown = Language::getDropdown();
         $country_dropdown = Country::getDropdown();
@@ -52,7 +52,6 @@ class EmployeeProfileController extends EmployeeController
 
         return view('employee.profile', compact(
             'title_dropdown',
-            'type_dropdown',
             'gender_dropdown',
             'language_dropdown',
             'country_dropdown',

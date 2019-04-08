@@ -3,7 +3,7 @@
 <!----------------------------------------------------------------------------->
 <!-----------------------New type_id radio------------------------------------->
 @include('layouts._forms._input_radio_inline',[
-    'name' => 'type',
+    'name' => 'person_type_id',
     'label' => 'Select the Type of Person to Create',
     'array' => $type_dropdown,
     'required' => true,

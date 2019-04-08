@@ -8,6 +8,7 @@ use App\Ethnicity;
 use App\Helpers\Helpers;
 use App\Language;
 use App\Person;
+use App\PersonType;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -33,7 +34,7 @@ class PersonController extends Controller
     public function create()
     {
         $title_dropdown = Person::$titleDropdown;
-        $type_dropdown = Person::$typeRadio;
+        $type_dropdown = PersonType::getDropdown();
         $gender_dropdown = Person::$genderRadio;
         $language_dropdown = Language::getDropdown();
         $country_dropdown = Country::getDropdown();
@@ -59,7 +60,7 @@ class PersonController extends Controller
         $values = Helpers::dbAddAudit(request()->all());
         $values['title'] = Person::getTitle($values['title']);
         $values['gender'] = Person::getGender($values['gender']);
-        $values['type'] = Person::getType($values['type']);
+        /** @noinspection PhpUndefinedMethodInspection */
         $person = Person::create($values);
 
         if (!$person) {
@@ -67,12 +68,13 @@ class PersonController extends Controller
             return redirect()->back();
         }
 
-        switch ($values['type']) {
+        switch ($person->personType->name) {
             case 'Student':
                 break;
             case 'Parent':
                 break;
             case 'Employee':
+                /** @noinspection PhpUndefinedMethodInspection */
                 $employee = Employee::create([
                     'person_id' => $person->id,
                     'user_created_id' => $values['user_created_id'],

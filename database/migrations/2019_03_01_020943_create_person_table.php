@@ -28,6 +28,7 @@ class CreatePersonTable extends Migration
             $table->text('email_secondary')->nullable();
             $table->unsignedBigInteger('image_file_id')->nullable();
             $table->text('website')->nullable();
+            $table->unsignedBigInteger('person_type_id')->nullable();
             $table->unsignedBigInteger('language_primary_id')->nullable();
             $table->unsignedBigInteger('language_secondary_id')->nullable();
             $table->unsignedBigInteger('language_tertiary_id')->nullable();

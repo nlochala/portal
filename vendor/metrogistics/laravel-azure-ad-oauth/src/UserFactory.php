@@ -6,6 +6,7 @@ use App\AdGroup;
 use App\Employee;
 use App\Helpers\Helpers;
 use App\Person;
+use App\PersonType;
 use App\User as AppUser;
 
 class UserFactory
@@ -155,6 +156,9 @@ class UserFactory
 
     public function newEmployee(AppUser $user, Person $person)
     {
+        $person->person_type_id = PersonType::where('name','Employee')->first()->id;
+        $person->save();
+
         $employee = new Employee();
         $employee->person_id = $person->id;
         $employee = Helpers::dbAddAudit($employee);

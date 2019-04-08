@@ -47,8 +47,6 @@ class Person extends Model
         return 'uuid';
     }
 
-
-
     /**
      * This populates the dropdown for title
      *
@@ -61,17 +59,6 @@ class Person extends Model
         'Prof.',
         'Sir.',
         'Dr.'
-    ];
-
-    /**
-     * This populates the dropdown for person_type
-     *
-     * @var array
-     */
-    public static $typeRadio = [
-        'Student',
-        'Parent',
-        'Employee',
     ];
 
     /**
@@ -106,18 +93,6 @@ class Person extends Model
     public static function getGender($gender)
     {
         return static::$genderRadio[$gender];
-    }
-
-    /**
-     * Return the resolved type
-     *
-     * @param $type
-     *
-     * @return mixed
-     */
-    public static function getType($type)
-    {
-        return static::$typeRadio[$type];
     }
 
     /**
@@ -173,6 +148,7 @@ class Person extends Model
         'email_secondary',
         'email_school',
         'image_file_id',
+        'person_type_id',
         'country_of_birth_id',
         'language_primary_id',
         'language_secondary_id',
@@ -422,5 +398,13 @@ class Person extends Model
         return $this->belongsTo('App\Ethnicity', 'ethnicity_id', 'id');
     }
 
-
+    /**
+     *  This person belongs to a personType
+     *
+     * @return BelongsTo
+     */
+    public function personType()
+    {
+        return $this->belongsTo('App\PersonType','person_type_id','id');
+    }
 }

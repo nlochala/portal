@@ -19,6 +19,8 @@ class ForeignKeys extends Migration
         |--------------------------------------------------------------------------
         */
         Schema::table('persons', function (Blueprint $table) {
+            $table->foreign('person_type_id')
+                ->references('id')->on('person_types');
             $table->foreign('image_file_id')
                 ->references('id')->on('files');
             $table->foreign('language_primary_id')
