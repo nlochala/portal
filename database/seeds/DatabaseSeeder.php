@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PositionClassificationsTableSeeder::class);
         $this->call(EmployeeStatusesTableSeeder::class);
         $this->call(VisaEntryTableSeeder::class);
+        $this->call(OfficialDocumentTypesTableSeeder::class);
+        $this->call(PersonTypesTableSeeder::class);
     }
 }

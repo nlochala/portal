@@ -15,8 +15,6 @@ class LanguagesTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('languages')->truncate();
-        Schema::enableForeignKeyConstraints();
-
 
         $languages = Helpers::parseCsv('database/seeds/data/languages.csv', true);
 
@@ -26,5 +24,7 @@ class LanguagesTableSeeder extends Seeder
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
-use App\Ethnicity as Ethnicities;
 use App\Helpers\Helpers;
-use App\Ethnicity;
+use App\PersonType;
 use Illuminate\Database\Seeder;
 
-class EthnicitiesTableSeeder extends Seeder
+class PersonTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,17 +14,19 @@ class EthnicitiesTableSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('ethnicities')->truncate();
+        DB::table('person_types')->truncate();
 
-        $ethnicities = Helpers::parseCsv('database/seeds/data/ethnicities.csv', true);
+        $person_types = Helpers::parseCsv('database/seeds/data/person_types.csv', false);
 
-        foreach($ethnicities as $type){
-            $model = new Ethnicity();
-            $model->name = $type[0];
+        foreach($person_types as $type){
+            $model = new PersonType();
+            $model->name = $type[2];
+            $model->description = $type[3];
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
 
         Schema::enableForeignKeyConstraints();
+
     }
 }

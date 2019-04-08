@@ -15,7 +15,6 @@ class EmployeeStatusesTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('employee_statuses')->truncate();
-        Schema::enableForeignKeyConstraints();
 
         $employee_statuses = Helpers::parseCsv('database/seeds/data/employee_statuses.csv', true);
 
@@ -26,6 +25,8 @@ class EmployeeStatusesTableSeeder extends Seeder
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
+
+        Schema::enableForeignKeyConstraints();
 
     }
 }

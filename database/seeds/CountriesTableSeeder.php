@@ -15,8 +15,6 @@ class CountriesTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('countries')->truncate();
-        Schema::enableForeignKeyConstraints();
-
 
         $countries = Helpers::parseCsv('database/seeds/data/countries.csv', true);
 
@@ -27,5 +25,7 @@ class CountriesTableSeeder extends Seeder
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -15,7 +15,6 @@ class PhoneTypesTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('phone_types')->truncate();
-        Schema::enableForeignKeyConstraints();
 
         $phone_types = Helpers::parseCsv('database/seeds/data/phone_types.csv', true);
 
@@ -26,5 +25,7 @@ class PhoneTypesTableSeeder extends Seeder
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -168,6 +168,30 @@ class ForeignKeys extends Migration
             $table->foreign('status_id')
                 ->references('id')->on('employee_statuses');
         });
+
+        /*
+        |--------------------------------------------------------------------------
+        | OFFICIAL DOCUMENT TYPES
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('official_document_types', function (Blueprint $table) {
+            $table->foreign('person_type_id')
+                ->references('id')->on('person_types');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | OFFICIAL DOCUMENTS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('official_documents', function (Blueprint $table) {
+            $table->foreign('official_document_type_id')
+                ->references('id')->on('official_document_types');
+            $table->foreign('person_id')
+                ->references('id')->on('persons');
+            $table->foreign('file_id')
+                ->references('id')->on('files');
+        });
     }
 
     /**

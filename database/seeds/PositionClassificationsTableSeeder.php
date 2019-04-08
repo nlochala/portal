@@ -15,7 +15,6 @@ class PositionClassificationsTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('position_classifications')->truncate();
-        Schema::enableForeignKeyConstraints();
 
         $position_classifications = Helpers::parseCsv('database/seeds/data/position_classifications.csv', true);
 
@@ -26,5 +25,7 @@ class PositionClassificationsTableSeeder extends Seeder
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -15,7 +15,6 @@ class FileExtensionsTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('file_extensions')->truncate();
-        Schema::enableForeignKeyConstraints();
 
         $file_extensions = Helpers::parseCsv('database/seeds/data/file_extensions.csv', false);
 
@@ -29,5 +28,7 @@ class FileExtensionsTableSeeder extends Seeder
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }

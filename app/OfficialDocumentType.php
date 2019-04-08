@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
-class OfficialDocument extends Model
+class OfficialDocumentType extends Model
 {
     use SoftDeletes;
 
@@ -24,7 +24,7 @@ class OfficialDocument extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -38,6 +38,7 @@ class OfficialDocument extends Model
         return 'uuid';
     }
 
+
     /**
      * Add mass-assignment to model.
      *
@@ -45,9 +46,9 @@ class OfficialDocument extends Model
      */
     protected $fillable = [
         'uuid',
-        'official_document_type_id',
-        'person_id',
-        'file_id',
+        'name',
+        'description',
+        'person_type_id',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
@@ -97,52 +98,32 @@ class OfficialDocument extends Model
     |--------------------------------------------------------------------------
     */
     /**
-     *  This official document belongs to a file
+     *  This document ty pe belongs to a personType
      *
      * @return BelongsTo
      */
-    public function file()
+    public function personType()
     {
-        return $this->belongsTo('App\File','file_id','id');
+        return $this->belongsTo('App\PersonType','person_type_id','id');
     }
 
     /**
-     *  This official document belongs to a person
-     *
-     * @return BelongsTo
-     */
-    public function person()
-    {
-        return $this->belongsTo('App\Person','person_id','id');
-    }
-
-    /**
-     *  This document belongs to a officialDocumentType
-     *
-     * @return BelongsTo
-     */
-    public function officialDocumentType()
-    {
-        return $this->belongsTo('App\OfficialDocumentType','official_document_type_id','id');
-    }
-
-    /**
-     *  This official document was created by a user
+     *  This document type was created by a user
      *
      * @return BelongsTo
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User', 'user_created_by', 'id');
+        return $this->belongsTo('App\User','user_created_by','id');
     }
 
     /**
-     *  This official document was updated by a user
+     *  This document type was updated by a user
      *
      * @return BelongsTo
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User', 'user_updated_by', 'id');
+        return $this->belongsTo('App\User','user_updated_by','id');
     }
 }

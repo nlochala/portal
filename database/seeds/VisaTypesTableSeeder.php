@@ -15,7 +15,6 @@ class VisaTypesTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('visa_types')->truncate();
-        Schema::enableForeignKeyConstraints();
 
         $visa_types = Helpers::parseCsv('database/seeds/data/visa_types.csv', true);
 
@@ -28,5 +27,7 @@ class VisaTypesTableSeeder extends Seeder
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }

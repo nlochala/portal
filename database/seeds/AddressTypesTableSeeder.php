@@ -15,7 +15,6 @@ class AddressTypesTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('address_types')->truncate();
-        Schema::enableForeignKeyConstraints();
 
         $address_types = Helpers::parseCsv('database/seeds/data/address_types.csv', true);
 
@@ -26,5 +25,7 @@ class AddressTypesTableSeeder extends Seeder
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }
+
+        Schema::enableForeignKeyConstraints();
     }
 }
