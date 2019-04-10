@@ -24,7 +24,7 @@ class Person extends Model
     protected $table = 'persons';
 
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
@@ -41,6 +41,7 @@ class Person extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
@@ -48,7 +49,7 @@ class Person extends Model
     }
 
     /**
-     * This populates the dropdown for title
+     * This populates the dropdown for title.
      *
      * @var array
      */
@@ -58,11 +59,11 @@ class Person extends Model
         'Miss.',
         'Prof.',
         'Sir.',
-        'Dr.'
+        'Dr.',
     ];
 
     /**
-     * This populates the dropdown for gender
+     * This populates the dropdown for gender.
      *
      * @var array
      */
@@ -74,7 +75,7 @@ class Person extends Model
     /**
      * Return the value for a given key in the title array.
      *
-     * @param Int $title
+     * @param int $title
      *
      * @return mixed
      */
@@ -84,7 +85,7 @@ class Person extends Model
     }
 
     /**
-     * Return the resolved gender
+     * Return the resolved gender.
      *
      * @param $gender
      *
@@ -96,20 +97,21 @@ class Person extends Model
     }
 
     /**
-     * Return the properly formatted full name
+     * Return the properly formatted full name.
      *
      * @param bool $last_name_first
+     *
      * @return string
      */
     public function fullName($last_name_first = false)
     {
         return $last_name_first
-            ? $this->family_name . ', ' . $this->given_name
-            : $this->given_name . ' ' . $this->family_name;
+            ? $this->family_name.', '.$this->given_name
+            : $this->given_name.' '.$this->family_name;
     }
 
     /**
-     * Display the preferredName of the person
+     * Display the preferredName of the person.
      *
      * @return mixed
      */
@@ -157,17 +159,17 @@ class Person extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
-
 
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -179,7 +181,7 @@ class Person extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -218,6 +220,7 @@ class Person extends Model
      * Get the person's Gender for forms.
      *
      * @param string $value
+     *
      * @return string
      */
     public function formGenderAttribute($value)
@@ -231,34 +234,34 @@ class Person extends Model
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This person has many officialDocuments
+     *  This person has many officialDocuments.
      *
      * @return HasMany
      */
     public function officialDocuments()
     {
-        return $this->hasMany('App\OfficialDocument','person_id');
+        return $this->hasMany('App\OfficialDocument', 'person_id');
     }
 
     /**
-     *  This person has many idCards
+     *  This person has many idCards.
      *
      * @return HasMany
      */
     public function idCards()
     {
-        return $this->hasMany('App\IdCard','person_id');
+        return $this->hasMany('App\IdCard', 'person_id');
     }
 
     /**
-     *  This person has many passports
+     *  This person has many passports.
      *
      * @return HasMany
      */
@@ -268,7 +271,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a user
+     *  This person belongs to a user.
      *
      * @return BelongsTo
      */
@@ -278,7 +281,7 @@ class Person extends Model
     }
 
     /**
-     *  This person has many addresses
+     *  This person has many addresses.
      *
      * @return HasMany
      */
@@ -288,7 +291,7 @@ class Person extends Model
     }
 
     /**
-     *  This person has many phone numbers
+     *  This person has many phone numbers.
      *
      * @return HasMany
      */
@@ -298,7 +301,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a employee
+     *  This person belongs to a employee.
      *
      * @return BelongsTo
      */
@@ -308,7 +311,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a student
+     *  This person belongs to a student.
      *
      * @return BelongsTo
      */
@@ -318,7 +321,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a student
+     *  This person belongs to a student.
      *
      * @return BelongsTo
      */
@@ -328,7 +331,7 @@ class Person extends Model
     }
 
     /**
-     * This person has a File
+     * This person has a File.
      *
      * @return HasOne
      */
@@ -339,7 +342,7 @@ class Person extends Model
     }
 
     /**
-     *  This user belongs to a user
+     *  This user belongs to a user.
      *
      * @return BelongsTo
      */
@@ -349,7 +352,7 @@ class Person extends Model
     }
 
     /**
-     *  This user belongs to a user
+     *  This user belongs to a user.
      *
      * @return BelongsTo
      */
@@ -359,7 +362,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a nationality
+     *  This person belongs to a nationality.
      *
      * @return BelongsTo
      */
@@ -369,7 +372,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a language
+     *  This person belongs to a language.
      *
      * @return BelongsTo
      */
@@ -379,7 +382,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a language
+     *  This person belongs to a language.
      *
      * @return BelongsTo
      */
@@ -389,7 +392,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a language
+     *  This person belongs to a language.
      *
      * @return BelongsTo
      */
@@ -399,7 +402,7 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a ethnicity
+     *  This person belongs to a ethnicity.
      *
      * @return BelongsTo
      */
@@ -409,12 +412,12 @@ class Person extends Model
     }
 
     /**
-     *  This person belongs to a personType
+     *  This person belongs to a personType.
      *
      * @return BelongsTo
      */
     public function personType()
     {
-        return $this->belongsTo('App\PersonType','person_type_id','id');
+        return $this->belongsTo('App\PersonType', 'person_type_id', 'id');
     }
 }

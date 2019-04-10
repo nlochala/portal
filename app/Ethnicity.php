@@ -14,7 +14,7 @@ class Ethnicity extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -37,6 +37,6 @@ class Ethnicity extends Model
      */
     public static function getDropdown()
     {
-        return static::pluck('name','id')->all();
+        return static::pluck('name', 'id')->all();
     }
 }

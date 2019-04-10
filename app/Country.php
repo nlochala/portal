@@ -15,7 +15,7 @@ class Country extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -38,7 +38,7 @@ class Country extends Model
      */
     public static function getDropdown()
     {
-        return static::pluck('name','id')->all();
+        return static::pluck('name', 'id')->all();
     }
 
     /**
@@ -48,10 +48,10 @@ class Country extends Model
      */
     public static function getCountryCodeDropdown()
     {
-        $array = static::all(['id','name','country_code']);
+        $array = static::all(['id', 'name', 'country_code']);
         $return_array = [];
 
-        foreach($array as $item){
+        foreach ($array as $item) {
             $return_array[$item->id] = $item->name . ' (+' . $item->country_code . ')';
         }
 

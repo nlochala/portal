@@ -3,39 +3,16 @@
 namespace App;
 
 use Carbon\Carbon;
-use Collective\Html\Eloquent\FormAccessible;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
+use Collective\Html\Eloquent\FormAccessible;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Employee extends Model
 {
     use SoftDeletes;
     use FormAccessible;
-
-    /**
-     *  Setup model event hooks
-     */
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
-        });
-    }
-
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    /** @noinspection PhpMissingParentCallCommonInspection */
-    public function getRouteKeyName()
-    {
-        return 'uuid';
-    }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -64,18 +41,48 @@ class Employee extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
 
-    public static function getProfileMenu(Employee $employee)
+    /**
+     *  Setup model event hooks.
+     */
+    public static function boot()
     {
-        $prefix = '/employee/' . $employee->id;
+        parent::boot();
+        self::creating(function ($model) {
+            $model->uuid = (string) Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+
+    /** @noinspection PhpMissingParentCallCommonInspection */
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+    /**
+     * This is a comment.
+     *
+     * @param self $employee
+     *
+     * @return array
+     */
+    public static function getProfileMenu(self $employee)
+    {
+        $prefix = '/employee/'.$employee->id;
 
         return [
-            'Overview' => $prefix . '/profile',
-            'Contact Information' => $prefix . '/profile/contact',
-            'Official Documents' => $prefix . '/profile/official_documents',
-            'Job Assignment' => $prefix . '/profile/job',
+            'Overview' => $prefix.'/profile',
+            'Contact Information' => $prefix.'/profile/contact',
+            'Official Documents' => $prefix.'/profile/official_documents',
+            'Job Assignment' => $prefix.'/profile/job',
         ];
     }
 
@@ -84,8 +91,9 @@ class Employee extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -97,7 +105,7 @@ class Employee extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -108,23 +116,20 @@ class Employee extends Model
         return Carbon::parse($value)->toFormattedDateString();
     }
 
-
-
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This employee belongs to a user
+     *  This employee belongs to a user.
      *
      * @return BelongsTo
      */
@@ -135,7 +140,7 @@ class Employee extends Model
     }
 
     /**
-     *  This employee belongs to a user
+     *  This employee belongs to a user.
      *
      * @return BelongsTo
      */
@@ -146,7 +151,7 @@ class Employee extends Model
     }
 
     /**
-     *  This employee belongs to a person
+     *  This employee belongs to a person.
      *
      * @return BelongsTo
      */

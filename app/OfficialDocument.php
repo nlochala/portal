@@ -17,14 +17,15 @@ class OfficialDocument extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -51,7 +52,7 @@ class OfficialDocument extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
 
     /*
@@ -59,8 +60,9 @@ class OfficialDocument extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -72,7 +74,7 @@ class OfficialDocument extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -83,51 +85,50 @@ class OfficialDocument extends Model
         return Carbon::parse($value)->toFormattedDateString();
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This official document belongs to a file
+     *  This official document belongs to a file.
      *
      * @return BelongsTo
      */
     public function file()
     {
-        return $this->belongsTo('App\File','file_id','id');
+        return $this->belongsTo('App\File', 'file_id', 'id');
     }
 
     /**
-     *  This official document belongs to a person
+     *  This official document belongs to a person.
      *
      * @return BelongsTo
      */
     public function person()
     {
-        return $this->belongsTo('App\Person','person_id','id');
+        return $this->belongsTo('App\Person', 'person_id', 'id');
     }
 
     /**
-     *  This document belongs to a officialDocumentType
+     *  This document belongs to a officialDocumentType.
      *
      * @return BelongsTo
      */
     public function officialDocumentType()
     {
-        return $this->belongsTo('App\OfficialDocumentType','official_document_type_id','id');
+        return $this->belongsTo('App\OfficialDocumentType', 'official_document_type_id', 'id');
     }
 
     /**
-     *  This official document was created by a user
+     *  This official document was created by a user.
      *
      * @return BelongsTo
      */
@@ -137,7 +138,7 @@ class OfficialDocument extends Model
     }
 
     /**
-     *  This official document was updated by a user
+     *  This official document was updated by a user.
      *
      * @return BelongsTo
      */

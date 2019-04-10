@@ -18,8 +18,9 @@ class OfficialDocumentType extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
@@ -39,7 +40,6 @@ class OfficialDocumentType extends Model
         return 'uuid';
     }
 
-
     /**
      * Add mass-assignment to model.
      *
@@ -53,17 +53,17 @@ class OfficialDocumentType extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
 
     /**
-     * Return a formatted dropdown
+     * Return a formatted dropdown.
      *
      * @return Collection
      */
     public static function getDropdown()
     {
-        return static::all()->pluck('name','id');
+        return static::all()->pluck('name', 'id');
     }
 
     /*
@@ -71,8 +71,9 @@ class OfficialDocumentType extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -84,7 +85,7 @@ class OfficialDocumentType extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -95,46 +96,45 @@ class OfficialDocumentType extends Model
         return Carbon::parse($value)->toFormattedDateString();
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This document ty pe belongs to a personType
+     *  This document ty pe belongs to a personType.
      *
      * @return BelongsTo
      */
     public function personType()
     {
-        return $this->belongsTo('App\PersonType','person_type_id','id');
+        return $this->belongsTo('App\PersonType', 'person_type_id', 'id');
     }
 
     /**
-     *  This document type was created by a user
+     *  This document type was created by a user.
      *
      * @return BelongsTo
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User','user_created_by','id');
+        return $this->belongsTo('App\User', 'user_created_by', 'id');
     }
 
     /**
-     *  This document type was updated by a user
+     *  This document type was updated by a user.
      *
      * @return BelongsTo
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User','user_updated_by','id');
+        return $this->belongsTo('App\User', 'user_updated_by', 'id');
     }
 }

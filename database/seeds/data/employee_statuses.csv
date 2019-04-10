@@ -1,3 +1,4 @@
-name,description
-Full-Time, Full-Time
-Part-Time, Part-Time
+Full-Time, Full-Time, 100
+Part-Time, Part-Time, 40
+Incoming, Employees that have been hired but have not yet begun., 0
+Departed, Employees that are no longer employed., 0

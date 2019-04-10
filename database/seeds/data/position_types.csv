@@ -1,4 +1,9 @@
 name,description
-Support Staff, Support Staff
-Teacher, Teacher
-Administrator, Administrator
+Academic Administrator, This would represent either a principle or vice-principle.
+Teacher, This is a classroom teacher.
+Teacher Assistant, This is a local classroom teacher.
+Academic Support, This employee is responsible for supporting the academic mission of the school.
+Support Staff, This employee supports the non-academic mission of the school.
+Support Administrator, This is an administrator or manager that supervises other support staff.
+Facilities Staff, This employee provides structural and security services for the school.
+Facilities Administrator, This is an administrator who supervises other facilities staff.

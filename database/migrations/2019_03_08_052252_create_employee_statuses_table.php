@@ -18,6 +18,7 @@ class CreateEmployeeStatusesTable extends Migration
             $table->uuid('uuid')->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();
+            $table->integer('base_weight')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();

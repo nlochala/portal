@@ -8,8 +8,6 @@ class PositionTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -18,7 +16,7 @@ class PositionTypesTableSeeder extends Seeder
 
         $position_types = Helpers::parseCsv('database/seeds/data/position_types.csv', true);
 
-        foreach($position_types as $type){
+        foreach ($position_types as $type) {
             $model = new PositionType();
             $model->name = $type[0];
             $model->description = $type[1];

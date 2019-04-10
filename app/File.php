@@ -288,7 +288,7 @@ class File extends Model
             $extension = $file->clientExtension();
         }
 
-        if(!$extension = FileExtension::where('name', $extension)->first()){
+        if (!$extension = FileExtension::where('name', $extension)->first()) {
             Helpers::flashAlert(
                 'danger',
                 'The type of file you are trying to upload is not recognized. Please try again.',

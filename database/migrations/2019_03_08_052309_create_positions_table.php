@@ -18,9 +18,11 @@ class CreatePositionsTable extends Migration
             $table->uuid('uuid')->nullable();
             $table->text('name')->nullable();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('status_id')->nullable();
-            $table->unsignedBigInteger('type_id')->nullable();
-            $table->unsignedBigInteger('classification_id')->nullable();
+            $table->unsignedBigInteger('school_id')->nullable();
+            $table->unsignedBigInteger('position_type_id')->nullable();
+            $table->unsignedBigInteger('supervisor_position_id')->nullable();
+            $table->integer('base_weight')->nullable();
+            $table->integer('stipend')->nullable();
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();

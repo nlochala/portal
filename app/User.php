@@ -43,7 +43,7 @@ class User extends Authenticatable
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -135,14 +135,14 @@ class User extends Authenticatable
      */
     public function displayThumbnail()
     {
-        if(isset($this->person->gender)){
+        if (isset($this->person->gender)) {
             $gender = strtolower($this->person->gender);
-            if($file = File::where('name',"default-$gender")->first()){
+            if ($file = File::where('name', "default-$gender")->first()) {
                 return $file->renderImage();
             }
         }
 
-        $file = File::where('name','default-male')->first();
+        $file = File::where('name', 'default-male')->first();
         return $file->renderImage();
     }
 }

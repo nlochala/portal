@@ -24,7 +24,7 @@ class Visa extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -38,7 +38,6 @@ class Visa extends Model
     {
         return 'uuid';
     }
-
 
 
     /**
@@ -141,7 +140,7 @@ class Visa extends Model
      */
     public function image()
     {
-        return $this->belongsTo('App\File','image_file_id','id');
+        return $this->belongsTo('App\File', 'image_file_id', 'id');
     }
 
     /**
@@ -151,7 +150,7 @@ class Visa extends Model
      */
     public function visaType()
     {
-        return $this->belongsTo('App\VisaType','visa_type_id','id');
+        return $this->belongsTo('App\VisaType', 'visa_type_id', 'id');
     }
 
     /**
@@ -161,7 +160,7 @@ class Visa extends Model
      */
     public function visaEntry()
     {
-        return $this->belongsTo('App\VisaEntry','visa_entry_id','id');
+        return $this->belongsTo('App\VisaEntry', 'visa_entry_id', 'id');
     }
 
     /**
@@ -171,7 +170,7 @@ class Visa extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User','user_created_by','id');
+        return $this->belongsTo('App\User', 'user_created_by', 'id');
     }
 
     /**
@@ -181,6 +180,6 @@ class Visa extends Model
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User','user_updated_by','id');
+        return $this->belongsTo('App\User', 'user_updated_by', 'id');
     }
 }

@@ -8,8 +8,6 @@ class ForeignKeys extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -149,31 +147,17 @@ class ForeignKeys extends Migration
         |--------------------------------------------------------------------------
         */
         Schema::table('employees', function (Blueprint $table) {
-            $table->foreign('position_id')
-                ->references('id')->on('positions');
+            $table->foreign('employee_classification_id')
+                ->references('id')->on('employee_classifications');
             $table->foreign('person_id')
                 ->references('id')->on('persons');
-            $table->foreign('status_id')
+            $table->foreign('employee_status_id')
                 ->references('id')->on('employee_statuses');
         });
 
         /*
         |--------------------------------------------------------------------------
-        | TABLE: JOBS
-        |--------------------------------------------------------------------------
-        */
-        Schema::table('positions', function (Blueprint $table) {
-            $table->foreign('type_id')
-                ->references('id')->on('position_types');
-            $table->foreign('classification_id')
-                ->references('id')->on('position_classifications');
-            $table->foreign('status_id')
-                ->references('id')->on('employee_statuses');
-        });
-
-        /*
-        |--------------------------------------------------------------------------
-        | OFFICIAL DOCUMENT TYPES
+        | TABLE: OFFICIAL DOCUMENT TYPES
         |--------------------------------------------------------------------------
         */
         Schema::table('official_document_types', function (Blueprint $table) {
@@ -183,7 +167,7 @@ class ForeignKeys extends Migration
 
         /*
         |--------------------------------------------------------------------------
-        | OFFICIAL DOCUMENTS
+        | TABLE: OFFICIAL DOCUMENTS
         |--------------------------------------------------------------------------
         */
         Schema::table('official_documents', function (Blueprint $table) {
@@ -194,12 +178,47 @@ class ForeignKeys extends Migration
             $table->foreign('file_id')
                 ->references('id')->on('files');
         });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: POSITIONS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('positions', function (Blueprint $table) {
+            $table->foreign('school_id')
+                ->references('id')->on('schools');
+            $table->foreign('position_type_id')
+                ->references('id')->on('position_types');
+            $table->foreign('supervisor_position_id')
+                ->references('id')->on('positions');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: SCHOOLS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('schools', function (Blueprint $table) {
+            $table->foreign('school_area_id')
+                ->references('id')->on('school_areas');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: EMPLOYEE BONUSES
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('employee_bonuses', function (Blueprint $table) {
+            $table->foreign('employee_bonus_type_id')
+                ->references('id')->on('employee_bonus_types');
+            $table->foreign('employee_id')
+                ->references('id')->on('employees');
+        });
+
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

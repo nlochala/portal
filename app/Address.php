@@ -25,7 +25,7 @@ class Address extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -112,7 +112,7 @@ class Address extends Model
      */
     public function person()
     {
-        return $this->belongsTo('App\Person','person_id','id');
+        return $this->belongsTo('App\Person', 'person_id', 'id');
     }
 
     /**
@@ -122,7 +122,7 @@ class Address extends Model
      */
     public function country()
     {
-        return $this->belongsTo('App\Country','country_id','id');
+        return $this->belongsTo('App\Country', 'country_id', 'id');
     }
 
     /**
@@ -132,7 +132,7 @@ class Address extends Model
      */
     public function addressType()
     {
-        return $this->belongsTo('App\AddressType','address_type_id','id');
+        return $this->belongsTo('App\AddressType', 'address_type_id', 'id');
     }
 
     /**
@@ -142,7 +142,7 @@ class Address extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User','user_created_by','id');
+        return $this->belongsTo('App\User', 'user_created_by', 'id');
     }
 
     /**
@@ -152,6 +152,6 @@ class Address extends Model
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User','user_updated_by','id');
+        return $this->belongsTo('App\User', 'user_updated_by', 'id');
     }
 }

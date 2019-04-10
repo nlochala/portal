@@ -17,6 +17,8 @@
 <script src="{{ asset('js/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 <script src="{{ asset('js/plugins/cropperjs/cropper.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables/datatables.min.js') }}"></script>
+<!-- Laravel Javascript Validation -->
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
 <script type="text/javascript">
     jQuery(document).ready(function () {

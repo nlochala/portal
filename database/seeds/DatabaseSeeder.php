@@ -19,11 +19,15 @@ class DatabaseSeeder extends Seeder
         $this->call(PhoneTypesTableSeeder::class);
         $this->call(VisaTypesTableSeeder::class);
         $this->call(EthnicitiesTableSeeder::class);
-        $this->call(PositionTypesTableSeeder::class);
-        $this->call(PositionClassificationsTableSeeder::class);
-        $this->call(EmployeeStatusesTableSeeder::class);
         $this->call(VisaEntryTableSeeder::class);
         $this->call(OfficialDocumentTypesTableSeeder::class);
         $this->call(PersonTypesTableSeeder::class);
+        $this->call(EmployeeBonusTypesTableSeeder::class);
+        $this->call(EmployeeClassificationsTableSeeder::class);
+        $this->call(EmployeeStatusesTableSeeder::class);
+        $this->call(PositionTypesTableSeeder::class);
+        $this->call(SchoolAreasTableSeeder::class);
+        $this->call(SchoolsTableSeeder::class);
+        $this->call(YearsTableSeeder::class);
     }
 }
