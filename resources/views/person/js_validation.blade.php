@@ -2,7 +2,7 @@
 jQuery('#admin-form').validate({
                 ignore: [],
                 rules: {
-                    'type': {
+                    'person_type_id': {
                         required: true
                     },
                      'title': {

@@ -14,8 +14,8 @@
 Route::view('/', 'landing');
 Route::get('/teacher_dashboard/{id}', 'TeacherDashboardController@index');
 Route::get('/dashboard', function () {
-    if ($uuid = auth()->user()->uuid ) {
-        return redirect()->to('teacher_dashboard/' . $uuid);
+    if ($uuid = auth()->user()->uuid) {
+        return redirect()->to('teacher_dashboard/'.$uuid);
     }
 });
 
@@ -24,7 +24,6 @@ Route::match(['get', 'post'], '/login', function () {
 });
 
 Route::get('download_file/{file}', 'MediaController@downloadFile');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +38,6 @@ Route::get('employee/lookup', 'EmployeeController@lookup');
 |--------------------------------------------------------------------------
 */
 Route::get('parent/lookup', 'ParentController@lookup');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -156,4 +154,3 @@ Route::get('person/{file}/delete', 'PersonController@destroy');
 Route::get('person/{file}', 'PersonController@show');
 //Index
 Route::get('person', 'PersonController@index');
-

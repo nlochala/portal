@@ -243,6 +243,11 @@
 
 
                 @section('js_after')
+                    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeEmailRequest','#email-form') !!}
+                    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeePhoneRequest','#phone-form') !!}
+                    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeAddressRequest','#address-form') !!}
+                    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeAddressRequest','#address-update-form') !!}
+
                     <script type="text/javascript">
                         jQuery(document).ready(function () {
 
@@ -255,74 +260,6 @@
                             $("#country_id").select2({placeholder: "Choose One..."});
                             $("#address_type_id").select2({placeholder: "Choose One..."});
                             $("#country_id_phone").select2({placeholder: "Choose One..."});
-
-                            @include('layouts._forms._js_validate_start')
-                            // Init Form Validation
-                            jQuery('#email-form').validate({
-                                ignore: [],
-                                rules: {
-                                    'email_primary': {
-                                        required: true,
-                                        email: true
-                                    },
-                                    'email_secondary': {
-                                        email: true
-                                    },
-                                    'email_school': {
-                                        email: true
-                                    }
-                                },
-                                messages: {}
-                            });
-
-                            // Init Form Validation
-                            jQuery('#phone-form').validate({
-                                ignore: [],
-                                rules: {
-                                    'country_id_1': {
-                                        required: true
-                                    },
-                                    'phone_type_id': {
-                                        required: true
-                                    },
-                                    'number': {
-                                        required: true,
-                                        number: true
-                                    },
-                                    'extension': {
-                                        required: false,
-                                        number: true
-                                    }
-                                },
-                                messages: {}
-                            });
-
-                            jQuery('#address-form').validate({
-                                ignore: [],
-                                rules: {
-                                    'country_id': {
-                                        required: true
-                                    },
-                                    'province': {
-                                        required: true
-                                    },
-                                    'city': {
-                                        required: true
-                                    },
-                                    'address_type_id': {
-                                        required: true
-                                    },
-                                    'address_line_1': {
-                                        required: true
-                                    },
-                                    'postal_code': {
-                                        required: false,
-                                        number: true
-                                    }
-                                },
-                                messages: {}
-                            });
-                            @include('layouts._forms._js_validate_end')
                         });
                     </script>
 @endsection

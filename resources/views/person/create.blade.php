@@ -53,6 +53,8 @@
 
 
 @section('js_after')
+    {!! JsValidator::formRequest('\App\Http\Requests\StorePersonRequest') !!}
+
     <script type="text/javascript">
         jQuery(document).ready(function () {
 
@@ -64,7 +66,6 @@
             $("#ethnicity_id").select2({ placeholder: "Choose One..." });
             $("#dob").datepicker();
 
-            @include('person.js_validation')
         });
     </script>
 @endsection

@@ -16,9 +16,10 @@ use Illuminate\View\View;
 class EmployeeContactController extends EmployeeController
 {
     /**
-     * Display the contact information
+     * Display the contact information.
      *
      * @param Employee $employee
+     *
      * @return Factory|View
      */
     public function contact(Employee $employee)
@@ -53,9 +54,10 @@ class EmployeeContactController extends EmployeeController
     }
 
     /**
-     * Store the "Update Email Addresses" form
+     * Store the "Update Email Addresses" form.
      *
      * @param Employee $employee
+     *
      * @return RedirectResponse
      */
     public function storeEmail(Employee $employee)
@@ -79,11 +81,11 @@ class EmployeeContactController extends EmployeeController
         return redirect()->back();
     }
 
-
     /**
-     * Store the "New Phone Number" form
+     * Store the "New Phone Number" form.
      *
      * @param Employee $employee
+     *
      * @return RedirectResponse
      */
     public function storePhone(Employee $employee)
@@ -93,7 +95,7 @@ class EmployeeContactController extends EmployeeController
         $values['user_created_ip'] = Helpers::getUserIp();
         $values['person_id'] = $employee->person->id;
         $values['country_id'] = $values['country_id_phone'];
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Phone::create($values)
             ?
             Helpers::flashAlert(
@@ -110,9 +112,10 @@ class EmployeeContactController extends EmployeeController
     }
 
     /**
-     * Store the "New Address" form
+     * Store the "New Address" form.
      *
      * @param Employee $employee
+     *
      * @return RedirectResponse
      */
     public function storeAddress(Employee $employee)
@@ -121,7 +124,7 @@ class EmployeeContactController extends EmployeeController
         $values['user_created_id'] = auth()->id();
         $values['user_created_ip'] = Helpers::getUserIp();
         $values['person_id'] = $employee->person->id;
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Address::create($values)
             ?
             Helpers::flashAlert(
@@ -138,10 +141,11 @@ class EmployeeContactController extends EmployeeController
     }
 
     /**
-     * Update the given address
+     * Update the given address.
      *
      * @param Employee $employee
-     * @param Address $address
+     * @param Address  $address
+     *
      * @return RedirectResponse
      */
     public function updateAddress(Employee $employee, Address $address)
@@ -149,12 +153,12 @@ class EmployeeContactController extends EmployeeController
         $values = request()->all();
         $address->user_updated_id = auth()->id();
         $address->user_updated_ip = Helpers::getUserIp();
-        $address->country_id = $values['country_id_' . $address->id];
-        $address->address_type_id = $values['address_type_id_' . $address->id];
+        $address->country_id = $values['country_id_'.$address->id];
+        $address->address_type_id = $values['address_type_id_'.$address->id];
         $address->update($values);
 
         Helpers::flash($address->update($values), 'address', 'updated');
 
-        return redirect()->to('/employee/' . $employee->uuid . '/contact');
+        return redirect()->to('/employee/'.$employee->uuid.'/contact');
     }
 }

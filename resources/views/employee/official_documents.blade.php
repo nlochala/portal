@@ -112,6 +112,8 @@
 @endsection
 
 @section('js_after')
+    {{--    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeOfficialDocumentRequest'); !!}--}}
+
     <script type="text/javascript">
         jQuery(document).ready(function () {
             $("#official_document_type_id").select2({placeholder: "Choose One..."});

@@ -106,9 +106,12 @@
 
 
 @section('js_after')
+
+    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeProfileRequest','#admin-form') !!}
+    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeImageRequest','#profile-form') !!}
+
     <script type="text/javascript">
         jQuery(document).ready(function () {
-
             $("#title").select2({ placeholder: "Choose one...", });
             $("#country_of_birth_id").select2({ placeholder: "Choose One..." });
             $("#language_primary_id").select2({ placeholder: "Choose One..." });
@@ -116,8 +119,6 @@
             $("#language_tertiary_id").select2({ placeholder: "Choose One..." });
             $("#ethnicity_id").select2({ placeholder: "Choose One..." });
             $("#dob").datepicker();
-
-            @include('person.js_validation')
         });
     </script>
 @endsection

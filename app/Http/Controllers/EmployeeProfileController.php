@@ -9,7 +9,6 @@ use App\File;
 use App\Helpers\Helpers;
 use App\Language;
 use App\Person;
-use App\PersonType;
 use Carbon\Carbon;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\RedirectResponse;
@@ -47,7 +46,7 @@ class EmployeeProfileController extends EmployeeController
             $image_created = $employee->person->image->created_at;
 
             $original_image_size = Helpers::formatBytes($employee->person->image->originalFile->size);
-            $original_image_url = '/download_file/' . $employee->person->image->originalFile->uuid;
+            $original_image_url = '/download_file/'.$employee->person->image->originalFile->uuid;
         }
 
         return view('employee.profile', compact(
@@ -67,11 +66,12 @@ class EmployeeProfileController extends EmployeeController
     }
 
     /**
-     * Update the basic profile on an employee
+     * Update the basic profile on an employee.
      *
      * @param Employee $employee
      *
      * @return RedirectResponse
+     *
      * @throws FileNotFoundException
      */
     public function updateProfile(Employee $employee)
@@ -83,16 +83,17 @@ class EmployeeProfileController extends EmployeeController
                 'danger',
                 'An image was not selected. Please try again.',
                 'fa fa-info-circle mr-1');
+
             return redirect()->back();
         }
 
         if (request()->hasFile('profile_image')) {
-            if(!$resized_file = File::saveAndResizeImage($values['profile_image'])){
+            if (!$resized_file = File::saveAndResizeImage($values['profile_image'])) {
                 return redirect()->back();
             }
             $employee->person->update(['image_file_id' => $resized_file->id]);
 
-            return redirect()->to('/employee/' . $employee->uuid . '/profile');
+            return redirect()->to('/employee/'.$employee->uuid.'/profile');
         }
 
         $values['dob'] = Carbon::createFromFormat('Y-m-d', $values['dob']);
@@ -103,8 +104,7 @@ class EmployeeProfileController extends EmployeeController
 
         Helpers::flash($employee->person->update($values), 'employee profile', 'updated');
 
-
-        return redirect()->to('/employee/' . $employee->uuid . '/profile');
+        return redirect()->to('/employee/'.$employee->uuid.'/profile');
     }
 
     /*
