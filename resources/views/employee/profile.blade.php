@@ -58,33 +58,33 @@
     @include('layouts._panels_start_content')
     <div class="col-md-12 animated fadeIn" style="padding-bottom: 20px">
         @if($image_data)
-        <div class="options-container" style="text-align: center">
-            <img class="img-fluid options-item rounded border border-2x border-dark" src="{{ $image_data }}" alt="">
-            <div class="options-overlay bg-black-75">
-                <div class="options-overlay-content">
-                    <h3 class="h4 text-white mb-2">Profile Image</h3>
-                    <h4 class="h6 text-white-75 mb-3">File Size: {{ $image_size }}<br />
-                    Upload Date: {{ $image_created }}</h4>
-                    <br />
-                    <a class="btn btn-sm btn-primary" href="{{ $original_image_url }}">
-                        <i class="si si-cloud-download mr-1"></i> Download ({{ $original_image_size }})
-                    </a>
+            <div class="options-container" style="text-align: center">
+                <img class="img-fluid options-item rounded border border-2x border-dark" src="{{ $image_data }}" alt="">
+                <div class="options-overlay bg-black-75">
+                    <div class="options-overlay-content">
+                        <h3 class="h4 text-white mb-2">Profile Image</h3>
+                        <h4 class="h6 text-white-75 mb-3">File Size: {{ $image_size }}<br/>
+                            Upload Date: {{ $image_created }}</h4>
+                        <br/>
+                        <a class="btn btn-sm btn-primary" href="{{ $original_image_url }}">
+                            <i class="si si-cloud-download mr-1"></i> Download ({{ $original_image_size }})
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr />
+            <hr/>
         @endif
     <!-- START FORM----------------------------------------------------------------------------->
 
-    {!! Form::open(['files' => true, 'id' => 'profile-form','url' => request()->getRequestUri()]) !!}
+        {!! Form::open(['files' => true, 'id' => 'profile-form','url' => request()->getRequestUri()]) !!}
 
         <h5>Upload New Image</h5>
-    @include('layouts._forms._input_file_upload', [
-        'name' => 'profile_image',
-        'label' => '',
-        'required' => true
-    ])
-
+        @include('layouts._forms._input_file_upload', [
+            'name' => 'upload[]',
+            'label' => '',
+            'required' => true,
+            'options' => ['id' => 'filepond', 'class' => 'filepond', 'accept' => 'image/*']
+        ])
 
         <div class="block-content block-content-full block-content-sm bg-body-light text-right">
             <button type="submit" class="btn btn-sm btn-outline-primary" data-toggle="click-ripple">
@@ -111,13 +111,45 @@
     {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeImageRequest','#profile-form') !!}
 
     <script type="text/javascript">
+
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginImageExifOrientation,
+            FilePondPluginImagePreview,
+            FilePondPluginImageCrop,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform,
+            FilePondPluginImageEdit
+        );
+
+        FilePond.create(
+            document.querySelector('#filepond'),
+            {
+                labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+                imagePreviewHeight: 200,
+                stylePanelLayout: 'integrated',
+                styleLoadIndicatorPosition: 'center bottom',
+                styleProgressIndicatorPosition: 'right bottom',
+                styleButtonRemoveItemPosition: 'left bottom',
+                styleButtonProcessItemPosition: 'right bottom',
+
+                server: {
+                    process: '/api/store_file',
+                },
+
+                // Use Doka.js as image editor
+                imageEditEditor: Doka.create()
+            }
+        );
+
+
         jQuery(document).ready(function () {
-            $("#title").select2({ placeholder: "Choose one...", });
-            $("#country_of_birth_id").select2({ placeholder: "Choose One..." });
-            $("#language_primary_id").select2({ placeholder: "Choose One..." });
-            $("#language_secondary_id").select2({ placeholder: "Choose One..." });
-            $("#language_tertiary_id").select2({ placeholder: "Choose One..." });
-            $("#ethnicity_id").select2({ placeholder: "Choose One..." });
+            $("#title").select2({placeholder: "Choose one...",});
+            $("#country_of_birth_id").select2({placeholder: "Choose One..."});
+            $("#language_primary_id").select2({placeholder: "Choose One..."});
+            $("#language_secondary_id").select2({placeholder: "Choose One..."});
+            $("#language_tertiary_id").select2({placeholder: "Choose One..."});
+            $("#ethnicity_id").select2({placeholder: "Choose One..."});
             $("#dob").datepicker();
         });
     </script>

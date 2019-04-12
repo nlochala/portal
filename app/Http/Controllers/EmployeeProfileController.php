@@ -78,6 +78,8 @@ class EmployeeProfileController extends EmployeeController
     {
         $values = request()->all();
 
+        dd($values);
+
         if (!request()->has('dob') && !request()->hasFile('profile_image')) {
             Helpers::flashAlert(
                 'danger',

@@ -24,6 +24,7 @@ Route::match(['get', 'post'], '/login', function () {
 });
 
 Route::get('download_file/{file}', 'MediaController@downloadFile');
+Route::post('api/store_file', 'MediaController@store');
 
 /*
 |--------------------------------------------------------------------------

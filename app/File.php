@@ -26,14 +26,15 @@ class File extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -42,12 +43,12 @@ class File extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
         return 'uuid';
     }
-
 
     /**
      * Add mass-assignment to model.
@@ -67,38 +68,39 @@ class File extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
 
     /**
-     * Generate a url for download the given file
+     * Generate a url for download the given file.
      *
      * @return UrlGenerator|string
      */
     public function downloadUrl()
     {
-        return url('/download_file/' . $this->uuid);
+        return url('/download_file/'.$this->uuid);
     }
 
     /**
-     * This will return the full path plus filename/extension
+     * This will return the full path plus filename/extension.
      *
      * @return string
      */
     public function getFullPath()
     {
-        $this->path ? $path = $this->path . '/' : $path = '';
-        return $path . $this->getFileName();
+        $this->path ? $path = $this->path.'/' : $path = '';
+
+        return $path.$this->getFileName();
     }
 
     /**
-     * This will return the full filename with extension
+     * This will return the full filename with extension.
      *
      * @return string
      */
     public function getFileName()
     {
-        return $this->name . '.' . $this->extension->name;
+        return $this->name.'.'.$this->extension->name;
     }
 
     /**
@@ -116,8 +118,9 @@ class File extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -129,7 +132,7 @@ class File extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -140,31 +143,31 @@ class File extends Model
         return Carbon::parse($value)->toFormattedDateString();
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Empty Size query scope
+     * Empty Size query scope.
      *
      * @param $query
      */
     public function scopeEmptySize($query)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         $query->whereNull('size');
     }
-
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     * This file has a original file
+     * This file has a original file.
      *
      * @return HasOne
      */
@@ -175,7 +178,7 @@ class File extends Model
     }
 
     /**
-     * This file has a FileExtension
+     * This file has a FileExtension.
      *
      * @return HasOne
      */
@@ -186,7 +189,7 @@ class File extends Model
     }
 
     /**
-     *  This file was created by a user
+     *  This file was created by a user.
      *
      * @return BelongsTo
      */
@@ -196,7 +199,7 @@ class File extends Model
     }
 
     /**
-     *  This file was updated by a user
+     *  This file was updated by a user.
      *
      * @return BelongsTo
      */
@@ -210,23 +213,27 @@ class File extends Model
     | HELPERS
     |--------------------------------------------------------------------------
     */
+
     /**
      * Return a filename. This will remove the full path and the extension.
      *
      * @param $path
+     *
      * @return mixed
      */
     public static function getFileNameFromPath($path)
     {
         $full_name = explode('/', $path);
         $full_name = end($full_name);
+
         return explode('.', $full_name)[0];
     }
 
     /**
-     * Generate a base64 string of the image in question
+     * Generate a base64 string of the image in question.
      *
      * @return string
+     *
      * @throws FileNotFoundException
      */
     public function renderImage()
@@ -234,7 +241,8 @@ class File extends Model
         $img = Image::make(Storage::disk($this->driver)->get($this->getFullPath()));
         $type = $this->extension->name;
         $img->encode($type);
-        return 'data:image/' . $type . ';base64,' . base64_encode($img);
+
+        return 'data:image/'.$type.';base64,'.base64_encode($img);
     }
 
     /**
@@ -252,6 +260,7 @@ class File extends Model
                 'danger',
                 'The file you are uploading is too big. Please try again with a smaller file.',
                 'fa fa-info-circle mr-1');
+
             return false;
         }
         // Check Extension
@@ -260,6 +269,7 @@ class File extends Model
                 'danger',
                 'The file you are uploading does not match the type expected. Please upload an image file.',
                 'fa fa-info-circle mr-1');
+
             return false;
         }
 
@@ -267,12 +277,13 @@ class File extends Model
     }
 
     /**
-     * Save an uploaded file
+     * Save an uploaded file.
      *
      * @param UploadedFile $file
      * @param $path
      * @param string $driver
-     * @param null $filename
+     * @param null   $filename
+     *
      * @return bool
      */
     public static function saveFile(UploadedFile $file, $driver = 'private', $filename = null, $path = '')
@@ -298,7 +309,7 @@ class File extends Model
         }
 
         $file_model = new File();
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         $file_model->file_extension_id = $extension->id;
         $file_model->path = $path;
         $file_model->size = Storage::disk($driver)->size($fullpath);
@@ -314,25 +325,27 @@ class File extends Model
     }
 
     /**
-     * Save and resize and image
+     * Save and resize and image.
      *
      * @param File $file
      * @param $path
      * @param $width
      * @param $height
      * @param string $driver
+     *
      * @return bool
+     *
      * @throws FileNotFoundException
      */
     protected static function saveResizedImage(File $file, $path, $width, $height, $driver = 'private')
     {
-        $new_name = $file->name . time();
+        $new_name = $file->name.time();
 
         $img = Image::make(Storage::disk($driver)->get($file->getFullPath()))->resize($width, $height, function (Constraint $constraint) {
             $constraint->aspectRatio();
         });
 
-        if (!Storage::disk($driver)->put("$path/$new_name." . $file->extension->name, $img->encode($file->extension->name))) {
+        if (!Storage::disk($driver)->put("$path/$new_name.".$file->extension->name, $img->encode($file->extension->name))) {
             Helpers::flashAlert(
                 'danger',
                 'There was an issue processing your image. Please try again.',
@@ -342,7 +355,7 @@ class File extends Model
         }
 
         $file_model = new File();
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         $file_model->file_extension_id = $file->extension->id;
         $file_model->path = $path;
         $file_model->name = $new_name;
@@ -354,6 +367,7 @@ class File extends Model
                 'danger',
                 'There was an issue saving the file database record. Please try again.',
                 'fa fa-info-circle mr-1');
+
             return false;
         }
 
@@ -364,31 +378,28 @@ class File extends Model
      * Take an uploaded file and save it's original full-sized copy, and then save a resized copy. Return
      * the resized model.
      *
-     * @param UploadedFile $file
-     * @param null $filename
+     * @param File   $file
+     * @param null   $filename
      * @param string $path
      * @param string $original_path
-     * @param int $width
-     * @param int $height
+     * @param int    $width
+     * @param int    $height
      * @param string $driver
+     *
      * @return bool
+     *
      * @throws FileNotFoundException
      */
-    public static function saveAndResizeImage(UploadedFile $file, $filename = null, $path = '', $original_path = '', $width = 300, $height = 400, $driver = 'private')
+    public static function saveAndResizeImage(File $file, $filename = null, $path = '', $original_path = '', $width = 300, $height = 400, $driver = 'private')
     {
-        if (!File::validateImage($file)) {
-            Helpers::flashAlert(
-                'danger',
-                'The file uploaded was not an image. The file should be an image. Please try again.',
-                'fa fa-info-circle mr-1');
-            return false;
-        }
+        //TODO: PROCESS THE FILE AND MOVE FROM TMP TO DOCUMENTS
 
         if (!$original_file = static::saveFile($file, $driver, $filename, $original_path)) {
             Helpers::flashAlert(
                 'danger',
                 'There was a problem saving the original file. Please try again.',
                 'fa fa-info-circle mr-1');
+
             return false;
         }
 
@@ -400,10 +411,11 @@ class File extends Model
                 'danger',
                 'The file uploaded was not processed correctly. Please try again.',
                 'fa fa-info-circle mr-1');
+
             return false;
         }
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         $resized_file->update(['original_file_id' => $original_file->id]);
 
         return $resized_file;

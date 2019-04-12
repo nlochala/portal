@@ -10,13 +10,15 @@
 <link rel="stylesheet" href="{{ asset('js/plugins/dropzone/dist/min/dropzone.min.css') }}">
 <link rel="stylesheet" href="{{ asset('js/plugins/cropperjs/cropper.min.css') }}">
 <link rel="stylesheet" href="{{ asset('js/plugins/datatables/datatables.min.css') }}">
-
-
+<link rel="stylesheet" href="{{ asset('js/plugins/doka/doka.min.css') }}">
+<link rel="stylesheet" href="{{ asset('js/plugins/filepond/filepond.css') }}">
+<link rel="stylesheet" href="{{ asset('js/plugins/filepond/filepond-plugin-image-edit/filepond-plugin-image-edit.css') }}">
+<link rel="stylesheet" href="{{ asset('js/plugins/filepond/filepond-plugin-image-preview/filepond-plugin-image-preview.css') }}">
 
 <link rel="stylesheet" id="css-main" href="{{ asset('css/fonts.css') }}">
 <link rel="stylesheet" id="css-theme" href="{{ mix('css/dashmix.css') }}">
 
 <!-- You can include a specific file from public/css/themes/ folder to alter the default color theme of the template. eg: -->
 <link rel="stylesheet" href="{{ mix('css/themes/' . env('THEME_CSS') . '.css') }}">
-@yield('css_after')
 
+@yield('css_after')

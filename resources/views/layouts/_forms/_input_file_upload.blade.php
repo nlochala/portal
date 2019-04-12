@@ -2,8 +2,14 @@
 $name = text
 $label = text
 $required = bool
+$options = array
 
 --}}
+
+@php
+isset($options) ?: $options = [];
+@endphp
+
 <div class="form-group row">
     @if(!empty($label))
     <label class="col-sm-4 col-form-label" for="{{ $name }}">{{ $label }}
@@ -18,8 +24,6 @@ $required = bool
     @else
     col-sm-12">
     @endif
-        {{ Form::file($name) }}
+        {{ Form::file($name, $options) }}
     </div>
 </div>
-
-
