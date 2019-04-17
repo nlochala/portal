@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEmployeeOfficialDocumentRequest extends FormRequest
+class StoreEmployeeIdCardRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,13 @@ class StoreEmployeeOfficialDocumentRequest extends FormRequest
     public function rules()
     {
         return [
-            'file_id' => 'required',
-            'official_document_type_id' => 'required',
+            'upload_front' => 'required',
+            'upload_back' => 'required',
+            'is_active' => 'required',
+            'number' => 'required',
+            'name' => 'required',
+            'issue_date' => 'required',
+            'expiration_date' => 'required',
         ];
     }
 
@@ -36,10 +41,10 @@ class StoreEmployeeOfficialDocumentRequest extends FormRequest
      */
     public function attributes()
     {
-        // 'dob' => 'date of birth',
         return [
-            'file_id' => 'document file',
-            'official_document_type_id' => 'document type',
+            'front_image_file_id' => 'front of ID Card image',
+            'back_image_file_id' => 'back of ID Card image',
+            'is_active' => 'card status',
         ];
     }
 
@@ -50,7 +55,6 @@ class StoreEmployeeOfficialDocumentRequest extends FormRequest
      */
     public function messages()
     {
-        // 'dob.required' => 'Your date of birth is required.',
         return [];
     }
 }

@@ -35,8 +35,13 @@
 
 @section('js_after')
     <script type="text/javascript">
-        jQuery(document).ready(function () {
+        @include('layouts._forms._js_filepond', ['id' => 'filepond'])
 
+        @foreach($passport->visas as $visa)
+            @include('layouts._forms._js_filepond', ['id' => 'filepond_'.$visa->id])
+        @endforeach
+
+        jQuery(document).ready(function () {
             @foreach($passports as $passport)
             $("#visa_type_id__{{ $passport->id }}").select2({placeholder: "Choose One..."});
             $("#is_active__{{ $passport->id }}").select2({placeholder: "Choose One..."});

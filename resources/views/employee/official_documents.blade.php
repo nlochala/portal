@@ -96,11 +96,12 @@
     <!----------------------------------------------------------------------------->
     <!----------------------------------------------------------------------------->
     <!----------------------------------------------------------------------------->
-    <!---------------------------New file_id file field----------------------------->
+    <!---------------------------New official document file field----------------------------->
     @include('layouts._forms._input_file_upload', [
-        'name' => 'file_id',
+        'name' => 'upload',
         'label' => 'Upload Document',
-        'required' => true
+        'required' => true,
+        'options' => ['id' => 'filepond', 'class' => 'filepond']
     ])
     <!----------------------------------------------------------------------------->
     <!----------------------------------------------------------------------------->
@@ -112,26 +113,13 @@
 @endsection
 
 @section('js_after')
-    {{--    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeOfficialDocumentRequest'); !!}--}}
+    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeOfficialDocumentRequest'); !!}
 
     <script type="text/javascript">
+        @include('layouts._forms._js_filepond', ['id' => 'filepond'])
+
         jQuery(document).ready(function () {
             $("#official_document_type_id").select2({placeholder: "Choose One..."});
-            @include('layouts._forms._js_validate_start')
-            // Init Form Validation. form.js.validation.template
-            jQuery('#admin-form').validate({
-                ignore: [],
-                rules: {
-                    'official_document_type_id': {
-                        required: true
-                    },
-                    'file_id': {
-                        required: true
-                    }
-                },
-                messages: {}
-            });
-            @include('layouts._forms._js_validate_end')
         });
     </script>
 @endsection

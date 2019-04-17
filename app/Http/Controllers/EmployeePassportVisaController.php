@@ -2,26 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\{Country, Employee, File, Helpers\Helpers, Passport, Visa, VisaEntry, VisaType};
-use Illuminate\{Contracts\Filesystem\FileNotFoundException,
-    Contracts\View\Factory,
-    Http\RedirectResponse,
-    Support\Str,
-    View\View};
-use Symfony\Component\Console\Helper\Helper;
+use App\Country;
+use App\Employee;
+use App\File;
+use App\Helpers\Helpers;
+use App\Passport;
+use App\Visa;
+use App\VisaEntry;
+use App\VisaType;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class EmployeePassportVisaController extends EmployeeController
 {
     /**
-     * Display the Passport and Visa information page
+     * Display the Passport and Visa information page.
      *
      * @param Employee $employee
+     *
      * @return Factory|View
      */
     public function passportVisa(Employee $employee)
     {
         if ($employee->person->passports->isEmpty()) {
-            return redirect()->to('/employee/' . $employee->uuid . '/create_passport');
+            return redirect()->to('/employee/'.$employee->uuid.'/create_passport');
         }
 
         $visa_type_dropdown = VisaType::getDropdown();
@@ -40,10 +47,11 @@ class EmployeePassportVisaController extends EmployeeController
     }
 
     /**
-     * Display the passport update form
+     * Display the passport update form.
      *
      * @param Employee $employee
      * @param Passport $passport
+     *
      * @return Factory|View
      */
     public function updatePassportForm(Employee $employee, Passport $passport)
@@ -60,32 +68,44 @@ class EmployeePassportVisaController extends EmployeeController
     }
 
     /**
-     * Process the update passport form
+     * Process the update passport form.
      *
      * @param Employee $employee
      * @param Passport $passport
+     *
      * @return RedirectResponse
+     *
      * @throws FileNotFoundException
      */
     public function updatePassport(Employee $employee, Passport $passport)
     {
         $values = request()->all();
-        $filename = Str::slug('passport ' . $employee->person->fullName(true));
+        $passport = Helpers::dbAddAudit($passport);
 
-        if(request()->hasFile('image_file')){
-            if(!$resized_image = File::saveAndResizeImage($values['image_file'], $filename)){
+        if (request()->has('upload')) {
+            $filename = Str::slug('passport '.$employee->person->fullName(true));
+
+            if (!$file = File::getFile($values['upload'])) {
                 Helpers::flashAlert(
                     'danger',
-                    'There was an error processing your image. Please try again.',
+                    'Could not find the uploaded image. Please try again.',
                     'fa fa-info-circle mr-1');
-                return redirect()->back();
+
+                return redirect()->back()->withInput();
             }
 
-            $passport->image_file_id = $resized_image->id;
+            if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
+                Helpers::flashAlert(
+                    'danger',
+                    'Could not resize the uploaded image. Please try again.',
+                    'fa fa-info-circle mr-1');
+
+                return redirect()->back()->withInput();
+            }
+            $passport->image_file_id = $resized_file->id;
         }
 
-        $passport = Helpers::dbAddAudit($passport);
-        if($passport->update($values)){
+        if ($passport->update($values)) {
             Helpers::flashAlert(
                 'success',
                 'The passport has been updated.',
@@ -99,13 +119,14 @@ class EmployeePassportVisaController extends EmployeeController
             'There was a problem updating your passport. Please try again.',
             'fa fa-info-circle mr-1');
 
-        return redirect()->back();
+        return redirect()->back()->withInput();
     }
 
     /**
-     * Display the passport creation form
+     * Display the passport creation form.
      *
      * @param Employee $employee
+     *
      * @return Factory|View
      */
     public function createPassport(Employee $employee)
@@ -123,103 +144,154 @@ class EmployeePassportVisaController extends EmployeeController
     }
 
     /**
-     * Store new passport information
+     * Store new passport information.
      *
      * @param Employee $employee
-     * @return void
+     *
+     * @return RedirectResponse
+     *
      * @throws FileNotFoundException
      */
     public function storePassport(Employee $employee)
     {
         $values = Helpers::dbAddAudit(request()->all());
-        $filename = Str::slug('passport ' . $employee->person->fullName(true));
+        $filename = Str::slug('passport '.$employee->person->fullName(true));
 
-        if (!request()->hasFile('image_file')) {
+        if (!request()->has('upload')) {
             Helpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the passport. Please try again.',
                 'fa fa-info-circle mr-1');
-            return redirect()->back();
+
+            return redirect()->back()->withInput();
         }
 
-        if(!$resized_image = File::saveAndResizeImage($values['image_file'], $filename)){
-            return redirect()->back();
+        if (!$file = File::getFile($values['upload'])) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not find the uploaded image. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back()->withInput();
         }
 
-        $values['image_file_id'] = $resized_image->id;
+        if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not resize the uploaded image. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back()->withInput();
+        }
+
+        $values['image_file_id'] = $resized_file->id;
         $values['person_id'] = $employee->person->id;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Helpers::flash(Passport::create($values), 'passport');
 
-        return redirect()->to('/employee/' . $employee->uuid . '/passports_visas');
+        return redirect()->to('/employee/'.$employee->uuid.'/passports_visas');
     }
 
     /**
-     * Store the visa for the given passport
+     * Store the visa for the given passport.
      *
      * @param Employee $employee
      * @param Passport $passport
+     *
      * @return RedirectResponse
+     *
      * @throws FileNotFoundException
      */
     public function storeVisa(Employee $employee, Passport $passport)
     {
         $old_values = Helpers::dbAddAudit(request()->all());
+        $filename = Str::slug('visa '.$employee->person->fullName(true));
         $values = [];
 
-        $filename = Str::slug('visa ' . $employee->person->fullName(true));
-
-        foreach($old_values as $key => $value){
-            $values[explode('__' . $passport->id, $key)[0]] = $value;
+        foreach ($old_values as $key => $value) {
+            $values[explode('__'.$passport->id, $key)[0]] = $value;
         }
 
-        if (!request()->hasFile('image_file_id')) {
+        if (!request()->has('upload')) {
             Helpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the visa. Please try again.',
                 'fa fa-info-circle mr-1');
-            return redirect()->back();
+
+            return redirect()->back()->withInput();
         }
 
-        if(!$resized_image = File::saveAndResizeImage($values['image_file_id'], $filename)){
-            return redirect()->back();
+        if (!$file = File::getFile($values['upload'])) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not find the uploaded image. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back()->withInput();
         }
 
-        $values['image_file_id'] = $resized_image->id;
+        if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not resize the uploaded image. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back()->withInput();
+        }
+
+        $values['image_file_id'] = $resized_file->id;
         $values['passport_id'] = $passport->id;
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         Helpers::flash(Visa::create($values), 'visa');
 
         return redirect()->back();
     }
 
     /**
-     * Store the updated visa
+     * Store the updated visa.
      *
      * @param Employee $employee
-     * @param Visa $visa
+     * @param Visa     $visa
+     *
      * @return RedirectResponse
+     *
      * @throws FileNotFoundException
      */
     public function updateVisa(Employee $employee, Visa $visa)
     {
         $values = request()->all();
+        $filename = Str::slug('visa '.$employee->person->fullName(true));
 
-        $filename = Str::slug('visa ' . $employee->person->fullName(true));
+        if (!request()->has('upload')) {
+            Helpers::flashAlert(
+                'danger',
+                'Please upload a scanned image of the visa. Please try again.',
+                'fa fa-info-circle mr-1');
 
-        if(request()->hasFile('image_file_id')){
-            if(!$resized_image = File::saveAndResizeImage($values['image_file_id'], $filename)){
-                Helpers::flashAlert(
-                    'danger',
-                    'There was an error processing your image. Please try again.',
-                    'fa fa-info-circle mr-1');
-                return redirect()->back();
-            }
-
-            $visa->image_file_id = $resized_image->id;
+            return redirect()->back()->withInput();
         }
+
+        if (!$file = File::getFile($values['upload'])) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not find the uploaded image. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back()->withInput();
+        }
+
+        if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not resize the uploaded image. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back()->withInput();
+        }
+
+        $visa->image_file_id = $resized_file->id;
         $visa->is_active = $values["is_active_$visa->id"];
         $visa->visa_type_id = $values["visa_type_id_$visa->id"];
         $visa->visa_entry_id = $values["visa_entry_id_$visa->id"];
@@ -229,9 +301,8 @@ class EmployeePassportVisaController extends EmployeeController
         $visa->entry_duration = $values['entry_duration'];
 
         $visa = Helpers::dbAddAudit($visa);
-        Helpers::flash($visa->save(),'visa','updated');
+        Helpers::flash($visa->save(), 'visa', 'updated');
 
         return redirect()->back();
     }
-
 }

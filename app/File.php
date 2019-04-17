@@ -280,25 +280,24 @@ class File extends Model
      * Save an uploaded file.
      *
      * @param UploadedFile $file
-     * @param $path
-     * @param string $driver
-     * @param null   $filename
+     * @param string       $driver
+     * @param null         $filename
      *
      * @return bool
      */
-    public static function saveFile(UploadedFile $file, $driver = 'private', $filename = null, $path = '')
+    public static function saveTmpFile(UploadedFile $file, $driver = 'private', $filename = null)
     {
         $filename ?: $filename = Str::slug(explode('.', $file->getClientOriginalName())[0]);
-
-        $fullpath = $file->store($path);
+        $tmp_path = env('FILE_TMP_DIRECTORY');
+        $fullpath = $file->store($tmp_path);
         $local_name = static::getFileNameFromPath($fullpath);
-
         $extension = $file->getClientOriginalExtension();
 
-        if ($file->getClientOriginalExtension() !== $file->clientExtension()) {
+        if ($extension !== $file->clientExtension()) {
             $extension = $file->clientExtension();
         }
 
+        /* @noinspection PhpUndefinedMethodInspection */
         if (!$extension = FileExtension::where('name', $extension)->first()) {
             Helpers::flashAlert(
                 'danger',
@@ -311,7 +310,7 @@ class File extends Model
         $file_model = new File();
         /* @noinspection PhpUndefinedMethodInspection */
         $file_model->file_extension_id = $extension->id;
-        $file_model->path = $path;
+        $file_model->path = $tmp_path;
         $file_model->size = Storage::disk($driver)->size($fullpath);
         $file_model->name = $local_name;
         $file_model->public_name = $filename;
@@ -322,6 +321,104 @@ class File extends Model
         }
 
         return $file_model;
+    }
+
+    /**
+     * Quickly return the file model from a uuid.
+     *
+     * @param $uuid
+     *
+     * @return mixed
+     */
+    public static function getFile($uuid = 'json_encoded array')
+    {
+        $file_array = [];
+        $uuid = json_decode($uuid);
+
+        if (count($uuid) > 1) {
+            foreach ($uuid as $id) {
+                $file_array[] = static::where('uuid', $id)->first();
+            }
+
+            return $file_array;
+        }
+
+        return static::where('uuid', $uuid[0])->first();
+    }
+
+    /**
+     * Rename the public name of a file and it's given original (if it has it).
+     *
+     * @param string $name
+     *
+     * @return bool|File
+     */
+    public function renameFile($name = 'pre-slug name')
+    {
+        if (!$this->update(['public_name' => Str::slug($name)])) {
+            return false;
+        }
+
+        if ($original = $this->originalFile) {
+            if (!$original->update(['public_name' => Str::slug($name)])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Move an existing file from one directory to another.
+     *
+     * @param $new_path
+     *
+     * @return bool
+     */
+    public function moveFile($new_path)
+    {
+        if (!Storage::move($this->getFullPath(), $new_path.$this->getFileName())) {
+            return false;
+        }
+
+        $this->update(['path' => $new_path]);
+
+        return true;
+    }
+
+    /**
+     * Check if the file is living in the tmp directory.
+     *
+     * @return bool
+     */
+    public function isTmp()
+    {
+        if ($this->path == env('FILE_TMP_DIRECTORY')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Rename and save permanently the given file.
+     *
+     * @param string $filename
+     * @param string $path
+     *
+     * @return File|bool
+     */
+    public function saveFile($filename = '', $path = '')
+    {
+        if ($filename && !$this->renameFile($filename)) {
+            return false;
+        }
+
+        if ($path !== $this->path && !$this->moveFile($path)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -339,7 +436,7 @@ class File extends Model
      */
     protected static function saveResizedImage(File $file, $path, $width, $height, $driver = 'private')
     {
-        $new_name = $file->name.time();
+        $new_name = $file->name.'-resized';
 
         $img = Image::make(Storage::disk($driver)->get($file->getFullPath()))->resize($width, $height, function (Constraint $constraint) {
             $constraint->aspectRatio();
@@ -361,6 +458,7 @@ class File extends Model
         $file_model->name = $new_name;
         $file_model->public_name = $file->public_name;
         $file_model->driver = $driver;
+        $file_model->original_file_id = $file->id;
         $file_model = Helpers::dbAddAudit($file_model);
         if (!$file_model->save()) {
             Helpers::flashAlert(
@@ -381,7 +479,6 @@ class File extends Model
      * @param File   $file
      * @param null   $filename
      * @param string $path
-     * @param string $original_path
      * @param int    $width
      * @param int    $height
      * @param string $driver
@@ -390,21 +487,14 @@ class File extends Model
      *
      * @throws FileNotFoundException
      */
-    public static function saveAndResizeImage(File $file, $filename = null, $path = '', $original_path = '', $width = 300, $height = 400, $driver = 'private')
+    public static function saveAndResizeImage(File $file, $filename = null, $path = '', $width = 300, $height = 400, $driver = 'private')
     {
-        //TODO: PROCESS THE FILE AND MOVE FROM TMP TO DOCUMENTS
-
-        if (!$original_file = static::saveFile($file, $driver, $filename, $original_path)) {
-            Helpers::flashAlert(
-                'danger',
-                'There was a problem saving the original file. Please try again.',
-                'fa fa-info-circle mr-1');
-
-            return false;
-        }
+        $path ?: $path = env('FILE_PERMANENT_DIRECTORY');
+        !$filename ?: $file->renameFile($filename);
+        $path == $file->path ?: $file->moveFile($path);
 
         /** @noinspection PhpParamsInspection */
-        $resized_file = static::saveResizedImage($original_file, $path, $width, $height, $driver);
+        $resized_file = static::saveResizedImage($file, $path, $width, $height, $driver);
 
         if (!$resized_file) {
             Helpers::flashAlert(
@@ -414,9 +504,6 @@ class File extends Model
 
             return false;
         }
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        $resized_file->update(['original_file_id' => $original_file->id]);
 
         return $resized_file;
     }

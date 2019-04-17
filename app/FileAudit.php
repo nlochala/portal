@@ -18,8 +18,9 @@ class FileAudit extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
@@ -52,7 +53,7 @@ class FileAudit extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
 
     /*
@@ -60,8 +61,9 @@ class FileAudit extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -73,7 +75,7 @@ class FileAudit extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -90,52 +92,53 @@ class FileAudit extends Model
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This fileAudit was created by a user
+     *  This fileAudit was created by a user.
      *
      * @return BelongsTo
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User','user_created_by','id');
+        return $this->belongsTo('App\User', 'user_created_by', 'id');
     }
 
     /**
-     *  This fileAudit was updated by a user
+     *  This fileAudit was updated by a user.
      *
      * @return BelongsTo
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User','user_updated_by','id');
+        return $this->belongsTo('App\User', 'user_updated_by', 'id');
     }
-
 
     /*
     |--------------------------------------------------------------------------
     | HELPERS
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Add new audit entry
+     * Add new audit entry.
      *
      * @param File $file
+     *
      * @return bool
      */
     public static function newAudit(File $file)
     {
-        $audit = new static;
+        $audit = new static();
         $audit->file_id = $file->id;
         $audit->person_id = auth()->user()->person->id;
         $audit->download_date = now();
         $audit = Helpers::dbAddAudit($audit);
-        if($audit->save()){
+        if ($audit->save()) {
             return true;
         }
 

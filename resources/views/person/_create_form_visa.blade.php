@@ -1,6 +1,6 @@
 <!-- START FORM----------------------------------------------------------------------------->
 
-{!! Form::open(['files' => true, 'id' => 'visa-form-' . $passport->uuid,'url' => "/employee/$employee->uuid/passport/$passport->uuid/create_visa"]) !!}
+{!! Form::open(['files' => true, 'id' => "visa-form-$passport->id",'url' => "/employee/$employee->uuid/passport/$passport->uuid/create_visa"]) !!}
 <!----------------------------------------------------------------------------->
 <!---------------------------New is_active dropdown----------------------------->
 @include('layouts._forms._input_dropdown',[
@@ -81,15 +81,15 @@
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
-<!---------------------------New image_file_id file field----------------------------->
+<!---------------------------New visa image file field----------------------------->
 @include('layouts._forms._input_file_upload', [
-    'name' => 'image_file_id',
+    'name' => 'upload',
     'label' => 'Visa Image',
-    'required' => true
+    'required' => true,
+    'options' => ['id' => 'filepond', 'class' => 'filepond', 'accept' => 'image/*']
 ])
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
-
 
 @include('layouts._forms._form_close')
 <!-- END FORM----------------------------------------------------------------------------->

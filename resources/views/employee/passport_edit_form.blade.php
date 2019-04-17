@@ -69,42 +69,15 @@
 @endsection
 
 @section('js_after')
+    {!! JsValidator::formRequest('\App\Http\Requests\UpdateEmployeePassportRequest','#passport-form') !!}
+
     <script type="text/javascript">
+        @include('layouts._forms._js_filepond', ['id' => 'filepond'])
+
         jQuery(document).ready(function () {
             $("#country_id").select2({placeholder: "Choose One..."});
             $("#expiration_date").datepicker();
             $("#issue_date").datepicker();
-
-            @include('layouts._forms._js_validate_start')
-            // Init Form Validation. form.js.validation.template
-            jQuery('#passport-form').validate({
-                ignore: [],
-                rules: {
-                    'is_active': {
-                        required: true
-                    },
-                    'country_id': {
-                        required: true
-                    },
-                    'given_name': {
-                        required: true
-                    },
-                    'family_name': {
-                        required: true
-                    },
-                    'number': {
-                        required: true
-                    },
-                    'issue_date': {
-                        required: true
-                    },
-                    'expiration_date': {
-                        required: true
-                    }
-                },
-                messages: {}
-            });
-            @include('layouts._forms._js_validate_end')
         });
     </script>
 @endsection

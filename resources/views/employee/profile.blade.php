@@ -80,7 +80,7 @@
 
         <h5>Upload New Image</h5>
         @include('layouts._forms._input_file_upload', [
-            'name' => 'upload[]',
+            'name' => 'upload',
             'label' => '',
             'required' => true,
             'options' => ['id' => 'filepond', 'class' => 'filepond', 'accept' => 'image/*']
@@ -141,7 +141,6 @@
                 imageEditEditor: Doka.create()
             }
         );
-
 
         jQuery(document).ready(function () {
             $("#title").select2({placeholder: "Choose one...",});

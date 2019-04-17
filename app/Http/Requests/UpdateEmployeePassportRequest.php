@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEmployeeOfficialDocumentRequest extends FormRequest
+class UpdateEmployeePassportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,13 @@ class StoreEmployeeOfficialDocumentRequest extends FormRequest
     public function rules()
     {
         return [
-            'file_id' => 'required',
-            'official_document_type_id' => 'required',
+            'is_cancelled' => 'required',
+            'country_id' => 'required',
+            'given_name' => 'required',
+            'family_name' => 'required',
+            'number' => 'required|numeric',
+            'issue_date' => 'required',
+            'expiration_date' => 'required',
         ];
     }
 
@@ -38,8 +43,8 @@ class StoreEmployeeOfficialDocumentRequest extends FormRequest
     {
         // 'dob' => 'date of birth',
         return [
-            'file_id' => 'document file',
-            'official_document_type_id' => 'document type',
+            'is_cancelled' => 'status',
+            'country_id' => 'country',
         ];
     }
 

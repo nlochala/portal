@@ -1,5 +1,5 @@
 <!-- START FORM----------------------------------------------------------------------------->
-{!! Form::model($visa,['method' => 'PATCH','files' => true, 'id' => "visa-edit-form-$visa->uuid",'url' => "/employee/$employee->uuid/visa/$visa->uuid/update_visa"]) !!}
+{!! Form::model($visa,['method' => 'PATCH','files' => true, 'id' => "visa-edit-form-$visa->id",'url' => "/employee/$employee->uuid/visa/$visa->uuid/update_visa"]) !!}
 <!----------------------------------------------------------------------------->
 <!---------------------------New is_active dropdown----------------------------->
 @include('layouts._forms._input_dropdown',[
@@ -79,11 +79,12 @@
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
-<!---------------------------New image_file_id file field----------------------------->
+<!---------------------------New visa image file field----------------------------->
 @include('layouts._forms._input_file_upload', [
-    'name' => 'image_file_id',
+    'name' => 'upload',
     'label' => 'Visa Image',
-    'required' => false
+    'required' => true,
+    'options' => ['id' => 'filepond_' . $visa->id, 'class' => 'filepond', 'accept' => 'image/*']
 ])
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->

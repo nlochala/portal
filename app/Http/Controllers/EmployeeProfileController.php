@@ -78,9 +78,7 @@ class EmployeeProfileController extends EmployeeController
     {
         $values = request()->all();
 
-        dd($values);
-
-        if (!request()->has('dob') && !request()->hasFile('profile_image')) {
+        if (!request()->has('dob') && !request()->has('upload')) {
             Helpers::flashAlert(
                 'danger',
                 'An image was not selected. Please try again.',
@@ -89,12 +87,8 @@ class EmployeeProfileController extends EmployeeController
             return redirect()->back();
         }
 
-        if (request()->hasFile('profile_image')) {
-            if (!$resized_file = File::saveAndResizeImage($values['profile_image'])) {
-                return redirect()->back();
-            }
-            $employee->person->update(['image_file_id' => $resized_file->id]);
-
+        if (request()->has('upload')) {
+            Helpers::flash($this->processImage(json_decode($values['upload']), $employee), 'image', 'created');
             return redirect()->to('/employee/'.$employee->uuid.'/profile');
         }
 
@@ -109,9 +103,27 @@ class EmployeeProfileController extends EmployeeController
         return redirect()->to('/employee/'.$employee->uuid.'/profile');
     }
 
-    /*
-   |--------------------------------------------------------------------------
-   | HELPERS
-   |--------------------------------------------------------------------------
-   */
+    /**
+     * @param array    $file_uuid
+     * @param Employee $employee
+     *
+     * @return bool|RedirectResponse
+     *
+     * @throws FileNotFoundException
+     */
+    protected function processImage(array $file_uuid, Employee $employee)
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        $file = File::where('uuid', $file_uuid)->first();
+        if (!$file) {
+            return false;
+        }
+
+        if (!$resized_file = File::saveAndResizeImage($file)) {
+            return false;
+        }
+
+        $employee->person->update(['image_file_id' => $resized_file->id]);
+        return true;
+    }
 }

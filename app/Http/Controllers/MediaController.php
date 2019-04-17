@@ -40,8 +40,17 @@ class MediaController extends Controller
         $stored_files = [];
 
         if (!isset($values['upload'])) {
-            $errors[] = 'A file was not attached to this request.';
-            return response(json_encode($errors), 444);
+            // Check to see if we are seeing a file upload key of upload_*
+            // This might happen if there are more than one upload fields in form.
+            foreach ($values as $key => $value) {
+                !preg_match('/upload_/', $key) ?: $values['upload'] = $value;
+            }
+
+            if (!isset($values['upload'])) {
+                $errors[] = 'A file was not attached to this request.';
+
+                return response(json_encode($errors), 444);
+            }
         }
 
         if (!is_array($values['upload']) && $values['upload'] instanceof UploadedFile) {
@@ -49,11 +58,15 @@ class MediaController extends Controller
         }
 
         foreach ($values['upload'] as $file) {
-            $tmp_file = File::saveFile($file, 'private', null, '/tmp');
+            $tmp_file = File::saveTmpFile($file);
             $tmp_file ? $stored_files[] = $tmp_file->uuid
-                    : $errors[] = 'There was an issue uploading the attached file.';
+                    : $errors[] = 'You can not upload a file of this type.';
         }
 
-        return response(json_encode($stored_files), 200);
+        if (count($errors) > 0) {
+            return response(json_encode($errors), 444);
+        }
+
+        return response($stored_files, 200);
     }
 }

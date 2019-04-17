@@ -68,37 +68,16 @@
 @endsection
 
 @section('js_after')
+    {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeIdCardRequest','#id_card-form') !!}
+
     <script type="text/javascript">
+        @include('layouts._forms._js_filepond',['id' => 'filepond_front'])
+        @include('layouts._forms._js_filepond',['id' => 'filepond_back'])
+
         jQuery(document).ready(function () {
             $("#is_active").select2({placeholder: "Choose One..."});
             $("#issue_date").datepicker();
             $("#expiration_date").datepicker();
-
-            @include('layouts._forms._js_validate_start')
-            // Init Form Validation. form.js.validation.template
-            jQuery('#id_card-form').validate({
-                ignore: [],
-                rules: {
-                    'is_active': {
-                        required: true
-                    },
-                    'number': {
-                        required: true
-                    },
-                    'name': {
-                        required: true
-                    },
-                    'issue_date': {
-                        required: true
-                    },
-                    'expiration_date': {
-                        required: true
-                    }
-                },
-                messages: {}
-            });
-            @include('layouts._forms._js_validate_end')
-
         });
     </script>
 @endsection

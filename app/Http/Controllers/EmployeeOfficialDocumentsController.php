@@ -9,6 +9,7 @@ use App\OfficialDocument;
 use App\OfficialDocumentType;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class EmployeeOfficialDocumentsController extends EmployeeController
@@ -53,18 +54,31 @@ class EmployeeOfficialDocumentsController extends EmployeeController
     {
         $values = Helpers::dbAddAudit(request()->all());
 
-        if (!request()->hasFile('file_id')) {
+        if (!request()->has('upload')) {
             Helpers::flashAlert(
                 'danger',
-                'A file was not attached to the form. Please try again.',
-                'fa fa-info-circle mr-1'
-            );
+                'Please upload an official document. Please try again.',
+                'fa fa-info-circle mr-1');
 
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
 
-        if (!$file = File::saveFile($values['file_id'])) {
-            return redirect()->back();
+        if (!$file = File::getFile($values['upload'])) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not find the uploaded document. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back()->withInput();
+        }
+
+        if (!$file->saveFile()) {
+            Helpers::flashAlert(
+                'danger',
+                'There was an issue saving your document. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back()->withInput();
         }
 
         $values['file_id'] = $file->id;
