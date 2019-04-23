@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use Webpatser\Uuid\Uuid;
 
 class School extends Model
@@ -47,12 +48,21 @@ class School extends Model
     protected $fillable = [
         'uuid',
         'name',
-        'school_area_id',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
         'user_updated_ip',
     ];
+
+    /**
+     * Return a formatted dropdown.
+     *
+     * @return Collection
+     */
+    public static function getDropdown()
+    {
+        return static::all()->pluck('name', 'id');
+    }
 
     /*
     |--------------------------------------------------------------------------

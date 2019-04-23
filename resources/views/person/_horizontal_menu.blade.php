@@ -71,16 +71,27 @@ h.item
     'badge_number' => null,
     'badge_color' => null
 ])
-@include('layouts._horizontal_menu_item_end')
-
-@include('layouts._horizontal_menu_item_start')
-@include('layouts._horizontal_menu_item', [
-    'url' => 'employee/' . $employee->uuid . '/position',
+@include('layouts._horizontal_menu_submenu_start',[
     'icon' => 'fa fa-chalkboard-teacher',
-    'title' => 'Employment Details',
+    'title' => 'Employment'
+])
+@include('layouts._horizontal_menu_item', [
+    'url' => 'employee/' . $employee->uuid . '/employment_overview',
+    'icon' => 'fa fa-chalkboard-teacher',
+    'title' => 'Overview',
     'badge_number' => null,
     'badge_color' => null
 ])
 @include('layouts._horizontal_menu_item_end')
-
+@include('layouts._horizontal_menu_item_start')
+@include('layouts._horizontal_menu_item', [
+    'url' => "employee/$employee->uuid/position/view_details",
+    'icon' => 'fa fa-chalkboard-teacher',
+    'title' => 'Position Details',
+    'badge_number' => null,
+    'badge_color' => null
+])
+@include('layouts._horizontal_menu_item_end')
+@include('layouts._horizontal_menu_submenu_end')
 @include('.layouts._horizontal_menu_end')
+

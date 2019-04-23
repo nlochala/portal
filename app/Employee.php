@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Collective\Html\Eloquent\FormAccessible;
@@ -35,9 +36,10 @@ class Employee extends Model
     protected $fillable = [
         'uuid',
         'person_id',
-        'position_id',
         'start_date',
         'end_date',
+        'employee_classification_id',
+        'employee_status_id',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
@@ -93,6 +95,38 @@ class Employee extends Model
     */
 
     /**
+     * return start_date as carbon object.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getStartDateAttribute($value)
+    {
+        if ($value) {
+            return Carbon::parse($value)->format('Y-m-d');
+        }
+
+        return null;
+    }
+
+    /**
+     * return end_date as carbon object.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getEndDateAttribute($value)
+    {
+        if ($value) {
+            return Carbon::parse($value)->format('Y-m-d');
+        }
+
+        return null;
+    }
+
+    /**
      * Set created_at to Carbon Object.
      *
      * @param $value
@@ -127,6 +161,20 @@ class Employee extends Model
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+    /**
+     * Many employees belongs to many positions.
+     *
+     * @return BelongsToMany
+     */
+    public function positions()
+    {
+        return $this->belongsToMany(
+            'App\Position',
+            'employees_positions_pivot',
+            'employee_id',
+            'position_id')
+            ->withTimestamps();
+    }
 
     /**
      *  This employee belongs to a user.

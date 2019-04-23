@@ -7,18 +7,29 @@ $required = bool
 
 --}}
 <div class="form-group row">
-    <label class="col-sm-4 col-form-label" for="{{ $name }}">{{ $label }}</label>
+    <label class="col-sm-4 col-form-label" for="{{ $name }}">{{ $label }}
+        @if($required)
+            <span class="text-danger">*</span>
+        @endif
+    </label>
     <div class="col-sm-8">
         @foreach($array as $value => $description)
             <div class="custom-control custom-radio custom-control-lg mb-1">
-                {{
-                    Form::radio($name, $value, $selected, [
-                        'class' => 'custom-control-input',
-                        'id' => $description
-                    ])
-                }}
-                <input type="radio" class="custom-control-input" id="example-rd-custom-lg1" name="example-rd-custom-lg"
-                       checked>
+                @if($selected == $value)
+                    {{
+                        Form::radio($name, $value, true, [
+                            'class' => 'custom-control-input',
+                            'id' => $description
+                        ])
+                    }}
+                @else
+                    {{
+                        Form::radio($name, $value, false, [
+                            'class' => 'custom-control-input',
+                            'id' => $description
+                        ])
+                    }}
+                @endif
                 <label class="custom-control-label" for="{{ $description }}">{{ $description }}</label>
             </div>
         @endforeach

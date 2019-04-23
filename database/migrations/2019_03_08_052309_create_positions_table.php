@@ -22,7 +22,7 @@ class CreatePositionsTable extends Migration
             $table->unsignedBigInteger('position_type_id')->nullable();
             $table->unsignedBigInteger('supervisor_position_id')->nullable();
             $table->integer('base_weight')->nullable();
-            $table->integer('stipend')->nullable();
+            $table->integer('stipend')->nullable()->default(0);
             $table->timestamps();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();

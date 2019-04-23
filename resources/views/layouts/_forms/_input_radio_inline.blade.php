@@ -16,10 +16,21 @@ $selected
     <div class="col-sm-8">
         @foreach($array as $value => $description)
             <div class="custom-control custom-radio custom-control-inline">
-                {{ Form::radio($name, $value, $selected, [
-                'class' => 'custom-control-input',
-                'id' => $description
-                ]) }}
+                @if($selected == $value)
+                    {{
+                        Form::radio($name, $value, true, [
+                            'class' => 'custom-control-input',
+                            'id' => $description
+                        ])
+                    }}
+                @else
+                    {{
+                        Form::radio($name, $value, false, [
+                            'class' => 'custom-control-input',
+                            'id' => $description
+                        ])
+                    }}
+                @endif
                 <label class="custom-control-label" for="{{ $description }}">{{ $description }}</label>
             </div>
         @endforeach

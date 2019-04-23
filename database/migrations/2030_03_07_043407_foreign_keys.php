@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection ALL */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -195,16 +195,6 @@ class ForeignKeys extends Migration
 
         /*
         |--------------------------------------------------------------------------
-        | TABLE: SCHOOLS
-        |--------------------------------------------------------------------------
-        */
-        Schema::table('schools', function (Blueprint $table) {
-            $table->foreign('school_area_id')
-                ->references('id')->on('school_areas');
-        });
-
-        /*
-        |--------------------------------------------------------------------------
         | TABLE: EMPLOYEE BONUSES
         |--------------------------------------------------------------------------
         */
@@ -213,6 +203,18 @@ class ForeignKeys extends Migration
                 ->references('id')->on('employee_bonus_types');
             $table->foreign('employee_id')
                 ->references('id')->on('employees');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: EMPLOYEE / POSITION PIVOT
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('employees_positions_pivot', function (Blueprint $table) {
+            $table->foreign('employee_id')
+                ->references('id')->on('employees');
+            $table->foreign('position_id')
+                ->references('id')->on('positions');
         });
 
     }

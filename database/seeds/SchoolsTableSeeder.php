@@ -18,8 +18,7 @@ class SchoolsTableSeeder extends Seeder
 
         foreach ($schools as $school) {
             $model = new School();
-            $model->name = $school[2];
-            $model->school_area_id = $school[3];
+            $model->name = $school[0];
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

@@ -136,7 +136,11 @@ Route::post('employee/{employee}/official_documents', 'EmployeeOfficialDocuments
 Route::get('employee/{employee}/official_documents/{document}/delete', 'EmployeeOfficialDocumentsController@delete');
 
 //Employment Details
-Route::get('employee/{employee}/position', 'EmployeeController@position');
+Route::get('employee/{employee}/employment_overview', 'EmployeePositionController@employmentOverview');
+Route::post('employee/{employee}/employment_overview', 'EmployeePositionController@storeOverview');
+Route::get('employee/{employee}/position/{position}/add', 'EmployeePositionController@addPosition');
+Route::get('employee/{employee}/position/{position}/remove', 'EmployeePositionController@removePosition');
+Route::get('employee/{employee}/position/view_details', 'EmployeePositionController@viewPositions');
 
 /*
 |--------------------------------------------------------------------------
@@ -155,3 +159,10 @@ Route::get('person/{file}/delete', 'PersonController@destroy');
 Route::get('person/{file}', 'PersonController@show');
 //Index
 Route::get('person', 'PersonController@index');
+
+/*
+|--------------------------------------------------------------------------
+| EMPLOYEE POSITIONS
+|--------------------------------------------------------------------------
+*/
+Route::get('api/position/ajaxshowposition', 'PositionController@ajaxShow');
