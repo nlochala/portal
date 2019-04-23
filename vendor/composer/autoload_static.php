@@ -8,15 +8,15 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
@@ -64,6 +64,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
             'Symfony\\Component\\Finder\\' => 25,
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\EventDispatcher\\' => 34,
+            'Symfony\\Component\\DomCrawler\\' => 29,
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\CssSelector\\' => 30,
             'Symfony\\Component\\Console\\' => 26,
@@ -154,6 +155,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         ),
         'B' => 
         array (
+            'BinaryTorch\\LaRecipe\\' => 21,
             'BeyondCode\\DumpServer\\' => 22,
             'Barryvdh\\LaravelIdeHelper\\' => 26,
             'Barryvdh\\Debugbar\\' => 18,
@@ -251,6 +253,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
+        ),
+        'Symfony\\Component\\DomCrawler\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/dom-crawler',
         ),
         'Symfony\\Component\\Debug\\' => 
         array (
@@ -444,6 +450,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
+        'BinaryTorch\\LaRecipe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/binarytorch/larecipe/src',
+        ),
         'BeyondCode\\DumpServer\\' => 
         array (
             0 => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src',
@@ -483,6 +493,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
             'PhpOption\\' => 
             array (
                 0 => __DIR__ . '/..' . '/phpoption/phpoption/src',
+            ),
+            'ParsedownExtra' => 
+            array (
+                0 => __DIR__ . '/..' . '/erusev/parsedown-extra',
             ),
             'Parsedown' => 
             array (
@@ -713,6 +727,25 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'BeyondCode\\DumpServer\\DumpServerServiceProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/DumpServerServiceProvider.php',
         'BeyondCode\\DumpServer\\Dumper' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/Dumper.php',
         'BeyondCode\\DumpServer\\RequestContextProvider' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/src/RequestContextProvider.php',
+        'BinaryTorch\\LaRecipe\\Cache' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Cache.php',
+        'BinaryTorch\\LaRecipe\\Commands\\AssetCommand' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Commands/AssetCommand.php',
+        'BinaryTorch\\LaRecipe\\Commands\\GenerateDocumentationCommand' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Commands/GenerateDocumentationCommand.php',
+        'BinaryTorch\\LaRecipe\\Commands\\InstallCommand' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Commands/InstallCommand.php',
+        'BinaryTorch\\LaRecipe\\Commands\\ThemeCommand' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Commands/ThemeCommand.php',
+        'BinaryTorch\\LaRecipe\\DocumentationRepository' => __DIR__ . '/..' . '/binarytorch/larecipe/src/DocumentationRepository.php',
+        'BinaryTorch\\LaRecipe\\Facades\\LaRecipe' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Facades/LaRecipe.php',
+        'BinaryTorch\\LaRecipe\\Http\\Controllers\\Controller' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Http/Controllers/Controller.php',
+        'BinaryTorch\\LaRecipe\\Http\\Controllers\\DocumentationController' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Http/Controllers/DocumentationController.php',
+        'BinaryTorch\\LaRecipe\\Http\\Controllers\\ScriptController' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Http/Controllers/ScriptController.php',
+        'BinaryTorch\\LaRecipe\\Http\\Controllers\\SearchController' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Http/Controllers/SearchController.php',
+        'BinaryTorch\\LaRecipe\\Http\\Controllers\\StyleController' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Http/Controllers/StyleController.php',
+        'BinaryTorch\\LaRecipe\\LaRecipe' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Larecipe.php',
+        'BinaryTorch\\LaRecipe\\LaRecipeServiceProvider' => __DIR__ . '/..' . '/binarytorch/larecipe/src/LaRecipeServiceProvider.php',
+        'BinaryTorch\\LaRecipe\\Models\\Documentation' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Models/Documentation.php',
+        'BinaryTorch\\LaRecipe\\Traits\\HasBladeParser' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Traits/HasBladeParser.php',
+        'BinaryTorch\\LaRecipe\\Traits\\HasDocumentationAttributes' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Traits/HasDocumentationAttributes.php',
+        'BinaryTorch\\LaRecipe\\Traits\\HasMarkdownParser' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Traits/HasMarkdownParser.php',
+        'BinaryTorch\\LaRecipe\\Traits\\Indexable' => __DIR__ . '/..' . '/binarytorch/larecipe/src/Traits/Indexable.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',
         'Carbon\\CarbonImmutable' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonImmutable.php',
         'Carbon\\CarbonInterface' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterface.php',
@@ -3588,6 +3621,8 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'Parsedown' => __DIR__ . '/..' . '/erusev/parsedown/Parsedown.php',
+        'ParsedownExtra' => __DIR__ . '/..' . '/erusev/parsedown-extra/ParsedownExtra.php',
+        'ParsedownExtraTest' => __DIR__ . '/..' . '/erusev/parsedown-extra/test/ParsedownExtraTest.php',
         'PersonTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/PersonTypesTableSeeder.php',
         'PharIo\\Manifest\\Application' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Application.php',
         'PharIo\\Manifest\\ApplicationName' => __DIR__ . '/..' . '/phar-io/manifest/src/values/ApplicationName.php',
@@ -4717,6 +4752,17 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'Symfony\\Component\\Debug\\FatalErrorHandler\\FatalErrorHandlerInterface' => __DIR__ . '/..' . '/symfony/debug/FatalErrorHandler/FatalErrorHandlerInterface.php',
         'Symfony\\Component\\Debug\\FatalErrorHandler\\UndefinedFunctionFatalErrorHandler' => __DIR__ . '/..' . '/symfony/debug/FatalErrorHandler/UndefinedFunctionFatalErrorHandler.php',
         'Symfony\\Component\\Debug\\FatalErrorHandler\\UndefinedMethodFatalErrorHandler' => __DIR__ . '/..' . '/symfony/debug/FatalErrorHandler/UndefinedMethodFatalErrorHandler.php',
+        'Symfony\\Component\\DomCrawler\\AbstractUriElement' => __DIR__ . '/..' . '/symfony/dom-crawler/AbstractUriElement.php',
+        'Symfony\\Component\\DomCrawler\\Crawler' => __DIR__ . '/..' . '/symfony/dom-crawler/Crawler.php',
+        'Symfony\\Component\\DomCrawler\\Field\\ChoiceFormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/ChoiceFormField.php',
+        'Symfony\\Component\\DomCrawler\\Field\\FileFormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/FileFormField.php',
+        'Symfony\\Component\\DomCrawler\\Field\\FormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/FormField.php',
+        'Symfony\\Component\\DomCrawler\\Field\\InputFormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/InputFormField.php',
+        'Symfony\\Component\\DomCrawler\\Field\\TextareaFormField' => __DIR__ . '/..' . '/symfony/dom-crawler/Field/TextareaFormField.php',
+        'Symfony\\Component\\DomCrawler\\Form' => __DIR__ . '/..' . '/symfony/dom-crawler/Form.php',
+        'Symfony\\Component\\DomCrawler\\FormFieldRegistry' => __DIR__ . '/..' . '/symfony/dom-crawler/FormFieldRegistry.php',
+        'Symfony\\Component\\DomCrawler\\Image' => __DIR__ . '/..' . '/symfony/dom-crawler/Image.php',
+        'Symfony\\Component\\DomCrawler\\Link' => __DIR__ . '/..' . '/symfony/dom-crawler/Link.php',
         'Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcher' => __DIR__ . '/..' . '/symfony/event-dispatcher/Debug/TraceableEventDispatcher.php',
         'Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcherInterface' => __DIR__ . '/..' . '/symfony/event-dispatcher/Debug/TraceableEventDispatcherInterface.php',
         'Symfony\\Component\\EventDispatcher\\Debug\\WrappedListener' => __DIR__ . '/..' . '/symfony/event-dispatcher/Debug/WrappedListener.php',
