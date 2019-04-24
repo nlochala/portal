@@ -40,6 +40,10 @@
 <script src="{{ asset('js/plugins/filepond/filepond-plugin-image-validate-size/filepond-plugin-image-validate-size.js') }}"></script>
 <script src="{{ asset('js/plugins/filepond/jquery-filepond/filepond.jquery.js') }}"></script>
 
+<!-- Summernote Text Editor-->
+<script src="{{ asset('js/plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+
 <script type="text/javascript">
     jQuery(document).ready(function () {
         @if(Session::has('color') && Session::has('icon') && Session::has('message') && Session::has('location') )

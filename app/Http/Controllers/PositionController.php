@@ -2,170 +2,143 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\FieldValidation;
 use App\Helpers\Helpers;
 use App\Position;
-use Exception;
-use Illuminate\Database\Eloquent\Collection;
+use App\PositionType;
+use App\School;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PositionController extends Controller
 {
-    protected $validation;
-
-    /**
-     * Require users to have been authenticated before reaching this page.
-     *
-     * UserController constructor.
-     */
-    public function __construct()
+    public function summary()
     {
-        $this->middleware('auth')->except('ajaxShow');
-        $this->validation = new FieldValidation();
-    }
-
-    // Array of fields that needs to be validated as required data.
-    protected $required = [];
-
-    // Array of all expected fields to use for saving/updating the model.
-    protected $fields = [];
-
-    /*
-        |--------------------------------------------------------------------------
-        | AJAX METHODS
-        |--------------------------------------------------------------------------
-    */
-
-    /**
-     * This returns a json formatted array for the table.
-     *
-     * @return Position[]|Collection
-     */
-    public function ajaxShow()
-    {
-        return Position::with(['type', 'school', 'supervisor'])->get();
     }
 
     /**
-     * Take the given arrays and specified actions and pass them to the CRUD methods
-     * below.
+     * Display a table of all positions.
      *
-     * @return array|bool
-     *
-     * @throws Exception
+     * @return Factory|View
      */
-    public function ajaxStore()
+    public function index()
+    {
+        return view('position.index');
+    }
+
+    public function archived()
+    {
+    }
+
+    /**
+     * View the create form.
+     *
+     * @return Factory|View
+     */
+    public function create()
+    {
+        $type_dropdown = PositionType::getDropdown();
+        $school_dropdown = School::getDropdown();
+        $position_dropdown = Position::getDropdown();
+
+        return view('position.create', compact(
+            'type_dropdown',
+            'school_dropdown',
+            'position_dropdown'
+        ));
+    }
+
+    /**
+     * Save the submitted form.
+     *
+     * @return RedirectResponse
+     */
+    public function store()
+    {
+        $values = Helpers::dbAddAudit(request()->all());
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $position = Position::create($values);
+        Helpers::flash($position, 'position', 'created');
+
+        if ($position) {
+            return redirect()->to("position/$position->uuid");
+        }
+
+        return redirect()->back()->withInput();
+    }
+
+    /**
+     * View a single position.
+     *
+     * @param Position $position
+     *
+     * @return Factory|View
+     */
+    public function view(Position $position)
+    {
+        $position->load('type', 'school', 'supervisor');
+
+        return view('position.view', compact('position'));
+    }
+
+    /**
+     * Display the update form.
+     *
+     * @param Position $position
+     *
+     * @return Factory|View
+     */
+    public function updateForm(Position $position)
+    {
+        $position->load('type', 'school', 'supervisor');
+        $type_dropdown = PositionType::getDropdown();
+        $school_dropdown = School::getDropdown();
+        $position_dropdown = Position::getDropdown();
+
+        return view('position.edit', compact(
+            'position',
+            'type_dropdown',
+            'school_dropdown',
+            'position_dropdown'
+            ));
+    }
+
+    /**
+     * Update the given position.
+     *
+     * @param Position $position
+     *
+     * @return RedirectResponse
+     */
+    public function update(Position $position)
     {
         $values = request()->all();
-
-        $action = $values['action'];
-        $data = $values['data'];
-        $return_array = [];
-
-        foreach ($data as $id => $position_data) {
-            // VALIDATE THE FORM DATA
-            foreach ($this->required as $field) {
-                $this->validation->required($field, $position_data);
-                $this->validation->required($field, $position_data);
-            }
-
-            if ($errors = $this->validation->hasErrors()) {
-                return $errors;
-            }
-
-            // EDIT THE GIVEN Position
-            if ('edit' == $action) {
-                /* @noinspection PhpUndefinedMethodInspection */
-                if ($position = $this->update(Position::find($id), $position_data)) {
-                    $return_array['data'][] = $position;
-                }
-            }
-            // CREATE THE Position
-            if ('create' == $action) {
-                $position = $this->store($data[$id]);
-                $return_array['data'][] = $position;
-            }
-        }
-
-        if ('remove' == $action) {
-            foreach ($data as $id => $position_data) {
-                /* @noinspection PhpUndefinedMethodInspection */
-                $this->destroy(Position::find($id));
-            }
-        }
-
-        return $return_array;
-    }
-
-    /*
-        |--------------------------------------------------------------------------
-        | CRUD METHODS
-        |--------------------------------------------------------------------------
-    */
-
-    /**
-     * Store the new position.
-     *
-     * @param $values
-     *
-     * @return RedirectResponse|bool
-     */
-    public function store($values)
-    {
-        $values = Helpers::dbAddAudit($values);
-        /* @noinspection PhpUndefinedMethodInspection */
-        $position = Position::create($values);
-
-        /* @noinspection PhpUndefinedMethodInspection */
-        if ($position->save()) {
-            return $position;
-        }
-
-        return false;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Position $position
-     * @param $values
-     *
-     * @return Position|bool
-     *
-     * @internal param int $id
-     */
-    public function update(Position $position, $values)
-    {
         $position = Helpers::dbAddAudit($position);
-        foreach ($this->fields as $field) {
-            /* @noinspection PhpVariableVariableInspection */
-            $position->$field = $values[$field];
+
+        $position->update($values);
+        Helpers::flash($position, 'position', 'updated');
+
+        if ($position) {
+            return redirect()->to("position/$position->uuid");
         }
 
-        if ($position->save()) {
-            return $position;
-        }
-
-        return false;
+        return redirect()->back()->withInput();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Archive the position and return to index.
      *
      * @param Position $position
      *
-     * @return string
-     *
-     * @throws Exception
+     * @return RedirectResponse
      */
-    public function destroy(Position $position)
+    public function archive(Position $position)
     {
         $position = Helpers::dbAddAudit($position);
+        $position->delete();
+        Helpers::flash($position, 'position', 'archived');
 
-        if ($position->save()) {
-            return $position->delete();
-        }
-
-        return false;
+        return redirect()->to('position/index');
     }
 }

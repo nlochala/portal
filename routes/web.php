@@ -23,6 +23,7 @@ Route::match(['get', 'post'], '/login', function () {
     return redirect()->to('/login/microsoft');
 });
 
+//TODO: Change the link location to api/download_file
 Route::get('download_file/{file}', 'MediaController@downloadFile');
 Route::post('api/store_file', 'MediaController@store');
 
@@ -165,4 +166,18 @@ Route::get('person', 'PersonController@index');
 | EMPLOYEE POSITIONS
 |--------------------------------------------------------------------------
 */
-Route::get('api/position/ajaxshowposition', 'PositionController@ajaxShow');
+//API
+Route::get('api/position/ajaxshowposition', 'PositionAjaxController@ajaxShow');
+//Overview
+Route::get('position/summary', 'PositionController@summary');
+Route::get('position/index', 'PositionController@index');
+Route::get('position/archived', 'PositionController@archived');
+//New
+Route::get('position/create', 'PositionController@create');
+Route::post('position/create', 'PositionController@store');
+//View
+Route::get('position/{position}', 'PositionController@view');
+//Update
+Route::patch('position/{position}/edit', 'PositionController@update');
+Route::get('position/{position}/edit', 'PositionController@updateForm');
+Route::get('position/{position}/archive', 'PositionController@archive');

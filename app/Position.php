@@ -47,11 +47,33 @@ class Position extends Model
      */
     protected $fillable = [
         'uuid',
+        'name',
+        'description',
+        'school_id',
+        'position_type_id',
+        'supervisor_position_id',
+        'stipend',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
         'user_updated_ip',
     ];
+
+    /**
+     * Return a formatted dropdown list.
+     *
+     * @return array
+     */
+    public static function getDropdown()
+    {
+        $return_array = [];
+        $positions = Position::with('school')->select('id', 'name', 'school_id')->get();
+        foreach ($positions->sortBy('name') as $position) {
+            $return_array[$position->id] = $position->name.' ('.$position->school->name.')';
+        }
+
+        return $return_array;
+    }
 
     /*
     |--------------------------------------------------------------------------

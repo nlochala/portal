@@ -1,5 +1,5 @@
 var tableposition = $('#position_table').DataTable({
-dom: "Bfrtip",
+dom: "frtip",
 select: true,
 paging: true,
 pageLength: 10,

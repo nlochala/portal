@@ -77,7 +77,7 @@ h.item
 ])
 @include('layouts._horizontal_menu_item', [
     'url' => 'employee/' . $employee->uuid . '/employment_overview',
-    'icon' => 'fa fa-chalkboard-teacher',
+    'icon' => 'fa fa-list',
     'title' => 'Overview',
     'badge_number' => null,
     'badge_color' => null
@@ -86,7 +86,7 @@ h.item
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [
     'url' => "employee/$employee->uuid/position/view_details",
-    'icon' => 'fa fa-chalkboard-teacher',
+    'icon' => 'fa fa-columns',
     'title' => 'Position Details',
     'badge_number' => null,
     'badge_color' => null
