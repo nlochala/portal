@@ -128,7 +128,8 @@ class Position extends Model
             'App\Employee',
             'employees_positions_pivot',
             'position_id',
-            'employee_id')
+            'employee_id'
+        )
             ->withTimestamps();
     }
 

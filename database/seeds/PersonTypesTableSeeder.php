@@ -8,8 +8,6 @@ class PersonTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -18,7 +16,7 @@ class PersonTypesTableSeeder extends Seeder
 
         $person_types = Helpers::parseCsv('database/seeds/data/person_types.csv', false);
 
-        foreach($person_types as $type){
+        foreach ($person_types as $type) {
             $model = new PersonType();
             $model->name = $type[2];
             $model->description = $type[3];
@@ -27,6 +25,5 @@ class PersonTypesTableSeeder extends Seeder
         }
 
         Schema::enableForeignKeyConstraints();
-
     }
 }

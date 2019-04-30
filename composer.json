@@ -25,13 +25,15 @@
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.2",
+    "beyondcode/dusk-dashboard": "^1.1",
     "beyondcode/laravel-dump-server": "^1.0",
     "filp/whoops": "^2.0",
     "fzaninotto/faker": "^1.4",
     "laravel/dusk": "^5.0",
     "mockery/mockery": "^1.0",
     "nunomaduro/collision": "^2.0",
-    "phpunit/phpunit": "^7.0"
+    "phpunit/phpunit": "^7.0",
+    "roquie/laravel-dusk-select2": "^1.1"
   },
   "config": {
     "optimize-autoloader": true,

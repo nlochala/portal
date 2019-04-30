@@ -13,6 +13,6 @@ $required = bool
         @endif
     </label>
     <div class="col-sm-8">
-        {!! Form::text($name,null,['class' => 'form-control','id' => $name, 'placeholder' => $placeholder]) !!}
+        {!! Form::text($name,null,['dusk' => $name, 'class' => 'form-control','id' => $name, 'placeholder' => $placeholder]) !!}
     </div>
 </div>

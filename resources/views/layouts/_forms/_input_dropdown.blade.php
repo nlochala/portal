@@ -17,6 +17,7 @@ $selected
     <div class="col-sm-8">
         {{ Form::select($name, $array, $selected, [
         'id' => $name,
+        'dusk' => $name,
         'style' => 'width: 100%;',
         'class' => 'js-select2 form-control ' . $class,
         'placeholder' => 'Choose One...'

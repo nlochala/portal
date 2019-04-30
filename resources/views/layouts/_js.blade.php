@@ -1,8 +1,8 @@
 {{--<!-- Dashmix Core JS -->--}}
-<script src="{{ mix('js/dashmix.app.js') }}"></script>
+<script src="{{ asset(mix('js/dashmix.app.js')) }}"></script>
 
 {{--<!-- Laravel Scaffolding JS -->--}}
-<script src="{{ mix('js/laravel.app.js') }}"></script>
+<script src="{{ asset(mix('js/laravel.app.js')) }}"></script>
 
 <!-- Page JS Plugins -->
 <script src="{{ asset('js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>

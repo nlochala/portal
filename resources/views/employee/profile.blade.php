@@ -59,7 +59,7 @@
     <div class="col-md-12 animated fadeIn" style="padding-bottom: 20px">
         @if($image_data)
             <div class="options-container" style="text-align: center">
-                <img class="img-fluid options-item rounded border border-2x border-dark" src="{{ $image_data }}" alt="">
+                <img dusk="profile-image" class="img-fluid options-item rounded border border-2x border-dark" src="{{ $image_data }}" alt="">
                 <div class="options-overlay bg-black-75">
                     <div class="options-overlay-content">
                         <h3 class="h4 text-white mb-2">Profile Image</h3>
@@ -122,7 +122,7 @@
             FilePondPluginImageEdit
         );
 
-        FilePond.create(
+        const pond = FilePond.create(
             document.querySelector('#filepond'),
             {
                 labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
