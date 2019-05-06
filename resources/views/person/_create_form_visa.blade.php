@@ -86,7 +86,7 @@
     'name' => 'upload',
     'label' => 'Visa Image',
     'required' => true,
-    'options' => ['id' => 'filepond', 'class' => 'filepond', 'accept' => 'image/*']
+    'options' => ['class' => 'filepond', 'accept' => 'image/*']
 ])
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->

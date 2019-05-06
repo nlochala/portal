@@ -39,7 +39,7 @@
     <!-- START FORM----------------------------------------------------------------------------->
     {!! Form::open(['files' => true, 'id' => 'passport-form','url' => request()->getRequestUri()]) !!}
 
-    @include('person._create_form_passport')
+    @include('person._form_passport')
 
     @include('layouts._forms._form_close')
     <!-- END FORM----------------------------------------------------------------------------->
@@ -71,7 +71,7 @@
     {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeePassportRequest','#passport-form') !!}
 
     <script type="text/javascript">
-        @include('layouts._forms._js_filepond', ['id' => 'filepond'])
+        @include('layouts._forms._js_filepond', ['id' => 'upload'])
 
         jQuery(document).ready(function () {
             $("#country_id").select2({placeholder: "Choose One..."});

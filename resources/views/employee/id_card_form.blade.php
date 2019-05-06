@@ -76,8 +76,8 @@
     {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeIdCardRequest','#id_card-form') !!}
 
     <script type="text/javascript">
-        @include('layouts._forms._js_filepond',['id' => 'filepond_front'])
-        @include('layouts._forms._js_filepond',['id' => 'filepond_back'])
+        @include('layouts._forms._js_filepond',['id' => 'upload_front'])
+        @include('layouts._forms._js_filepond',['id' => 'upload_back'])
 
         jQuery(document).ready(function () {
             $("#is_active").select2({placeholder: "Choose One..."});

@@ -4,10 +4,10 @@ namespace App;
 
 use Carbon\Carbon;
 use Collective\Html\Eloquent\FormAccessible;
-use Illuminate\{Database\Eloquent\Model,
-    Database\Eloquent\Relations\BelongsTo,
-    Database\Eloquent\Relations\HasMany,
-    Database\Eloquent\SoftDeletes};
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
 class Passport extends Model
@@ -20,14 +20,15 @@ class Passport extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -36,6 +37,7 @@ class Passport extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
@@ -61,18 +63,19 @@ class Passport extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
 
     public static $statusRadio = [
         'Cancelled',
-        'Active'
+        'Active',
     ];
 
     /**
-     * Return the status of a passport
+     * Return the status of a passport.
      *
-     * @param Int $status
+     * @param int $status
+     *
      * @return mixed
      */
     public static function getStatus(Int $status)
@@ -87,7 +90,7 @@ class Passport extends Model
      */
     public static function getSampleImage()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         return File::where('name', 'sample-passport')->first()->renderImage();
     }
 
@@ -96,8 +99,9 @@ class Passport extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set issue_date to carbon object
+     * Set issue_date to carbon object.
      *
      * @param $value
      *
@@ -109,7 +113,7 @@ class Passport extends Model
     }
 
     /**
-     * Set expiration_date to carbon object
+     * Set expiration_date to carbon object.
      *
      * @param $value
      *
@@ -121,7 +125,7 @@ class Passport extends Model
     }
 
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -133,7 +137,7 @@ class Passport extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -148,6 +152,7 @@ class Passport extends Model
      * Get the passport's IssueDate for forms.
      *
      * @param string $value
+     *
      * @return string
      */
     public function formIssueDateAttribute($value)
@@ -159,6 +164,7 @@ class Passport extends Model
      * Get the passport's ExpirationDate for forms.
      *
      * @param string $value
+     *
      * @return string
      */
     public function formExpirationDateAttribute($value)
@@ -172,14 +178,14 @@ class Passport extends Model
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This passport has many visas
+     *  This passport has many visas.
      *
      * @return HasMany
      */
@@ -189,7 +195,7 @@ class Passport extends Model
     }
 
     /**
-     *  This passport belongs to a person
+     *  This passport belongs to a person.
      *
      * @return BelongsTo
      */
@@ -199,7 +205,7 @@ class Passport extends Model
     }
 
     /**
-     *  This passport belongs to a image
+     *  This passport belongs to a image.
      *
      * @return BelongsTo
      */
@@ -209,7 +215,7 @@ class Passport extends Model
     }
 
     /**
-     *  This passport belongs to a country
+     *  This passport belongs to a country.
      *
      * @return BelongsTo
      */
@@ -219,7 +225,7 @@ class Passport extends Model
     }
 
     /**
-     *  This passport was created by a user
+     *  This passport was created by a user.
      *
      * @return BelongsTo
      */
@@ -229,7 +235,7 @@ class Passport extends Model
     }
 
     /**
-     *  This passport was updated by a user
+     *  This passport was updated by a user.
      *
      * @return BelongsTo
      */

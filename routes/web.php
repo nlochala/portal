@@ -10,21 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::view('/', 'landing');
-Route::get('/teacher_dashboard/{id}', 'TeacherDashboardController@index');
-Route::get('/dashboard', function () {
-    if ($uuid = auth()->user()->uuid) {
-        return redirect()->to('teacher_dashboard/'.$uuid);
-    }
-});
-
-Route::match(['get', 'post'], '/login', function () {
-    return redirect()->to('/login/microsoft');
-});
+Route::get('authenticated', 'OAuthController@login')->name('login');
 
 //TODO: Change the link location to api/download_file
 Route::get('download_file/{file}', 'MediaController@downloadFile');
+Route::get('api/download_file/{file}', 'MediaController@downloadFile');
 Route::post('api/store_file', 'MediaController@store');
 
 /*

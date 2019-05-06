@@ -74,7 +74,7 @@
     </tr>
     @include('_tables.end-new-table')
     <hr/>
-    <button type="button" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+    <button type="button" dusk="btn-modal-block-email" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
             data-target="#modal-block-email">
         <i class="fa fa-fw fa-pen mr-1"></i> Update Email Addresses
     </button>
@@ -114,7 +114,7 @@
                 </td>
                 <td class="text-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
+                        <button type="button" dusk="btn-delete-phone-{{ $phone->uuid }}" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
                                 onclick="window.location.href='/phone/{{ $phone->uuid }}/profile/delete'">
                             <i class="fa fa-times"></i>
                         </button>
@@ -125,7 +125,7 @@
         @include('_tables.end-new-table')
     @endif
     <hr/>
-    <button type="button" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+    <button type="button" dusk="btn-modal-block-phone" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
             data-target="#modal-block-phone">
         <i class="fa fa-fw fa-plus mr-1"></i> Add New Phone Number
     </button>
@@ -173,11 +173,11 @@
                 </td>
                 <td class="text-center">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" title="Edit"
+                        <button type="button" dusk="btn-modal-block-address-{{ $address->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal" title="Edit"
                                 data-target="#modal-block-address-{{ $address->id }}">
                             <i class="fa fa-pen"></i>
                         </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
+                        <button type="button" dusk="btn-delete-address-{{ $address->uuid }}" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
                                 onclick="window.location.href='/address/{{ $address->uuid }}/delete'">
                             <i class="fa fa-times"></i>
                         </button>
@@ -188,7 +188,7 @@
                 @include('_tables.end-new-table')
                 @endif
                 <hr/>
-                <button type="button" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+                <button type="button" dusk="btn-modal-block-address-new" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
                         data-target="#modal-block-address-new">
                     <i class="fa fa-fw fa-plus mr-1"></i> Add New Address
                 </button>

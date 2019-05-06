@@ -20,14 +20,15 @@ class IdCard extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -36,6 +37,7 @@ class IdCard extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
@@ -60,25 +62,26 @@ class IdCard extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
 
     public static $statusRadio = [
         'Cancelled',
-        'Active'
+        'Active',
     ];
 
     /**
      * Return a rendered copy of the sample idcard images.
      *
      * @param $type
+     *
      * @return bool
      */
     public static function sampleImage($type)
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /* @noinspection PhpUndefinedMethodInspection */
         if ($image = File::where('name', "sample-idcard-$type")->first()) {
-            /** @noinspection PhpUndefinedMethodInspection */
+            /* @noinspection PhpUndefinedMethodInspection */
             return $image;
         }
 
@@ -90,8 +93,9 @@ class IdCard extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set issue_date to carbon object
+     * Set issue_date to carbon object.
      *
      * @param $value
      *
@@ -103,7 +107,7 @@ class IdCard extends Model
     }
 
     /**
-     * Set expiration_date to carbon object
+     * Set expiration_date to carbon object.
      *
      * @param $value
      *
@@ -115,7 +119,7 @@ class IdCard extends Model
     }
 
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -127,7 +131,7 @@ class IdCard extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -142,6 +146,7 @@ class IdCard extends Model
      * Get the passport's IssueDate for forms.
      *
      * @param string $value
+     *
      * @return string
      */
     public function formIssueDateAttribute($value)
@@ -153,6 +158,7 @@ class IdCard extends Model
      * Get the passport's ExpirationDate for forms.
      *
      * @param string $value
+     *
      * @return string
      */
     public function formExpirationDateAttribute($value)
@@ -160,21 +166,20 @@ class IdCard extends Model
         return Carbon::parse($value)->format('Y-m-d');
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     * This idCard has a File
+     * This idCard has a File.
      *
      * @return HasOne
      */
@@ -185,7 +190,7 @@ class IdCard extends Model
     }
 
     /**
-     * This idCard has a File
+     * This idCard has a File.
      *
      * @return HasOne
      */
@@ -196,7 +201,7 @@ class IdCard extends Model
     }
 
     /**
-     *  This id_Card was created by a user
+     *  This id_Card was created by a user.
      *
      * @return BelongsTo
      */
@@ -206,7 +211,7 @@ class IdCard extends Model
     }
 
     /**
-     *  This id_Card was updated by a user
+     *  This id_Card was updated by a user.
      *
      * @return BelongsTo
      */

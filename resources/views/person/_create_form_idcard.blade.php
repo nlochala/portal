@@ -59,7 +59,7 @@
     'name' => 'upload_front',
     'label' => 'Card Image (Front)',
     'required' => true,
-    'options' => ['id' => 'filepond_front', 'class' => 'filepond', 'accept' => 'image/*']
+    'options' => ['class' => 'filepond', 'accept' => 'image/*']
 ])
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
@@ -69,7 +69,7 @@
     'name' => 'upload_back',
     'label' => 'Card Image (Back)',
     'required' => true,
-    'options' => ['id' => 'filepond_back', 'class' => 'filepond', 'accept' => 'image/*']
+    'options' => ['class' => 'filepond', 'accept' => 'image/*']
 ])
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->

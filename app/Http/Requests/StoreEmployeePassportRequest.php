@@ -24,13 +24,14 @@ class StoreEmployeePassportRequest extends FormRequest
     public function rules()
     {
         return [
-            'is_cancelled' => 'required',
+            'is_active' => 'required',
             'country_id' => 'required',
             'given_name' => 'required',
             'family_name' => 'required',
             'number' => 'required|numeric',
             'issue_date' => 'required',
             'expiration_date' => 'required',
+            'upload' => 'required',
         ];
     }
 

@@ -12,6 +12,16 @@ use Storage;
 class MediaController extends Controller
 {
     /**
+     * Require users to have been authenticated before reaching this page.
+     *
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Download the given file.
      *
      * @param File $file

@@ -17,11 +17,11 @@ return [
     'credentials' => [
         'client_id' => env('AZURE_AD_CLIENT_ID', ''),
         'client_secret' => env('AZURE_AD_CLIENT_SECRET', ''),
-        'redirect' => env('APP_URL') .'/login/microsoft/callback'
+        'redirect' => env('APP_URL').'/login/microsoft/callback',
     ],
 
     // The route to redirect the user to upon login.
-    'redirect_on_login' => '/dashboard',
+    'redirect_on_login' => '/authenticated',
 
     // The User Eloquent class.
     'user_class' => '\\App\\User',
@@ -41,5 +41,5 @@ return [
         'givenName' => 'given_name',
         'surname' => 'family_name',
         'email' => 'email',
-    ]
+    ],
 ];

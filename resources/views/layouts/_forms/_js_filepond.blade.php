@@ -13,7 +13,7 @@ FilePondPluginImageTransform,
 FilePondPluginImageEdit
 );
 
-FilePond.create(
+const {{ $id }} = FilePond.create(
 document.querySelector('#{{ $id }}'),
 {
 labelIdle: `Drag & Drop an image here or <span class="filepond--label-action">Browse</span>`,

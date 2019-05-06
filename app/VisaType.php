@@ -18,14 +18,15 @@ class VisaType extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -34,21 +35,21 @@ class VisaType extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
         return 'uuid';
     }
 
-
     /**
-     * Return a formatted dropdown
+     * Return a formatted dropdown.
      *
-     * @return Collection
+     * @return array
      */
     public static function getDropdown()
     {
-        return static::all()->pluck('formatted_name', 'id');
+        return static::all()->pluck('formatted_name', 'id')->toArray();
     }
 
     /*
@@ -56,8 +57,9 @@ class VisaType extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -69,7 +71,7 @@ class VisaType extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -81,7 +83,7 @@ class VisaType extends Model
     }
 
     /**
-     * get formatted name
+     * get formatted name.
      *
      * @return mixed
      */
@@ -90,22 +92,20 @@ class VisaType extends Model
         return "$this->code - $this->name";
     }
 
-
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This visa type was created by a user
+     *  This visa type was created by a user.
      *
      * @return BelongsTo
      */
@@ -115,7 +115,7 @@ class VisaType extends Model
     }
 
     /**
-     *  This visa type was updated by a user
+     *  This visa type was updated by a user.
      *
      * @return BelongsTo
      */

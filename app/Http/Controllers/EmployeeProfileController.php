@@ -17,6 +17,16 @@ use View;
 class EmployeeProfileController extends EmployeeController
 {
     /**
+     * Require users to have been authenticated before reaching this page.
+     *
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param Employee $employee

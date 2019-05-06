@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 use Webpatser\Uuid\Uuid;
 
 class AddressType extends Model
@@ -21,7 +20,7 @@ class AddressType extends Model
     */
 
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
@@ -30,7 +29,6 @@ class AddressType extends Model
             $model->uuid = (string) Uuid::generate(4);
         });
     }
-
 
     /**
      * Add mass-assignment to model.
@@ -44,27 +42,27 @@ class AddressType extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
 
     /**
-     * Return a formatted dropdown list
+     * Return a formatted dropdown list.
      *
-     * @return Collection
+     * @return array
      */
     public static function getDropdown()
     {
-        return static::all()->pluck('name', 'id');
+        return static::all()->pluck('name', 'id')->toArray();
     }
-
 
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -76,7 +74,7 @@ class AddressType extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -87,46 +85,45 @@ class AddressType extends Model
         return Carbon::parse($value)->toFormattedDateString();
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This address type has many addresses
+     *  This address type has many addresses.
      *
      * @return HasMany
      */
     public function addresses()
     {
-        return $this->hasMany('App\Address','address_type_id');
+        return $this->hasMany('App\Address', 'address_type_id');
     }
 
     /**
-     *  This address type was created by a user
+     *  This address type was created by a user.
      *
      * @return BelongsTo
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User','user_created_by','id');
+        return $this->belongsTo('App\User', 'user_created_by', 'id');
     }
 
     /**
-     *  This address type was updated by a user
+     *  This address type was updated by a user.
      *
      * @return BelongsTo
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User','user_updated_by','id');
+        return $this->belongsTo('App\User', 'user_updated_by', 'id');
     }
 }

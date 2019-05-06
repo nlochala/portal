@@ -3,6 +3,7 @@
 namespace Laravel\Dusk;
 
 use Exception;
+use Tests\TestCase;
 use App\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -33,16 +34,30 @@ class DuskServiceProvider extends ServiceProvider
             'uses' => 'Laravel\Dusk\Http\Controllers\UserController@user',
         ]);
 
+        /*
+         |--------------------------------------------------------------------------
+         | CUSTOM MACROS
+         |--------------------------------------------------------------------------
+         |
+         | These macros are created to help enhance the running of dusk tests.
+         |
+         */
+        /*
+         |--------------------------------------------------------------------------
+         | FORM MACROS
+         |--------------------------------------------------------------------------
+         */
+        // Form Elements
         Browser::macro('selectDropdown', function ($element = null, $value = null) {
             $this->script("$('#$element').select2('open');");
             $this->keys('.select2-search__field', $value)
-                 ->keys('.select2-search__field', '{enter}')
-                 ->assertSeeIn('#select2-'.$element.'-container', $value);
+                ->keys('.select2-search__field', '{enter}')
+                ->assertSeeIn('#select2-' . $element . '-container', $value);
             return $this;
         });
 
         Browser::macro('assertDropdownValue', function ($element = null, $value = null) {
-                $this->assertSeeIn('#select2-'.$element.'-container', $value);
+            $this->assertSeeIn('#select2-' . $element . '-container', $value);
             return $this;
         });
 
@@ -59,33 +74,72 @@ class DuskServiceProvider extends ServiceProvider
             return $this;
         });
 
-        Browser::macro('submitForm', function ($formId = null) {
-            $this->script("$('#$formId button[type=submit]').trigger('click')");
-            return $this;
-        });
-
-        Browser::macro('seeSuccessDialog', function () {
-            $this->waitFor('div[data-notify=container]')
-                ->assertSeeIn('div[data-notify=container] span[data-notify=message]','successfully!');
-            return $this;
-        });
-
-        Browser::macro('seeErrorDialog', function () {
-            $this->waitFor('div[data-notify=container]')
-                ->assertSeeIn('div[data-notify=container] span[data-notify=message]','Please try again.');
-            return $this;
-        });
-
-        Browser::macro('uploadFile', function($element = null, $filepond_const = null, $file_url) {
-            $this->script("$filepond_const.addFile('$file_url')");
-            $this->waitForText('Upload complete', 10);
-            $file_uuid = $this->value($element);
+        Browser::macro('uploadFile', function ($element = null, $file_url = false) {
+            $file_url ?: $file_url = url('/storage/sample-passport.jpg');
+            $this->script("$element.addFile('$file_url')");
+            $this->waitUntil('$(\'div[id='.$element.']\').text().includes(\'Upload complete\')', 30);
+            $file_uuid = $this->value(".filepond--file-wrapper input[name=$element]");
 
             $file = File::all()->last();
             PHPUnit::assertEquals(json_decode($file_uuid)[0], $file->uuid);
 
             return $this;
         });
+
+        Browser::macro('submitForm', function ($formId = null) {
+            $this->script("$('#$formId button[type=submit]').trigger('click')");
+            return $this;
+        });
+
+        // Form Request
+        Browser::macro('assertHasRequiredInputErrors', function ($form_request, array $excluded_ids = []) {
+            $required_ids = [];
+            foreach ($form_request->rules() as $id => $value) {
+                if (strpos($value, 'required') !== false) {
+                    $required_ids[] = $id;
+                }
+            }
+
+            foreach (array_diff($required_ids, $excluded_ids) as $id) {
+                PHPUnit::assertContains('required', $this->text("#$id-error"));
+            }
+
+            return $this;
+        });
+
+        /*
+         |--------------------------------------------------------------------------
+         | SEE DIALOGS
+         |--------------------------------------------------------------------------
+         */
+        Browser::macro('seeSuccessDialog', function () {
+            $this->waitFor('div[data-notify=container]')
+                ->assertSeeIn('div[data-notify=container] span[data-notify=message]', 'successfully');
+            return $this;
+        });
+
+        Browser::macro('seeErrorDialog', function () {
+            $this->waitFor('div[data-notify=container]')
+                ->assertSeeIn('div[data-notify=container] span[data-notify=message]', 'Please try again.');
+            return $this;
+        });
+
+        /*
+         |--------------------------------------------------------------------------
+         | INTERACT WITH ELEMENTS
+         |--------------------------------------------------------------------------
+         */
+        Browser::macro('clickButton', function ($dusk_selector = '') {
+            $this->script("$('button[dusk=$dusk_selector]').trigger('click');");
+            return $this;
+        });
+
+         Browser::macro('downloadFile', function ($download_btn_dusk_selector = '', File $file) {
+            $this->script("$('button[dusk=$download_btn_dusk_selector]').trigger('click');");
+            return $this;
+        });
+
+
     }
 
     /**

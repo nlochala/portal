@@ -24,7 +24,7 @@ class StoreEmployeeOfficialDocumentRequest extends FormRequest
     public function rules()
     {
         return [
-            'file_id' => 'required',
+            'upload' => 'required',
             'official_document_type_id' => 'required',
         ];
     }
@@ -38,7 +38,7 @@ class StoreEmployeeOfficialDocumentRequest extends FormRequest
     {
         // 'dob' => 'date of birth',
         return [
-            'file_id' => 'document file',
+            'upload' => 'document file',
             'official_document_type_id' => 'document type',
         ];
     }

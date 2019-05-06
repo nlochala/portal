@@ -48,8 +48,7 @@ class EmployeeProfile extends Page
     public function elements()
     {
         return [
-            '@filepond' => '#profile-form #filepond',
-            '@filepond_input' => '.filepond--file-wrapper input[name=upload]',
+            '@filepond' => '#profile-form #upload',
         ];
     }
 
@@ -86,14 +85,13 @@ class EmployeeProfile extends Page
      * Submit a profile picture.
      *
      * @param Browser $browser
-     * @param $filepond_const
      */
-    public function submitProfilePicture(Browser $browser, $filepond_const)
+    public function submitProfilePicture(Browser $browser)
     {
         $browser->submitForm('profile-form')
             ->seeErrorDialog()
             ->assertVisible('@filepond')
-            ->uploadFile('@filepond_input', $filepond_const, url('/storage/default-male.png'))
+            ->uploadFile('upload', url('/storage/default-male.png'))
             ->submitForm('profile-form')
             ->on(new EmployeeProfile($this->employee))
             ->seeSuccessDialog()

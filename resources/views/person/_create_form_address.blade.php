@@ -1,8 +1,8 @@
 <!-- START FORM----------------------------------------------------------------------------->
 @if(isset($edit_address))
-    {!! Form::model($edit_address,['method' => 'PATCH','id' => 'address-form','url' => "/employee/$employee->uuid/address/$edit_address->uuid/update_address"]) !!}
+    {!! Form::model($edit_address,['method' => 'PATCH','id' => 'address-update-form','url' => "/employee/$employee->uuid/address/$edit_address->uuid/update_address"]) !!}
 @else
-    {!! Form::open(['files' => false, 'id' => 'address-update-form','url' => '/employee/' . $employee->uuid . '/profile/store_address']) !!}
+    {!! Form::open(['files' => false, 'id' => 'address-form','url' => '/employee/' . $employee->uuid . '/profile/store_address']) !!}
 @endif
 @include('layouts._forms._row_start', ['size' => 12])
 

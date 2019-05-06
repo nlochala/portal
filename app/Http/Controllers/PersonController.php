@@ -9,7 +9,6 @@ use App\Helpers\Helpers;
 use App\Language;
 use App\Person;
 use App\PersonType;
-use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -65,6 +64,7 @@ class PersonController extends Controller
 
         if (!$person) {
             Helpers::flashAlert('danger', 'There was a problem saving your form. Please try again.', 'fa fa-info-circle mr-1');
+
             return redirect()->back();
         }
 
@@ -78,16 +78,19 @@ class PersonController extends Controller
                 $employee = Employee::create([
                     'person_id' => $person->id,
                     'user_created_id' => $values['user_created_id'],
-                    'user_created_ip' => $values['user_created_ip']
+                    'user_created_ip' => $values['user_created_ip'],
                 ]);
                 if (!$employee) {
                     Helpers::flashAlert('danger', 'There was a problem saving your form. Please try again.', 'fa fa-info-circle mr-1');
+
                     return redirect()->back();
                 }
                 Helpers::flashAlert('success', 'The employee has been successfully created.', 'fa fa-check mr-1');
-                return redirect()->to('employee/' . $employee->uuid . '/profile');
+
+                return redirect()->to('employee/'.$employee->uuid.'/profile');
             default:
                 Helpers::flashAlert('danger', 'Not sure what type of person you are trying to create... Please try again.', 'fa fa-info-circle mr-1');
+
                 return redirect()->back();
         }
     }

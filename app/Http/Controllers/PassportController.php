@@ -22,50 +22,30 @@ class PassportController extends Controller
      * Cancel the given passport.
      *
      * @param Passport $passport
+     *
      * @return RedirectResponse
      */
     public function cancel(Passport $passport)
     {
         $passport->is_active = false;
         $passport = Helpers::dbAddAudit($passport);
-        $passport->save()
-            ?
-            Helpers::flashAlert(
-                'success',
-                'The passport has been cancelled.',
-                'fa fa-check mr-1')
-            :
-            Helpers::flashAlert(
-                'danger',
-                'There was an issue cancelling the passport. Please try again.',
-                'fa fa-info-circle mr-1');
-
+        Helpers::flash($passport->save(), 'passport', 'cancelled');
         return redirect()->back();
     }
 
     /**
-     * Delete the given passport
+     * Delete the given passport.
      *
      * @param Passport $passport
+     *
      * @return RedirectResponse
      */
     public function delete(Passport $passport)
     {
         $passport->is_active = false;
         $passport = Helpers::dbAddAudit($passport);
-        $passport->delete()
-            ?
-            Helpers::flashAlert(
-                'success',
-                'The passport has been deleted.',
-                'fa fa-check mr-1')
-            :
-            Helpers::flashAlert(
-                'danger',
-                'There was an issue deleting the passport. Please try again.',
-                'fa fa-info-circle mr-1');
-
+        $passport->save();
+        Helpers::flash($passport->delete(), 'passport', 'deleted');
         return redirect()->back();
     }
-
 }

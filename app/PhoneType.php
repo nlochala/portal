@@ -17,8 +17,9 @@ class PhoneType extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
@@ -33,17 +34,21 @@ class PhoneType extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
         return 'uuid';
     }
 
-
-
+    /**
+     * Return a formatted dropdown of phone types.
+     *
+     * @return array
+     */
     public static function getDropdown()
     {
-        return static::all()->pluck('name','id');
+        return static::all()->pluck('name', 'id')->toArray();
     }
 
     /*
@@ -51,8 +56,9 @@ class PhoneType extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -64,7 +70,7 @@ class PhoneType extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -75,36 +81,35 @@ class PhoneType extends Model
         return Carbon::parse($value)->toFormattedDateString();
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This phone_type was created by a user
+     *  This phone_type was created by a user.
      *
      * @return BelongsTo
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User','user_created_by','id');
+        return $this->belongsTo('App\User', 'user_created_by', 'id');
     }
 
     /**
-     *  This phone_type was updated by a user
+     *  This phone_type was updated by a user.
      *
      * @return BelongsTo
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User','user_updated_by','id');
+        return $this->belongsTo('App\User', 'user_updated_by', 'id');
     }
 }

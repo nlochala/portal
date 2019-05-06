@@ -2,20 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Address;
 use App\Helpers\Helpers;
 use App\Phone;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class PhoneController extends Controller
 {
     /**
-     * Destroy the Phone Number
+     * Require users to have been authenticated before reaching this page.
+     *
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Destroy the Phone Number.
      *
      * @param Phone $phone
+     *
      * @return bool|null
+     *
      * @throws Exception
      */
     public function destroy(Phone $phone)
@@ -34,22 +44,26 @@ class PhoneController extends Controller
      * Delete the given item.
      *
      * @param Phone $phone
+     *
      * @return RedirectResponse
+     *
      * @throws Exception
      */
     public function profileDestroy(Phone $phone)
     {
-        if($this->destroy($phone)){
+        if ($this->destroy($phone)) {
             Helpers::flashAlert(
                 'success',
                 'The phone number has been successfully deleted.',
                 'fa fa-check mr-1');
+
             return redirect()->back();
         }
         Helpers::flashAlert(
             'danger',
             'There was a problem deleting the phone. Please try again.',
             'fa fa-info-circle mr-1');
+
         return redirect()->back();
     }
 }

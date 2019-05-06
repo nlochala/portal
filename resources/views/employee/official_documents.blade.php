@@ -39,20 +39,20 @@
         @foreach($documents as $document)
             <tr>
                 <td><strong>{{ $document->officialDocumentType->name }}</strong></td>
-                <td><a href="{{ $document->file->downloadUrl() }}">{{ $document->file->public_name }}
-                        .{{ $document->file->extension->name }}</a></td>
+                <td><a href="{{ $document->file->downloadUrl() }}">
+                        {{ $document->file->public_name }}.{{ $document->file->extension->name }}</a></td>
                 <td>{{ $document->file->extension->type }}</td>
                 <td>{{ \App\Helpers\Helpers::formatBytes($document->file->size) }}</td>
                 <td>{{ strtoupper($document->file->driver) }}</td>
                 <td>{{ $document->file->created_at }}</td>
                 <td>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="tooltip"
+                        <button type="button" dusk="btn-download-document-{{ $document->id }}" class="btn btn-sm btn-outline-primary" data-toggle="tooltip"
                                 title="Download"
                                 onclick="window.location.href='{{ $document->file->downloadUrl() }}'">
                             <i class="fa fa-download"></i>
                         </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
+                        <button type="button" dusk="btn-delete-document-{{ $document->id }}" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
                                 onclick="window.location.href='/employee/{{ $employee->uuid }}/official_documents/{{ $document->uuid }}/delete'">
                             <i class="fa fa-times"></i>
                         </button>
@@ -63,7 +63,7 @@
         @include('_tables.end-new-table')
     @endif
     <hr/>
-    <button type="button" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+    <button type="button" dusk="btn-modal-block-new-document" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
             data-target="#modal-block-new-document">
         <i class="fa fa-plus"></i> Upload New Document
     </button>
@@ -101,7 +101,7 @@
         'name' => 'upload',
         'label' => 'Upload Document',
         'required' => true,
-        'options' => ['id' => 'filepond', 'class' => 'filepond']
+        'options' => ['class' => 'filepond']
     ])
     <!----------------------------------------------------------------------------->
     <!----------------------------------------------------------------------------->
@@ -116,7 +116,7 @@
     {!! JsValidator::formRequest('\App\Http\Requests\StoreEmployeeOfficialDocumentRequest'); !!}
 
     <script type="text/javascript">
-        @include('layouts._forms._js_filepond', ['id' => 'filepond'])
+        @include('layouts._forms._js_filepond', ['id' => 'upload'])
 
         jQuery(document).ready(function () {
             $("#official_document_type_id").select2({placeholder: "Choose One..."});

@@ -19,6 +19,16 @@ use Illuminate\View\View;
 class EmployeePassportVisaController extends EmployeeController
 {
     /**
+     * Require users to have been authenticated before reaching this page.
+     *
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display the Passport and Visa information page.
      *
      * @param Employee $employee
@@ -108,7 +118,7 @@ class EmployeePassportVisaController extends EmployeeController
         if ($passport->update($values)) {
             Helpers::flashAlert(
                 'success',
-                'The passport has been updated.',
+                'The passport has been successfully updated.',
                 'fa fa-check mr-1');
 
             return redirect()->to("/employee/$employee->uuid/passports_visas");
@@ -264,7 +274,7 @@ class EmployeePassportVisaController extends EmployeeController
         $values = request()->all();
         $filename = Str::slug('visa '.$employee->person->fullName(true));
 
-        if (!request()->has('upload')) {
+        if (!request()->has('upload_1')) {
             Helpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the visa. Please try again.',
@@ -273,7 +283,7 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->back()->withInput();
         }
 
-        if (!$file = File::getFile($values['upload'])) {
+        if (!$file = File::getFile($values['upload_1'])) {
             Helpers::flashAlert(
                 'danger',
                 'Could not find the uploaded image. Please try again.',

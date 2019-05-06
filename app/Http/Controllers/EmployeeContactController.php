@@ -16,6 +16,16 @@ use Illuminate\View\View;
 class EmployeeContactController extends EmployeeController
 {
     /**
+     * Require users to have been authenticated before reaching this page.
+     *
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display the contact information.
      *
      * @param Employee $employee

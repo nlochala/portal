@@ -81,10 +81,10 @@
 <!----------------------------------------------------------------------------->
 <!---------------------------New visa image file field----------------------------->
 @include('layouts._forms._input_file_upload', [
-    'name' => 'upload',
+    'name' => "upload_$visa->id",
     'label' => 'Visa Image',
     'required' => true,
-    'options' => ['id' => 'filepond_' . $visa->id, 'class' => 'filepond', 'accept' => 'image/*']
+    'options' => ['class' => 'filepond', 'accept' => 'image/*']
 ])
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->

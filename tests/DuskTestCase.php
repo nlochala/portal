@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use BeyondCode\DuskDashboard\Testing\TestCase as BaseTestCase;
+use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
@@ -30,8 +30,8 @@ abstract class DuskTestCase extends BaseTestCase
     {
         $options = (new ChromeOptions())->addArguments([
             '--disable-gpu',
-            '--headless',
-            '--window-size=1920,1080',
+//            '--headless',
+            '--window-size=1920,3080',
         ]);
 
         return RemoteWebDriver::create(

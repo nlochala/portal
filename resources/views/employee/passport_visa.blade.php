@@ -35,10 +35,10 @@
 
 @section('js_after')
     <script type="text/javascript">
-        @include('layouts._forms._js_filepond', ['id' => 'filepond'])
+        @include('layouts._forms._js_filepond', ['id' => 'upload'])
 
         @foreach($passport->visas as $visa)
-            @include('layouts._forms._js_filepond', ['id' => 'filepond_'.$visa->id])
+            @include('layouts._forms._js_filepond', ['id' => 'upload_'.$visa->id])
         @endforeach
 
         jQuery(document).ready(function () {

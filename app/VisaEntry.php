@@ -18,8 +18,9 @@ class VisaEntry extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
@@ -34,23 +35,21 @@ class VisaEntry extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
         return 'uuid';
     }
 
-
-
-
     /**
-     * Return a formatted dropdown
+     * Return a formatted dropdown.
      *
-     * @return Collection
+     * @return array
      */
     public static function getDropdown()
     {
-        return static::all()->pluck('name', 'id');
+        return static::all()->pluck('name', 'id')->toArray();
     }
 
     /*
@@ -58,8 +57,9 @@ class VisaEntry extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -71,7 +71,7 @@ class VisaEntry extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -88,14 +88,14 @@ class VisaEntry extends Model
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This visa entry was created by a user
+     *  This visa entry was created by a user.
      *
      * @return BelongsTo
      */
@@ -105,7 +105,7 @@ class VisaEntry extends Model
     }
 
     /**
-     *  This visa entry was updated by a user
+     *  This visa entry was updated by a user.
      *
      * @return BelongsTo
      */

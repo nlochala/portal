@@ -4,35 +4,36 @@
 <!----------------------------------New Panel ------------------------------------>
 @include('layouts._panels_start_panel', ['title' => 'ID Card (Number: xxxxxx' . substr($id_card->number, -4) . ')', 'with_block' => true])
 <div class="block-options" style="float: left">
-    @if($id_card->is_active)
-        <button type="button" class="btn btn-hero-sm btn-hero-success">
+    <button type="button" dusk="btn-id-card-status-{{ $id_card->id }}"
+        @if($id_card->is_active)
+            class="btn btn-hero-sm btn-hero-success">
             <i class="fa fa-check-circle"></i> ACTIVE
-            @else
-                <button type="button" class="btn btn-hero-sm btn-hero-light">
-                    <i class="fa fa-pause-circle"></i> CANCELLED
-                    @endif
-                </button>
+        @else
+            class="btn btn-hero-sm btn-hero-light">
+            <i class="fa fa-pause-circle"></i> CANCELLED
+        @endif
+    </button>
 </div>
 </div>
 {{-- END BLOCK OPTIONS --}}
 @include('layouts._panels_start_content')
 @if($id_card->is_active)
-    <button type="button"
+    <button type="button" dusk="btn-new-id-card"
             class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/create_id_card") !!}>
         <i class="fa fa-plus fa-plus mr-1"></i> Add New ID Card
     </button>
 @endif
-<button type="button"
+<button type="button" dusk="btn-update-id-card-{{ $id_card->id }}"
         class="btn btn-outline-primary mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/id_card/$id_card->uuid/update_id_card") !!}>
     <i class="fa fa-fw fa-pen mr-1"></i> Update ID Card
 </button>
 @if($id_card->is_active)
-    <button type="button"
+    <button type="button" dusk="btn-cancel-id-card-{{ $id_card->id }}"
             class="btn btn-outline-dark mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/id_card/$id_card->uuid/cancel") !!}>
         <i class="fa fa-pause-circle mr-1"></i> Cancel ID Card
     </button>
 @else
-    <button type="button"
+    <button type="button" dusk="btn-delete-id-card-{{ $id_card->id }}"
             class="btn btn-outline-danger mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/id_card/$id_card->uuid/delete") !!}>
         <i class="fa fa-trash mr-1"></i> Delete ID Card
     </button>

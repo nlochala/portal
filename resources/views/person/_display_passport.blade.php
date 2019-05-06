@@ -5,10 +5,10 @@
 @include('layouts._panels_start_panel', ['title' => "Passport (Number: {$passport->number})", 'with_block' => true])
 <div class="block-options" style="float: left">
     @if($passport->is_active)
-        <button type="button" class="btn btn-hero-sm btn-hero-success">
+        <button dusk="btn-active-{{ $passport->id }}" type="button" class="btn btn-hero-sm btn-hero-success">
             <i class="fa fa-check-circle"></i> ACTIVE
             @else
-                <button type="button" class="btn btn-hero-sm btn-hero-light">
+                <button dusk="btn-cancelled-{{ $passport->id }}" type="button" class="btn btn-hero-sm btn-hero-light">
                     <i class="fa fa-pause-circle"></i> CANCELLED
                     @endif
                 </button>
@@ -20,22 +20,24 @@
 @include('layouts._content_row_start')
 @include('layouts._content_column_start', ['size' => 8, 'class' => '', 'style' => ''])
 @if($passport->is_active)
-<button type="button"
-        class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/create_passport") !!}>
-    <i class="fa fa-plus fa-plus mr-1"></i> Add New Passport
-</button>
+    <button type="button" dusk="btn-new-passport"
+            class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/create_passport") !!}>
+        <i class="fa fa-plus fa-plus mr-1"></i> Add New Passport
+    </button>
 @endif
-<button type="button"
+
+<button type="button" dusk="btn-update-passport-{{ $passport->id }}"
         class="btn btn-outline-primary mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/passport/$passport->uuid/update_passport") !!}>
     <i class="fa fa-fw fa-pen mr-1"></i> Update Passport
 </button>
+
 @if($passport->is_active)
-    <button type="button"
+    <button type="button" dusk="btn-cancel-passport-{{ $passport->id }}"
             class="btn btn-outline-dark mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/passport/$passport->uuid/cancel") !!}>
         <i class="fa fa-pause-circle mr-1"></i> Cancel Passport
     </button>
 @else
-    <button type="button"
+    <button type="button" dusk="btn-delete-passport-{{ $passport->id }}"
             class="btn btn-outline-danger mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/passport/$passport->uuid/delete") !!}>
         <i class="fa fa-trash mr-1"></i> Delete Passport
     </button>
@@ -101,9 +103,9 @@
         <tr>
             <td>
                 @if($visa->is_active)
-                    <span class="badge badge-success"> <i class="fa fa-check"></i> ACTIVE </span>
+                    <span dusk="table-is-active-visa-{{ $visa->id }}" class="badge badge-success"> <i class="fa fa-check"></i> ACTIVE </span>
                 @else
-                    <span class="badge badge-secondary"> <i class="far fa-pause-circle"></i> Cancelled</span>
+                    <span dusk="table-is-active-visa-{{ $visa->id }}" class="badge badge-secondary"> <i class="far fa-pause-circle"></i> Cancelled</span>
                 @endif
             </td>
             <td>
@@ -117,22 +119,22 @@
                 @endif
             </td>
             <td>{{ $visa->issue_date->format('Y-m-d') }}</td>
-            <td>{{ $visa->expiration_date->format('Y-m-d') }}<br />
-           {!! \App\Helpers\Helpers::getExpirationBadge($visa->expiration_date,null,30,180) !!}
+            <td>{{ $visa->expiration_date->format('Y-m-d') }}<br/>
+                {!! \App\Helpers\Helpers::getExpirationBadge($visa->expiration_date,null,30,180) !!}
             </td>
             <td>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-info" data-toggle="tooltip"
+                    <button type="button" dusk="btn-download-image-{{ $visa->id }}" class="btn btn-sm btn-outline-info" data-toggle="tooltip"
                             title="Download Info Page"
                             onclick="window.location.href='{{ $visa->image->originalFile->downloadUrl() }}'">
                         <i class="fa fa-file-download"></i>
                     </button>
-                    <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" title="Edit"
+                    <button type="button" dusk="btn-modal-block-visa-{{ $visa->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal" title="Edit"
                             data-target="#modal-block-visa-{{ $visa->id }}">
                         <i class="fa fa-pen"></i>
                     </button>
                     @if($visa->is_active)
-                        <button type="button" class="btn btn-sm btn-outline-dark" data-toggle="tooltip" title="Cancel"
+                        <button type="button" dusk="btn-cancel-visa-{{ $visa->id }}" class="btn btn-sm btn-outline-dark" data-toggle="tooltip" title="Cancel"
                                 onclick="window.location.href='/visa/{{ $visa->uuid }}/cancel'">
                             <i class="fa fa-pause-circle"></i>
                         </button>
@@ -140,7 +142,7 @@
                 </div>
                 @if(!$visa->is_active)
                     <div class="btn-group" style="float: right">
-                        <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
+                        <button type="button" dusk="btn-delete-visa-{{ $visa->id }}" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
                                 onclick="window.location.href='/visa/{{ $visa->uuid }}/delete'">
                             <i class="fa fa-times"></i>
                         </button>
@@ -151,7 +153,7 @@
     @endforeach
     @include('_tables.end-new-table')
 @endif
-<button type="button" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+<button type="button" dusk="btn-modal-block-visa-form-{{ $passport->id }}" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
         data-target="#modal-block-visa-form-{{ $passport->id }}">
     <i class="fa fa-plus"> </i> Add New Visa
 </button>
@@ -168,14 +170,14 @@
     <!-------------------------------- Modal: Visa Edit Start------------------------------------------->
     @include('layouts._modal_panel_start',[
         'id' => 'modal-block-visa-' . $visa->id,
-        'title' => 'Visa Edit'
+        'title' => "Edit Visa (#$visa->number)"
     ])
     @include('person._edit_form_visa', ['visa' => $visa])
 @endforeach
 <!-------------------------------- Modal: New Visa Start------------------------------------------->
 @include('layouts._modal_panel_start',[
     'id' => 'modal-block-visa-form-' . $passport->id,
-    'title' => 'New Visa'
+    'title' => "New Visa for Passport (#$passport->number)"
 ])
 @include('person._create_form_visa',['passport' => $passport])
 

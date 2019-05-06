@@ -8,6 +8,7 @@ $options = array
 
 @php
 isset($options) ?: $options = [];
+isset($options['id']) ?: $options['id'] = $name;
 @endphp
 
 <div class="form-group row">

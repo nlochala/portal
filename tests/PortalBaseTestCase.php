@@ -4,12 +4,9 @@ namespace Tests;
 
 use App\Person;
 use Faker\Factory;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class PortalBaseTestCase extends DuskTestCase
 {
-    use DatabaseTransactions;
-
     protected $person;
     protected $user;
     protected $faker;

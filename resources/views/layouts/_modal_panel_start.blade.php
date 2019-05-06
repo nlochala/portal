@@ -7,7 +7,7 @@ $title
 --}}
 
 
-<div class="modal fade" id="{{ $id }}" tabindex="-1" role="dialog"
+<div dusk="{{ $id }}" class="modal fade" id="{{ $id }}" tabindex="-1" role="dialog"
       aria-labelledby="{{ $id }}" aria-hidden="true" data-focus="false">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">

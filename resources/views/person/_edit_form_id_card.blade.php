@@ -58,8 +58,8 @@
 @include('layouts._forms._input_file_upload', [
     'name' => 'upload_front',
     'label' => 'Card Image (Front)',
-    'required' => true,
-    'options' => ['id' => 'filepond_front', 'class' => 'filepond', 'accept' => 'image/*']
+    'required' => false,
+    'options' => ['class' => 'filepond', 'accept' => 'image/*']
 ])
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
@@ -68,8 +68,8 @@
 @include('layouts._forms._input_file_upload', [
     'name' => 'upload_back',
     'label' => 'Card Image (Back)',
-    'required' => true,
-    'options' => ['id' => 'filepond_back', 'class' => 'filepond', 'accept' => 'image/*']
+    'required' => false,
+    'options' => ['class' => 'filepond', 'accept' => 'image/*']
 ])
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->

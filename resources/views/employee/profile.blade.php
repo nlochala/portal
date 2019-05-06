@@ -83,7 +83,7 @@
             'name' => 'upload',
             'label' => '',
             'required' => true,
-            'options' => ['id' => 'filepond', 'class' => 'filepond', 'accept' => 'image/*']
+            'options' => ['class' => 'filepond', 'accept' => 'image/*']
         ])
 
         <div class="block-content block-content-full block-content-sm bg-body-light text-right">
@@ -122,8 +122,8 @@
             FilePondPluginImageEdit
         );
 
-        const pond = FilePond.create(
-            document.querySelector('#filepond'),
+        const upload = FilePond.create(
+            document.querySelector('#upload'),
             {
                 labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
                 imagePreviewHeight: 200,

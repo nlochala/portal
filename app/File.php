@@ -160,6 +160,19 @@ class File extends Model
         $query->whereNull('size');
     }
 
+    /**
+     * Get files that fit specific type.
+     *
+     * @param $query
+     * @param $extension_type
+     */
+    public function scopeWhereType($query, $extension_type)
+    {
+        $query->whereHas('extension', function ($query) use ($extension_type) {
+            $query->where('type', $extension_type);
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
