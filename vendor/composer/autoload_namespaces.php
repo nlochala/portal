@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Webpatser\\Uuid' => array($vendorDir . '/webpatser/laravel-uuid/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
+    'Pimple' => array($vendorDir . '/pimple/pimple/src'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
     'ParsedownExtra' => array($vendorDir . '/erusev/parsedown-extra'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
