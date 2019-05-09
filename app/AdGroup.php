@@ -2,23 +2,23 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class AdGroup extends Model
 {
     use SoftDeletes;
 
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -27,13 +27,12 @@ class AdGroup extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
         return 'uuid';
     }
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -54,9 +53,8 @@ class AdGroup extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
-
 
     /*
     |--------------------------------------------------------------------------
@@ -64,21 +62,20 @@ class AdGroup extends Model
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Many ad_groups belongs to many users
+     * Many ad_groups belongs to many users.
      *
      * @return BelongsToMany
      */
