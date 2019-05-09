@@ -18,7 +18,6 @@
     "laravel/framework": "5.8.*",
     "laravel/tinker": "^1.0",
     "laravelcollective/html": "^5.4.0",
-    "lorisleiva/laravel-deployer": "^0.2.11",
     "metrogistics/laravel-azure-ad-oauth": "1.2",
     "predis/predis": "^1.1",
     "proengsoft/laravel-jsvalidation": "^2.2.1",
