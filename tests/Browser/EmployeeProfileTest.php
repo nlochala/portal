@@ -1,23 +1,24 @@
-<?php
+<?php /** @noinspection PhpUndefinedMethodInspection */
 
 /** @noinspection PhpMethodNamingConventionInspection */
 
 namespace Tests\Browser;
 
-use App\Passport;
-use Laravel\Dusk\Browser;
-use Tests\Browser\Pages\EmployeeContactInformation;
-use Tests\Browser\Pages\EmployeeCreateIdCard;
-use Tests\Browser\Pages\EmployeeCreatePassport;
-use Tests\Browser\Pages\EmployeeCreateVisa;
-use Tests\Browser\Pages\EmployeeIdCard;
-use Tests\Browser\Pages\EmployeeOfficialDocuments;
-use Tests\Browser\Pages\EmployeePassport;
-use Tests\Browser\Pages\EmployeeProfile;
-use Tests\Browser\Pages\EmployeeUpdateIdCard;
-use Tests\Browser\Pages\EmployeeVisa;
-use Tests\PortalBaseTestCase;
 use Throwable;
+use Laravel\Dusk\Browser;
+use Tests\PortalBaseTestCase;
+use Tests\Browser\Pages\EmployeeVisa;
+use Tests\Browser\Pages\EmployeeIdCard;
+use Tests\Browser\Pages\EmployeeProfile;
+use Tests\Browser\Pages\EmployeePassport;
+use Tests\Browser\Pages\EmployeeCreateVisa;
+use Tests\Browser\Pages\EmployeeCreateIdCard;
+use Tests\Browser\Pages\EmployeeUpdateIdCard;
+use Tests\Browser\Pages\EmployeeCreatePassport;
+use Tests\Browser\Pages\EmployeePositionDetails;
+use Tests\Browser\Pages\EmployeeEmploymentDetails;
+use Tests\Browser\Pages\EmployeeOfficialDocuments;
+use Tests\Browser\Pages\EmployeeContactInformation;
 
 class EmployeeProfileTest extends PortalBaseTestCase
 {
@@ -38,7 +39,6 @@ class EmployeeProfileTest extends PortalBaseTestCase
                 ->logout();
         });
     }
-
 
     /**
      * An employee can see and change their contact information.
@@ -256,6 +256,7 @@ class EmployeeProfileTest extends PortalBaseTestCase
      * An employee can create official documents.
      *
      * @test
+     * @throws Throwable
      */
     public function an_employee_can_create_official_documents()
     {
@@ -271,6 +272,7 @@ class EmployeeProfileTest extends PortalBaseTestCase
      * An employee can delete an official documents.
      *
      * @test
+     * @throws Throwable
      */
     public function an_employee_can_delete_an_official_documents()
     {
@@ -278,6 +280,44 @@ class EmployeeProfileTest extends PortalBaseTestCase
             $browser->loginAs($this->user->id)
                 ->visit(new EmployeeOfficialDocuments($this->person->employee))
                 ->deleteOfficialDocument()
+                ->logout();
+        });
+    }
+
+    /**
+     * An employee can view their employment details.
+     *
+     * @test
+     * @throws Throwable
+     */
+    public function an_employee_can_change_their_employment_details()
+    {
+        $this->artisan('db:seed --class=PositionsTableSeeder');
+
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user->id)
+                ->visit(new EmployeeEmploymentDetails($this->person->employee))
+                ->employeeOverview()
+                ->employeePositions()
+                ->logout();
+        });
+    }
+
+    /**
+     * An employee can view their position details.
+     *
+     * @test
+     * @throws Throwable
+     */
+    public function an_employee_can_view_their_position_details()
+    {
+        $this->artisan('db:seed --class=PositionsTableSeeder');
+
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs($this->user->id)
+                ->visit(new EmployeePositionDetails($this->person->employee))
+                ->noPositionsAdded()
+                ->showPositions()
                 ->logout();
         });
     }

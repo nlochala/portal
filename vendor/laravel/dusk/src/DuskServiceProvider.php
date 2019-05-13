@@ -3,6 +3,7 @@
 namespace Laravel\Dusk;
 
 use Exception;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use App\File;
 use Illuminate\Support\Facades\Route;
@@ -70,7 +71,8 @@ class DuskServiceProvider extends ServiceProvider
         });
 
         Browser::macro('selectRadio', function ($value = null) {
-            $this->click("label[for=$value]");
+            $value = Str::slug($value);
+            $this->click("@$value");
             return $this;
         });
 
@@ -139,6 +141,11 @@ class DuskServiceProvider extends ServiceProvider
             return $this;
         });
 
+        Browser::macro('searchTable', function ($table_id = null, $search_value = null) {
+            $this->keys("input[aria-controls=$table_id]", $search_value)
+            ->keys("input[aria-controls=$table_id]", '{enter}');
+            return $this;
+        });
 
     }
 

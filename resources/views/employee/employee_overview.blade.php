@@ -39,7 +39,7 @@
         'name' => 'start_date',
         'label' => 'Start Date',
         'format' => 'yyyy-mm-dd',
-        'required' => false,
+        'required' => true,
         'selected' => $employee->start_date
     ])
     {{-- MUST ADD form.date.js TO BOTTOM OF PAGE --}}
@@ -123,7 +123,7 @@
 
     <hr />
 
-    <button type="button" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+    <button type="button" dusk="btn-modal-block-positions" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
             data-target="#modal-block-positions">
         <i class="fa fa-plus"></i> Add Additional Position
     </button>

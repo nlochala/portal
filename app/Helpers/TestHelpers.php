@@ -21,6 +21,11 @@ class TestHelpers
         return $new_image;
     }
 
+    /**
+     * Create a sample file and return the file model.
+     *
+     * @return mixed
+     */
     public static function getSampleFile()
     {
         $original_file = File::whereType('Document')->first();
@@ -29,5 +34,16 @@ class TestHelpers
 
         return $new_file;
     }
-}
 
+    /**
+     * We have selectors that might contain spaces or other invalid jQuery selectors.
+     * We need to sanitize them and then return back to the requesting function.
+     *
+     * @param $selector
+     * @return mixed
+     */
+    public static function sanitizeSelectors($selector)
+    {
+        return str_replace(' ', '\ ', $selector);
+    }
+}

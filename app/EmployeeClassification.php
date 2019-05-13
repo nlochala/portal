@@ -3,11 +3,10 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EmployeeClassification extends Model
 {
@@ -55,12 +54,10 @@ class EmployeeClassification extends Model
 
     /**
      * Return a formatted dropdown.
-     *
-     * @return Collection
      */
     public static function getDropdown()
     {
-        return static::all()->pluck('combined_name', 'id');
+        return static::all()->pluck('combined_name', 'id')->toArray();
     }
 
     /*

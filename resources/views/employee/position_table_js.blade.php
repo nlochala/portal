@@ -1,4 +1,4 @@
-var tableposition = $('#position_table').DataTable({
+const tableposition = $('#position_table').DataTable({
 dom: "frtip",
 select: true,
 paging: true,
@@ -11,7 +11,7 @@ columns: [
 {data: "stipend"},
 {data: "uuid",
 render: function(data, type, row) {
-return "<button type=\"button\" class=\"btn btn-sm btn-outline-success\" data-toggle=\"tooltip\" title=\"Add Position\"\n" +
+return "<button type=\"button\" class=\"btn btn-sm btn-outline-success\" dusk=\"" + data + "\" data-toggle=\"tooltip\" title=\"Add Position\"\n" +
 "                onclick=\"window.location.href='/employee/{{ $employee->uuid }}/position/" + data + "/add'\">\n" +
 "            <i class=\"fa fa-plus-circle\"></i> Add\n" +
 "        </button>";
