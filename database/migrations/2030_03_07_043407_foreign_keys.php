@@ -216,7 +216,17 @@ class ForeignKeys extends Migration
             $table->foreign('position_id')
                 ->references('id')->on('positions');
         });
-
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: ROOMS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('rooms', function (Blueprint $table) {
+            $table->foreign('room_type_id')
+                ->references('id')->on('room_types');
+            $table->foreign('building_id')
+                ->references('id')->on('buildings');
+        });
     }
 
     /**

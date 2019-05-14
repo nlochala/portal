@@ -1,0 +1,85 @@
+number,description,room_type_id,building_id,phone_extension
+201,Dr. Kempf's Office,1,1,828
+102b,Mr. Brychan's Office,1,1,839
+205,Mrs. Jamie's Office,1,1,825
+206,Office #1,1,1,847
+208,Office #2,1,1,871
+100,Reception,1,1,808
+108,Child Care Room,4,1,807
+111,K4 Dinasours,4,1,806
+101,K4 Hippos,4,1,811
+110,K5 Panthers,4,1,810
+112,K5 Raccoons ,4,1,809
+113,Music Room ,4,1,805
+103,N3 Bees,4,1,802
+109,N3 Monkeys,4,1,801
+104,N3 Sleeping Room,4,1,803
+106,Teacher Workroom,5,1,874
+102a,Conference Room,6,1,804
+203,Conference Room,6,1,840
+200,A Auditorium,8,1,872
+202,Mr. Eric's Office,1,2,885
+204,Mr. Jack's Office,1,2,882
+201,Mr. Zack's Office,1,2,831
+216,Ms. Ana's Office,1,2,829
+212b,Ms. Angela/Helen's Office,1,2,886
+206,Ms. Smitha's Office,1,2,881
+114,Nurse's Office,1,2,877
+208,Staff Office,1,2,814
+106,Curriculum Lab,2,2,836
+217,Record Room,2,2,880
+111,1st Frogs,4,2,818
+109,1st Gators,4,2,815
+113,1st Owls,4,2,842
+105,2nd Elephants,4,2,835
+107,2nd Lions,4,2,817
+103,2nd Zebras,4,2,826
+207,3rd Dolphins,4,2,821
+203,3rd Pandas,4,2,834
+205,3rd Tigers,4,2,813
+215,4th Penguins,4,2,827
+213,4th Polar Bears,4,2,819
+211,5th Eagles,4,2,832
+209,5th Falcons,4,2,823
+214,EFL-1,4,2,844
+104,EFL-2,4,2,824
+212a,EFL-3,4,2,833
+301,Music Room,4,2,876
+302,Music Room,4,2,879
+303,Music Room,4,2,878
+101,Teacher Workroom,5,2,822
+210,Teacher Workroom,5,2,820
+108,Elementary Library,9,2,837
+110,Secondary Library,9,2,816
+102,Computer Lab,10,2,843
+300,B Auditorium,8,2,000
+104b,Mr. James' Office,1,3,865
+201,Mr. Mike's Office,1,3,850
+115,Ms. Courtney's Office,1,3,854
+112,Ms. Deanna's Office,1,3,849
+209,EFL,4,3,867
+213,HS History,4,3,848
+211,HS Language Arts,4,3,861
+215,HS Math,4,3,862
+106,Mandarin,4,3,856
+110,Mandarin,4,3,863
+202,Mandarin,4,3,852
+203,Mandarin,4,3,812
+205,Mandarin,4,3,851
+206a,Mandarin,4,3,890
+206b,Mandarin,4,3,859
+207,Mandarin,4,3,868
+111 ,MS History,4,3,869
+109,MS Language Arts,4,3,864
+113,MS Math,4,3,845
+108,MS Reading,4,3,855
+107,MS Science,4,3,857
+210,MS/HS Fine Arts,4,3,860
+104a,PE/Health,4,3,889
+208,Science Lab,4,3,870
+103,Teacher Workroom,5,3,838
+217,Teacher Workroom,5,3,866
+102,Computer Lab,10,3,858
+204,Computer Lab,10,3,846
+100,Cafeteria/Kitchen,7,4,887
+100,Security Guard Station,1,1,873

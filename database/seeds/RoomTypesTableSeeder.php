@@ -1,10 +1,10 @@
 <?php
 
-use App\Country;
+use App\RoomType;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
-class CountriesTableSeeder extends Seeder
+class RoomTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,14 +14,14 @@ class CountriesTableSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('countries')->truncate();
+        DB::table('room_types')->truncate();
 
-        $countries = Helpers::parseCsv('database/seeds/data/countries.csv', true);
+        $room_types = Helpers::parseCsv('database/seeds/data/room_types.csv', false);
 
-        foreach ($countries as $country) {
-            $model = new Country();
-            $model->name = $country[0];
-            $model->country_code = $country[1];
+        foreach ($room_types as $type) {
+            $model = new RoomType();
+            $model->name = $type[2];
+            $model->description = $type[3];
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

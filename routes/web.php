@@ -29,14 +29,14 @@ Route::get('employee/lookup', 'EmployeeController@lookup');
 | PARENTS
 |--------------------------------------------------------------------------
 */
-Route::get('parent/lookup', 'ParentController@lookup');
+//Route::get('parent/lookup', 'ParentController@lookup');
 
 /*
 |--------------------------------------------------------------------------
 | STUDENTS
 |--------------------------------------------------------------------------
 */
-Route::get('student/lookup', 'StudentController@lookup');
+//Route::get('student/lookup', 'StudentController@lookup');
 
 /*
 |--------------------------------------------------------------------------
