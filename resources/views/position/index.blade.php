@@ -99,15 +99,15 @@
                         data: "uuid",
                         render: function (data, type, row) {
                             return "        <div class=\"btn-group\">\n" +
-                                "            <button type=\"button\" class=\"btn btn-sm btn-outline-info\" data-toggle=\"tooltip\" title=\"View Details\"\n" +
+                                "            <button dusk=\"btn-show-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-info\" data-toggle=\"tooltip\" title=\"View Details\"\n" +
                                 "                    onclick=\"window.location.href='/position/" + data + "'\">\n" +
                                 "                <i class=\"si si-magnifier\"></i>\n" +
                                 "            </button>\n" +
-                                "            <button type=\"button\" class=\"btn btn-sm btn-outline-primary\" data-toggle=\"tooltip\" title=\"Edit\"\n" +
+                                "            <button dusk=\"btn-edit-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-primary\" data-toggle=\"tooltip\" title=\"Edit\"\n" +
                                 "                    onclick=\"window.location.href='/position/" + data + "/edit'\">\n" +
                                 "                <i class=\"fa fa-pen\"></i>\n" +
                                 "            </button>\n" +
-                                "            <button type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"tooltip\" title=\"Archive\"\n" +
+                                "            <button dusk=\"btn-archive-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"tooltip\" title=\"Archive\"\n" +
                                 "                    onclick=\"window.location.href='/position/" + data + "/archive'\">\n" +
                                 "                <i class=\"fa fa-times\"></i>\n" +
                                 "            </button>\n" +

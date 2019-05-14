@@ -25,6 +25,7 @@
     "webpatser/laravel-uuid": "^3.0"
   },
   "require-dev": {
+    "ajthinking/tinx": "^2.3",
     "barryvdh/laravel-debugbar": "^3.2",
     "beyondcode/laravel-dump-server": "^1.0",
     "filp/whoops": "^2.0",

@@ -90,4 +90,5 @@ return array(
     'Barryvdh\\Debugbar\\' => array($vendorDir . '/barryvdh/laravel-debugbar/src'),
     'Arrilot\\Widgets\\' => array($vendorDir . '/arrilot/laravel-widgets/src'),
     'App\\' => array($baseDir . '/app'),
+    'Ajthinking\\Tinx\\' => array($vendorDir . '/ajthinking/tinx/src'),
 );

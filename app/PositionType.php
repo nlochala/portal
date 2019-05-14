@@ -56,11 +56,11 @@ class PositionType extends Model
     /**
      * Return a formatted dropdown.
      *
-     * @return Collection
+     * @return array
      */
     public static function getDropdown()
     {
-        return static::all()->pluck('name', 'id');
+        return static::all()->pluck('name', 'id')->toArray();
     }
 
     /*

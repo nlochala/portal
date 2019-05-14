@@ -4,8 +4,8 @@ namespace Laravel\Dusk;
 
 use Exception;
 use Illuminate\Support\Str;
-use Tests\TestCase;
 use App\File;
+use Tests\TestCase;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use PHPUnit\Framework\Assert as PHPUnit;
@@ -72,14 +72,14 @@ class DuskServiceProvider extends ServiceProvider
 
         Browser::macro('selectRadio', function ($value = null) {
             $value = Str::slug($value);
-            $this->click("@$value");
+            $this->click("@radio-$value");
             return $this;
         });
 
         Browser::macro('uploadFile', function ($element = null, $file_url = false) {
             $file_url ?: $file_url = url('/storage/sample-passport.jpg');
             $this->script("$element.addFile('$file_url')");
-            $this->waitUntil('$(\'div[id='.$element.']\').text().includes(\'Upload complete\')', 30);
+            $this->waitUntil('$(\'div[id=' . $element . ']\').text().includes(\'Upload complete\')', 30);
             $file_uuid = $this->value(".filepond--file-wrapper input[name=$element]");
 
             $file = File::all()->last();
@@ -90,6 +90,11 @@ class DuskServiceProvider extends ServiceProvider
 
         Browser::macro('submitForm', function ($formId = null) {
             $this->script("$('#$formId button[type=submit]').trigger('click')");
+            return $this;
+        });
+
+        Browser::macro('textArea', function ($element = null, $text = null) {
+            $this->script("$('#$element').summernote('code', '$text')");
             return $this;
         });
 
@@ -136,14 +141,15 @@ class DuskServiceProvider extends ServiceProvider
             return $this;
         });
 
-         Browser::macro('downloadFile', function ($download_btn_dusk_selector = '', File $file) {
+        Browser::macro('downloadFile', function ($download_btn_dusk_selector = '', File $file) {
             $this->script("$('button[dusk=$download_btn_dusk_selector]').trigger('click');");
             return $this;
         });
 
         Browser::macro('searchTable', function ($table_id = null, $search_value = null) {
-            $this->keys("input[aria-controls=$table_id]", $search_value)
-            ->keys("input[aria-controls=$table_id]", '{enter}');
+            $this->waitFor("#$table_id")
+                ->keys("input[aria-controls=$table_id]", $search_value)
+                ->keys("input[aria-controls=$table_id]", '{enter}');
             return $this;
         });
 

@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts._breadcrumbs', [
-    'title' => 'Employee Positions - Index',
+    'title' => 'Edit - '.$position->name,
     'breadcrumbs' => [
         [
             'page_name' => 'Portal',

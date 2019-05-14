@@ -28,6 +28,7 @@ class StorePositionRequest extends FormRequest
             'school_id' => 'required',
             'position_type_id' => 'required',
             'supervisor_position_id' => 'required',
+            'stipend' => 'numeric',
         ];
     }
 

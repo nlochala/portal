@@ -31,7 +31,7 @@ $selected
                         ])
                     }}
                 @endif
-                <label class="custom-control-label" dusk="{{ \Illuminate\Support\Str::slug($description) }}" for="{{ $description }}">{{ $description }}</label>
+                <label class="custom-control-label" dusk="radio-{{ \Illuminate\Support\Str::slug($description) }}" for="{{ $description }}">{{ $description }}</label>
             </div>
         @endforeach
     </div>

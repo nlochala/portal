@@ -22,8 +22,8 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
@@ -174,6 +174,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         array (
             'Arrilot\\Widgets\\' => 16,
             'App\\' => 4,
+            'Ajthinking\\Tinx\\' => 16,
         ),
     );
 
@@ -516,6 +517,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'Ajthinking\\Tinx\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ajthinking/tinx/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -570,6 +575,19 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
 
     public static $classMap = array (
         'AddressTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AddressTypesTableSeeder.php',
+        'Ajthinking\\Tinx\\Console\\NamesTable' => __DIR__ . '/..' . '/ajthinking/tinx/src/Console/NamesTable.php',
+        'Ajthinking\\Tinx\\Console\\State' => __DIR__ . '/..' . '/ajthinking/tinx/src/Console/State.php',
+        'Ajthinking\\Tinx\\Console\\TinxCommand' => __DIR__ . '/..' . '/ajthinking/tinx/src/Console/TinxCommand.php',
+        'Ajthinking\\Tinx\\Includes\\IncludeManager' => __DIR__ . '/..' . '/ajthinking/tinx/src/Includes/IncludeManager.php',
+        'Ajthinking\\Tinx\\Models\\Model' => __DIR__ . '/..' . '/ajthinking/tinx/src/Models/Model.php',
+        'Ajthinking\\Tinx\\Models\\ModelValidator' => __DIR__ . '/..' . '/ajthinking/tinx/src/Models/ModelValidator.php',
+        'Ajthinking\\Tinx\\Models\\Models' => __DIR__ . '/..' . '/ajthinking/tinx/src/Models/Models.php',
+        'Ajthinking\\Tinx\\Naming\\ForbiddenNames' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/ForbiddenNames.php',
+        'Ajthinking\\Tinx\\Naming\\PascalStrategy' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/PascalStrategy.php',
+        'Ajthinking\\Tinx\\Naming\\ShortestUniqueStrategy' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/ShortestUniqueStrategy.php',
+        'Ajthinking\\Tinx\\Naming\\Strategy' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/Strategy.php',
+        'Ajthinking\\Tinx\\Naming\\StrategyFactory' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/StrategyFactory.php',
+        'Ajthinking\\Tinx\\TinxServiceProvider' => __DIR__ . '/..' . '/ajthinking/tinx/src/TinxServiceProvider.php',
         'App\\AdGroup' => __DIR__ . '/../..' . '/app/AdGroup.php',
         'App\\Address' => __DIR__ . '/../..' . '/app/Address.php',
         'App\\AddressType' => __DIR__ . '/../..' . '/app/AddressType.php',
@@ -672,6 +690,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Providers\\TelescopeServiceProvider' => __DIR__ . '/../..' . '/app/Providers/TelescopeServiceProvider.php',
         'App\\School' => __DIR__ . '/../..' . '/app/School.php',
         'App\\SchoolArea' => __DIR__ . '/../..' . '/app/SchoolArea.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
@@ -5822,6 +5841,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
         'Symfony\\Polyfill\\Php70\\Php70' => __DIR__ . '/..' . '/symfony/polyfill-php70/Php70.php',
         'Symfony\\Polyfill\\Php72\\Php72' => __DIR__ . '/..' . '/symfony/polyfill-php72/Php72.php',
+        'Tests\\Browser\\EmployeePositionsCRUDTest' => __DIR__ . '/../..' . '/tests/Browser/EmployeePositionsCRUDTest.php',
         'Tests\\Browser\\EmployeeProfileTest' => __DIR__ . '/../..' . '/tests/Browser/EmployeeProfileTest.php',
         'Tests\\Browser\\Pages\\EmployeeContactInformation' => __DIR__ . '/../..' . '/tests/Browser/Pages/EmployeeContactInformation.php',
         'Tests\\Browser\\Pages\\EmployeeCreateIdCard' => __DIR__ . '/../..' . '/tests/Browser/Pages/EmployeeCreateIdCard.php',
@@ -5838,6 +5858,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'Tests\\Browser\\Pages\\EmployeeVisa' => __DIR__ . '/../..' . '/tests/Browser/Pages/EmployeeVisa.php',
         'Tests\\Browser\\Pages\\HomePage' => __DIR__ . '/../..' . '/tests/Browser/Pages/HomePage.php',
         'Tests\\Browser\\Pages\\Page' => __DIR__ . '/../..' . '/tests/Browser/Pages/Page.php',
+        'Tests\\Browser\\Pages\\PositionsCreate' => __DIR__ . '/../..' . '/tests/Browser/Pages/PositionsCreate.php',
+        'Tests\\Browser\\Pages\\PositionsEdit' => __DIR__ . '/../..' . '/tests/Browser/Pages/PositionsEdit.php',
+        'Tests\\Browser\\Pages\\PositionsIndex' => __DIR__ . '/../..' . '/tests/Browser/Pages/PositionsIndex.php',
+        'Tests\\Browser\\Pages\\PositionsView' => __DIR__ . '/../..' . '/tests/Browser/Pages/PositionsView.php',
         'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
         'Tests\\DuskTestCase' => __DIR__ . '/../..' . '/tests/DuskTestCase.php',
         'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',

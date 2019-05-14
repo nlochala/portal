@@ -45,11 +45,11 @@
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => $position->name, 'with_block' => true])
     <div class="block-options">
-        <button type="button" class="btn btn-hero-sm btn-hero-light" data-toggle="tooltip" title="Edit"
+        <button dusk="btn-edit-{{ $position->id }}" type="button" class="btn btn-hero-sm btn-hero-light" data-toggle="tooltip" title="Edit"
                 onclick="window.location.href='/position/{{ $position->uuid }}/edit'">
             <i class="fa fa-pen"></i> Edit
         </button>
-        <button type="button" class="btn btn-hero-sm  btn-hero-danger" data-toggle="tooltip" title="Archive"
+        <button dusk="btn-archive-{{ $position->id }}" type="button" class="btn btn-hero-sm  btn-hero-danger" data-toggle="tooltip" title="Archive"
                 onclick="window.location.href='/position/{{ $position->uuid }}/archive'">
             <i class="fa fa-times"></i> Archive
         </button>
