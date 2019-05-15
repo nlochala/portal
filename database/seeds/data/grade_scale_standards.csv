@@ -1,0 +1,7 @@
+1,M,Mastery,The student has mastered the material.,2,,,,,,,
+2,AM,Approaching Mastery,The student is approaching mastery of the material.,2,,,,,,,
+3,NM,Not Mastered,The student has not yet mastered the material.,2,,,,,,,
+4,S,Satisfactory,The student is performing at a satisfactory level.,4,,,,,,,
+5,N,Needs Improvement,The student needs to improve.,4,,,,,,,
+6,U,Unsatisfactory,The student is performing at an unsatisfactory level.,4,,,,,,,
+7,NA,Not Applicable,The student will not be assessed.,4,,,,,,,

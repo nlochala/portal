@@ -4,12 +4,13 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
+use Whoops\Exception\ErrorException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Room extends Model
+class GradeScale extends Model
 {
     use SoftDeletes;
 
@@ -47,11 +48,10 @@ class Room extends Model
      */
     protected $fillable = [
         'uuid',
-        'number',
+        'name',
         'description',
-        'room_type_id',
-        'building_id',
-        'phone_extension',
+        'is_percentage_based',
+        'is_standards_based',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
@@ -63,18 +63,6 @@ class Room extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * Return a formatted room number.
-     *
-     * @param $value
-     *
-     * @return mixed
-     */
-    public function getNumberAttribute($value)
-    {
-        return $this->building->short_name."-$value";
-    }
 
     /**
      * Set created_at to Carbon Object.
@@ -113,28 +101,27 @@ class Room extends Model
     */
 
     /**
-     * This room has a Building.
+     *  This grade_scale has many items.
      *
-     * @return HasOne
+     * @return HasMany
      */
-    public function building()
+    public function items()
     {
-        return $this->hasOne('App\Building', 'id', 'building_id');
+        if ($this->is_percentage_based) {
+            return $this->hasMany('App\GradeScalePercentage', 'grade_scale_id');
+        }
+
+        if ($this->is_standards_based) {
+            return $this->hasMany('App\GradeScaleStandard', 'grade_scale_id');
+        }
+
+        return throwException(new ErrorException(
+            'The grade scale must be either percentage-based or standards-based. This grade scale is neither.'
+        ));
     }
 
     /**
-     * This room has a RoomType.
-     *
-     * @return HasOne
-     */
-    public function type()
-    {
-        // 6 --> this is the key for the relationship on the table defined on 4
-        return $this->hasOne('App\RoomType', 'id', 'room_type_id');
-    }
-
-    /**
-     *  This room was created by a user.
+     *  This grade_scale was created by a user.
      *
      * @return BelongsTo
      */
@@ -144,7 +131,7 @@ class Room extends Model
     }
 
     /**
-     *  This room was updated by a user.
+     *  This grade_scale was updated by a user.
      *
      * @return BelongsTo
      */

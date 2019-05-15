@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Room extends Model
+class GradeScalePercentage extends Model
 {
     use SoftDeletes;
 
@@ -47,11 +47,11 @@ class Room extends Model
      */
     protected $fillable = [
         'uuid',
-        'number',
-        'description',
-        'room_type_id',
-        'building_id',
-        'phone_extension',
+        'grade_scale_id',
+        'from',
+        'to',
+        'result',
+        'equivalent_standard_id',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
@@ -63,18 +63,6 @@ class Room extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * Return a formatted room number.
-     *
-     * @param $value
-     *
-     * @return mixed
-     */
-    public function getNumberAttribute($value)
-    {
-        return $this->building->short_name."-$value";
-    }
 
     /**
      * Set created_at to Carbon Object.
@@ -113,28 +101,29 @@ class Room extends Model
     */
 
     /**
-     * This room has a Building.
+     * This grade_scale_percentage has a GradeScale.
      *
      * @return HasOne
      */
-    public function building()
-    {
-        return $this->hasOne('App\Building', 'id', 'building_id');
-    }
-
-    /**
-     * This room has a RoomType.
-     *
-     * @return HasOne
-     */
-    public function type()
+    public function gradeScale()
     {
         // 6 --> this is the key for the relationship on the table defined on 4
-        return $this->hasOne('App\RoomType', 'id', 'room_type_id');
+        return $this->hasOne('App\GradeScale', 'id', 'grade_scale_id');
     }
 
     /**
-     *  This room was created by a user.
+     * This grade_scale_percentage has a GradeScaleStandard.
+     *
+     * @return HasOne
+     */
+    public function standard()
+    {
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\GradeScaleStandard', 'id', 'equivalent_standard_id');
+    }
+
+    /**
+     *  This grade_scale_percentage was created by a user.
      *
      * @return BelongsTo
      */
@@ -144,7 +133,7 @@ class Room extends Model
     }
 
     /**
-     *  This room was updated by a user.
+     *  This grade_scale_percentage was updated by a user.
      *
      * @return BelongsTo
      */

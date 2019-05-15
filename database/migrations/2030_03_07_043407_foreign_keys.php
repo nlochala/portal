@@ -216,6 +216,7 @@ class ForeignKeys extends Migration
             $table->foreign('position_id')
                 ->references('id')->on('positions');
         });
+
         /*
         |--------------------------------------------------------------------------
         | TABLE: ROOMS
@@ -226,6 +227,116 @@ class ForeignKeys extends Migration
                 ->references('id')->on('room_types');
             $table->foreign('building_id')
                 ->references('id')->on('buildings');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: GRADE_LEVELS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('grade_levels', function (Blueprint $table) {
+            $table->foreign('year_id')
+                ->references('id')->on('years');
+            $table->foreign('school_id')
+                ->references('id')->on('schools');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: REPORT_CARD_WEIGHTS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('report_card_weights', function (Blueprint $table) {
+            $table->foreign('course_id')
+                ->references('id')->on('courses');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: COURSES
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('courses', function (Blueprint $table) {
+            $table->foreign('course_transcript_type_id')
+                ->references('id')->on('course_transcript_types');
+            $table->foreign('grade_scale_id')
+                ->references('id')->on('grade_scales');
+            $table->foreign('department_id')
+                ->references('id')->on('departments');
+            $table->foreign('school_id')
+                ->references('id')->on('schools');
+            $table->foreign('year_id')
+                ->references('id')->on('years');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: COURSES_PREREQUISITES_PIVOT
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('courses_prerequisites_pivot', function (Blueprint $table) {
+            $table->foreign('course_id')
+                ->references('id')->on('courses');
+            $table->foreign('requires_course_id')
+                ->references('id')->on('courses');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: COURSES_COREQUISITES_PIVOT
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('courses_corequisites_pivot', function (Blueprint $table) {
+            $table->foreign('course_id')
+                ->references('id')->on('courses');
+            $table->foreign('requires_course_id')
+                ->references('id')->on('courses');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: COURSES_EQUIVALENTS_PIVOT
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('courses_equivalents_pivot', function (Blueprint $table) {
+            $table->foreign('course_id')
+                ->references('id')->on('courses');
+            $table->foreign('equivalent_to_course_id')
+                ->references('id')->on('courses');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: COURSE_GRADE_LEVELS_PIVOT
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('courses_grade_levels_pivot', function (Blueprint $table) {
+            $table->foreign('course_id')
+                ->references('id')->on('courses');
+            $table->foreign('grade_level_id')
+                ->references('id')->on('grade_levels');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: GRADE_SCALE_PERCENTAGES
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('grade_scale_percentages', function (Blueprint $table) {
+            $table->foreign('grade_scale_id')
+                ->references('id')->on('grade_scales');
+            $table->foreign('equivalent_standard_id')
+                ->references('id')->on('grade_scale_standards');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: GRADE_SCALE_STANDARDS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('grade_scale_standards', function (Blueprint $table) {
+            $table->foreign('grade_scale_id')
+                ->references('id')->on('grade_scales');
         });
     }
 

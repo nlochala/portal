@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Room extends Model
+class GradeLevel extends Model
 {
     use SoftDeletes;
 
@@ -47,11 +47,10 @@ class Room extends Model
      */
     protected $fillable = [
         'uuid',
-        'number',
-        'description',
-        'room_type_id',
-        'building_id',
-        'phone_extension',
+        'short_name',
+        'name',
+        'year_id',
+        'school_id',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
@@ -63,18 +62,6 @@ class Room extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * Return a formatted room number.
-     *
-     * @param $value
-     *
-     * @return mixed
-     */
-    public function getNumberAttribute($value)
-    {
-        return $this->building->short_name."-$value";
-    }
 
     /**
      * Set created_at to Carbon Object.
@@ -113,28 +100,29 @@ class Room extends Model
     */
 
     /**
-     * This room has a Building.
+     * This grade_level has a Year.
      *
      * @return HasOne
      */
-    public function building()
-    {
-        return $this->hasOne('App\Building', 'id', 'building_id');
-    }
-
-    /**
-     * This room has a RoomType.
-     *
-     * @return HasOne
-     */
-    public function type()
+    public function year()
     {
         // 6 --> this is the key for the relationship on the table defined on 4
-        return $this->hasOne('App\RoomType', 'id', 'room_type_id');
+        return $this->hasOne('App\Year', 'id', 'year_id');
     }
 
     /**
-     *  This room was created by a user.
+     * This grade_level has a School.
+     *
+     * @return HasOne
+     */
+    public function school()
+    {
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\School', 'id', 'school_id');
+    }
+
+    /**
+     *  This grade_level was created by a user.
      *
      * @return BelongsTo
      */
@@ -144,7 +132,7 @@ class Room extends Model
     }
 
     /**
-     *  This room was updated by a user.
+     *  This grade_level was updated by a user.
      *
      * @return BelongsTo
      */

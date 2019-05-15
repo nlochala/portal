@@ -6,10 +6,10 @@ use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Room extends Model
+class CourseTranscriptType extends Model
 {
     use SoftDeletes;
 
@@ -47,11 +47,8 @@ class Room extends Model
      */
     protected $fillable = [
         'uuid',
-        'number',
+        'name',
         'description',
-        'room_type_id',
-        'building_id',
-        'phone_extension',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
@@ -63,18 +60,6 @@ class Room extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * Return a formatted room number.
-     *
-     * @param $value
-     *
-     * @return mixed
-     */
-    public function getNumberAttribute($value)
-    {
-        return $this->building->short_name."-$value";
-    }
 
     /**
      * Set created_at to Carbon Object.
@@ -113,28 +98,17 @@ class Room extends Model
     */
 
     /**
-     * This room has a Building.
+     *  This course_transcript_type has many courses.
      *
-     * @return HasOne
+     * @return HasMany
      */
-    public function building()
+    public function courses()
     {
-        return $this->hasOne('App\Building', 'id', 'building_id');
+        return $this->hasMany('App\Course', 'course_transcript_type_id');
     }
 
     /**
-     * This room has a RoomType.
-     *
-     * @return HasOne
-     */
-    public function type()
-    {
-        // 6 --> this is the key for the relationship on the table defined on 4
-        return $this->hasOne('App\RoomType', 'id', 'room_type_id');
-    }
-
-    /**
-     *  This room was created by a user.
+     *  This transcript_type was created by a user.
      *
      * @return BelongsTo
      */
@@ -144,7 +118,7 @@ class Room extends Model
     }
 
     /**
-     *  This room was updated by a user.
+     *  This transcript_type was updated by a user.
      *
      * @return BelongsTo
      */
