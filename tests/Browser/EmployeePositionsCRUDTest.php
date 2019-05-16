@@ -21,7 +21,7 @@ class EmployeePositionsCRUDTest extends PortalBaseTestCase
      */
     public function a_position_can_be_created()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
 
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user->id)
@@ -38,7 +38,7 @@ class EmployeePositionsCRUDTest extends PortalBaseTestCase
      */
     public function a_position_can_be_viewed()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
         $position = Position::all()->random(1)->first();
 
         $this->browse(function (Browser $browser) use ($position) {
@@ -58,7 +58,7 @@ class EmployeePositionsCRUDTest extends PortalBaseTestCase
      */
     public function a_position_can_be_edited()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
         $position = Position::all()->random(1)->first();
 
         $this->browse(function (Browser $browser) use ($position) {
@@ -77,10 +77,9 @@ class EmployeePositionsCRUDTest extends PortalBaseTestCase
      */
     public function view_index_of_positions()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
         $position = Position::all()->random(1)->first();
 
-        $this->artisan('db:seed --class=PositionsTableSeeder');
         $this->browse(function (Browser $browser) use ($position) {
             $browser->loginAs($this->user->id)
                 ->visit(new PositionsIndex($position))
@@ -97,10 +96,9 @@ class EmployeePositionsCRUDTest extends PortalBaseTestCase
      */
     public function view_index_of_positions_click_details()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
         $position = Position::all()->random(1)->first();
 
-        $this->artisan('db:seed --class=PositionsTableSeeder');
         $this->browse(function (Browser $browser) use ($position) {
             $browser->loginAs($this->user->id)
                 ->visit(new PositionsIndex($position))
@@ -117,10 +115,9 @@ class EmployeePositionsCRUDTest extends PortalBaseTestCase
      */
     public function view_index_of_positions_click_edit()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
         $position = Position::all()->random(1)->first();
 
-        $this->artisan('db:seed --class=PositionsTableSeeder');
         $this->browse(function (Browser $browser) use ($position) {
             $browser->loginAs($this->user->id)
                 ->visit(new PositionsIndex($position))
@@ -137,10 +134,9 @@ class EmployeePositionsCRUDTest extends PortalBaseTestCase
      */
     public function view_index_of_positions_click_archive()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
         $position = Position::all()->random(1)->first();
 
-        $this->artisan('db:seed --class=PositionsTableSeeder');
         $this->browse(function (Browser $browser) use ($position) {
             $browser->loginAs($this->user->id)
                 ->visit(new PositionsIndex($position))
