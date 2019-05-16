@@ -21,7 +21,7 @@ return [
     ],
 
     // The route to redirect the user to upon login.
-    'redirect_on_login' => '/authenticated',
+    'redirect_on_login' => '/',
 
     // The User Eloquent class.
     'user_class' => '\\App\\User',

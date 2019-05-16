@@ -2,12 +2,12 @@
 
 namespace App\Helpers;
 
+use Storage;
 use App\File;
 use Carbon\Carbon;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
-use Storage;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class Helpers
 {
@@ -22,6 +22,27 @@ class Helpers
     public function __construct()
     {
         $this->today = Carbon::today();
+    }
+
+    /**
+     * @param $path
+     * @param bool $strict
+     * @return bool
+     */
+    public static function isUri($path, $strict = true)
+    {
+        $request_prefix = explode('/', request()->getRequestUri())[1];
+        $path_prefix = explode('/', $path)[1];
+
+        if (request()->getRequestUri() == $path) {
+            return true;
+        }
+
+        if (! $strict && ($request_prefix == $path_prefix)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -150,7 +171,7 @@ class Helpers
     {
         /** @noinspection PhpVariableNamingConventionInspection */
         $sSuffix = strtoupper(substr($sSize, -1));
-        if (!in_array($sSuffix, ['P', 'T', 'G', 'M', 'K'])) {
+        if (! in_array($sSuffix, ['P', 'T', 'G', 'M', 'K'])) {
             return (int) $sSize;
         }
         /** @noinspection PhpVariableNamingConventionInspection */
@@ -239,7 +260,7 @@ class Helpers
             $x = 0;
             while (false !== ($data = fgetcsv($handle, 1000, ','))) {
                 if ($remove_first_row && 0 == $x) {
-                    ++$x;
+                    $x++;
                     continue;
                 }
                 // Each individual array is being pushed into the nested array
@@ -274,7 +295,7 @@ class Helpers
         if ($model->exists) {
             $model->user_updated_id = $user_id;
             $model->user_updated_ip = static::getUserIp();
-        } elseif (!$model->exists) {
+        } elseif (! $model->exists) {
             $model->user_created_id = $user_id;
             $model->user_created_ip = static::getUserIp();
         }
@@ -290,7 +311,7 @@ class Helpers
     public static function getUserIp()
     {
         if (array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)
-            && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])
+            && ! empty($_SERVER['HTTP_X_FORWARDED_FOR'])
         ) {
             if (strpos($_SERVER['HTTP_X_FORWARDED_FOR'], ',') > 0) {
                 $addr = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
@@ -301,7 +322,7 @@ class Helpers
             }
         } else {
             if (isset($_SERVER['REMOTE_ADDR'])
-                && !empty($_SERVER['REMOTE_ADDR'])
+                && ! empty($_SERVER['REMOTE_ADDR'])
             ) {
                 return $_SERVER['REMOTE_ADDR'];
             }

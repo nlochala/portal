@@ -2,20 +2,20 @@
 
 namespace App;
 
-use App\Helpers\Helpers;
-use Carbon\Carbon;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
-use Intervention\Image\Constraint;
-use Intervention\Image\ImageManagerStatic as Image;
 use Storage;
+use Carbon\Carbon;
+use App\Helpers\Helpers;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+use Intervention\Image\Constraint;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class File extends Model
 {
@@ -26,6 +26,8 @@ class File extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
+    protected $with = ['extension'];
 
     /**
      *  Setup model event hooks.
@@ -277,7 +279,7 @@ class File extends Model
             return false;
         }
         // Check Extension
-        if (!FileExtension::isType('Graphics', $file)) {
+        if (! FileExtension::isType('Graphics', $file)) {
             Helpers::flashAlert(
                 'danger',
                 'The file you are uploading does not match the type expected. Please upload an image file.',
@@ -311,7 +313,7 @@ class File extends Model
         }
 
         /* @noinspection PhpUndefinedMethodInspection */
-        if (!$extension = FileExtension::where('name', $extension)->first()) {
+        if (! $extension = FileExtension::where('name', $extension)->first()) {
             Helpers::flashAlert(
                 'danger',
                 'The type of file you are trying to upload is not recognized. Please try again.',
@@ -329,7 +331,7 @@ class File extends Model
         $file_model->public_name = $filename;
         $file_model->driver = $driver;
         $file_model = Helpers::dbAddAudit($file_model);
-        if (!$file_model->save()) {
+        if (! $file_model->save()) {
             return false;
         }
 
@@ -368,12 +370,12 @@ class File extends Model
      */
     public function renameFile($name = 'pre-slug name')
     {
-        if (!$this->update(['public_name' => Str::slug($name)])) {
+        if (! $this->update(['public_name' => Str::slug($name)])) {
             return false;
         }
 
         if ($original = $this->originalFile) {
-            if (!$original->update(['public_name' => Str::slug($name)])) {
+            if (! $original->update(['public_name' => Str::slug($name)])) {
                 return false;
             }
         }
@@ -390,7 +392,7 @@ class File extends Model
      */
     public function moveFile($new_path)
     {
-        if (!Storage::move($this->getFullPath(), $new_path.$this->getFileName())) {
+        if (! Storage::move($this->getFullPath(), $new_path.$this->getFileName())) {
             return false;
         }
 
@@ -423,11 +425,11 @@ class File extends Model
      */
     public function saveFile($filename = '', $path = '')
     {
-        if ($filename && !$this->renameFile($filename)) {
+        if ($filename && ! $this->renameFile($filename)) {
             return false;
         }
 
-        if ($path !== $this->path && !$this->moveFile($path)) {
+        if ($path !== $this->path && ! $this->moveFile($path)) {
             return false;
         }
 
@@ -455,7 +457,7 @@ class File extends Model
             $constraint->aspectRatio();
         });
 
-        if (!Storage::disk($driver)->put("$path/$new_name.".$file->extension->name, $img->encode($file->extension->name))) {
+        if (! Storage::disk($driver)->put("$path/$new_name.".$file->extension->name, $img->encode($file->extension->name))) {
             Helpers::flashAlert(
                 'danger',
                 'There was an issue processing your image. Please try again.',
@@ -473,7 +475,7 @@ class File extends Model
         $file_model->driver = $driver;
         $file_model->original_file_id = $file->id;
         $file_model = Helpers::dbAddAudit($file_model);
-        if (!$file_model->save()) {
+        if (! $file_model->save()) {
             Helpers::flashAlert(
                 'danger',
                 'There was an issue saving the file database record. Please try again.',
@@ -503,13 +505,13 @@ class File extends Model
     public static function saveAndResizeImage(File $file, $filename = null, $path = '', $width = 300, $height = 400, $driver = 'private')
     {
         $path ?: $path = env('FILE_PERMANENT_DIRECTORY');
-        !$filename ?: $file->renameFile($filename);
+        ! $filename ?: $file->renameFile($filename);
         $path == $file->path ?: $file->moveFile($path);
 
         /** @noinspection PhpParamsInspection */
         $resized_file = static::saveResizedImage($file, $path, $width, $height, $driver);
 
-        if (!$resized_file) {
+        if (! $resized_file) {
             Helpers::flashAlert(
                 'danger',
                 'The file uploaded was not processed correctly. Please try again.',

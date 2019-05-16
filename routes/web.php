@@ -11,6 +11,7 @@
 |
 */
 Route::get('authenticated', 'OAuthController@login')->name('login');
+Route::get('/', 'LandingController')->name('landing');
 
 //TODO: Change the link location to api/download_file
 Route::get('download_file/{file}', 'MediaController@downloadFile');

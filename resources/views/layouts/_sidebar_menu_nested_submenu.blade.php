@@ -18,17 +18,30 @@ $submenu_array =
 --}}
 <li class="nav-main-item
 @foreach($submenu_array as $item)
-    {{  request()->is($item['uri']) ? ' open' : '' }}
+@if(\App\Helpers\Helpers::isUri($item['uri'], false))
+        open
+        @endif
 @endforeach
         ">
-    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
+    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+
+       @if(\App\Helpers\Helpers::isUri($item['uri'], false))
+       aria-expanded="true"
+       @else
+       aria-expanded="false"
+       @endif
+       href="#">
         <i class="nav-main-link-icon {{ $section_icon }}"></i>
         <span class="nav-main-link-name">{{ $section_title }}</span>
     </a>
     <ul class="nav-main-submenu">
         @foreach($submenu_array as $item)
             <li class="nav-main-item">
-                <a class="nav-main-link{{ request()->is($item['uri']) ? ' active' : '' }}" href="{{ $item['uri'] }}">
+                <a class="nav-main-link
+        @if(request()->getRequestUri() == $item['uri'])
+                        active
+@endif
+                        " href="{{ $item['uri'] }}">
                     <span class="nav-main-link-name">{{ $item['title'] }}</span>
                 </a>
             </li>

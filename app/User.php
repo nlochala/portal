@@ -3,22 +3,19 @@
 namespace App;
 
 use App\Helpers\Helpers;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Intervention\Image\Constraint;
-use Intervention\Image\ImageManagerStatic as Image;
-use Storage;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
-
 
     /**
      * The attributes that should be hidden for arrays.
@@ -30,20 +27,22 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $with = ['person'];
 
     /*
     |--------------------------------------------------------------------------
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -52,12 +51,12 @@ class User extends Authenticatable
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
         return 'uuid';
     }
-
 
     /**
      * The attributes that are mass assignable.
@@ -71,7 +70,6 @@ class User extends Authenticatable
         'password',
     ];
 
-
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
@@ -84,14 +82,14 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This uer belongs to a person
+     *  This uer belongs to a person.
      *
      * @return BelongsTo
      */
@@ -100,9 +98,8 @@ class User extends Authenticatable
         return $this->belongsTo('App\Person', 'person_id', 'id');
     }
 
-
     /**
-     * Many users belongs to many ad_groups
+     * Many users belongs to many ad_groups.
      *
      * @return BelongsToMany
      */
@@ -113,7 +110,7 @@ class User extends Authenticatable
     }
 
     /**
-     * This user has a File
+     * This user has a File.
      *
      * @return HasOne
      */
@@ -128,6 +125,7 @@ class User extends Authenticatable
     | HELPERS
     |--------------------------------------------------------------------------
     */
+
     /**
      * Display a user's thumbnail image.
      *
@@ -143,6 +141,7 @@ class User extends Authenticatable
         }
 
         $file = File::where('name', 'default-male')->first();
+
         return $file->renderImage();
     }
 }

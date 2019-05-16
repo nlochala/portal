@@ -22,63 +22,143 @@
 
 @include('layouts._sidebar_menu')
 
-{{--<li class="nav-main-item">--}}
-{{--<a class="nav-main-link{{ request()->is('dashboard') ? ' active' : '' }}" href="/dashboard">--}}
-{{--<i class="nav-main-link-icon si si-cursor"></i>--}}
-{{--<span class="nav-main-link-name">Dashboard</span>--}}
-{{--<span class="nav-main-link-badge badge badge-pill badge-success">0</span>--}}
-{{--</a>--}}
-{{--</li>--}}
 
-
-@include('layouts._sidebar_heading', ['header' => 'Management'])
+@include('layouts._sidebar_menu_submenu_item', [
+'uri' => '/',
+'icon' => 'si si-globe',
+'title' => 'Home'
+])
+@include('layouts._sidebar_heading', ['header' => '----- Manage -----'])
+@include('layouts._sidebar_heading', ['header' => 'People'])
 @include('layouts._sidebar_menu_nested_submenu', [
-'section_title' => 'People',
+'section_title' => 'Employees',
 'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
         [
-            'title' => 'Employees',
-            'uri'   => '/employee/lookup'
+            'title' => 'Dashboard',
+            'uri'   => '/employee/dashboard'
         ],
         [
-            'title' => 'Students',
-            'uri'   => '/student/lookup'
+            'title' => 'Directory',
+            'uri'   => '/employee/index'
         ],
         [
-            'title' => 'Parents',
-            'uri'   => '/parent/lookup'
+            'title' => 'Positions',
+            'uri'   => '/position/index'
         ],
-        [
-            'title' => '+ Add New Person',
-            'uri'   => '/person/create'
-        ]
     ]
 ])
 @include('layouts._sidebar_menu_nested_submenu', [
-'section_title' => 'Positions',
-'section_icon' => 'fa fa-chalkboard-teacher',
+'section_title' => 'Students',
+'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
         [
             'title' => 'Summary',
-            'uri'   => '/position/summary'
+            'uri'   => '/student/dashboard'
+        ],
+        [
+            'title' => 'Directory',
+            'uri'   => '/student/index'
+        ],
+    ]
+])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Parents',
+'section_icon' => 'fa fa-users-cog',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Summary',
+            'uri'   => '/parent/dashboard'
+        ],
+        [
+            'title' => 'Directory',
+            'uri'   => '/parent/index'
+        ],
+    ]
+])
+@include('layouts._sidebar_heading', ['header' => 'Calendar'])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'School Year',
+'section_icon' => 'fa fa-calendar-alt',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Index',
+            'uri'   => '/year/index'
+        ],
+    ]
+])
+@include('layouts._sidebar_heading', ['header' => 'Academics'])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Courses',
+'section_icon' => 'fa fa-chalkboard-teacher',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Dashboard',
+            'uri'   => '/courses/dashboard'
         ],
         [
             'title' => 'Index',
-            'uri'   => '/position/index'
+            'uri'   => '/courses/index'
         ],
-        [
-            'title' => '+ Add New Position',
-            'uri'   => '/position/create'
-        ]
     ]
 ])
-@include('layouts._sidebar_heading', ['header' => 'More'])
-@include('layouts._sidebar_menu_submenu_item', [
-'uri' => 'examples1/test',
-'icon' => 'si si-globe',
-'title' => 'Landing'
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Grade Levels',
+'section_icon' => 'fa fa-user-graduate',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Index',
+            'uri'   => '/grade_level/index'
+        ],
+    ]
+])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Grade Scales',
+'section_icon' => 'fa fa-clipboard-list',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Index',
+            'uri'   => '/grade_scale/index'
+        ],
+    ]
+])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Departments',
+'section_icon' => 'fa fa-book-reader',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Index',
+            'uri'   => '/department/index'
+        ],
+    ]
+])
+@include('layouts._sidebar_heading', ['header' => 'Facilities'])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Room Assignments',
+'section_icon' => 'fa fa-school',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Rooms',
+            'uri'   => '/room/index'
+        ],
+        [
+            'title' => 'Buildings',
+            'uri'   => '/building/index'
+        ],
+        [
+            'title' => 'Room Types',
+            'uri'   => '/room_type/index'
+        ],
+    ]
 ])
 @include('layouts._end_sidebar_menu')
 <!-- END Side Navigation -->
