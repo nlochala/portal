@@ -9321,8 +9321,6 @@ jQuery.each( {
 	charCode: true,
 	key: true,
 	keyCode: true,
-	button: true,
-	buttons: true,
 	clientX: true,
 	clientY: true,
 	offsetX: true,

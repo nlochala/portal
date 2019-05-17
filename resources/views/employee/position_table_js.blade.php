@@ -21,6 +21,10 @@ return "<button type=\"button\" class=\"btn btn-sm btn-outline-success\" dusk=\"
 });
 new $.fn.dataTable.Buttons(tableposition, {
 buttons: [
+{
+extend: 'collection',
+text: '<i class="fa fa-fw fa-download mr-1"></i>',
+buttons: [
 'copy',
 'excel',
 'csv',
@@ -29,10 +33,10 @@ extend: 'pdf',
 orientation: 'landscape',
 pageSize: 'LETTER'
 },
-'print'
+'print',
+],
+fade: true,
+className: 'btn-sm btn-hero-primary'
+}
 ]
-});
-
-tableposition.buttons(2, null).container().appendTo(
-tableposition.table().container()
-);
+}).container().prependTo(tableposition.table().container());

@@ -292,7 +292,7 @@ class EmployeeProfileTest extends PortalBaseTestCase
      */
     public function an_employee_can_change_their_employment_details()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
 
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user->id)
@@ -311,7 +311,7 @@ class EmployeeProfileTest extends PortalBaseTestCase
      */
     public function an_employee_can_view_their_position_details()
     {
-        $this->artisan('db:seed --class=PositionsTableSeeder');
+        $this->artisan('db:seed --class=PositionsFakerTableSeeder');
 
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user->id)

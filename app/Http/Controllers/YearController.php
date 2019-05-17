@@ -2,84 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Year;
-use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Contracts\View\Factory;
 
 class YearController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Require users to have been authenticated before reaching this page.
      *
-     * @return \Illuminate\Http\Response
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display an index of the school years.
+     *
+     * @return Factory|View
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Year  $year
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Year $year)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Year  $year
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Year $year)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Year  $year
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Year $year)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Year  $year
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Year $year)
-    {
-        //
+        return view('year.index');
     }
 }

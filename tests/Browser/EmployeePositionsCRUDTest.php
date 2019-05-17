@@ -22,7 +22,6 @@ class EmployeePositionsCRUDTest extends PortalBaseTestCase
     public function a_position_can_be_created()
     {
         $this->artisan('db:seed --class=PositionsFakerTableSeeder');
-
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user->id)
                 ->visit(new PositionsCreate())

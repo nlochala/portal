@@ -3,10 +3,10 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Year extends Model
 {
@@ -58,9 +58,79 @@ class Year extends Model
 
     /*
     |--------------------------------------------------------------------------
+    | STATIC METHODS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Return the current school year.
+     *
+     * @return mixed
+     */
+    public static function currentYear()
+    {
+        return Year::findOrFail(env('SCHOOL_YEAR_ID'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | METHODS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Check if the given year is the current school year.
+     *
+     * @return bool
+     */
+    public function isCurrentYear()
+    {
+        if ($this->id == env('SCHOOL_YEAR_ID')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Get year name.
+     *
+     * @return mixed
+     */
+    public function getNameAttribute()
+    {
+        return "$this->year_start-$this->year_end";
+    }
+
+    /**
+     * Get start_date as Carbon Object.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getStartDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    /**
+     * Get end_date as Carbon Object.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getEndDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
 
     /**
      * Set created_at to Carbon Object.

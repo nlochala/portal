@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-
 class FieldValidation
 {
     /**
@@ -26,7 +25,20 @@ class FieldValidation
      */
     public function __construct()
     {
-        $this->error_array['data'] = array();
+        $this->error_array['data'] = [];
+    }
+
+    /**
+     * @param $form_request
+     * @param $data
+     */
+    public function checkForm($form_request, $data)
+    {
+        foreach ($form_request->rules() as $field => $rules) {
+            foreach (explode('|', $rules) as $rule) {
+                $this->$rule($field, $data);
+            }
+        }
     }
 
     /*
@@ -34,6 +46,25 @@ class FieldValidation
     | VALIDATION CHECKS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * This is the "field requires a number" check. If the field is empty or isn't a number, it writes to the
+     * error parameter.
+     *
+     * @param $field
+     * @param $data
+     * @param string $message
+     */
+    public function numeric($field, $data, $message = 'This field must be numeric.')
+    {
+        if (! is_numeric($data[$field])) {
+            $this->errors[] = [
+                'name' => $field,
+                'status' => $message,
+            ];
+        }
+    }
+
     /**
      * This is the "field is required" check. If the field is empty, it writes to the
      * error parameter.
@@ -44,11 +75,10 @@ class FieldValidation
      */
     public function required($field, $data, $message = 'This field is required.')
     {
-        if(empty($data[$field]))
-        {
+        if (empty($data[$field])) {
             $this->errors[] = [
                 'name' => $field,
-                'status' => $message
+                'status' => $message,
             ];
         }
     }
@@ -62,10 +92,10 @@ class FieldValidation
      */
     public function email($field, $data, $message = 'This field requires a valid email.')
     {
-        if (!filter_var($data[$field], FILTER_VALIDATE_EMAIL)) {
+        if (! filter_var($data[$field], FILTER_VALIDATE_EMAIL)) {
             $this->errors[] = [
                 'name' => $field,
-                'status' => $message
+                'status' => $message,
             ];
         }
     }
@@ -79,10 +109,10 @@ class FieldValidation
      */
     public function url($field, $data, $message = 'This field requires a valid url.')
     {
-        if (!filter_var($data[$field], FILTER_VALIDATE_URL)) {
+        if (! filter_var($data[$field], FILTER_VALIDATE_URL)) {
             $this->errors[] = [
                 'name' => $field,
-                'status' => $message
+                'status' => $message,
             ];
         }
     }
@@ -97,16 +127,15 @@ class FieldValidation
      */
     public function passwordConfirmation($password_field1, $password_field2, $user_data, $message = 'These passwords do not match!')
     {
-        if($user_data[$password_field1] !== $user_data[$password_field2])
-        {
+        if ($user_data[$password_field1] !== $user_data[$password_field2]) {
             $this->errors[] = [
                 'name' => $password_field1,
-                'status' => $message
+                'status' => $message,
             ];
 
             $this->errors[] = [
                 'name' => $password_field2,
-                'status' => $message
+                'status' => $message,
             ];
         }
     }
@@ -116,6 +145,7 @@ class FieldValidation
     | RETURN ARRAY
     |--------------------------------------------------------------------------
     */
+
     /**
      * This is the constructed array that is returned.
      *
@@ -123,13 +153,12 @@ class FieldValidation
      */
     public function hasErrors()
     {
-        if(!empty($this->errors))
-        {
+        if (! empty($this->errors)) {
             $this->error_array['fieldErrors'] = $this->errors;
+
             return $this->error_array;
         }
 
         return false;
     }
-
 }

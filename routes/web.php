@@ -172,3 +172,21 @@ Route::get('position/{position}', 'PositionController@view');
 Route::patch('position/{position}/edit', 'PositionController@update');
 Route::get('position/{position}/edit', 'PositionController@updateForm');
 Route::get('position/{position}/archive', 'PositionController@archive');
+
+/*
+|--------------------------------------------------------------------------
+| SCHOOL YEAR
+|--------------------------------------------------------------------------
+*/
+Route::get('year/index', 'YearController@index');
+Route::get('api/year/ajaxshowyear', 'YearAjaxController@ajaxShow');
+Route::post('api/year/ajaxstoreyear', 'YearAjaxController@ajaxStore');
+
+/*
+|--------------------------------------------------------------------------
+| GRADE LEVELS
+|--------------------------------------------------------------------------
+*/
+Route::get('grade_level/index', 'GradeLevelController@index');
+Route::get('api/grade_level/ajaxshowgrade_level', 'GradeLevelAjaxController@ajaxShow');
+Route::post('api/grade_level/ajaxstoregrade_level', 'GradeLevelAjaxController@ajaxStore');
