@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
 use App\File;
-use App\Helpers\Helpers;
 use App\IdCard;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
+use App\Employee;
+use App\Helpers\Helpers;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class EmployeeIdCardController extends EmployeeController
 {
@@ -81,7 +81,7 @@ class EmployeeIdCardController extends EmployeeController
         foreach ($uploads as $key => $value) {
             $filename = Str::slug("ID Card $key ".$employee->person->fullName(true));
 
-            if (!$file_id = $this->processImage($key, $value, $filename)) {
+            if (! $file_id = $this->processImage($key, $value, $filename)) {
                 return redirect()->back()->withInput();
             }
             $values[$key.'_image_file_id'] = $file_id;
@@ -127,12 +127,12 @@ class EmployeeIdCardController extends EmployeeController
         $values = Helpers::dbAddAudit(request()->all());
         $uploads = [];
 
-        !isset($values['upload_front']) ?: $uploads['front'] = $values['upload_front'];
-        !isset($values['upload_back']) ?: $uploads['back'] = $values['upload_back'];
+        ! isset($values['upload_front']) ?: $uploads['front'] = $values['upload_front'];
+        ! isset($values['upload_back']) ?: $uploads['back'] = $values['upload_back'];
 
         foreach ($uploads as $key => $value) {
             $filename = Str::slug("ID Card $key ".$employee->person->fullName(true));
-            if (!$file_id = $this->processImage($key, $value, $filename)) {
+            if (! $file_id = $this->processImage($key, $value, $filename)) {
                 return redirect()->back()->withInput();
             }
 
@@ -157,7 +157,7 @@ class EmployeeIdCardController extends EmployeeController
      */
     protected function processImage($key, $value, $filename)
     {
-        if (!request()->has("upload_$key")) {
+        if (! request()->has("upload_$key")) {
             Helpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the ID Card. Please try again.',
@@ -166,7 +166,7 @@ class EmployeeIdCardController extends EmployeeController
             return false;
         }
 
-        if (!$file = File::getFile($value)) {
+        if (! $file = File::getFile($value)) {
             Helpers::flashAlert(
                 'danger',
                 'Could not find the uploaded image. Please try again.',
@@ -175,7 +175,7 @@ class EmployeeIdCardController extends EmployeeController
             return false;
         }
 
-        if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
+        if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
             Helpers::flashAlert(
                 'danger',
                 'Could not resize the uploaded image. Please try again.',

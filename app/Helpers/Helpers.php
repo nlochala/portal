@@ -252,6 +252,7 @@ class Helpers
     public static function parseCsv($file_path, $remove_first_row = true)
     {
         $return_array = [];
+        $file_path = base_path($file_path);
 
         // Open the file for reading
         if (false !== ($handle = fopen("{$file_path}", 'r'))) {

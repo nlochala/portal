@@ -190,3 +190,12 @@ Route::post('api/year/ajaxstoreyear', 'YearAjaxController@ajaxStore');
 Route::get('grade_level/index', 'GradeLevelController@index');
 Route::get('api/grade_level/ajaxshowgrade_level', 'GradeLevelAjaxController@ajaxShow');
 Route::post('api/grade_level/ajaxstoregrade_level', 'GradeLevelAjaxController@ajaxStore');
+
+/*
+|--------------------------------------------------------------------------
+| DEPARTMENTS
+|--------------------------------------------------------------------------
+*/
+Route::get('department/index', 'DepartmentController@index');
+Route::get('api/department/ajaxshowdepartment', 'DepartmentAjaxController@ajaxShow');
+Route::post('api/department/ajaxstoredepartment', 'DepartmentAjaxController@ajaxStore');

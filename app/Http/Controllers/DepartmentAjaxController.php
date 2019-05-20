@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Year;
 use Exception;
+use App\Department;
 use App\Helpers\Helpers;
 use App\Helpers\FieldValidation;
-use App\Http\Requests\StoreYearRequest;
 use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\StoreDepartmentRequest;
 
-class YearAjaxController extends Controller
+class DepartmentAjaxController extends Controller
 {
     protected $validation;
     protected $errors;
@@ -26,7 +26,7 @@ class YearAjaxController extends Controller
         $this->middleware('auth')->except('ajaxShow');
         $this->validation = new FieldValidation();
         $this->errors = false;
-        $this->request = new StoreYearRequest();
+        $this->request = new StoreDepartmentRequest();
         $this->eagerLoad = [];
     }
 
@@ -39,7 +39,7 @@ class YearAjaxController extends Controller
      * @param null $custom_message
      * @return bool|void
      */
-    public function attemptAction($result, $item = 'school year or position', $action = 'update or delete', $custom_message = null)
+    public function attemptAction($result, $item = 'year', $action = 'update', $custom_message = null)
     {
         if ($result) {
             return $result;
@@ -63,11 +63,11 @@ class YearAjaxController extends Controller
     /**
      * This returns a json formatted array for the table.
      *
-     * @return Year[]|Collection
+     * @return Department[]|Collection
      */
     public function ajaxShow()
     {
-        return Year::with($this->eagerLoad)->get();
+        return Department::with($this->eagerLoad)->get();
     }
 
     /**
@@ -91,22 +91,22 @@ class YearAjaxController extends Controller
                 return $errors;
             }
 
-            // EDIT THE GIVEN Year
+            // EDIT THE GIVEN Department
             if ($action == 'edit') {
-                if ($year = $this->update(Year::find($id), $form_data)) {
-                    $return_array['data'][] = $year->load($this->eagerLoad);
+                if ($department = $this->update(Department::find($id), $form_data)) {
+                    $return_array['data'][] = $department->load($this->eagerLoad);
                 }
             }
-            // CREATE THE Year
+            // CREATE THE Department
             if ($action == 'create') {
-                $year = $this->store($data[$id]);
-                $return_array['data'][] = $year->load($this->eagerLoad);
+                $department = $this->store($data[$id]);
+                $return_array['data'][] = $department->load($this->eagerLoad);
             }
         }
 
         if ($action == 'remove') {
             foreach ($data as $id => $form_data) {
-                $this->destroy(Year::find($id));
+                $this->destroy(Department::find($id));
             }
         }
 
@@ -124,7 +124,7 @@ class YearAjaxController extends Controller
     */
 
     /**
-     * Store the new year.
+     * Store the new department.
      *
      * @param $values
      * @return bool
@@ -132,40 +132,41 @@ class YearAjaxController extends Controller
     public function store($values)
     {
         $values = Helpers::dbAddAudit($values);
-        return $this->attemptAction(Year::create($values), 'year', 'create');
+
+        return $this->attemptAction(Department::create($values), 'department', 'create');
     }
 
     /**
      * Update the given model.
      *
-     * @param Year $year
+     * @param Department $department
      * @param $values
-     * @return Year|mixed|void
+     * @return Department|mixed|void
      */
-    public function update(Year $year, $values)
+    public function update(Department $department, $values)
     {
-        $year = Helpers::dbAddAudit($year);
-        $this->attemptAction($year->update($values), 'year', 'update');
+        $department = Helpers::dbAddAudit($department);
+        $this->attemptAction($department->update($values), 'department', 'update');
 
-        return $year;
+        return $department;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Year $year
+     * @param Department $department
      * @return void
      */
-    public function destroy(Year $year)
+    public function destroy(Department $department)
     {
-        $years = Helpers::parseCsv('database/seeds/data/years.csv', false);
-        // Can not delete a pre-populated year.
-        if ($year->id <= count($years)) {
-            $this->attemptAction(false, 'year', 'delete', 'Can not delete. This year is protected.');
+        $departments = Helpers::parseCsv('database/seeds/data/departments.csv', false);
+        // Can not delete a pre-populated department.
+        if ($department->id <= count($departments)) {
+            $this->attemptAction(false, 'department', 'delete', 'Can not delete. This department is protected.');
             return;
         }
 
-        $year = Helpers::dbAddAudit($year);
-        $this->attemptAction($year->delete(), 'year', 'delete');
+        $department = Helpers::dbAddAudit($department);
+        $this->attemptAction($department->delete(), 'department', 'delete');
     }
 }
