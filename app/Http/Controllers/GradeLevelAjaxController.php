@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Year;
-use Exception;
+use App\GradeLevel;
 use App\Helpers\Helpers;
 use App\Helpers\FieldValidation;
-use App\Http\Requests\StoreYearRequest;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\StoreGradeLevelRequest;
 
-class YearAjaxController extends Controller
+class GradeLevelAjaxController extends Controller
 {
     protected $validation;
     protected $errors;
@@ -26,8 +26,8 @@ class YearAjaxController extends Controller
         $this->middleware('auth')->except('ajaxShow');
         $this->validation = new FieldValidation();
         $this->errors = false;
-        $this->request = new StoreYearRequest();
-        $this->eagerLoad = [];
+        $this->request = new StoreGradeLevelRequest();
+        $this->eagerLoad = ['year', 'school'];
     }
 
     /**
@@ -39,7 +39,7 @@ class YearAjaxController extends Controller
      * @param null $custom_message
      * @return bool|void
      */
-    public function attemptAction($result, $item = 'school year or position', $action = 'update or delete', $custom_message = null)
+    public function attemptAction($result, $item = 'school grade_level or position', $action = 'update or delete', $custom_message = null)
     {
         if ($result) {
             return $result;
@@ -63,11 +63,11 @@ class YearAjaxController extends Controller
     /**
      * This returns a json formatted array for the table.
      *
-     * @return Year[]|Collection
+     * @return GradeLevel[]|Collection
      */
     public function ajaxShow()
     {
-        return Year::with($this->eagerLoad)->get();
+        return GradeLevel::with($this->eagerLoad)->get();
     }
 
     /**
@@ -91,22 +91,22 @@ class YearAjaxController extends Controller
                 return $errors;
             }
 
-            // EDIT THE GIVEN Year
+            // EDIT THE GIVEN GradeLevel
             if ($action == 'edit') {
-                if ($year = $this->update(Year::find($id), $form_data)) {
-                    $return_array['data'][] = $year->load($this->eagerLoad);
+                if ($grade_level = $this->update(GradeLevel::find($id), $form_data)) {
+                    $return_array['data'][] = $grade_level->load($this->eagerLoad);
                 }
             }
-            // CREATE THE Year
+            // CREATE THE GradeLevel
             if ($action == 'create') {
-                $year = $this->store($data[$id]);
-                $return_array['data'][] = $year->load($this->eagerLoad);
+                $grade_level = $this->store($data[$id]);
+                $return_array['data'][] = $grade_level->load($this->eagerLoad);
             }
         }
 
         if ($action == 'remove') {
             foreach ($data as $id => $form_data) {
-                $this->destroy(Year::find($id));
+                $this->destroy(GradeLevel::find($id));
             }
         }
 
@@ -124,7 +124,7 @@ class YearAjaxController extends Controller
     */
 
     /**
-     * Store the new year.
+     * Store the new grade_level.
      *
      * @param $values
      * @return bool
@@ -132,39 +132,34 @@ class YearAjaxController extends Controller
     public function store($values)
     {
         $values = Helpers::dbAddAudit($values);
-        return $this->attemptAction(Year::create($values), 'year', 'create');
+
+        return $this->attemptAction(GradeLevel::create($values), 'grade_level', 'create');
     }
 
     /**
      * Update the given model.
      *
-     * @param Year $year
+     * @param GradeLevel $grade_level
      * @param $values
-     * @return Year|mixed|void
+     * @return GradeLevel|mixed|void
      */
-    public function update(Year $year, $values)
+    public function update(GradeLevel $grade_level, $values)
     {
-        $year = Helpers::dbAddAudit($year);
-        $this->attemptAction($year->update($values), 'year', 'update');
+        $grade_level = Helpers::dbAddAudit($grade_level);
+        $this->attemptAction($grade_level->update($values), 'grade_level', 'update');
 
-        return $year;
+        return $grade_level;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param Year $year
+     * @param GradeLevel $grade_level
      * @return void
      */
-    public function destroy(Year $year)
+    public function destroy(GradeLevel $grade_level)
     {
-        // Can not delete a pre-populated year or one that is currently active.
-        if ($year->id == 1 || $year->id == 2 || $year->isCurrentYear()) {
-            $this->attemptAction(false, 'year', 'delete', 'Can not delete. This year is protected.');
-            return;
-        }
-
-        $year = Helpers::dbAddAudit($year);
-        $this->attemptAction($year->delete(), 'year', 'delete');
+        $grade_level = Helpers::dbAddAudit($grade_level);
+        $this->attemptAction($grade_level->delete(), 'grade_level', 'delete');
     }
 }

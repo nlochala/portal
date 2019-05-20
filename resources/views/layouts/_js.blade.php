@@ -18,6 +18,7 @@
 <script src="{{ asset('js/plugins/cropperjs/cropper.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+<script src="{{ asset('js/datatables_select2.js') }}"></script>
 
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>

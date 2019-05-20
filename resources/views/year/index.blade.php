@@ -45,7 +45,6 @@
     @include('layouts._panels_start_content')
 
     <!-- TABLE OF YEARS -->
-    <div id="export-btn"></div>
     @include('_tables.new-table',['id' => 'year_table', 'table_head' => ['ID', 'Year Start', 'Year End', 'Start Date', 'End Date']])
     @include('_tables.end-new-table')
 
@@ -107,9 +106,6 @@
                     {data: "end_date"}
                 ],
                 buttons: [
-                    {extend: "create", editor: editoryear, className: 'btn-sm btn-hero-primary'},
-                    {extend: "edit", editor: editoryear, className: 'btn-sm btn-hero-primary'},
-                    {extend: "remove", editor: editoryear, className: 'btn-sm btn-hero-danger'},
                     {
                         extend: 'collection',
                         text: '<i class="fa fa-fw fa-download mr-1"></i>',
@@ -125,8 +121,19 @@
                             'print',
                         ],
                         fade: true,
-                        className: 'btn-sm btn-hero-primary'
-                    }
+                        className: 'btn-sm btn-hero-primary',
+                        autoClose: true
+                    },
+                    {
+                        text: '',
+                        className: 'btn-sm btn-light',
+                        action: function ( e, dt, node, config ) {
+                            this.disable();
+                        }
+                    },
+                    {extend: "create", editor: editoryear, className: 'btn-sm btn-hero-primary'},
+                    {extend: "edit", editor: editoryear, className: 'btn-sm btn-hero-primary'},
+                    {extend: "remove", editor: editoryear, className: 'btn-sm btn-hero-danger'},
                 ]
             });
         });
