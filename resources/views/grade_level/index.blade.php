@@ -38,7 +38,7 @@
     @include('layouts._panels_start_column', ['size' => 12])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
-    @include('layouts._panels_start_panel', ['title' => 'Current Grade Levels', 'with_block' => false])
+    @include('layouts._panels_start_panel', ['title' => 'Grade Level Management', 'with_block' => false])
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
 

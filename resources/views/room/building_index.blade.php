@@ -2,19 +2,18 @@
 
 @section('content')
     @include('layouts._breadcrumbs', [
-    'title' => 'School Years',
+    'title' => 'Buildings',
     'breadcrumbs' => [
         [
             'page_name' => 'Portal',
             'page_uri'  => '/'
         ],
         [
-            'page_name' => 'School Year',
+            'page_name' => 'Buildings',
             'page_uri'  => request()->getRequestUri()
         ]
     ]
 ])
-
     @include('layouts._content_start')
     <!--
     panel.row
@@ -35,17 +34,15 @@
     |--------------||--------------|
 
 -->
-    <h1 class="font-w400">The current school year is: {{ App\Year::currentYear()->name }}</h1>
     @include('layouts._panels_start_row',['has_uniform_length' => true])
     @include('layouts._panels_start_column', ['size' => 12])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
-    @include('layouts._panels_start_panel', ['title' => 'School Year Management', 'with_block' => false])
+    @include('layouts._panels_start_panel', ['title' => 'Buildings Management', 'with_block' => false])
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
 
-    <!-- TABLE OF YEARS -->
-    @include('_tables.new-table',['id' => 'year_table', 'table_head' => ['ID', 'Year Start', 'Year End', 'Start Date', 'End Date']])
+    <!-- TABLE OF Buildings Management -->@include('_tables.new-table',['id' => 'building_table', 'table_head' => ['ID', 'Abbreviation', 'Name']])
     @include('_tables.end-new-table')
 
 
@@ -62,48 +59,30 @@
 @section('js_after')
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            var editoryear = new $.fn.dataTable.Editor({
-                ajax: "{{ url('api/year/ajaxstoreyear') }}",
-                table: "#year_table",
+            var editorbuilding = new $.fn.dataTable.Editor({
+                ajax: "{{ url('api/building/ajaxstorebuilding') }}",
+                table: "#building_table",
                 idSrc: 'id',
                 fields: [{
-                    label: "Year Start:",
-                    name: "year_start"
+                    label: "Abbreviation:",
+                    name: "short_name"
                 }, {
-                    label: "Year End:",
-                    name: "year_end"
-                }, {
-                    label: "Start Date:",
-                    name: "start_date",
-                    type: "datetime",
-                    opts: {
-                        showOn: 'focus',
-                        format: 'YYYY-MM-DD'
-                    }
-                }, {
-                    label: "End Date:",
-                    name: "end_date",
-                    type: "datetime",
-                    opts: {
-                        showOn: 'focus',
-                        format: 'YYYY-MM-DD'
-                    }
+                    label: "Name:",
+                    name: "name"
                 },
                 ]
             });
 
-            var tableyear = $('#year_table').DataTable({
+            var tablebuilding = $('#building_table').DataTable({
                 dom: "Bfrtip",
                 select: true,
                 paging: true,
                 pageLength: 50,
-                ajax: {"url": "{{ url('api/year/ajaxshowyear') }}", "dataSrc": ""},
+                ajax: {"url": "{{ url('api/building/ajaxshowbuilding') }}", "dataSrc": ""},
                 columns: [
                     {data: "id"},
-                    {data: "year_start"},
-                    {data: "year_end"},
-                    {data: "start_date"},
-                    {data: "end_date"}
+                    {data: "short_name"},
+                    {data: "name"},
                 ],
                 buttons: [
                     {
@@ -121,8 +100,7 @@
                             'print',
                         ],
                         fade: true,
-                        className: 'btn-sm btn-hero-primary',
-                        autoClose: true
+                        className: 'btn-sm btn-hero-primary'
                     },
                     {
                         text: '',
@@ -131,9 +109,10 @@
                             this.disable();
                         }
                     },
-                    {extend: "create", editor: editoryear, className: 'btn-sm btn-hero-primary'},
-                    {extend: "edit", editor: editoryear, className: 'btn-sm btn-hero-primary'},
-                    {extend: "remove", editor: editoryear, className: 'btn-sm btn-hero-danger'},
+                    {extend: "create", editor: editorbuilding, className: 'btn-sm btn-hero-primary'},
+                    {extend: "edit", editor: editorbuilding, className: 'btn-sm btn-hero-primary'},
+                    {extend: "remove", editor: editorbuilding, className: 'btn-sm btn-hero-danger'},
+
                 ]
             });
         });

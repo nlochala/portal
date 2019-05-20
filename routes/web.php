@@ -199,3 +199,33 @@ Route::post('api/grade_level/ajaxstoregrade_level', 'GradeLevelAjaxController@aj
 Route::get('department/index', 'DepartmentController@index');
 Route::get('api/department/ajaxshowdepartment', 'DepartmentAjaxController@ajaxShow');
 Route::post('api/department/ajaxstoredepartment', 'DepartmentAjaxController@ajaxStore');
+
+/*
+|--------------------------------------------------------------------------
+| ROOMS
+|--------------------------------------------------------------------------
+*/
+Route::get('room/index', 'RoomController@index');
+Route::get('api/room/ajaxshowroom', 'RoomAjaxController@ajaxShow');
+Route::post('api/room/ajaxstoreroom', 'RoomAjaxController@ajaxStore');
+
+/*
+|--------------------------------------------------------------------------
+| BUILDINGS
+|--------------------------------------------------------------------------
+*/
+Route::get('building/index', 'BuildingController@index');
+Route::get('api/building/ajaxshowbuilding', 'BuildingAjaxController@ajaxShow');
+Route::post('api/building/ajaxstorebuilding', 'BuildingAjaxController@ajaxStore');
+
+/*
+|--------------------------------------------------------------------------
+| ROOM TYPES
+|--------------------------------------------------------------------------
+*/
+Route::get('room_type/index', 'RoomTypeController@index');
+Route::get('api/room_type/ajaxshowroom_type', 'RoomTypeAjaxController@ajaxShow');
+Route::post('api/room_type/ajaxstoreroom_type', 'RoomTypeAjaxController@ajaxStore');
+
+
+

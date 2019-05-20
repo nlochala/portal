@@ -71,7 +71,7 @@ class Room extends Model
      *
      * @return mixed
      */
-    public function getNumberAttribute($value)
+    public function getBuildingNumberAttribute($value)
     {
         return $this->building->short_name."-$value";
     }
