@@ -39,7 +39,7 @@
     |--------------||--------------|
 
 -->
-
+    @include('grade_scale._grade_scale_update')
     @include('layouts._panels_start_row',['has_uniform_length' => true])
     @include('layouts._panels_start_column', ['size' => 12])
     <!-------------------------------------------------------------------------------->
@@ -63,8 +63,12 @@
 @endsection
 
 @section('js_after')
+
+    {!! JsValidator::formRequest('\App\Http\Requests\UpdateGradeScaleRequest','#grade-scale-form') !!}
+
     <script type="text/javascript">
         jQuery(document).ready(function () {
+
             var editoritem = new $.fn.dataTable.Editor({
                 ajax: "{{ url('api/grade_scale/'.$grade_scale->uuid.'/'.$grade_scale->getScaleType().'/ajaxstoreitem') }}",
                 table: "#item_table",
@@ -86,7 +90,7 @@
                         placeholder: "Choose One..."
                     },
                     options: [
-                            @foreach($equivalent_standards as $equivalent_standard)
+                        @foreach($equivalent_standards as $equivalent_standard)
                         {
                             label: "{{ $equivalent_standard->name }}", value: "{{ $equivalent_standard->id }}"
                         },

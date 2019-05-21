@@ -3,6 +3,7 @@
 @section('content')
     @include('layouts._breadcrumbs', [
     'title' => $grade_scale->name,
+    'subtitle' => $grade_scale->description,
     'breadcrumbs' => [
         [
             'page_name' => 'Portal',
@@ -38,7 +39,7 @@
     |--------------||--------------|
 
 -->
-
+    @include('grade_scale._grade_scale_update')
     @include('layouts._panels_start_row',['has_uniform_length' => true])
     @include('layouts._panels_start_column', ['size' => 12])
     <!-------------------------------------------------------------------------------->
@@ -62,6 +63,9 @@
 @endsection
 
 @section('js_after')
+
+    {!! JsValidator::formRequest('\App\Http\Requests\UpdateGradeScaleRequest','#grade-scale-form') !!}
+
     <script type="text/javascript">
         jQuery(document).ready(function () {
             var editoritem = new $.fn.dataTable.Editor({

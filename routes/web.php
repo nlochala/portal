@@ -235,11 +235,10 @@ Route::post('api/room_type/ajaxstoreroom_type', 'RoomTypeAjaxController@ajaxStor
 */
 Route::get('api/grade_scale/ajaxshowgrade_scale', 'GradeScaleAjaxController@ajaxShow');
 Route::get('grade_scale/index', 'GradeScaleController@index');
-Route::post('grade_scale/index', 'GradeScaleController@create');
+Route::post('grade_scale/index', 'GradeScaleController@store');
 Route::get('grade_scale/{grade_scale}', 'GradeScaleController@show');
-Route::get('grade_scale/{grade_scale}/update', 'GradeScaleController@update');
-Route::patch('grade_scale/{grade_scale}/update', 'GradeScaleController@store');
-Route::patch('grade_scale/{grade_scale}/delete', 'GradeScaleController@delete');
+Route::patch('grade_scale/{grade_scale}', 'GradeScaleController@update');
+Route::get('grade_scale/{grade_scale}/delete', 'GradeScaleController@delete');
 Route::get('api/grade_scale/{grade_scale}/percentage/ajaxshowitem', 'GradeScalePercentageAjaxController@ajaxShow');
 Route::get('api/grade_scale/{grade_scale}/standards/ajaxshowitem', 'GradeScaleStandardsAjaxController@ajaxShow');
 Route::post('api/grade_scale/{grade_scale}/percentage/ajaxstoreitem', 'GradeScalePercentageAjaxController@ajaxStore');

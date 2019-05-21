@@ -56,20 +56,61 @@
     @include('layouts._panels_end_row')
 
     @include('layouts._content_end')
+
+    <!-------------------------------- Modal: New Grade Scale Start------------------------------------------->
+    @include('layouts._modal_panel_start',[
+        'id' => 'modal-block-grade-scale',
+        'title' => 'New Grade Scale'
+    ])
+    <!-- START FORM----------------------------------------------------------------------------->
+    {!! Form::open(['files' => false, 'id' => 'grade-scale-form','url' => request()->getRequestUri()]) !!}
+    <!----------------------------------------------------------------------------->
+    <!---------------------------New name text field----------------------------->
+    @include('layouts._forms._input_text',[
+        'name' => 'name',
+        'label' => 'Name',
+        'placeholder' => '',
+        'required' => true
+      ])
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+    <!---------------------------New description text field----------------------------->
+    @include('layouts._forms._input_text',[
+        'name' => 'description',
+        'label' => 'Description',
+        'placeholder' => '',
+        'required' => true
+      ])
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+    <!-----------------------New grade_scale_type_id radio------------------------------------->
+    @include('layouts._forms._input_radio_inline',[
+        'name' => 'grade_scale_type_id',
+        'label' => 'Grade Scale Type',
+        'array' => $type_radio,
+        'required' => true,
+        'selected' => null
+
+    ])
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+
+
+    @include('layouts._forms._form_close')
+    <!-- END FORM----------------------------------------------------------------------------->
+    @include('layouts._modal_panel_end')
+    <!-------------------------------- Modal: New Grade Scale END------------------------------------------->
+    <!------   data-toggle="modal" data-target="#modal-block-grade-scale". ----->
 @endsection
 
 @section('js_after')
 
-    <!-- Add Form Validation v.blade -->
+    {!! JsValidator::formRequest('\App\Http\Requests\StoreGradeScaleRequest','#grade-scale-form') !!}
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            let protected_ids = [
-                @foreach($protected_uuids as $uuid)
-                    "{{ $uuid }}",
-                @endforeach
-            ];
-
             var tablegrade_scale = $('#grade_scales_table').DataTable({
                 dom: "frtip",
                 select: true,
@@ -105,22 +146,16 @@
                     {
                         data: "uuid",
                         render: function (data, type, row) {
-                            let part2 = '';
-                            let part1 = "        <div class=\"btn-group\">\n" +
+                            return "        <div class=\"btn-group\">\n" +
                                 "            <button dusk=\"btn-show-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-info\" data-toggle=\"tooltip\" title=\"View Details\"\n" +
                                 "                    onclick=\"window.location.href='/grade_scale/" + data + "'\">\n" +
                                 "                <i class=\"si si-magnifier\"></i>\n" +
-                                "            </button>\n";
-                            if (! protected_ids.includes(data)) {
-                                part2 = "   <button dusk=\"btn-archive-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"tooltip\" title=\"Archive\"\n" +
-                                    "                    onclick=\"window.location.href='/grade_scale/" + data + "/archive'\">\n" +
-                                    "                <i class=\"fa fa-times\"></i>\n" +
-                                    "            </button>\n" +
-                                    "        </div>";
-                            }else{
-                                part2 = "        </div>";
-                            }
-                            return part1 + part2;
+                                "            </button>\n" +
+                                "            <button dusk=\"btn-archive-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"tooltip\" title=\"Delete\"\n" +
+                                "                    onclick=\"window.location.href='/grade_scale/" + data + "/delete'\">\n" +
+                                "                <i class=\"fa fa-times\"></i>\n" +
+                                "            </button>\n" +
+                                "        </div>"
                         }
                     }
                 ]
@@ -143,7 +178,21 @@
                         ],
                         fade: true,
                         className: 'btn-sm btn-hero-primary'
-                    }
+                    },
+                    {
+                        text: '',
+                        className: 'btn-sm btn-light',
+                        action: function ( e, dt, node, config ) {
+                            this.disable();
+                        }
+                    },
+                    {
+                        text: 'New',
+                        className: 'btn-sm btn-hero-primary',
+                        action: function ( e, dt, node, config ) {
+                            $('#modal-block-grade-scale').modal('toggle');
+                        }
+                    },
                 ]
             }).container().prependTo(tablegrade_scale.table().container());
         });

@@ -28,11 +28,8 @@ class GradeScaleController extends Controller
      */
     public function index()
     {
-        $grade_scales = Helpers::parseCsv('database/seeds/data/grade_scales.csv', false);
-        // Can not delete a pre-populated grade_scale.
-        $protected_uuids = GradeScale::where('id', '<=', count($grade_scales))->pluck('uuid')->toArray();
-
-        return view('grade_scale.scale_index', compact('protected_uuids'));
+        $type_radio = GradeScale::$typeRadio;
+        return view('grade_scale.scale_index', compact('type_radio'));
     }
 
     /**
@@ -40,12 +37,34 @@ class GradeScaleController extends Controller
      *
      * @return RedirectResponse
      */
-    public function create()
+    public function store()
     {
         $values = Helpers::dbAddAudit(request()->all());
-        $grade_scale = GradeScale::create($values);
+        $values = GradeScale::setScaleType($values);
 
-        return redirect()->to("grade_scale/$grade_scale->uuid/show");
+        $grade_scale = GradeScale::create($values);
+        Helpers::flash($grade_scale, 'grade scale', 'created');
+
+        if (! $grade_scale) {
+            return redirect()->to('grade_scale/index');
+        }
+
+        return redirect()->to("grade_scale/$grade_scale->uuid");
+    }
+
+    /**
+     * Update the given model.
+     *
+     * @param GradeScale $grade_scale
+     * @return RedirectResponse
+     */
+    public function update(GradeScale $grade_scale)
+    {
+        $values = request()->all();
+        $grade_scale = Helpers::dbAddAudit($grade_scale);
+
+        Helpers::flash($grade_scale->update($values), 'grade scale', 'updated');
+        return redirect()->to('grade_scale/'.$grade_scale->uuid);
     }
 
     /**
@@ -62,5 +81,27 @@ class GradeScaleController extends Controller
         $equivalent_standards = GradeScaleStandard::getEquivalentStandardsDropdown();
 
         return view('grade_scale.show_'.$grade_scale->getScaleType(), compact('grade_scale', 'equivalent_standards'));
+    }
+
+    /**
+     * Delete the given model.
+     *
+     * @param GradeScale $grade_scale
+     * @return RedirectResponse
+     */
+    public function delete(GradeScale $grade_scale)
+    {
+        if ($grade_scale->is_protected) {
+            Helpers::flashAlert(
+                'danger',
+                'Can not delete the grade scale. It is protected.',
+                'fa fa-info-circle mr-1');
+            return redirect()->back();
+        }
+
+        $grade_scale = Helpers::dbAddAudit($grade_scale);
+        Helpers::flash($grade_scale->delete(), 'grade scale', 'deleted');
+
+        return redirect()->back();
     }
 }

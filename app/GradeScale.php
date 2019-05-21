@@ -41,6 +41,11 @@ class GradeScale extends Model
         return 'uuid';
     }
 
+    public static $typeRadio = [
+        '0' => 'Standards-Based',
+        '1' => 'Percentage-Based',
+    ];
+
     protected $casts = [
         'is_percentage_based' => 'bool',
         'is_standards_based' => 'bool',
@@ -62,6 +67,27 @@ class GradeScale extends Model
         'user_updated_id',
         'user_updated_ip',
     ];
+
+    /**
+     * Set the proper grade scale type.
+     *
+     * @param array $values
+     * @return array
+     */
+    public static function setScaleType(array $values)
+    {
+        if ($values['grade_scale_type_id'] == 1) {
+            $values['is_percentage_based'] = true;
+            $values['is_standards_based'] = false;
+
+            return $values;
+        }
+
+        $values['is_percentage_based'] = false;
+        $values['is_standards_based'] = true;
+
+        return $values;
+    }
 
     /**
      * Return the scale type.
