@@ -120,7 +120,7 @@
 ])
 @include('layouts._sidebar_menu_nested_submenu', [
 'section_title' => 'Grade Scales',
-'section_icon' => 'fa fa-clipboard-list',
+'section_icon' => 'fa fa-balance-scale',
 'submenu_array' =>
     [
         [

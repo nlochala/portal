@@ -21,6 +21,7 @@ class EmployeeBonusTypesTableSeeder extends Seeder
             $model->name = $type[2];
             $model->description = $type[3];
             $model->amount = $type[4];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

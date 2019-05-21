@@ -20,6 +20,7 @@ class SchoolAreasTableSeeder extends Seeder
             $model = new SchoolArea();
             $model->name = $item[2];
             $model->description = $item[3];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

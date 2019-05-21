@@ -23,6 +23,7 @@ class YearsTableSeeder extends Seeder
             $model->start_date = $year[4];
             $model->end_date = $year[5];
             $model = Helpers::dbAddAudit($model);
+            $model->is_protected = true;
             $model->save();
         }
 

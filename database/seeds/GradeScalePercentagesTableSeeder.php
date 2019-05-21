@@ -26,6 +26,7 @@ class GradeScalePercentagesTableSeeder extends Seeder
             $model->result = $item[3];
             $model->equivalent_standard_id = $item[6];
             $model = Helpers::dbAddAudit($model);
+            $model->is_protected = true;
             $model->save();
         }
 

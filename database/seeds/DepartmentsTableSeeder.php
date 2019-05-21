@@ -22,6 +22,7 @@ class DepartmentsTableSeeder extends Seeder
             $model = new Department();
             $model->name = $department[2];
             $model->description = $department[3];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

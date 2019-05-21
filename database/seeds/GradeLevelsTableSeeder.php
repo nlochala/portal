@@ -24,6 +24,7 @@ class GradeLevelsTableSeeder extends Seeder
             $model->name = $level[3];
             $model->year_id = $level[4];
             $model->school_id = $level[5];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

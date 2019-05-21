@@ -22,6 +22,7 @@ class BuildingsTableSeeder extends Seeder
             $model = new Building();
             $model->short_name = $building[2];
             $model->name = $building[3];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

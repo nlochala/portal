@@ -18,15 +18,15 @@ class OfficialDocumentTypesTableSeeder extends Seeder
 
         $official_document_types = Helpers::parseCsv('database/seeds/data/official_document_types.csv', false);
 
-        foreach($official_document_types as $type){
+        foreach ($official_document_types as $type) {
             $model = new OfficialDocumentType();
             $model->name = $type[2];
             $model->person_type_id = $type[4];
             $model = Helpers::dbAddAudit($model);
+            $model->is_protected = true;
             $model->save();
         }
 
         Schema::enableForeignKeyConstraints();
-
     }
 }

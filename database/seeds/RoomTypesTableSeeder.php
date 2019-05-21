@@ -23,6 +23,7 @@ class RoomTypesTableSeeder extends Seeder
             $model->name = $type[2];
             $model->description = $type[3];
             $model = Helpers::dbAddAudit($model);
+            $model->is_protected = true;
             $model->save();
         }
 

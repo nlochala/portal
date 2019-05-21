@@ -20,6 +20,7 @@ class PositionTypesTableSeeder extends Seeder
             $model = new PositionType();
             $model->name = $type[0];
             $model->description = $type[1];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

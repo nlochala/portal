@@ -25,6 +25,7 @@ class GradeScalesTableSeeder extends Seeder
             $model->is_percentage_based = $scale[4];
             $model->is_standards_based = $scale[5];
             $model = Helpers::dbAddAudit($model);
+            $model->is_protected = true;
             $model->save();
         }
 

@@ -18,10 +18,11 @@ class AddressTypesTableSeeder extends Seeder
 
         $address_types = Helpers::parseCsv('database/seeds/data/address_types.csv', true);
 
-        foreach($address_types as $type){
+        foreach ($address_types as $type) {
             $model = new AddressType();
             $model->name = $type[0];
             $model->description = $type[1];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

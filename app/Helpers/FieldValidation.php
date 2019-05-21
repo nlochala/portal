@@ -57,6 +57,10 @@ class FieldValidation
      */
     public function numeric($field, $data, $message = 'This field must be numeric.')
     {
+        if (empty($data[$field])) {
+            return;
+        }
+
         if (! is_numeric($data[$field])) {
             $this->errors[] = [
                 'name' => $field,
@@ -92,6 +96,10 @@ class FieldValidation
      */
     public function email($field, $data, $message = 'This field requires a valid email.')
     {
+        if (empty($data[$field])) {
+            return;
+        }
+
         if (! filter_var($data[$field], FILTER_VALIDATE_EMAIL)) {
             $this->errors[] = [
                 'name' => $field,
@@ -109,6 +117,10 @@ class FieldValidation
      */
     public function url($field, $data, $message = 'This field requires a valid url.')
     {
+        if (empty($data[$field])) {
+            return;
+        }
+
         if (! filter_var($data[$field], FILTER_VALIDATE_URL)) {
             $this->errors[] = [
                 'name' => $field,

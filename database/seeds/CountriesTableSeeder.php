@@ -22,6 +22,7 @@ class CountriesTableSeeder extends Seeder
             $model = new Country();
             $model->name = $country[0];
             $model->country_code = $country[1];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

@@ -3,10 +3,10 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class GradeScaleStandard extends Model
@@ -56,6 +56,16 @@ class GradeScaleStandard extends Model
         'user_updated_id',
         'user_updated_ip',
     ];
+
+    /**
+     * Return the standards that are equivalent to the percentages.
+     *
+     * @return mixed
+     */
+    public static function getEquivalentStandardsDropdown()
+    {
+        return static::where('grade_scale_id', 2)->get();
+    }
 
     /*
     |--------------------------------------------------------------------------

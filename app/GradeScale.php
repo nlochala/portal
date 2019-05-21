@@ -41,6 +41,11 @@ class GradeScale extends Model
         return 'uuid';
     }
 
+    protected $casts = [
+        'is_percentage_based' => 'bool',
+        'is_standards_based' => 'bool',
+    ];
+
     /**
      * Add mass-assignment to model.
      *
@@ -57,6 +62,22 @@ class GradeScale extends Model
         'user_updated_id',
         'user_updated_ip',
     ];
+
+    /**
+     * Return the scale type.
+     *
+     * @return string
+     */
+    public function getScaleType()
+    {
+        if ($this->is_percentage_based) {
+            return 'percentage';
+        }
+
+        if ($this->is_standards_based) {
+            return 'standards';
+        }
+    }
 
     /*
     |--------------------------------------------------------------------------

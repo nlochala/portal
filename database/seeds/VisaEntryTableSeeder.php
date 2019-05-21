@@ -1,8 +1,7 @@
 <?php
 
-use App\Helpers\Helpers;
-use App\PhoneType;
 use App\VisaEntry;
+use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
 class VisaEntryTableSeeder extends Seeder
@@ -19,13 +18,14 @@ class VisaEntryTableSeeder extends Seeder
 
         $visa_entries = Helpers::parseCsv('database/seeds/data/visa_entries.csv', true);
 
-        foreach($visa_entries as $type){
+        foreach ($visa_entries as $type) {
             $model = new VisaEntry();
             $model->name = $type[0];
 
             empty($type[1]) ?: $model->number_of_entries = $type[1];
 
             $model = Helpers::dbAddAudit($model);
+            $model->is_protected = true;
             $model->save();
         }
 

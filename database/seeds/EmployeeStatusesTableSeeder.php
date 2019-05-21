@@ -20,6 +20,7 @@ class EmployeeStatusesTableSeeder extends Seeder
             $model = new EmployeeStatus();
             $model->name = $type[0];
             $model->description = $type[1];
+            $model->is_protected = true;
             $model->base_weight = $type[2];
             $model = Helpers::dbAddAudit($model);
             $model->save();

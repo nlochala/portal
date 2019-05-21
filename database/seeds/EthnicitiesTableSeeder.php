@@ -1,8 +1,7 @@
 <?php
 
-use App\Ethnicity as Ethnicities;
-use App\Helpers\Helpers;
 use App\Ethnicity;
+use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
 class EthnicitiesTableSeeder extends Seeder
@@ -19,9 +18,10 @@ class EthnicitiesTableSeeder extends Seeder
 
         $ethnicities = Helpers::parseCsv('database/seeds/data/ethnicities.csv', true);
 
-        foreach($ethnicities as $type){
+        foreach ($ethnicities as $type) {
             $model = new Ethnicity();
             $model->name = $type[0];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

@@ -25,6 +25,7 @@ class EmployeeClassificationsTableSeeder extends Seeder
             $model->medical_insurance_allowance = $classification[6];
             $model->social_insurance_allowance = $classification[7];
             $model->medical_covered = $classification[8];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

@@ -20,6 +20,7 @@ class SchoolsTableSeeder extends Seeder
             $model = new School();
             $model->name = $school[0];
             $model = Helpers::dbAddAudit($model);
+            $model->is_protected = true;
             $model->save();
         }
 

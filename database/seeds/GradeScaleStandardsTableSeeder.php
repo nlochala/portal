@@ -25,6 +25,7 @@ class GradeScaleStandardsTableSeeder extends Seeder
             $model->description = $item[3];
             $model->grade_scale_id = $item[4];
             $model = Helpers::dbAddAudit($model);
+            $model->is_protected = true;
             $model->save();
         }
 

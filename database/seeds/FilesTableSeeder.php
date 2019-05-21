@@ -18,13 +18,14 @@ class FilesTableSeeder extends Seeder
 
         $file_extensions = Helpers::parseCsv('database/seeds/data/files.csv', false);
 
-        foreach($file_extensions as $type){
+        foreach ($file_extensions as $type) {
             $model = new ProjectFile();
             $model->file_extension_id = $type[0];
             $model->path = $type[1];
             $model->size = $type[2];
             $model->name = $type[3];
             $model->driver = $type[4];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

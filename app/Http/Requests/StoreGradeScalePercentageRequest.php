@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRoomRequest extends FormRequest
+class StoreGradeScalePercentageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class StoreRoomRequest extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'required',
-            'description' => 'required',
-            'building_id' => 'required',
-            'room_type_id' => 'required',
-            'phone_extension' => 'numeric',
+            //
         ];
     }
 }
