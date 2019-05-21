@@ -159,11 +159,8 @@ class RoomTypeAjaxController extends Controller
      */
     public function destroy(RoomType $room_type)
     {
-        $room_types = Helpers::parseCsv('database/seeds/data/room_types.csv', false);
-        // Can not delete a pre-populated room_type.
-        if ($room_type->id <= count($room_types)) {
+        if ($room_type->is_protected) {
             $this->attemptAction(false, 'room_type', 'delete', 'Can not delete. This room type is protected.');
-
             return;
         }
 

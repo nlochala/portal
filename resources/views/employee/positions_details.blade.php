@@ -72,7 +72,7 @@
         </tr>
         <tr>
             <td><strong>Stipend:</strong></td>
-            <td>{{ $position->stipend }}</td>
+            <td>{{ $position->formattedStipend }}</td>
         </tr>
         @include('_tables.end-new-table')
         <strong>Position Description</strong>

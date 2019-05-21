@@ -158,9 +158,7 @@ class YearAjaxController extends Controller
      */
     public function destroy(Year $year)
     {
-        $years = Helpers::parseCsv('database/seeds/data/years.csv', false);
-        // Can not delete a pre-populated year.
-        if ($year->id <= count($years)) {
+        if ($year->is_protected) {
             $this->attemptAction(false, 'year', 'delete', 'Can not delete. This year is protected.');
             return;
         }

@@ -159,9 +159,7 @@ class BuildingAjaxController extends Controller
      */
     public function destroy(Building $building)
     {
-        $buildings = Helpers::parseCsv('database/seeds/data/buildings.csv', false);
-        // Can not delete a pre-populated building.
-        if ($building->id <= count($buildings)) {
+        if ($building->is_protected) {
             $this->attemptAction(false, 'building', 'delete', 'Can not delete. This building is protected.');
 
             return;

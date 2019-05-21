@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\GradeScale;
 use Exception;
+use App\GradeScale;
 use App\Helpers\Helpers;
 use App\GradeScaleStandard;
 use App\Helpers\FieldValidation;
@@ -161,6 +161,12 @@ class GradeScaleStandardsAjaxController extends Controller
      */
     public function destroy(GradeScaleStandard $standard)
     {
+        if ($standard->is_protected) {
+            $this->attemptAction(false, 'percentage', 'delete', 'Can not delete. This item is protected.');
+
+            return;
+        }
+
         $standard = Helpers::dbAddAudit($standard);
         $this->attemptAction($standard->delete(), 'standard', 'delete');
     }

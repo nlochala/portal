@@ -3,11 +3,11 @@
 namespace App;
 
 use Carbon\Carbon;
+use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Webpatser\Uuid\Uuid;
 
 class Position extends Model
 {
@@ -80,6 +80,20 @@ class Position extends Model
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Return the formatted stipend string.
+     *
+     * @return string
+     */
+    public function getFormattedStipendAttribute()
+    {
+        if (! $this->stipend) {
+            return '0 ¥';
+        }
+
+        return $this->stipend.' ¥';
+    }
 
     /**
      * Set created_at to Carbon Object.

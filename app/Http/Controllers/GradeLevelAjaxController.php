@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\GradeLevel;
 use App\Helpers\Helpers;
 use App\Helpers\FieldValidation;
-use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\StoreGradeLevelRequest;
 
@@ -159,6 +159,12 @@ class GradeLevelAjaxController extends Controller
      */
     public function destroy(GradeLevel $grade_level)
     {
+        if ($grade_level->is_protected) {
+            $this->attemptAction(false, 'grade_level', 'delete', 'Can not delete. This grade level is protected.');
+
+            return;
+        }
+
         $grade_level = Helpers::dbAddAudit($grade_level);
         $this->attemptAction($grade_level->delete(), 'grade_level', 'delete');
     }

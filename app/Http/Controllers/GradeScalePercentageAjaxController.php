@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\GradeScale;
 use Exception;
+use App\GradeScale;
 use App\Helpers\Helpers;
 use App\GradeScalePercentage;
 use App\Helpers\FieldValidation;
@@ -161,6 +161,12 @@ class GradeScalePercentageAjaxController extends Controller
      */
     public function destroy(GradeScalePercentage $percentage)
     {
+        if ($percentage->is_protected) {
+            $this->attemptAction(false, 'percentage', 'delete', 'Can not delete. This item is protected.');
+
+            return;
+        }
+
         $percentage = Helpers::dbAddAudit($percentage);
         $this->attemptAction($percentage->delete(), 'percentage', 'delete');
     }

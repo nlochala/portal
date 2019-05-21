@@ -159,9 +159,7 @@ class DepartmentAjaxController extends Controller
      */
     public function destroy(Department $department)
     {
-        $departments = Helpers::parseCsv('database/seeds/data/departments.csv', false);
-        // Can not delete a pre-populated department.
-        if ($department->id <= count($departments)) {
+        if ($department->is_protected) {
             $this->attemptAction(false, 'department', 'delete', 'Can not delete. This department is protected.');
             return;
         }

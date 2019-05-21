@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use App\Room;
+use Exception;
 use App\Helpers\Helpers;
 use App\Helpers\FieldValidation;
 use App\Http\Requests\StoreRoomRequest;
@@ -159,6 +159,12 @@ class RoomAjaxController extends Controller
      */
     public function destroy(Room $room)
     {
+        if ($room->is_protected) {
+            $this->attemptAction(false, 'room', 'delete', 'Can not delete. This room is protected.');
+
+            return;
+        }
+
         $room = Helpers::dbAddAudit($room);
         $this->attemptAction($room->delete(), 'room', 'delete');
     }

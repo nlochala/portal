@@ -103,7 +103,7 @@
                 <td>{{ $position->name }}</td>
                 <td>{{ $position->type->name }}</td>
                 <td>{{ $position->school->name }}</td>
-                <td>{{ $position->stipend }}</td>
+                <td>{{ $position->formattedStipend }}</td>
                 <td class="text-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="View Details"

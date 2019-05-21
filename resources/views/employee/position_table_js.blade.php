@@ -8,7 +8,16 @@ columns: [
 {data: "name"},
 {data: "type.name"},
 {data: "school.name"},
-{data: "stipend"},
+{
+data: "stipend",
+render: function (data, type, row) {
+if (data == null || data == '') {
+return 0 + ' ¥';
+}
+
+return data + ' ¥';
+}
+},
 {data: "uuid",
 render: function(data, type, row) {
 return "<button type=\"button\" class=\"btn btn-sm btn-outline-success\" dusk=\"" + data + "\" data-toggle=\"tooltip\" title=\"Add Position\"\n" +
