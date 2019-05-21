@@ -14,6 +14,7 @@ class DocumentationController extends Controller
 
     /**
      * DocumentationController constructor.
+     * @param DocumentationRepository $documentationRepository
      */
     public function __construct(DocumentationRepository $documentationRepository)
     {
@@ -27,21 +28,26 @@ class DocumentationController extends Controller
     /**
      * Redirect the index page of docs to the default version.
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function index()
     {
-        $redirectURL = config('larecipe.versions.default').'/'.config('larecipe.docs.landing');
-
-        return redirect()->route('larecipe.show', $redirectURL);
+        return redirect()->route(
+            'larecipe.show',
+            [
+                'version' => config('larecipe.versions.default'),
+                'page' => config('larecipe.docs.landing')
+            ]
+        );
     }
 
     /**
      * Show a documentation page.
      *
-     * @param  string $version
-     * @param  string|null $page
-     * @return Response
+     * @param $version
+     * @param null $page
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($version, $page = null)
     {
@@ -52,7 +58,13 @@ class DocumentationController extends Controller
         }
 
         if ($this->documentationRepository->isNotPublishedVersion($version)) {
-            return redirect($documentation->defaultVersionUrl.'/'.$page, 301);
+            return redirect()->route(
+                'larecipe.show',
+                [
+                    'version' => config('larecipe.versions.default'),
+                    'page' => config('larecipe.docs.landing')
+                ]
+            );
         }
 
         return response()->view('larecipe::docs', [

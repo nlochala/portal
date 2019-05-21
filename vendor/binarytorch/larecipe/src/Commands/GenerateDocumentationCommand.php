@@ -43,7 +43,7 @@ class GenerateDocumentationCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle()
     {
@@ -101,7 +101,9 @@ class GenerateDocumentationCommand extends Command
     /**
      * Create index.md for the given version if it's not exists.
      *
+     * @param $versionDirectory
      * @return bool
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function createVersionIndex($versionDirectory)
     {
@@ -120,7 +122,9 @@ class GenerateDocumentationCommand extends Command
     /**
      * Create {landing}.md for the given version if it's not exists.
      *
+     * @param $versionDirectory
      * @return bool
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function createVersionLanding($versionDirectory)
     {
@@ -147,12 +151,6 @@ class GenerateDocumentationCommand extends Command
             '{{LANDING}}',
             ucwords(config('larecipe.docs.landing')),
             $stub
-        );
-
-        $content = str_replace(
-            '{{ROOT}}',
-            config('larecipe.docs.route'),
-            $content
         );
 
         $content = str_replace(
@@ -183,6 +181,7 @@ class GenerateDocumentationCommand extends Command
      *
      * @param $stub
      * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function getStub($stub)
     {

@@ -27,17 +27,17 @@ class DocumentationRepository
     {
         $this->documentation = $documentation;
 
-        $this->docsRoute = config('larecipe.docs.route');
+        $this->docsRoute = route('larecipe.index');
         $this->defaultVersion = config('larecipe.versions.default');
         $this->publishedVersions = config('larecipe.versions.published');
-        $this->defaultVersionUrl = $this->docsRoute.'/'.$this->defaultVersion;
+        $this->defaultVersionUrl = route('larecipe.show', ['version' => $this->defaultVersion]);
     }
 
     /**
      * @param $version
-     * @param $page
-     *
-     * @return $this
+     * @param null $page
+     * @param array $data
+     * @return $this|DocumentationRepository
      */
     public function get($version, $page = null, $data = [])
     {
@@ -90,12 +90,14 @@ class DocumentationRepository
     /**
      * Prepare the current section page.
      *
+     * @param $version
+     * @param $page
      * @return $this
      */
     protected function prepareSection($version, $page)
     {
         if ($this->documentation->sectionExists($version, $page)) {
-            $this->currentSection = '/'.$page;
+            $this->currentSection = $page;
         }
 
         return $this;
@@ -109,7 +111,10 @@ class DocumentationRepository
     protected function prepareCanonical()
     {
         if ($this->documentation->sectionExists($this->defaultVersion, $this->sectionPage)) {
-            $this->canonical = $this->docsRoute.'/'.$this->defaultVersion.'/'.$this->sectionPage;
+            $this->canonical = route('larecipe.show', [
+                'version' => $this->defaultVersion,
+                'page' => $this->sectionPage
+            ]);
         }
 
         return $this;

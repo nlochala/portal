@@ -14,6 +14,7 @@
 
 <p align="center">
 <a href="https://github.com/saleem-hadad/larecipe"><img src="https://img.shields.io/packagist/dt/binarytorch/larecipe.svg" alt="License"></a>
+<a title="MadeWithVueJs.com Shield" href="https://madewithvuejs.com/p/larecipe/shield-link"> <img src="https://madewithvuejs.com/storage/repo-shields/1087-shield.svg"/></a>
 <a href="https://github.com/saleem-hadad/larecipe"><img src="https://img.shields.io/github/release/saleem-hadad/larecipe.svg" alt="Release"></a>
 <a href="https://github.com/saleem-hadad/larecipe"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 <a href="#backers" alt="sponsors on Open Collective"><img src="https://opencollective.com/larecipe/backers/badge.svg" /></a> <a href="#sponsors" alt="Sponsors on Open Collective"><img src="https://opencollective.com/larecipe/sponsors/badge.svg" /></a> 
@@ -46,37 +47,36 @@ Visit your app domain with `/docs` endpoint. That's it.
 
 * [Zino](https://zino.saleemhadad.me/docs/1.0/installation) - 🤖 Custom Arduino library made for humans.
 * [Blogged](https://blogged.binarytorch.com.my/docs/1.0/overview) - Blogged is a package provides an easy way to create beautiful blog inside your Laravel projects.
+* [Wave](https://wave.devdojo.com/docs) - Wave is the perfect starter kit for building your next great idea
 * Put your docs here 😍👌
 
-## Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<a href="https://github.com/saleem-hadad/larecipe/graphs/contributors"><img src="https://opencollective.com/larecipe/contributors.svg?width=890&button=false" /></a>
+
+## Gold Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/larecipe#sponsor)]
+
+<a href="https://www.logengine.dev/" target="_blank">
+    <img width="200px" height="200px" src="https://opencollective-production.s3-us-west-1.amazonaws.com/badd02d0-61fc-11e9-bd81-b7f6a515acbf.png">
+</a>
+
+## Bronze Sponsors
+
+<a href="https://github.com/mrgfrederic" target="_blank">
+    <img width="100px" height="100px" src="https://avatars0.githubusercontent.com/u/42940842?s=460&v=4">
+</a>
 
 
 ## Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/larecipe#backer)]
 
-<a href="https://opencollective.com/larecipe#backers" target="_blank"><img src="https://opencollective.com/larecipe/backers.svg?width=890"></a>
+<img src="https://opencollective.com/larecipe/tiers/backers.svg?avatarHeight=50" />
 
+## Contributors
 
-## Sponsors
-
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/larecipe#sponsor)]
-
-<a href="https://opencollective.com/larecipe/sponsor/0/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/1/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/2/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/3/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/4/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/5/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/6/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/7/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/8/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/larecipe/sponsor/9/website" target="_blank"><img src="https://opencollective.com/larecipe/sponsor/9/avatar.svg"></a>
-
-
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/saleem-hadad/larecipe/graphs/contributors"><img src="https://opencollective.com/larecipe/contributors.svg?width=890&button=false" /></a>
 
 ## License
 

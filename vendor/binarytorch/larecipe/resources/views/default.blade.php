@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
     <head>
-        {{-- Meta --}}
+        <!-- META Tags -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{{ isset($title) ? $title . ' | ' : null }}{{ config('app.name') }}</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        {{-- SEO --}}
+        <!-- SEO -->
         <meta name="author" content="{{ config('larecipe.seo.author') }}">
         <meta name="description" content="{{ config('larecipe.seo.description') }}">
         <meta name="keywords" content="{{ config('larecipe.seo.keywords') }}">
@@ -23,14 +23,20 @@
             @endforeach
         @endif
 
-        {{-- CSS --}}
+        <!-- CSS -->
         <link rel="stylesheet" href="{{ larecipe_assets('css/app.css') }}">
 
-        {{-- Icon --}}
+        <!-- Favicon -->
         <link rel="apple-touch-icon" href="{{ asset(config('larecipe.ui.fav')) }}">
         <link rel="shortcut icon" type="image/png" href="{{ asset(config('larecipe.ui.fav')) }}"/>
-        
-        {{-- Dynamic color --}}
+
+        <!-- FontAwesome -->
+        <link rel="stylesheet" href="{{ larecipe_assets('css/font-awesome.css') }}">
+        @if (config('larecipe.ui.fa_v4_shims', true))
+            <link rel="stylesheet" href="{{ larecipe_assets('css/font-awesome-v4-shims.css') }}">
+        @endif
+
+        <!-- Dynamic Colors -->
         @include('larecipe::style')
 
         <!-- CSRF Token -->
@@ -43,9 +49,9 @@
     <body>
         <div id="app" v-cloak>
             @include('larecipe::partials.nav')
-            
+
             @include('larecipe::plugins.search')
-            
+
             @yield('content')
 
             <larecipe-back-to-top></larecipe-back-to-top>
@@ -62,7 +68,7 @@
             window.LaRecipe = new CreateLarecipe(config)
         </script>
 
-        {{-- Google Analytics --}}
+        <!-- Google Analytics -->
         @if(config('larecipe.settings.ga_id'))
             <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('larecipe.settings.ga_id') }}"></script>
             <script>
@@ -73,7 +79,7 @@
                 gtag('config', "{{ config('larecipe.settings.ga_id') }}");
             </script>
         @endif
-        {{-- /Google Analytics --}}
+        <!-- /Google Analytics -->
 
         @foreach (LaRecipe::allScripts() as $name => $path)
             <script src="{{ route('larecipe.scripts', $name) }}"></script>
