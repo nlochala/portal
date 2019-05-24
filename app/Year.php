@@ -72,6 +72,21 @@ class Year extends Model
         return Year::findOrFail(env('SCHOOL_YEAR_ID'));
     }
 
+    /**
+     * Return a formatted dropdown.
+     *
+     * @param null $scope
+     * @return array
+     */
+    public static function getDropdown($scope = null)
+    {
+        if ($scope) {
+            return static::$scope()->get()->pluck('name', 'id')->toArray();
+        }
+
+        return static::all()->pluck('name', 'id')->toArray();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | METHODS

@@ -4,13 +4,11 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PersonType extends Model
+class CourseType extends Model
 {
     use SoftDeletes;
 
@@ -41,6 +39,8 @@ class PersonType extends Model
         return 'uuid';
     }
 
+    protected $casts = ['is_protected' => 'bool'];
+
     /**
      * Add mass-assignment to model.
      *
@@ -50,6 +50,7 @@ class PersonType extends Model
         'uuid',
         'name',
         'description',
+        'is_protected',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
@@ -59,11 +60,11 @@ class PersonType extends Model
     /**
      * Return a formatted dropdown.
      *
-     * @return Collection
+     * @return array
      */
     public static function getDropdown()
     {
-        return static::all()->pluck('name', 'id');
+        return static::all()->pluck('name', 'id')->toArray();
     }
 
     /*
@@ -109,17 +110,7 @@ class PersonType extends Model
     */
 
     /**
-     *  This person_type has many persons.
-     *
-     * @return HasMany
-     */
-    public function persons()
-    {
-        return $this->hasMany('App\Person', 'person_type_id');
-    }
-
-    /**
-     *  This person type was created by a user.
+     *  This course_type was created by a user.
      *
      * @return BelongsTo
      */
@@ -129,7 +120,7 @@ class PersonType extends Model
     }
 
     /**
-     *  This person type was updated by a user.
+     *  This course_type was updated by a user.
      *
      * @return BelongsTo
      */

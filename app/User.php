@@ -2,12 +2,10 @@
 
 namespace App;
 
-use App\Helpers\Helpers;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -27,7 +25,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $with = ['person'];
+//    protected $with = ['person'];
 
     /*
     |--------------------------------------------------------------------------

@@ -3,13 +3,13 @@
 namespace App;
 
 use Carbon\Carbon;
-use Collective\Html\Eloquent\FormAccessible;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
+use Collective\Html\Eloquent\FormAccessible;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Person extends Model
 {
@@ -105,9 +105,11 @@ class Person extends Model
      */
     public function fullName($last_name_first = false)
     {
+        $family_name = $this->family_name ? $this->family_name : $this->user->family_name;
+
         return $last_name_first
-            ? $this->family_name.', '.$this->given_name
-            : $this->given_name.' '.$this->family_name;
+            ? $family_name.', '.$this->preferredName()
+            : $this->preferredName().' '.$family_name;
     }
 
     /**
@@ -117,13 +119,13 @@ class Person extends Model
      */
     public function preferredName()
     {
-        if (!$this->preferred_name && !$this->given_name) {
-            return $this->user->given_name;
-        } elseif (!$this->preferred_name) {
-            return $this->given_name;
-        } else {
-            return $this->preferred_name;
+        $name = $this->preferred_name ? $this->preferred_name : $this->given_name;
+
+        if (! $this->preferred_name && ! $this->given_name) {
+            $name = $this->user->given_name;
         }
+
+        return $name;
     }
 
     /*
@@ -348,7 +350,7 @@ class Person extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User', 'user_created_by', 'id');
+        return $this->belongsTo('App\User', 'user_created_id', 'id');
     }
 
     /**
@@ -358,7 +360,7 @@ class Person extends Model
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User', 'user_updated_by', 'id');
+        return $this->belongsTo('App\User', 'user_updated_id', 'id');
     }
 
     /**

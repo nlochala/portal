@@ -3,10 +3,10 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Phone extends Model
 {
@@ -17,14 +17,15 @@ class Phone extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -33,12 +34,12 @@ class Phone extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
         return 'uuid';
     }
-
 
     /**
      * Add mass-assignment to model.
@@ -55,17 +56,17 @@ class Phone extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
-
 
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -77,7 +78,7 @@ class Phone extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -94,14 +95,14 @@ class Phone extends Model
     |--------------------------------------------------------------------------
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This phone belongs to a country
+     *  This phone belongs to a country.
      *
      * @return BelongsTo
      */
@@ -111,7 +112,7 @@ class Phone extends Model
     }
 
     /**
-     *  This phone belongs to a phoneType
+     *  This phone belongs to a phoneType.
      *
      * @return BelongsTo
      */
@@ -120,9 +121,8 @@ class Phone extends Model
         return $this->belongsTo('App\PhoneType', 'phone_type_id', 'id');
     }
 
-
     /**
-     *  This phone belongs to a person
+     *  This phone belongs to a person.
      *
      * @return BelongsTo
      */
@@ -132,22 +132,22 @@ class Phone extends Model
     }
 
     /**
-     *  This phone number was created by a user
+     *  This phone number was created by a user.
      *
      * @return BelongsTo
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User', 'user_created_by', 'id');
+        return $this->belongsTo('App\User', 'user_created_id', 'id');
     }
 
     /**
-     *  This phone number was updated by a user
+     *  This phone number was updated by a user.
      *
      * @return BelongsTo
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User', 'user_updated_by', 'id');
+        return $this->belongsTo('App\User', 'user_updated_id', 'id');
     }
 }

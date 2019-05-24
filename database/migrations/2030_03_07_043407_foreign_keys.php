@@ -263,10 +263,10 @@ class ForeignKeys extends Migration
                 ->references('id')->on('grade_scales');
             $table->foreign('department_id')
                 ->references('id')->on('departments');
-            $table->foreign('school_id')
-                ->references('id')->on('schools');
             $table->foreign('year_id')
                 ->references('id')->on('years');
+            $table->foreign('course_type_id')
+                ->references('id')->on('course_types');
         });
 
         /*

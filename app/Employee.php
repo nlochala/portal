@@ -185,7 +185,7 @@ class Employee extends Model
     public function createdBy()
     {
         // 5 --> this is the key for the relationship on the table defined on 4
-        return $this->belongsTo('App\User', 'user_created_by', 'id');
+        return $this->belongsTo('App\User', 'user_created_id', 'id');
     }
 
     /**
@@ -196,7 +196,7 @@ class Employee extends Model
     public function updatedBy()
     {
         // 5 --> this is the key for the relationship on the table defined on 4
-        return $this->belongsTo('App\User', 'user_updated_by', 'id');
+        return $this->belongsTo('App\User', 'user_updated_id', 'id');
     }
 
     /**

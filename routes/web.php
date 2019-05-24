@@ -244,3 +244,15 @@ Route::get('api/grade_scale/{grade_scale}/standards/ajaxshowitem', 'GradeScaleSt
 Route::post('api/grade_scale/{grade_scale}/percentage/ajaxstoreitem', 'GradeScalePercentageAjaxController@ajaxStore');
 Route::post('api/grade_scale/{grade_scale}/standards/ajaxstoreitem', 'GradeScaleStandardsAjaxController@ajaxStore');
 
+/*
+|--------------------------------------------------------------------------
+| COURSES
+|--------------------------------------------------------------------------
+*/
+Route::get('course/index', 'CourseController@index');
+Route::get('course/{course}', 'CourseController@show');
+Route::post('course/{course}', 'CourseController@store');
+Route::post('course/{course}/report_card_options', 'CourseController@storeReportCardOptions');
+Route::post('api/course/ajaxstorecourse', 'CourseAjaxController@ajaxStore');
+Route::get('api/course/ajaxshowcourse', 'CourseAjaxController@ajaxShow');
+

@@ -99,11 +99,11 @@
     [
         [
             'title' => 'Dashboard',
-            'uri'   => '/courses/dashboard'
+            'uri'   => '/course/dashboard'
         ],
         [
             'title' => 'Index',
-            'uri'   => '/courses/index'
+            'uri'   => '/course/index'
         ],
     ]
 ])

@@ -100,7 +100,7 @@ class PhoneType extends Model
      */
     public function createdBy()
     {
-        return $this->belongsTo('App\User', 'user_created_by', 'id');
+        return $this->belongsTo('App\User', 'user_created_id', 'id');
     }
 
     /**
@@ -110,6 +110,6 @@ class PhoneType extends Model
      */
     public function updatedBy()
     {
-        return $this->belongsTo('App\User', 'user_updated_by', 'id');
+        return $this->belongsTo('App\User', 'user_updated_id', 'id');
     }
 }

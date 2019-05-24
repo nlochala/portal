@@ -46,6 +46,41 @@ class Helpers
     }
 
     /**
+     * Return a checked string if the values equal each other.
+     *
+     * @param bool $is_checked
+     * @return string
+     */
+    public static function isChecked($is_checked = false)
+    {
+        if ($is_checked) {
+            return 'checked';
+        }
+
+        return '';
+    }
+
+    /**
+     * @param array $values
+     * @return array
+     */
+    public static function convertSwitchFormOperator(array $values)
+    {
+        $return_array = [];
+
+        foreach ($values as $field => $value) {
+            if ($field == '_token') {
+                $return_array[$field] = $value;
+            } else {
+                $value = $value == 'on' ? true : false;
+                $return_array[$field] = $value;
+            }
+        }
+
+        return $return_array;
+    }
+
+    /**
      * Return the proper badge for the expiration date.
      *
      * @param Carbon $expiration_date

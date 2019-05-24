@@ -55,6 +55,16 @@ class CourseTranscriptType extends Model
         'user_updated_ip',
     ];
 
+    /**
+     * Return a formatted dropdown.
+     *
+     * @return array
+     */
+    public static function getDropdown()
+    {
+        return static::all()->pluck('name', 'id')->toArray();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES

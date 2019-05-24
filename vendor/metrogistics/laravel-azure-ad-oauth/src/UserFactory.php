@@ -42,8 +42,6 @@ class UserFactory
             $callback($auth_user);
         }
 
-        $auth_user = Helpers::dbAddAudit($auth_user);
-
         if ($auth_user->isDirty()) {
             $auth_user->update();
         }
@@ -65,16 +63,11 @@ class UserFactory
 
         $new_user->username = $this->getUsernameFromEmail($azure_user->email);
 
-        $person = new Person();
-        $person->given_name =
-
         $callback = static::$user_callback;
 
         if ($callback && is_callable($callback)) {
             $callback($new_user);
         }
-
-        $new_user = Helpers::dbAddAudit($new_user);
 
         $new_user->save();
 

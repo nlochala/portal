@@ -39,5 +39,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GradeScaleStandardsTableSeeder::class);
         $this->call(CourseTranscriptTypesTableSeeder::class);
         $this->call(PositionsTableSeeder::class);
+        $this->call(CourseTypesTableSeeder::class);
     }
 }

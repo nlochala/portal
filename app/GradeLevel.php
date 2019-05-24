@@ -59,6 +59,27 @@ class GradeLevel extends Model
 
     /*
     |--------------------------------------------------------------------------
+    | STATIC METHODS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Return a formatted dropdown.
+     *
+     * @param null $scope
+     * @return array
+     */
+    public static function getDropdown($scope = null)
+    {
+        if ($scope) {
+            return static::$scope()->get()->pluck('short_name', 'id')->toArray();
+        }
+
+        return static::all()->pluck('short_name', 'id')->toArray();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
@@ -92,6 +113,16 @@ class GradeLevel extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Current year age levels query scope.
+     *
+     * @param $query
+     */
+    public function scopeCurrent($query)
+    {
+        $query->where('year_id', '=', env('SCHOOL_YEAR_ID'));
+    }
 
     /*
     |--------------------------------------------------------------------------

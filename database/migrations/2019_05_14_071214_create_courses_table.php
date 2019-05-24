@@ -22,17 +22,14 @@ class CreateCoursesTable extends Migration
             $table->text('credits')->nullable();
             $table->integer('max_class_size')->nullable();
             $table->boolean('is_active')->nullable()->default(false);
-            $table->boolean('is_elective')->nullable()->default(false);
-            $table->boolean('is_activity')->nullable()->default(false);
-            $table->boolean('is_homeroom')->nullable()->default(false);
             $table->boolean('has_attendance')->nullable()->default(false);
             $table->boolean('show_on_report_card')->nullable()->default(false);
             $table->boolean('calculate_report_card')->nullable()->default(false);
             $table->boolean('calculate_on_transcript')->nullable()->default(false);
             $table->unsignedBigInteger('course_transcript_type_id')->nullable();
+            $table->unsignedBigInteger('course_type_id')->nullable();
             $table->unsignedBigInteger('grade_scale_id')->nullable();
             $table->unsignedBigInteger('department_id')->nullable();
-            $table->unsignedBigInteger('school_id')->nullable();
             $table->unsignedBigInteger('year_id')->nullable();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();
