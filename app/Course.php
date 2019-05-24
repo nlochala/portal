@@ -4,13 +4,12 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Course extends Model
+class Course extends PortalBaseModel
 {
     use SoftDeletes;
 

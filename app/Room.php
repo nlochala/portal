@@ -4,12 +4,11 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Room extends Model
+class Room extends PortalBaseModel
 {
     use SoftDeletes;
 

@@ -4,12 +4,11 @@ namespace App;
 
 use App\Helpers\Helpers;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
-class FileAudit extends Model
+class FileAudit extends PortalBaseModel
 {
     use SoftDeletes;
 

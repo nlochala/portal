@@ -9,7 +9,6 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Constraint;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -17,7 +16,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
-class File extends Model
+class File extends PortalBaseModel
 {
     use SoftDeletes;
 

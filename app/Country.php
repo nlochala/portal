@@ -3,9 +3,8 @@
 namespace App;
 
 use Webpatser\Uuid\Uuid;
-use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+class Country extends PortalBaseModel
 {
     /**
      *  Setup model event hooks.

@@ -3,13 +3,12 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class FileExtension extends Model
+class FileExtension extends PortalBaseModel
 {
     use SoftDeletes;
 
@@ -18,8 +17,9 @@ class FileExtension extends Model
     | SETUP
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  Setup model event hooks
+     *  Setup model event hooks.
      */
     public static function boot()
     {
@@ -34,12 +34,12 @@ class FileExtension extends Model
      *
      * @return string
      */
+
     /** @noinspection PhpMissingParentCallCommonInspection */
     public function getRouteKeyName()
     {
         return 'uuid';
     }
-
 
     /**
      * The database table (file_extensions) used by the model.
@@ -61,17 +61,17 @@ class FileExtension extends Model
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
-        'user_updated_ip'
+        'user_updated_ip',
     ];
-
 
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
     /**
-     * Set created_at to Carbon Object
+     * Set created_at to Carbon Object.
      *
      * @param $value
      *
@@ -83,7 +83,7 @@ class FileExtension extends Model
     }
 
     /**
-     * Set updated_at to Carbon Object
+     * Set updated_at to Carbon Object.
      *
      * @param $value
      *
@@ -94,7 +94,6 @@ class FileExtension extends Model
         return Carbon::parse($value)->toFormattedDateString();
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -102,7 +101,7 @@ class FileExtension extends Model
     */
 
     /**
-     * extensions by type query scope
+     * extensions by type query scope.
      *
      * @param $query
      * @param $type
@@ -114,14 +113,14 @@ class FileExtension extends Model
         return $query->where('type', '=', $type);
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
-     *  This file_extension was created by a user
+     *  This file_extension was created by a user.
      *
      * @return BelongsTo
      */
@@ -131,7 +130,7 @@ class FileExtension extends Model
     }
 
     /**
-     *  This file_extension was updated by a user
+     *  This file_extension was updated by a user.
      *
      * @return BelongsTo
      */
@@ -148,7 +147,7 @@ class FileExtension extends Model
 
     /**
      * Check whether the given file has the extension of a given type.
-     * Check that it has a valid mime type
+     * Check that it has a valid mime type.
      *
      * @param              $type
      * @param UploadedFile $file
@@ -166,7 +165,7 @@ class FileExtension extends Model
             && ($extension_class->mime_apache == $mime_type || $extension_class->mime_nginx == $mime_type)) {
             return true;
         }
+
         return false;
     }
-
 }

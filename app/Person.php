@@ -4,14 +4,13 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
-use Illuminate\Database\Eloquent\Model;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Person extends Model
+class Person extends PortalBaseModel
 {
     use SoftDeletes;
     use FormAccessible;

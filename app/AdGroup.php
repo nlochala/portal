@@ -3,11 +3,10 @@
 namespace App;
 
 use Webpatser\Uuid\Uuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class AdGroup extends Model
+class AdGroup extends PortalBaseModel
 {
     use SoftDeletes;
 

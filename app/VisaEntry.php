@@ -3,13 +3,12 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Webpatser\Uuid\Uuid;
 
-class VisaEntry extends Model
+class VisaEntry extends PortalBaseModel
 {
     use SoftDeletes;
 

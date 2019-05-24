@@ -3,12 +3,11 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
-class EmployeeBonusType extends Model
+class EmployeeBonusType extends PortalBaseModel
 {
     use SoftDeletes;
 

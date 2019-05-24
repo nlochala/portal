@@ -5,12 +5,11 @@ namespace App;
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Whoops\Exception\ErrorException;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class GradeScale extends Model
+class GradeScale extends PortalBaseModel
 {
     use SoftDeletes;
 

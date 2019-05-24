@@ -4,13 +4,12 @@ namespace App;
 
 use Carbon\Carbon;
 use Collective\Html\Eloquent\FormAccessible;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Webpatser\Uuid\Uuid;
 
-class Passport extends Model
+class Passport extends PortalBaseModel
 {
     use SoftDeletes;
     use FormAccessible;

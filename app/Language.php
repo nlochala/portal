@@ -3,9 +3,8 @@
 namespace App;
 
 use Webpatser\Uuid\Uuid;
-use Illuminate\Database\Eloquent\Model;
 
-class Language extends Model
+class Language extends PortalBaseModel
 {
     /**
      *  Setup model event hooks.
