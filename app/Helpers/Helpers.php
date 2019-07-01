@@ -321,8 +321,8 @@ class Helpers
         auth()->user() ? $user_id = auth()->user()->id : $user_id = 1;
 
         if (is_array($model)) {
-            $model['user_created_id'] = auth()->id();
-            $model['user_created_ip'] = Helpers::getUserIp();
+            $model['user_created_id'] = $user_id;
+            $model['user_created_ip'] = static::getUserIp();
 
             return $model;
         }

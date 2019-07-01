@@ -250,9 +250,27 @@ Route::post('api/grade_scale/{grade_scale}/standards/ajaxstoreitem', 'GradeScale
 |--------------------------------------------------------------------------
 */
 Route::get('course/index', 'CourseController@index');
+Route::post('course/index', 'CourseController@store');
 Route::get('course/{course}', 'CourseController@show');
-Route::post('course/{course}', 'CourseController@store');
-Route::post('course/{course}/report_card_options', 'CourseController@storeReportCardOptions');
+Route::patch('course/{course}', 'CourseController@storeUpdateShow');
+Route::get('course/{course}/audits', 'CourseController@showAudits');
+Route::get('course/{course}/edit', 'CourseController@update');
+Route::patch('course/{course}/edit', 'CourseController@storeUpdate');
+
+Route::post('course/{course}/report_card_options', 'CourseController@storeCourseDisplayOptions');
+Route::patch('course/{course}/transcript_options', 'CourseController@storeTranscriptOptions');
+Route::patch('course/{course}/scheduling_options', 'CourseController@storeSchedulingOptions');
+Route::patch('course/{course}/required_materials', 'CourseController@storeRequiredMaterials');
+
 Route::post('api/course/ajaxstorecourse', 'CourseAjaxController@ajaxStore');
 Route::get('api/course/ajaxshowcourse', 'CourseAjaxController@ajaxShow');
+
+Route::post('api/course/{course}/ajaxstoreprerequisite', 'CoursePrerequisiteAjaxController@ajaxStore');
+Route::get('api/course/{course}/ajaxshowprerequisite', 'CoursePrerequisiteAjaxController@ajaxShow');
+
+Route::post('api/course/{course}/ajaxstorecorequisite', 'CourseCorequisiteAjaxController@ajaxStore');
+Route::get('api/course/{course}/ajaxshowcorequisite', 'CourseCorequisiteAjaxController@ajaxShow');
+
+Route::post('api/course/{course}/ajaxstoreequivalent', 'CourseEquivalentAjaxController@ajaxStore');
+Route::get('api/course/{course}/ajaxshowequivalent', 'CourseEquivalentAjaxController@ajaxShow');
 

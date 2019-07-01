@@ -20,6 +20,7 @@ class CreateCoursesTable extends Migration
             $table->text('description')->nullable();
             $table->text('short_name')->nullable();
             $table->text('credits')->nullable();
+            $table->text('required_materials')->nullable();
             $table->integer('max_class_size')->nullable();
             $table->boolean('is_active')->nullable()->default(false);
             $table->boolean('has_attendance')->nullable()->default(false);

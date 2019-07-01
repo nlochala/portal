@@ -41,6 +41,7 @@ class Course extends PortalBaseModel
     }
 
     public static $reportCardCheckbox = [
+        'is_active' => 'Activate Course',
         'has_attendance' => 'Record Attendance',
         'show_on_report_card' => 'Include on Report Card',
         'calculate_report_card' => 'Calculate on Report Card',
@@ -110,6 +111,64 @@ class Course extends PortalBaseModel
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Prerequisites display.
+     *
+     * @return mixed
+     */
+    public function getDisplayInlinePrerequisitesAttribute()
+    {
+        return $this->prerequisites->isEmpty()
+            ? '---'
+            : implode(', ', $this->prerequisites->pluck('short_name_url')->toArray());
+    }
+
+    /**
+     * Corequisites display.
+     *
+     * @return mixed
+     */
+    public function getDisplayInlineCorequisitesAttribute()
+    {
+        return $this->corequisites->isEmpty()
+            ? '---'
+            : implode(', ', $this->corequisites->pluck('short_name_url')->toArray());
+    }
+
+    /**
+     * Equivalents display.
+     *
+     * @return mixed
+     */
+    public function getDisplayInlineEquivalentsAttribute()
+    {
+        return $this->equivalents->isEmpty()
+            ? '---'
+            : implode(', ', $this->equivalents->pluck('short_name_url')->toArray());
+    }
+
+    /**
+     * Equivalents display.
+     *
+     * @return mixed
+     */
+    public function getDisplayInlineGradeLevelsAttribute()
+    {
+        return $this->gradeLevels->isEmpty()
+            ? '---'
+            : implode(', ', $this->gradeLevels->pluck('short_name')->toArray());
+    }
+
+    /**
+     * Return url-formatted short_name.
+     *
+     * @return mixed
+     */
+    public function getShortNameUrlAttribute()
+    {
+        return '<a href="'.url('course/'.$this->uuid).'">'.$this->short_name.'</a>';
+    }
 
     /**
      * Return a formatted name.
