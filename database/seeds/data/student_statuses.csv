@@ -1,0 +1,5 @@
+Perspective Student, "This student has not yet been accepted, but has gone through the application process."
+Incoming Student, "This student has not yet started their first day of class, but has been accepted."
+Current Student, "This is a current student."
+Graduated Student, "This is a student that has since graduated."
+Former Student, "This was an enrolled student, but is currently studying elsewhere."

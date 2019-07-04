@@ -136,6 +136,52 @@ Route::get('employee/{employee}/position/view_details', 'EmployeePositionControl
 
 /*
 |--------------------------------------------------------------------------
+| STUDENT
+|--------------------------------------------------------------------------
+*/
+//Directory
+Route::get('student/index', 'StudentController@index');
+Route::post('student/index', 'StudentController@storeNewStudent');
+Route::get('api/student/ajaxshowstudent', 'StudentAjaxController@ajaxShow');
+
+//Overview
+Route::get('student/{student}/profile', 'StudentProfileController@profile');
+Route::patch('student/{student}/profile', 'StudentProfileController@updateProfile');
+Route::post('student/{student}/profile', 'StudentProfileController@updateProfile');
+
+//Contact Information
+Route::get('student/{student}/contact', 'StudentContactController@contact');
+Route::post('student/{student}/profile/store_phone', 'StudentContactController@storePhone');
+Route::post('student/{student}/profile/store_address', 'StudentContactController@storeAddress');
+Route::patch('student/{student}/profile/store_email', 'StudentContactController@storeEmail');
+Route::patch('student/{student}/address/{address}/update_address', 'StudentContactController@updateAddress');
+
+//Passports and Visas
+Route::get('student/{student}/passports_visas', 'StudentPassportVisaController@passportVisa');
+Route::get('student/{student}/create_passport', 'StudentPassportVisaController@createPassport');
+Route::post('student/{student}/create_passport', 'StudentPassportVisaController@storePassport');
+Route::post('student/{student}/passport/{passport}/create_visa', 'StudentPassportVisaController@storeVisa');
+Route::patch('student/{student}/visa/{visa}/update_visa', 'StudentPassportVisaController@updateVisa');
+Route::patch('student/{student}/passport/{passport}/update_passport', 'StudentPassportVisaController@updatePassport');
+Route::get('student/{student}/passport/{passport}/update_passport', 'StudentPassportVisaController@updatePassportForm');
+
+////ID Cards
+//Route::get('student/{student}/id_card', 'StudentIdCardController@idCard');
+//Route::get('student/{student}/create_id_card', 'StudentIdCardController@createForm');
+//Route::post('student/{student}/create_id_card', 'StudentIdCardController@store');
+//Route::get('student/{student}/id_card/{id_card}/update_id_card', 'StudentIdCardController@editForm');
+//Route::patch('student/{student}/id_card/{id_card}/update_id_card', 'StudentIdCardController@update');
+//
+////Official Documents
+//Route::get('student/{student}/official_documents', 'StudentOfficialDocumentsController@officialDocuments');
+//Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsController@store');
+//Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsController@store');
+//Route::get('student/{student}/official_documents/{document}/delete', 'StudentOfficialDocumentsController@delete');
+
+//Student Details
+
+/*
+|--------------------------------------------------------------------------
 | PERSON
 |--------------------------------------------------------------------------
 */

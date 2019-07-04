@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Add Content Title Here b.breadcrumbs -->
-    @include('person._horizontal_menu')
+    @include('employee._horizontal_menu')
     @include('layouts._content_start')
     <h1 class="font-w400" style="text-align: center">{{ $employee->person->preferredName() }}'s
         Passports and Visas</h1>
@@ -27,7 +27,7 @@
 
 -->
     @foreach($passports as $passport)
-        @include('person._display_passport', ['passport' => $passport])
+        @include('employee._display_passport', ['passport' => $passport])
     @endforeach
 
     @include('layouts._content_end')

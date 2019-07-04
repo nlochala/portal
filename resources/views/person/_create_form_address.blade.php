@@ -1,11 +1,3 @@
-<!-- START FORM----------------------------------------------------------------------------->
-@if(isset($edit_address))
-    {!! Form::model($edit_address,['method' => 'PATCH','id' => 'address-update-form','url' => "/employee/$employee->uuid/address/$edit_address->uuid/update_address"]) !!}
-@else
-    {!! Form::open(['files' => false, 'id' => 'address-form','url' => '/employee/' . $employee->uuid . '/profile/store_address']) !!}
-@endif
-@include('layouts._forms._row_start', ['size' => 12])
-
 @if(isset($edit_address))
     <!----------------------------------------------------------------------------->
     <!---------------------------New address_type_id dropdown----------------------------->
@@ -110,7 +102,3 @@
     <!----------------------------------------------------------------------------->
     <!----------------------------------------------------------------------------->
 @endif
-
-@include('layouts._forms._row_end')
-@include('layouts._forms._form_close')
-<!-- END FORM----------------------------------------------------------------------------->

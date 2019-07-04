@@ -338,6 +338,22 @@ class ForeignKeys extends Migration
             $table->foreign('grade_scale_id')
                 ->references('id')->on('grade_scales');
         });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: STUDENTS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('students', function (Blueprint $table) {
+            $table->foreign('person_id')
+                ->references('id')->on('persons');
+            $table->foreign('family_id')
+                ->references('id')->on('families');
+            $table->foreign('student_status_id')
+                ->references('id')->on('student_statuses');
+            $table->foreign('grade_level_id')
+                ->references('id')->on('grade_levels');
+        });
     }
 
     /**

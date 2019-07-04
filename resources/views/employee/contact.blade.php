@@ -3,7 +3,7 @@
 @section('content')
     <!-- Add Content Title Here b.breadcrumbs -->
 
-    @include('person._horizontal_menu')
+    @include('employee._horizontal_menu')
     @include('layouts._content_start')
     <h1 class="font-w400" style="text-align: center">{{ $employee->person->preferredName() }}'s Contact
         Information</h1>
@@ -210,7 +210,12 @@
                     'id' => 'modal-block-email',
                     'title' => 'Update Email Addresses'
                 ])
+
+            <!-- START FORM----------------------------------------------------------------------------->
+                {!! Form::model($person,['method' => 'PATCH','id' => 'email-form','url' => '/employee/' . $employee->uuid . '/profile/store_email']) !!}
                 @include('person._create_form_email')
+                @include('layouts._forms._form_close')
+            <!-- END FORM----------------------------------------------------------------------------->
                 @include('layouts._modal_panel_end')
             <!-------------------------------- Modal: Update Email Addresses END------------------------------------------->
                 <!-------------------------------- Modal: New Phone Start------------------------------------------->
@@ -218,7 +223,12 @@
                     'id' => 'modal-block-phone',
                     'title' => 'Add New Phone Number'
                 ])
+                <!-- START FORM----------------------------------------------------------------------------->
+
+                {!! Form::open(['files' => false, 'id' => 'phone-form','url' => '/employee/' . $employee->uuid . '/profile/store_phone']) !!}
                 @include('person._create_form_phone')
+                @include('layouts._forms._form_close')
+            <!-- END FORM----------------------------------------------------------------------------->
                 @include('layouts._modal_panel_end')
             <!-------------------------------- Modal: END------------------------------------------->
                 <!-------------------------------- Modal: New Address Start------------------------------------------->
@@ -226,7 +236,10 @@
                     'id' => 'modal-block-address-new',
                     'title' => 'Add New Address'
                 ])
+                {!! Form::open(['files' => false, 'id' => 'address-form','url' => '/employee/' . $employee->uuid . '/profile/store_address']) !!}
                 @include('person._create_form_address')
+                @include('layouts._forms._form_close')
+            <!-- END FORM----------------------------------------------------------------------------->
                 @include('layouts._modal_panel_end')
             <!-------------------------------- Modal: END------------------------------------------->
                 @foreach($addresses as $address)
@@ -235,7 +248,10 @@
                         'id' => 'modal-block-address-' . $address->id,
                         'title' => 'Update Address'
                     ])
+                    {!! Form::model($address,['method' => 'PATCH','id' => 'address-update-form','url' => "/employee/$employee->uuid/address/$address->uuid/update_address"]) !!}
                     @include('person._create_form_address',['edit_address' => $address])
+                    @include('layouts._forms._form_close')
+                <!-- END FORM----------------------------------------------------------------------------->
                     @include('layouts._modal_panel_end')
                 <!-------------------------------- Modal: Update Address END------------------------------------------->
                 @endforeach

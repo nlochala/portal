@@ -47,6 +47,37 @@
 
 
 <script type="text/javascript">
+
+    // Return a formatted date where YYYY-MM-DD
+    function formatDate(dateString) {
+        let date = new Date(dateString);
+        let year = date.getFullYear();
+        let month = (date.getMonth() + 1);
+        let day = date.getDate();
+
+        if (month < 10) {
+            month = '0'+month;
+        }
+
+        if (day < 10) {
+            day = '0'+day;
+        }
+
+        return year+'-'+month+'-'+day;
+    }
+
+    // Return the age of the person in question by a given string.
+    function getAge(dateString) {
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
     jQuery(document).ready(function () {
         @if(Session::has('color') && Session::has('icon') && Session::has('message') && Session::has('location') )
         Dashmix.helpers('notify', {

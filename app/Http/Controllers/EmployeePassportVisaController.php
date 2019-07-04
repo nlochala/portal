@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
+use App\Visa;
 use App\Country;
 use App\Employee;
-use App\File;
-use App\Helpers\Helpers;
 use App\Passport;
-use App\Visa;
-use App\VisaEntry;
 use App\VisaType;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
+use App\VisaEntry;
+use App\Helpers\Helpers;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class EmployeePassportVisaController extends EmployeeController
 {
@@ -95,7 +95,7 @@ class EmployeePassportVisaController extends EmployeeController
         if (request()->has('upload')) {
             $filename = Str::slug('passport '.$employee->person->fullName(true));
 
-            if (!$file = File::getFile($values['upload'])) {
+            if (! $file = File::getFile($values['upload'])) {
                 Helpers::flashAlert(
                     'danger',
                     'Could not find the uploaded image. Please try again.',
@@ -104,7 +104,7 @@ class EmployeePassportVisaController extends EmployeeController
                 return redirect()->back()->withInput();
             }
 
-            if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
+            if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
                 Helpers::flashAlert(
                     'danger',
                     'Could not resize the uploaded image. Please try again.',
@@ -167,7 +167,7 @@ class EmployeePassportVisaController extends EmployeeController
         $values = Helpers::dbAddAudit(request()->all());
         $filename = Str::slug('passport '.$employee->person->fullName(true));
 
-        if (!request()->has('upload')) {
+        if (! request()->has('upload')) {
             Helpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the passport. Please try again.',
@@ -176,7 +176,7 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->back()->withInput();
         }
 
-        if (!$file = File::getFile($values['upload'])) {
+        if (! $file = File::getFile($values['upload'])) {
             Helpers::flashAlert(
                 'danger',
                 'Could not find the uploaded image. Please try again.',
@@ -185,7 +185,7 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->back()->withInput();
         }
 
-        if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
+        if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
             Helpers::flashAlert(
                 'danger',
                 'Could not resize the uploaded image. Please try again.',
@@ -223,7 +223,7 @@ class EmployeePassportVisaController extends EmployeeController
             $values[explode('__'.$passport->id, $key)[0]] = $value;
         }
 
-        if (!request()->has('upload')) {
+        if (! request()->has('upload')) {
             Helpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the visa. Please try again.',
@@ -232,7 +232,7 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->back()->withInput();
         }
 
-        if (!$file = File::getFile($values['upload'])) {
+        if (! $file = File::getFile($values['upload'])) {
             Helpers::flashAlert(
                 'danger',
                 'Could not find the uploaded image. Please try again.',
@@ -241,7 +241,7 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->back()->withInput();
         }
 
-        if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
+        if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
             Helpers::flashAlert(
                 'danger',
                 'Could not resize the uploaded image. Please try again.',
@@ -274,31 +274,24 @@ class EmployeePassportVisaController extends EmployeeController
         $values = request()->all();
         $filename = Str::slug('visa '.$employee->person->fullName(true));
 
-        if (!request()->has('upload_1')) {
-            Helpers::flashAlert(
-                'danger',
-                'Please upload a scanned image of the visa. Please try again.',
-                'fa fa-info-circle mr-1');
+        if (request()->has('upload_1')) {
+            if (! $file = File::getFile($values['upload_1'])) {
+                Helpers::flashAlert(
+                    'danger',
+                    'Could not find the uploaded image. Please try again.',
+                    'fa fa-info-circle mr-1');
 
-            return redirect()->back()->withInput();
-        }
+                return redirect()->back()->withInput();
+            }
 
-        if (!$file = File::getFile($values['upload_1'])) {
-            Helpers::flashAlert(
-                'danger',
-                'Could not find the uploaded image. Please try again.',
-                'fa fa-info-circle mr-1');
+            if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
+                Helpers::flashAlert(
+                    'danger',
+                    'Could not resize the uploaded image. Please try again.',
+                    'fa fa-info-circle mr-1');
 
-            return redirect()->back()->withInput();
-        }
-
-        if (!$resized_file = File::saveAndResizeImage($file, $filename)) {
-            Helpers::flashAlert(
-                'danger',
-                'Could not resize the uploaded image. Please try again.',
-                'fa fa-info-circle mr-1');
-
-            return redirect()->back()->withInput();
+                return redirect()->back()->withInput();
+            }
         }
 
         $visa->image_file_id = $resized_file->id;

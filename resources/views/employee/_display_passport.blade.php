@@ -172,14 +172,25 @@
         'id' => 'modal-block-visa-' . $visa->id,
         'title' => "Edit Visa (#$visa->number)"
     ])
+    <!-- START FORM----------------------------------------------------------------------------->
+    {!! Form::model($visa,['method' => 'PATCH','files' => true, 'id' => "visa-edit-form-$visa->id",'url' => "/employee/$employee->uuid/visa/$visa->uuid/update_visa"]) !!}
     @include('person._edit_form_visa', ['visa' => $visa])
+    @include('layouts._forms._form_close')
+    <!-- END FORM----------------------------------------------------------------------------->
+    @include('layouts._modal_panel_end')
+    <!-------------------------------- Modal: Visa Edit END------------------------------------------->
 @endforeach
 <!-------------------------------- Modal: New Visa Start------------------------------------------->
 @include('layouts._modal_panel_start',[
     'id' => 'modal-block-visa-form-' . $passport->id,
     'title' => "New Visa for Passport (#$passport->number)"
 ])
+<!-- START FORM----------------------------------------------------------------------------->
+
+{!! Form::open(['files' => true, 'id' => "visa-form-$passport->id",'url' => "/employee/$employee->uuid/passport/$passport->uuid/create_visa"]) !!}
 @include('person._create_form_visa',['passport' => $passport])
+@include('layouts._forms._form_close')
+<!-- END FORM----------------------------------------------------------------------------->
 
 @include('layouts._modal_panel_end')
 <!-------------------------------- Modal: New Visa END------------------------------------------->

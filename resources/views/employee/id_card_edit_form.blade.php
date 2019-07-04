@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Add Content Title Here b.breadcrumbs -->
-    @include('person._horizontal_menu')
+    @include('employee._horizontal_menu')
     @include('layouts._content_start')
     <h1 class="font-w400" style="text-align: center">ID Card #xxxxxx{{ substr($id_card->number, -4) }}</h1>
     <!--

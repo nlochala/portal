@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use View;
+use App\File;
+use App\Person;
 use App\Country;
 use App\Employee;
-use App\Ethnicity;
-use App\File;
-use App\Helpers\Helpers;
 use App\Language;
-use App\Person;
+use App\Ethnicity;
 use Carbon\Carbon;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use App\Helpers\Helpers;
 use Illuminate\Http\RedirectResponse;
-use View;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class EmployeeProfileController extends EmployeeController
 {
@@ -35,7 +35,6 @@ class EmployeeProfileController extends EmployeeController
      */
     public function profile(Employee $employee)
     {
-        $menu_list = Employee::getProfileMenu($employee);
         $title_dropdown = Person::$titleDropdown;
         $gender_dropdown = Person::$genderRadio;
         $language_dropdown = Language::getDropdown();
@@ -66,7 +65,6 @@ class EmployeeProfileController extends EmployeeController
             'country_dropdown',
             'ethnicity_dropdown',
             'employee',
-            'menu_list',
             'image_data',
             'image_size',
             'image_created',
@@ -88,7 +86,7 @@ class EmployeeProfileController extends EmployeeController
     {
         $values = request()->all();
 
-        if (!request()->has('dob') && !request()->has('upload')) {
+        if (! request()->has('dob') && ! request()->has('upload')) {
             Helpers::flashAlert(
                 'danger',
                 'An image was not selected. Please try again.',
@@ -99,6 +97,7 @@ class EmployeeProfileController extends EmployeeController
 
         if (request()->has('upload')) {
             Helpers::flash($this->processImage(json_decode($values['upload']), $employee), 'image', 'created');
+
             return redirect()->to('/employee/'.$employee->uuid.'/profile');
         }
 
@@ -125,15 +124,16 @@ class EmployeeProfileController extends EmployeeController
     {
         /** @noinspection PhpUndefinedMethodInspection */
         $file = File::where('uuid', $file_uuid)->first();
-        if (!$file) {
+        if (! $file) {
             return false;
         }
 
-        if (!$resized_file = File::saveAndResizeImage($file)) {
+        if (! $resized_file = File::saveAndResizeImage($file)) {
             return false;
         }
 
         $employee->person->update(['image_file_id' => $resized_file->id]);
+
         return true;
     }
 }

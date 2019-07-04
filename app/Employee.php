@@ -3,11 +3,11 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Webpatser\Uuid\Uuid;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Employee extends PortalBaseModel
 {
@@ -105,8 +105,6 @@ class Employee extends PortalBaseModel
         if ($value) {
             return Carbon::parse($value)->format('Y-m-d');
         }
-
-        return null;
     }
 
     /**
@@ -121,8 +119,6 @@ class Employee extends PortalBaseModel
         if ($value) {
             return Carbon::parse($value)->format('Y-m-d');
         }
-
-        return null;
     }
 
     /**
@@ -160,6 +156,7 @@ class Employee extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
     /**
      * Many employees belongs to many positions.
      *
