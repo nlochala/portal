@@ -172,13 +172,59 @@ Route::post('student/{student}/create_id_card', 'StudentIdCardController@store')
 Route::get('student/{student}/id_card/{id_card}/update_id_card', 'StudentIdCardController@editForm');
 Route::patch('student/{student}/id_card/{id_card}/update_id_card', 'StudentIdCardController@update');
 
-////Official Documents
-//Route::get('student/{student}/official_documents', 'StudentOfficialDocumentsController@officialDocuments');
-//Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsController@store');
-//Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsController@store');
-//Route::get('student/{student}/official_documents/{document}/delete', 'StudentOfficialDocumentsController@delete');
+//Official Documents
+Route::get('student/{student}/official_documents', 'StudentOfficialDocumentsController@officialDocuments');
+Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsController@store');
+Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsController@store');
+Route::get('student/{student}/official_documents/{document}/delete', 'StudentOfficialDocumentsController@delete');
 
-//Student Details
+//Family
+
+/*
+|--------------------------------------------------------------------------
+| PARENT
+|--------------------------------------------------------------------------
+*/
+//Directory
+Route::get('parent/index', 'ParentController@index');
+Route::post('parent/index', 'ParentController@storeNewParent');
+Route::get('api/parent/ajaxshowparent', 'ParentAjaxController@ajaxShow');
+
+//Overview
+Route::get('parent/{parent}/profile', 'ParentProfileController@profile');
+Route::patch('parent/{parent}/profile', 'ParentProfileController@updateProfile');
+Route::post('parent/{parent}/profile', 'ParentProfileController@updateProfile');
+
+//Contact Information
+Route::get('parent/{parent}/contact', 'ParentContactController@contact');
+Route::post('parent/{parent}/profile/store_phone', 'ParentContactController@storePhone');
+Route::post('parent/{parent}/profile/store_address', 'ParentContactController@storeAddress');
+Route::patch('parent/{parent}/profile/store_email', 'ParentContactController@storeEmail');
+Route::patch('parent/{parent}/address/{address}/update_address', 'ParentContactController@updateAddress');
+
+//Passports and Visas
+Route::get('parent/{parent}/passports_visas', 'ParentPassportVisaController@passportVisa');
+Route::get('parent/{parent}/create_passport', 'ParentPassportVisaController@createPassport');
+Route::post('parent/{parent}/create_passport', 'ParentPassportVisaController@storePassport');
+Route::post('parent/{parent}/passport/{passport}/create_visa', 'ParentPassportVisaController@storeVisa');
+Route::patch('parent/{parent}/visa/{visa}/update_visa', 'ParentPassportVisaController@updateVisa');
+Route::patch('parent/{parent}/passport/{passport}/update_passport', 'ParentPassportVisaController@updatePassport');
+Route::get('parent/{parent}/passport/{passport}/update_passport', 'ParentPassportVisaController@updatePassportForm');
+
+//ID Cards
+Route::get('parent/{parent}/id_card', 'ParentIdCardController@idCard');
+Route::get('parent/{parent}/create_id_card', 'ParentIdCardController@createForm');
+Route::post('parent/{parent}/create_id_card', 'ParentIdCardController@store');
+Route::get('parent/{parent}/id_card/{id_card}/update_id_card', 'ParentIdCardController@editForm');
+Route::patch('parent/{parent}/id_card/{id_card}/update_id_card', 'ParentIdCardController@update');
+
+//Official Documents
+Route::get('parent/{parent}/official_documents', 'ParentOfficialDocumentsController@officialDocuments');
+Route::post('parent/{parent}/official_documents', 'ParentOfficialDocumentsController@store');
+Route::post('parent/{parent}/official_documents', 'ParentOfficialDocumentsController@store');
+Route::get('parent/{parent}/official_documents/{document}/delete', 'ParentOfficialDocumentsController@delete');
+
+//Family
 
 /*
 |--------------------------------------------------------------------------

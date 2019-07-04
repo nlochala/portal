@@ -3,7 +3,7 @@
 @section('content')
     @include('student._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">{{ $student->person->preferredName()}}'s Official Documents</h1>
+    <h1 class="font-w400" style="text-align: center">{{ $student->person->fullName()}}'s Official Documents</h1>
     <!--
     panel.row
     panel.column

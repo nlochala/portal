@@ -71,27 +71,35 @@ h.item
     'badge_number' => null,
     'badge_color' => null
 ])
-@include('layouts._horizontal_menu_submenu_start',[
-    'icon' => 'fa fa-chalkboard-teacher',
-    'title' => 'Academics'
-])
-@include('layouts._horizontal_menu_item', [
-    'url' => 'student/' . $student->uuid . '/academics_overview',
-    'icon' => 'fa fa-list',
-    'title' => 'Overview',
-    'badge_number' => null,
-    'badge_color' => null
-])
-@include('layouts._horizontal_menu_item_end')
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [
-    'url' => "student/$student->uuid/transcripts",
-    'icon' => 'fa fa-columns',
-    'title' => 'Transcripts',
+    'url' => 'student/' . $student->uuid . '/family',
+    'icon' => 'fa fa-users',
+    'title' => 'Family',
     'badge_number' => null,
     'badge_color' => null
 ])
-@include('layouts._horizontal_menu_item_end')
-@include('layouts._horizontal_menu_submenu_end')
+{{--@include('layouts._horizontal_menu_submenu_start',[--}}
+{{--    'icon' => 'fa fa-users',--}}
+{{--    'title' => 'Family'--}}
+{{--])--}}
+{{--@include('layouts._horizontal_menu_item', [--}}
+{{--    'url' => 'student/' . $student->uuid . '/academics_overview',--}}
+{{--    'icon' => 'fa fa-list',--}}
+{{--    'title' => 'Overview',--}}
+{{--    'badge_number' => null,--}}
+{{--    'badge_color' => null--}}
+{{--])--}}
+{{--@include('layouts._horizontal_menu_item_end')--}}
+{{--@include('layouts._horizontal_menu_item_start')--}}
+{{--@include('layouts._horizontal_menu_item', [--}}
+{{--    'url' => "student/$student->uuid/transcripts",--}}
+{{--    'icon' => 'fa fa-columns',--}}
+{{--    'title' => 'Transcripts',--}}
+{{--    'badge_number' => null,--}}
+{{--    'badge_color' => null--}}
+{{--])--}}
+{{--@include('layouts._horizontal_menu_item_end')--}}
+{{--@include('layouts._horizontal_menu_submenu_end')--}}
 @include('.layouts._horizontal_menu_end')
 
