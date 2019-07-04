@@ -4,7 +4,7 @@
     <!-- Add Content Title Here b.breadcrumbs -->
     @include('student._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">{{ $student->person->preferredName() }}'s
+    <h1 class="font-w400" style="text-align: center">{{ $student->person->fullName() }}'s
         ID Cards</h1>
     <!--
     panel.row
@@ -27,7 +27,7 @@
 
 -->
     @foreach($id_cards->sortByDesc('is_active') as $id_card)
-        @include('person._display_id_card',['id_card' => $id_card])
+        @include('student._display_id_card',['id_card' => $id_card])
     @endforeach
 
     @include('layouts._content_end')

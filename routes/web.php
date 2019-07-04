@@ -165,13 +165,13 @@ Route::patch('student/{student}/visa/{visa}/update_visa', 'StudentPassportVisaCo
 Route::patch('student/{student}/passport/{passport}/update_passport', 'StudentPassportVisaController@updatePassport');
 Route::get('student/{student}/passport/{passport}/update_passport', 'StudentPassportVisaController@updatePassportForm');
 
-////ID Cards
-//Route::get('student/{student}/id_card', 'StudentIdCardController@idCard');
-//Route::get('student/{student}/create_id_card', 'StudentIdCardController@createForm');
-//Route::post('student/{student}/create_id_card', 'StudentIdCardController@store');
-//Route::get('student/{student}/id_card/{id_card}/update_id_card', 'StudentIdCardController@editForm');
-//Route::patch('student/{student}/id_card/{id_card}/update_id_card', 'StudentIdCardController@update');
-//
+//ID Cards
+Route::get('student/{student}/id_card', 'StudentIdCardController@idCard');
+Route::get('student/{student}/create_id_card', 'StudentIdCardController@createForm');
+Route::post('student/{student}/create_id_card', 'StudentIdCardController@store');
+Route::get('student/{student}/id_card/{id_card}/update_id_card', 'StudentIdCardController@editForm');
+Route::patch('student/{student}/id_card/{id_card}/update_id_card', 'StudentIdCardController@update');
+
 ////Official Documents
 //Route::get('student/{student}/official_documents', 'StudentOfficialDocumentsController@officialDocuments');
 //Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsController@store');
