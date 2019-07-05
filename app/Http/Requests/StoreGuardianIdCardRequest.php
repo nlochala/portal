@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEmployeeProfileRequest extends FormRequest
+class StoreGuardianIdCardRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,13 @@ class StoreEmployeeProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'given_name' => 'required',
-            'family_name' => 'required',
-            'gender' => 'required',
-            'dob' => 'required|date',
-            'preferred_name' => 'required',
-            'country_of_birth_id' => 'required',
-            'language_primary_id' => 'required',
-            'ethnicity_id' => 'required',
+            'upload_front' => 'required',
+            'upload_back' => 'required',
+            'is_active' => 'required',
+            'number' => 'required',
+            'name' => 'required',
+            'issue_date' => 'required',
+            'expiration_date' => 'required',
         ];
     }
 
@@ -44,11 +42,9 @@ class StoreEmployeeProfileRequest extends FormRequest
     public function attributes()
     {
         return [
-            'gender' => 'gender',
-            'dob' => 'date of birth',
-            'country_of_birth_id' => 'nationality',
-            'language_primary_id' => 'primary language',
-            'ethnicity_id' => 'ethnicity',
+            'front_image_file_id' => 'front of ID Card image',
+            'back_image_file_id' => 'back of ID Card image',
+            'is_active' => 'card status',
         ];
     }
 

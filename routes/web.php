@@ -182,47 +182,47 @@ Route::get('student/{student}/official_documents/{document}/delete', 'StudentOff
 
 /*
 |--------------------------------------------------------------------------
-| PARENT
+| GUARDIAN
 |--------------------------------------------------------------------------
 */
 //Directory
-Route::get('parent/index', 'ParentController@index');
-Route::post('parent/index', 'ParentController@storeNewParent');
-Route::get('api/parent/ajaxshowparent', 'ParentAjaxController@ajaxShow');
+Route::get('guardian/index', 'GuardianController@index');
+Route::post('guardian/index', 'GuardianController@storeNewGuardian');
+Route::get('api/guardian/ajaxshowguardian', 'GuardianAjaxController@ajaxShow');
 
 //Overview
-Route::get('parent/{parent}/profile', 'ParentProfileController@profile');
-Route::patch('parent/{parent}/profile', 'ParentProfileController@updateProfile');
-Route::post('parent/{parent}/profile', 'ParentProfileController@updateProfile');
+Route::get('guardian/{guardian}/profile', 'GuardianProfileController@profile');
+Route::patch('guardian/{guardian}/profile', 'GuardianProfileController@updateProfile');
+Route::post('guardian/{guardian}/profile', 'GuardianProfileController@updateProfile');
 
 //Contact Information
-Route::get('parent/{parent}/contact', 'ParentContactController@contact');
-Route::post('parent/{parent}/profile/store_phone', 'ParentContactController@storePhone');
-Route::post('parent/{parent}/profile/store_address', 'ParentContactController@storeAddress');
-Route::patch('parent/{parent}/profile/store_email', 'ParentContactController@storeEmail');
-Route::patch('parent/{parent}/address/{address}/update_address', 'ParentContactController@updateAddress');
+Route::get('guardian/{guardian}/contact', 'GuardianContactController@contact');
+Route::post('guardian/{guardian}/profile/store_phone', 'GuardianContactController@storePhone');
+Route::post('guardian/{guardian}/profile/store_address', 'GuardianContactController@storeAddress');
+Route::patch('guardian/{guardian}/profile/store_email', 'GuardianContactController@storeEmail');
+Route::patch('guardian/{guardian}/address/{address}/update_address', 'GuardianContactController@updateAddress');
 
 //Passports and Visas
-Route::get('parent/{parent}/passports_visas', 'ParentPassportVisaController@passportVisa');
-Route::get('parent/{parent}/create_passport', 'ParentPassportVisaController@createPassport');
-Route::post('parent/{parent}/create_passport', 'ParentPassportVisaController@storePassport');
-Route::post('parent/{parent}/passport/{passport}/create_visa', 'ParentPassportVisaController@storeVisa');
-Route::patch('parent/{parent}/visa/{visa}/update_visa', 'ParentPassportVisaController@updateVisa');
-Route::patch('parent/{parent}/passport/{passport}/update_passport', 'ParentPassportVisaController@updatePassport');
-Route::get('parent/{parent}/passport/{passport}/update_passport', 'ParentPassportVisaController@updatePassportForm');
+Route::get('guardian/{guardian}/passports_visas', 'GuardianPassportVisaController@passportVisa');
+Route::get('guardian/{guardian}/create_passport', 'GuardianPassportVisaController@createPassport');
+Route::post('guardian/{guardian}/create_passport', 'GuardianPassportVisaController@storePassport');
+Route::post('guardian/{guardian}/passport/{passport}/create_visa', 'GuardianPassportVisaController@storeVisa');
+Route::patch('guardian/{guardian}/visa/{visa}/update_visa', 'GuardianPassportVisaController@updateVisa');
+Route::patch('guardian/{guardian}/passport/{passport}/update_passport', 'GuardianPassportVisaController@updatePassport');
+Route::get('guardian/{guardian}/passport/{passport}/update_passport', 'GuardianPassportVisaController@updatePassportForm');
 
 //ID Cards
-Route::get('parent/{parent}/id_card', 'ParentIdCardController@idCard');
-Route::get('parent/{parent}/create_id_card', 'ParentIdCardController@createForm');
-Route::post('parent/{parent}/create_id_card', 'ParentIdCardController@store');
-Route::get('parent/{parent}/id_card/{id_card}/update_id_card', 'ParentIdCardController@editForm');
-Route::patch('parent/{parent}/id_card/{id_card}/update_id_card', 'ParentIdCardController@update');
+Route::get('guardian/{guardian}/id_card', 'GuardianIdCardController@idCard');
+Route::get('guardian/{guardian}/create_id_card', 'GuardianIdCardController@createForm');
+Route::post('guardian/{guardian}/create_id_card', 'GuardianIdCardController@store');
+Route::get('guardian/{guardian}/id_card/{id_card}/update_id_card', 'GuardianIdCardController@editForm');
+Route::patch('guardian/{guardian}/id_card/{id_card}/update_id_card', 'GuardianIdCardController@update');
 
 //Official Documents
-Route::get('parent/{parent}/official_documents', 'ParentOfficialDocumentsController@officialDocuments');
-Route::post('parent/{parent}/official_documents', 'ParentOfficialDocumentsController@store');
-Route::post('parent/{parent}/official_documents', 'ParentOfficialDocumentsController@store');
-Route::get('parent/{parent}/official_documents/{document}/delete', 'ParentOfficialDocumentsController@delete');
+Route::get('guardian/{guardian}/official_documents', 'GuardianOfficialDocumentsController@officialDocuments');
+Route::post('guardian/{guardian}/official_documents', 'GuardianOfficialDocumentsController@store');
+Route::post('guardian/{guardian}/official_documents', 'GuardianOfficialDocumentsController@store');
+Route::get('guardian/{guardian}/official_documents/{document}/delete', 'GuardianOfficialDocumentsController@delete');
 
 //Family
 

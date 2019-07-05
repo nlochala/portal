@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEmployeeProfileRequest extends FormRequest
+class StoreGuardianEmailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,9 @@ class StoreEmployeeProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'given_name' => 'required',
-            'family_name' => 'required',
-            'gender' => 'required',
-            'dob' => 'required|date',
-            'preferred_name' => 'required',
-            'country_of_birth_id' => 'required',
-            'language_primary_id' => 'required',
-            'ethnicity_id' => 'required',
+            'email_primary' => 'required|email',
+            'email_secondary' => 'email',
+            'email_school' => 'email',
         ];
     }
 
@@ -44,11 +38,9 @@ class StoreEmployeeProfileRequest extends FormRequest
     public function attributes()
     {
         return [
-            'gender' => 'gender',
-            'dob' => 'date of birth',
-            'country_of_birth_id' => 'nationality',
-            'language_primary_id' => 'primary language',
-            'ethnicity_id' => 'ethnicity',
+            'email_primary' => 'primary email',
+            'email_secondary' => 'secondary email',
+            'email_school' => 'school email',
         ];
     }
 
@@ -61,4 +53,6 @@ class StoreEmployeeProfileRequest extends FormRequest
     {
         return [];
     }
+
 }
+

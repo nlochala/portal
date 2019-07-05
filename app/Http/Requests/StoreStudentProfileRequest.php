@@ -29,6 +29,7 @@ class StoreStudentProfileRequest extends FormRequest
             'family_name' => 'required',
             'gender' => 'required',
             'dob' => 'required|date',
+            'preferred_name' => 'required',
             'country_of_birth_id' => 'required',
             'language_primary_id' => 'required',
             'ethnicity_id' => 'required',

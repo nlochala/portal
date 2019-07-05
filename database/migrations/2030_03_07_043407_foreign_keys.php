@@ -354,6 +354,20 @@ class ForeignKeys extends Migration
             $table->foreign('grade_level_id')
                 ->references('id')->on('grade_levels');
         });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: GUARDIAN
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('guardians', function (Blueprint $table) {
+            $table->foreign('person_id')
+                ->references('id')->on('persons');
+            $table->foreign('family_id')
+                ->references('id')->on('families');
+            $table->foreign('guardian_type_id')
+                ->references('id')->on('guardian_types');
+        });
     }
 
     /**

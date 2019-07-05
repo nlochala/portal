@@ -144,10 +144,10 @@
                                 "                    onclick=\"window.location.href='/student/" + data + "/profile'\">\n" +
                                 "                <i class=\"fa fa-pen\"></i>\n" +
                                 "            </button>\n" +
-                                "            <button dusk=\"btn-archive-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"tooltip\" title=\"Archive\"\n" +
-                                "                    onclick=\"window.location.href='/student/" + data + "/archive'\">\n" +
-                                "                <i class=\"fa fa-times\"></i>\n" +
-                                "            </button>\n" +
+                                // "            <button dusk=\"btn-archive-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"tooltip\" title=\"Archive\"\n" +
+                                // "                    onclick=\"window.location.href='/student/" + data + "/archive'\">\n" +
+                                // "                <i class=\"fa fa-times\"></i>\n" +
+                                // "            </button>\n" +
                                 "        </div>"
                         }
                     },

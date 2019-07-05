@@ -87,11 +87,33 @@ class Employee extends PortalBaseModel
         ];
     }
 
+    /**
+     * Return a formatted dropdown.
+     *
+     * @return array
+     */
+    public static function getDropdown()
+    {
+        return static::with('person')->get()->pluck('legal_full_name', 'id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * return the full name of a student.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getLegalFullNameAttribute()
+    {
+        return $this->person->family_name.', '.$this->person->given_name;
+    }
 
     /**
      * return start_date as carbon object.

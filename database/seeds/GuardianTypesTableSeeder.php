@@ -1,10 +1,10 @@
 <?php
 
+use App\GuardianType;
 use App\Helpers\Helpers;
-use App\StudentStatus;
 use Illuminate\Database\Seeder;
 
-class StudentStatusesTableSeeder extends Seeder
+class GuardianTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,12 +12,12 @@ class StudentStatusesTableSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('student_statuses')->truncate();
+        DB::table('guardian_types')->truncate();
 
-        $student_statuses = Helpers::parseCsv('database/seeds/data/student_statuses.csv', false);
+        $student_statuses = Helpers::parseCsv('database/seeds/data/guardian_types.csv', false);
 
         foreach ($student_statuses as $type) {
-            $model = new StudentStatus();
+            $model = new GuardianType();
             $model->name = $type[0];
             $model->description = $type[1];
             $model->is_protected = true;

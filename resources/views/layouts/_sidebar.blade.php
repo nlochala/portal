@@ -65,17 +65,17 @@
     ]
 ])
 @include('layouts._sidebar_menu_nested_submenu', [
-'section_title' => 'Parents',
+'section_title' => 'Guardians',
 'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
         [
             'title' => 'Summary',
-            'uri'   => '/parent/dashboard'
+            'uri'   => '/guardian/dashboard'
         ],
         [
             'title' => 'Directory',
-            'uri'   => '/parent/index'
+            'uri'   => '/guardian/index'
         ],
     ]
 ])

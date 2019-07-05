@@ -13,7 +13,7 @@ class StoreStudentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,35 @@ class StoreStudentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'student_status_id' => 'required',
+            'grade_level_id' => 'required',
+            'given_name' => 'required',
+            'family_name' => 'required',
+            'preferred_name' => 'required',
+            'gender' => 'required',
+            'dob' => 'required',
         ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        // 'dob' => 'date of birth',
+        return [];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        // 'dob.required' => 'Your date of birth is required.',
+        return [];
     }
 }
