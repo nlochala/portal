@@ -105,6 +105,16 @@ class Guardian extends PortalBaseModel
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Family query scope.
+     *
+     * @param $query
+     */
+    public function scopeHasFamily($query)
+    {
+        $query->whereNotNull('family_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

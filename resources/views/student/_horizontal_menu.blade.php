@@ -72,13 +72,23 @@ h.item
     'badge_color' => null
 ])
 @include('layouts._horizontal_menu_item_start')
-@include('layouts._horizontal_menu_item', [
-    'url' => 'student/' . $student->uuid . '/family',
-    'icon' => 'fa fa-users',
-    'title' => 'Family',
-    'badge_number' => null,
-    'badge_color' => null
-])
+@if($student->family_id === null)
+    @include('layouts._horizontal_menu_item', [
+        'url' => 'student/' . $student->uuid . '/new_family',
+        'icon' => 'fa fa-users',
+        'title' => 'Family',
+        'badge_number' => null,
+        'badge_color' => null
+    ])
+@else
+    @include('layouts._horizontal_menu_item', [
+        'url' => 'family/' . $student->family->uuid,
+        'icon' => 'fa fa-users',
+        'title' => 'Family',
+        'badge_number' => null,
+        'badge_color' => null
+    ])
+@endif
 {{--@include('layouts._horizontal_menu_submenu_start',[--}}
 {{--    'icon' => 'fa fa-users',--}}
 {{--    'title' => 'Family'--}}

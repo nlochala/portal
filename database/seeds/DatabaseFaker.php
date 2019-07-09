@@ -13,5 +13,10 @@ class DatabaseFaker extends Seeder
     {
         $this->call(PositionsFakerTableSeeder::class);
         $this->call(CoursesFakerTableSeeder::class);
+        DB::unprepared(file_get_contents('database/seeds/data/families-students-guardians.sql'));
+
+//        $this->call(StudentFakerTableSeeder::class);
+//        $this->call(GuardianFakerTableSeeder::class);
+//        $this->call(FamilyFakerTableSeeder::class);
     }
 }

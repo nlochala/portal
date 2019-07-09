@@ -72,13 +72,23 @@ h.item
     'badge_color' => null
 ])
 @include('layouts._horizontal_menu_item_start')
-@include('layouts._horizontal_menu_item', [
-    'url' => 'guardian/' . $guardian->uuid . '/family',
-    'icon' => 'fa fa-users',
-    'title' => 'Family',
-    'badge_number' => null,
-    'badge_color' => null
-])
+@if($guardian->family_id === null)
+    @include('layouts._horizontal_menu_item', [
+        'url' => 'guardian/' . $guardian->uuid . '/new_family',
+        'icon' => 'fa fa-users',
+        'title' => 'Family',
+        'badge_number' => null,
+        'badge_color' => null
+    ])
+@else
+    @include('layouts._horizontal_menu_item', [
+        'url' => 'family/' . $guardian->family->uuid,
+        'icon' => 'fa fa-users',
+        'title' => 'Family',
+        'badge_number' => null,
+        'badge_color' => null
+    ])
+@endif
 {{--@include('layouts._horizontal_menu_submenu_start',[--}}
 {{--    'icon' => 'fa fa-users',--}}
 {{--    'title' => 'Family'--}}

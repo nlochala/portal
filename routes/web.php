@@ -179,6 +179,7 @@ Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsCon
 Route::get('student/{student}/official_documents/{document}/delete', 'StudentOfficialDocumentsController@delete');
 
 //Family
+Route::get('student/{student}/new_family', 'StudentFamilyController@newFamily');
 
 /*
 |--------------------------------------------------------------------------
@@ -225,6 +226,7 @@ Route::post('guardian/{guardian}/official_documents', 'GuardianOfficialDocuments
 Route::get('guardian/{guardian}/official_documents/{document}/delete', 'GuardianOfficialDocumentsController@delete');
 
 //Family
+Route::get('guardian/{guardian}/new_family', 'GuardianFamilyController@newFamily');
 
 /*
 |--------------------------------------------------------------------------

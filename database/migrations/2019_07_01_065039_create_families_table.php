@@ -16,7 +16,13 @@ class CreateFamiliesTable extends Migration
         Schema::create('families', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->nullable();
+            $table->integer('user_created_id')->nullable();
+            $table->string('user_created_ip')->nullable();
+            $table->string('user_updated_ip')->nullable();
+            $table->integer('user_updated_id')->nullable();
+            $table->boolean('is_protected')->nullable()->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
