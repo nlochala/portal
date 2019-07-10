@@ -62,33 +62,10 @@
     ])
     <!-- START FORM----------------------------------------------------------------------------->
     {!! Form::open(['files' => false, 'id' => 'student-form','url' => request()->getRequestUri()]) !!}
-    <!----------------------------------------------------------------------------->
-    <!---------------------------New student_status_id dropdown----------------------------->
-    @include('layouts._forms._input_dropdown',[
-        'name' => 'student_status_id',
-        'label' => 'Student Status',
-        'array' => $status_dropdown,
-        'class' => null,
-        'selected' => null,
-        'required' => true
-      ])
-    <!----------------------------------------------------------------------------->
-    <!----------------------------------------------------------------------------->
-    <!----------------------------------------------------------------------------->
-    <!---------------------------New grade_level_id dropdown----------------------------->
-    @include('layouts._forms._input_dropdown',[
-        'name' => 'grade_level_id',
-        'label' => 'Grade Level',
-        'array' => $grade_level_dropdown,
-        'class' => null,
-        'selected' => null,
-        'required' => true
-      ])
-    <!----------------------------------------------------------------------------->
-    <!----------------------------------------------------------------------------->
+    @include('layouts._forms._heading',['title' => 'Academics'])
+    @include('student._academic_overview_form')
+    @include('layouts._forms._heading',['title' => 'Biographical'])
     @include('person._create_form_biographical', ['type' => 'student'])
-
-
     @include('layouts._forms._form_close')
     <!-- END FORM----------------------------------------------------------------------------->
     @include('layouts._modal_panel_end')
@@ -102,6 +79,8 @@
     <script type="text/javascript">
         jQuery(document).ready(function () {
             $('#dob').datepicker();
+            $('#start_date').datepicker();
+            $('#end_date').datepicker();
             $('#student_status_id').select2();
             $('#grade_level_id').select2();
 

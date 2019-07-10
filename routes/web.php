@@ -178,6 +178,10 @@ Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsCon
 Route::post('student/{student}/official_documents', 'StudentOfficialDocumentsController@store');
 Route::get('student/{student}/official_documents/{document}/delete', 'StudentOfficialDocumentsController@delete');
 
+//Academics
+Route::get('student/{student}/academics/overview', 'StudentAcademicController@overview');
+Route::patch('student/{student}/academics/overview', 'StudentAcademicController@storeOverview');
+
 //Family
 Route::get('student/{student}/new_family', 'StudentFamilyController@newFamily');
 Route::get('student/{student}/add_to_existing_family/{family}', 'StudentFamilyController@addToExistingFamily');

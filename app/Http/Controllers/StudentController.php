@@ -37,13 +37,13 @@ class StudentController extends Controller
     {
         $title_dropdown = Person::$titleDropdown;
         $gender_dropdown = Person::$genderRadio;
-        $status_dropdown = StudentStatus::getDropdown();
+        $student_status_dropdown = StudentStatus::getDropdown();
         $grade_level_dropdown = GradeLevel::getDropdown();
 
         return view('student.index', compact(
             'gender_dropdown',
             'title_dropdown',
-            'status_dropdown',
+            'student_status_dropdown',
             'grade_level_dropdown'
         ));
     }
@@ -62,6 +62,8 @@ class StudentController extends Controller
         $student_values['person_id'] = $person->id;
         $student_values['grade_level_id'] = $values['grade_level_id'];
         $student_values['student_status_id'] = $values['student_status_id'];
+        $student_values['start_date'] = $values['start_date'];
+        $student_values['end_date'] = $values['end_date'];
 
         $values = Helpers::dbAddAudit($student_values);
         $student = Student::create($values);
