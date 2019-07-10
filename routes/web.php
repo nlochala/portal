@@ -180,6 +180,8 @@ Route::get('student/{student}/official_documents/{document}/delete', 'StudentOff
 
 //Family
 Route::get('student/{student}/new_family', 'StudentFamilyController@newFamily');
+Route::get('student/{student}/add_to_existing_family/{family}', 'StudentFamilyController@addToExistingFamily');
+Route::get('student/{student}/create_new_family', 'StudentFamilyController@createNewFamily');
 
 /*
 |--------------------------------------------------------------------------
@@ -227,6 +229,17 @@ Route::get('guardian/{guardian}/official_documents/{document}/delete', 'Guardian
 
 //Family
 Route::get('guardian/{guardian}/new_family', 'GuardianFamilyController@newFamily');
+Route::get('guardian/{guardian}/add_to_existing_family/{family}', 'GuardianFamilyController@addToExistingFamily');
+Route::get('guardian/{guardian}/create_new_family', 'GuardianFamilyController@createNewFamily');
+
+/*
+|--------------------------------------------------------------------------
+| FAMILY
+|--------------------------------------------------------------------------
+*/
+//API
+Route::get('api/family/ajaxshowfamilies', 'FamilyAjaxController@ajaxShow');
+Route::get('family/{family}', 'FamilyController@show');
 
 /*
 |--------------------------------------------------------------------------
