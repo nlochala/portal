@@ -21,10 +21,9 @@ class FilesTableSeeder extends Seeder
         foreach ($file_extensions as $type) {
             $model = new ProjectFile();
             $model->file_extension_id = $type[0];
-            $model->path = $type[1];
-            $model->size = $type[2];
-            $model->name = $type[3];
-            $model->driver = $type[4];
+            $model->size = $type[1];
+            $model->name = $type[2];
+            $model->driver = $type[3];
             $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();

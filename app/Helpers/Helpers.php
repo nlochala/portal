@@ -395,4 +395,19 @@ class Helpers
         session()->flash('message', $message);
         session()->flash('title', $title);
     }
+
+    /**
+     * Calculate a person's age from a given dob.
+     *
+     * @param Carbon $dob
+     * @return string
+     */
+    public static function getAge(Carbon $dob)
+    {
+        if ($dob->age > 1) {
+            return $dob->age.' Years Old';
+        }
+
+        return Carbon::now()->diffInMonths($dob).' Months Old';
+    }
 }

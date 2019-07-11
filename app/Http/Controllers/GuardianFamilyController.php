@@ -55,4 +55,18 @@ class GuardianFamilyController extends GuardianController
 
         return redirect()->to('family/'.$family->uuid);
     }
+
+    /**
+     * Show either the family page or the new family page.
+     *
+     * @param Guardian $guardian
+     * @return RedirectResponse
+     */
+    public function viewFamily(Guardian $guardian)
+    {
+        return $guardian->family_id ?
+            redirect()->to('family/'.$guardian->family->uuid)
+            :
+            redirect()->to('guardian/'.$guardian->uuid.'/new_family');
+    }
 }

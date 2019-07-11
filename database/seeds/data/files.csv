@@ -1,6 +1,8 @@
-22,,41646,default-female,public,,2019-03-18 03:36:17,2019-03-18 03:36:27,,,,,
-22,,6471,default-male,public,,2019-03-18 03:36:17,2019-03-18 03:36:17,,,,,
-20,,758292,sample-passport,public,,2019-03-18 03:36:17,2019-03-18 03:36:17,,,,,
-22,,423037,sample-idcard-back,public,,2019-03-18 03:36:17,2019-03-18 03:36:17,,,,,
-22,,443097,sample-idcard-front,public,,2019-03-18 03:36:17,2019-03-18 03:36:17,,,,,
-2,,75304,sample-file,public,,2019-05-06 03:37:59,2019-05-06 03:38:03,,,,,
+22,41646,default-female,public,1
+22,6471,default-male,public,1
+20,758292,sample-passport,public,1
+22,423037,sample-idcard-back,public,1
+22,443097,sample-idcard-front,public,1
+2,75304,sample-file,public,1
+22,12767,profile-female,public,1
+22,8854,profile-male,public,1

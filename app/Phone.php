@@ -58,6 +58,28 @@ class Phone extends PortalBaseModel
         'user_updated_ip',
     ];
 
+    /**
+     * Return the formatted number. Make sure you eager load the model before
+     * executing this function.
+     *
+     * @return string
+     */
+    public function formattedNumber()
+    {
+        if ($this->country && $this->country->name !== 'China') {
+            $number = '<strong>'.$this->phoneType->name.': </strong>(+'
+                .$this->country->country_code.') '.$this->number;
+        } else {
+            $number = '<strong>'.$this->phoneType->name.': </strong>'.$this->number;
+        }
+
+        if ($this->extension) {
+            $number .= ' Ext. '.$this->extension;
+        }
+
+        return $number;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES

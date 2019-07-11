@@ -184,6 +184,7 @@ Route::patch('student/{student}/academics/overview', 'StudentAcademicController@
 
 //Family
 Route::get('student/{student}/new_family', 'StudentFamilyController@newFamily');
+Route::get('student/{student}/view_family', 'StudentFamilyController@viewFamily');
 Route::get('student/{student}/add_to_existing_family/{family}', 'StudentFamilyController@addToExistingFamily');
 Route::get('student/{student}/create_new_family', 'StudentFamilyController@createNewFamily');
 
@@ -233,6 +234,7 @@ Route::get('guardian/{guardian}/official_documents/{document}/delete', 'Guardian
 
 //Family
 Route::get('guardian/{guardian}/new_family', 'GuardianFamilyController@newFamily');
+Route::get('guardian/{guardian}/view_family', 'GuardianFamilyController@viewFamily');
 Route::get('guardian/{guardian}/add_to_existing_family/{family}', 'GuardianFamilyController@addToExistingFamily');
 Route::get('guardian/{guardian}/create_new_family', 'GuardianFamilyController@createNewFamily');
 

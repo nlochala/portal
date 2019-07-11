@@ -55,4 +55,18 @@ class StudentFamilyController extends StudentController
 
         return redirect()->to('family/'.$family->uuid);
     }
+
+    /**
+     * Show either the family page or the new family page.
+     *
+     * @param Student $student
+     * @return RedirectResponse
+     */
+    public function viewFamily(Student $student)
+    {
+        return $student->family_id ?
+            redirect()->to('family/'.$student->family->uuid)
+            :
+            redirect()->to('student/'.$student->uuid.'/new_family');
+    }
 }

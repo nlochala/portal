@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use App\Helpers\Helpers;
 use Webpatser\Uuid\Uuid;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -163,11 +164,91 @@ class Person extends PortalBaseModel
         'user_updated_ip',
     ];
 
+    /**
+     * Display the profile image.
+     *
+     * @param int $width
+     * @return string
+     */
+    public function profileImage($width = 200)
+    {
+        $image = $this->image;
+
+        if (! $image) {
+            $image = File::where('name', 'profile-'.strtolower($this->gender))->first();
+        }
+
+        return '<img dusk="profile-image" width="'.$width.'" 
+            class="img-fluid options-item rounded border border-2x border-dark" src="'.$image->renderImage().'" alt="">';
+    }
+
+    /**
+     * Return formatted email.
+     *
+     * @return string
+     */
+    public function emails()
+    {
+        $emails = '';
+        $emails .= "<strong>Primary Email:</strong> <a href='mailto:$this->email_primary'>
+            $this->email_primary</a>";
+
+        ! $this->email_secondary ?: $emails .= "<br /><strong>Secondary Email:</strong> 
+            <a href='mailto:$this->email_secondary'>$this->email_secondary</a>";
+        ! $this->email_school ?: $emails .= "<br /><strong>School Email:</strong> 
+            <a href='mailto:$this->email_school'>$this->email_school</a>";
+
+        return $emails;
+    }
+
+    /**
+     * Return a list of phone numbers for a given person.
+     *
+     * @return string
+     */
+    public function phoneNumbers()
+    {
+        $numbers = null;
+        for ($i = 0; $i < $this->phones->count(); $i++) {
+            if ($i === 0) {
+                $numbers = $this->phones[$i]->formattedNumber();
+            } else {
+                $numbers .= '<br />'.$this->phones[$i]->formattedNumber();
+            }
+        }
+
+        return $numbers;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Get Dob to Carbon Object.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getDobAttribute($value)
+    {
+        return Carbon::parse($value);
+    }
+
+    /**
+     * Get age.
+     *
+     * @return mixed
+     */
+    public function getAgeAttribute()
+    {
+        $dob = Carbon::parse($this->dob);
+
+        return Helpers::getAge($dob);
+    }
 
     /**
      * Set created_at to Carbon Object.
@@ -322,13 +403,13 @@ class Person extends PortalBaseModel
     }
 
     /**
-     *  This person belongs to a student.
+     *  This person belongs to a guardian.
      *
      * @return BelongsTo
      */
-    public function parent()
+    public function guardian()
     {
-        return $this->belongsTo('App\Parent', 'id', 'person_id');
+        return $this->belongsTo('App\Guardian', 'id', 'person_id');
     }
 
     /**
@@ -410,15 +491,5 @@ class Person extends PortalBaseModel
     public function ethnicity()
     {
         return $this->belongsTo('App\Ethnicity', 'ethnicity_id', 'id');
-    }
-
-    /**
-     *  This person belongs to a personType.
-     *
-     * @return BelongsTo
-     */
-    public function personType()
-    {
-        return $this->belongsTo('App\PersonType', 'person_type_id', 'id');
     }
 }

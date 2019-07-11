@@ -258,9 +258,9 @@
             $('#grade_levels').val([{{ implode(',', $course->gradeLevels->pluck('id')->toArray()) }}]);
             $('#grade_levels').trigger('change'); // Notify any JS components that the value changed
 
-            @include('course._requisites_datatables', ['type' => 'prerequisite'])
-            @include('course._requisites_datatables', ['type' => 'corequisite'])
-            @include('course._requisites_datatables', ['type' => 'equivalent'])
+                    @include('course._requisites_datatables', ['type' => 'prerequisite'])
+                    @include('course._requisites_datatables', ['type' => 'corequisite'])
+                    @include('course._requisites_datatables', ['type' => 'equivalent'])
 
             var edit_element = $('#materials-edit');
             var input_element = $('#materials');

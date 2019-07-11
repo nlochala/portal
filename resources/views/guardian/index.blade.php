@@ -217,10 +217,10 @@
                                 "                    onclick=\"window.location.href='/guardian/" + data + "/profile'\">\n" +
                                 "                <i class=\"fa fa-pen\"></i>\n" +
                                 "            </button>\n" +
-                                // "            <button dusk=\"btn-archive-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"tooltip\" title=\"Archive\"\n" +
-                                // "                    onclick=\"window.location.href='/guardian/" + data + "/archive'\">\n" +
-                                // "                <i class=\"fa fa-times\"></i>\n" +
-                                // "            </button>\n" +
+                                "            <button dusk=\"btn-family-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-success\" data-toggle=\"tooltip\" title=\"View Family\"\n" +
+                                "                    onclick=\"window.location.href='/guardian/" + data + "/view_family'\">\n" +
+                                "                <i class=\"fa fa-users\"></i>\n" +
+                                "            </button>\n" +
                                 "        </div>"
                         }
                     },
