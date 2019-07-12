@@ -25,6 +25,7 @@ class StoreEmployeeRequest extends FormRequest
     {
         return [
             'start_date' => 'required',
+            'email_school' => 'required',
             'employee_classification_id' => 'required',
             'employee_status_id' => 'required',
             'title' => 'required',

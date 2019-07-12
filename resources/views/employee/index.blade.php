@@ -63,6 +63,16 @@
     <!-- START FORM----------------------------------------------------------------------------->
     {!! Form::open(['files' => false, 'id' => 'employee-form','url' => request()->getRequestUri()]) !!}
     @include('layouts._forms._heading',['title' => 'Employment Overview'])
+    <!----------------------------------------------------------------------------->
+    <!---------------------------New school_email text field----------------------------->
+    @include('layouts._forms._input_text',[
+        'name' => 'email_school',
+        'label' => 'School Email',
+        'placeholder' => 'xxxx@tlcdg.com',
+        'required' => true
+      ])
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
     @include('employee._overview_form')
     @include('layouts._forms._heading',['title' => 'Biographical'])
     @include('person._create_form_biographical', ['type' => 'employee'])

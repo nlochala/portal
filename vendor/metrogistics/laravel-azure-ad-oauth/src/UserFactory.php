@@ -153,6 +153,10 @@ class UserFactory
 
     public function newEmployee(AppUser $user, Person $person)
     {
+        if ($employee = Employee::where('person_id', $person->id)->first()) {
+            return $employee;
+        }
+
         $employee = new Employee();
         $employee->person_id = $person->id;
         $employee = Helpers::dbAddAudit($employee);
