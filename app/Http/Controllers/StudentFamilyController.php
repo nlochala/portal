@@ -64,9 +64,8 @@ class StudentFamilyController extends StudentController
      */
     public function viewFamily(Student $student)
     {
-        return $student->family_id ?
-            redirect()->to('family/'.$student->family->uuid)
-            :
-            redirect()->to('student/'.$student->uuid.'/new_family');
+        return $student->family_id
+            ? redirect()->to('family/'.$student->family->uuid)
+            : redirect()->to('student/'.$student->uuid.'/new_family');
     }
 }

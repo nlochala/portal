@@ -15,16 +15,6 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 class EmployeeIdCardController extends EmployeeController
 {
     /**
-     * Require users to have been authenticated before reaching this page.
-     *
-     * UserController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * Return the employee Id Card view.
      *
      * @param Employee $employee

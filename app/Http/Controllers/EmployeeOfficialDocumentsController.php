@@ -2,28 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
 use App\File;
+use App\Employee;
 use App\Helpers\Helpers;
 use App\OfficialDocument;
-use App\OfficialDocumentType;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
+use App\OfficialDocumentType;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
 
 class EmployeeOfficialDocumentsController extends EmployeeController
 {
-    /**
-     * Require users to have been authenticated before reaching this page.
-     *
-     * UserController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display the official documents of a given employee.
      *
@@ -54,7 +43,7 @@ class EmployeeOfficialDocumentsController extends EmployeeController
     {
         $values = Helpers::dbAddAudit(request()->all());
 
-        if (!request()->has('upload')) {
+        if (! request()->has('upload')) {
             Helpers::flashAlert(
                 'danger',
                 'Please upload an official document. Please try again.',
@@ -63,7 +52,7 @@ class EmployeeOfficialDocumentsController extends EmployeeController
             return redirect()->back()->withInput();
         }
 
-        if (!$file = File::getFile($values['upload'])) {
+        if (! $file = File::getFile($values['upload'])) {
             Helpers::flashAlert(
                 'danger',
                 'Could not find the uploaded document. Please try again.',
@@ -72,7 +61,7 @@ class EmployeeOfficialDocumentsController extends EmployeeController
             return redirect()->back()->withInput();
         }
 
-        if (!$file->saveFile()) {
+        if (! $file->saveFile()) {
             Helpers::flashAlert(
                 'danger',
                 'There was an issue saving your document. Please try again.',

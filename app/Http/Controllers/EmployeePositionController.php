@@ -3,27 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
-use App\EmployeeClassification;
-use App\EmployeeStatus;
-use App\Helpers\Helpers;
 use App\Position;
 use App\PositionType;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
+use App\EmployeeStatus;
+use App\Helpers\Helpers;
 use Illuminate\View\View;
+use App\EmployeeClassification;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
 
 class EmployeePositionController extends EmployeeController
 {
-    /**
-     * Require users to have been authenticated before reaching this page.
-     *
-     * UserController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * @param Employee $employee
      *

@@ -2,29 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Phone;
 use App\Address;
-use App\AddressType;
 use App\Country;
 use App\Employee;
-use App\Helpers\Helpers;
-use App\Phone;
 use App\PhoneType;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
+use App\AddressType;
+use App\Helpers\Helpers;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
 
 class EmployeeContactController extends EmployeeController
 {
-    /**
-     * Require users to have been authenticated before reaching this page.
-     *
-     * UserController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display the contact information.
      *

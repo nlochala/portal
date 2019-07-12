@@ -180,6 +180,26 @@ class Employee extends PortalBaseModel
     */
 
     /**
+     *  This employee belongs to a status.
+     *
+     * @return BelongsTo
+     */
+    public function status()
+    {
+        return $this->belongsTo('App\EmployeeStatus', 'employee_status_id', 'id');
+    }
+
+    /**
+     *  This employee belongs to a classification.
+     *
+     * @return BelongsTo
+     */
+    public function classification()
+    {
+        return $this->belongsTo('App\EmployeeClassification', 'employee_classification_id', 'id');
+    }
+
+    /**
      * Many employees belongs to many positions.
      *
      * @return BelongsToMany

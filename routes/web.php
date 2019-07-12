@@ -93,6 +93,11 @@ Route::get('address/{address}/delete', 'AddressController@delete');
 | EMPLOYEE
 |--------------------------------------------------------------------------
 */
+//Directory
+Route::get('employee/index', 'EmployeeController@index');
+Route::post('employee/index', 'EmployeeController@storeNewEmployee');
+Route::get('api/employee/ajaxshowemployee', 'EmployeeAjaxController@ajaxShow');
+
 //Overview
 Route::get('employee/{employee}/profile', 'EmployeeProfileController@profile');
 Route::patch('employee/{employee}/profile', 'EmployeeProfileController@updateProfile');
