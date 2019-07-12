@@ -94,7 +94,7 @@ class AzureOauthProvider extends AbstractProvider implements ProviderInterface
         return (new User())->setRaw($user)->map([
             'id'                => $user['id'],
             'name'              => $user['displayName'],
-            'email'             => $user['mail'],
+            'email'             => $user['userPrincipalName'],
 
             'businessPhones'    => $user['businessPhones'],
             'displayName'       => $user['displayName'],
