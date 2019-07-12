@@ -103,8 +103,24 @@
                             return name;
                         }
                     },
-                    {data: "status.name"},
-                    {data: "classification.name"},
+                    {data: "status",
+                        render: function (data, type, row) {
+                            if (data === null) {
+                                return '--';
+                            }
+
+                            return data.name;
+                        }
+                    },
+                    {data: "classification",
+                        render: function (data, type, row) {
+                            if (data === null) {
+                                return '--';
+                            }
+
+                            return data.name;
+                        }
+                    },
                     {
                         data: "person",
                         render: function (data, type, row) {
