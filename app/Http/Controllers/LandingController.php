@@ -15,6 +15,10 @@ class LandingController extends Controller
      */
     public function __invoke(Request $request)
     {
+        if (! auth()->user()) {
+            return redirect()->route('login');
+        }
+
         return view('landing');
     }
 }

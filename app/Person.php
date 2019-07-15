@@ -175,7 +175,9 @@ class Person extends PortalBaseModel
         $image = $this->image;
 
         if (! $image) {
-            $image = File::where('name', 'profile-'.strtolower($this->gender))->first();
+            $image = $this->gender
+                ? File::where('name', 'profile-'.strtolower($this->gender))->first()
+                : File::find(8);
         }
 
         return '<img dusk="profile-image" width="'.$width.'" 
