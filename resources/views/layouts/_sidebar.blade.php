@@ -35,10 +35,10 @@
 'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
-        [
-            'title' => 'Dashboard',
-            'uri'   => '/employee/dashboard'
-        ],
+//       [
+//           'title' => 'Dashboard',
+//           'uri'   => '/employee/dashboard'
+//  ],
         [
             'title' => 'Directory',
             'uri'   => '/employee/index'
@@ -54,10 +54,10 @@
 'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
-        [
-            'title' => 'Summary',
-            'uri'   => '/student/dashboard'
-        ],
+ //       [
+ //           'title' => 'Summary',
+ //           'uri'   => '/student/dashboard'
+ //       ],
         [
             'title' => 'Directory',
             'uri'   => '/student/index'
@@ -69,10 +69,10 @@
 'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
-        [
-            'title' => 'Summary',
-            'uri'   => '/guardian/dashboard'
-        ],
+  //      [
+  //          'title' => 'Summary',
+  //          'uri'   => '/guardian/dashboard'
+  //      ],
         [
             'title' => 'Directory',
             'uri'   => '/guardian/index'
@@ -97,10 +97,10 @@
 'section_icon' => 'fa fa-chalkboard-teacher',
 'submenu_array' =>
     [
-        [
-            'title' => 'Dashboard',
-            'uri'   => '/course/dashboard'
-        ],
+ //       [
+ //           'title' => 'Dashboard',
+ //           'uri'   => '/course/dashboard'
+ //       ],
         [
             'title' => 'Index',
             'uri'   => '/course/index'
