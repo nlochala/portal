@@ -13,9 +13,9 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
+        '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
@@ -28,7 +28,6 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
-        '67a8251cebeeca63fd3b1fc35cc0eb21' => __DIR__ . '/..' . '/roquie/laravel-dusk-select2/src/macro.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -121,7 +120,6 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
             'Laravel\\Tinker\\' => 15,
             'Laravel\\Telescope\\' => 18,
             'Laravel\\Socialite\\' => 18,
-            'Laravel\\Dusk\\' => 13,
         ),
         'J' => 
         array (
@@ -416,10 +414,6 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'Laravel\\Socialite\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/socialite/src',
-        ),
-        'Laravel\\Dusk\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/dusk/src',
         ),
         'JsonSchema\\' => 
         array (
@@ -3174,33 +3168,6 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'JsonSchema\\Uri\\UriRetriever' => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema/Uri/UriRetriever.php',
         'JsonSchema\\Validator' => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema/Validator.php',
         'LanguagesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/LanguagesTableSeeder.php',
-        'Laravel\\Dusk\\Browser' => __DIR__ . '/..' . '/laravel/dusk/src/Browser.php',
-        'Laravel\\Dusk\\Chrome\\ChromeProcess' => __DIR__ . '/..' . '/laravel/dusk/src/Chrome/ChromeProcess.php',
-        'Laravel\\Dusk\\Chrome\\SupportsChrome' => __DIR__ . '/..' . '/laravel/dusk/src/Chrome/SupportsChrome.php',
-        'Laravel\\Dusk\\Component' => __DIR__ . '/..' . '/laravel/dusk/src/Component.php',
-        'Laravel\\Dusk\\Concerns\\InteractsWithAuthentication' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/InteractsWithAuthentication.php',
-        'Laravel\\Dusk\\Concerns\\InteractsWithCookies' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/InteractsWithCookies.php',
-        'Laravel\\Dusk\\Concerns\\InteractsWithElements' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/InteractsWithElements.php',
-        'Laravel\\Dusk\\Concerns\\InteractsWithJavascript' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/InteractsWithJavascript.php',
-        'Laravel\\Dusk\\Concerns\\InteractsWithMouse' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/InteractsWithMouse.php',
-        'Laravel\\Dusk\\Concerns\\MakesAssertions' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/MakesAssertions.php',
-        'Laravel\\Dusk\\Concerns\\MakesUrlAssertions' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/MakesUrlAssertions.php',
-        'Laravel\\Dusk\\Concerns\\ProvidesBrowser' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/ProvidesBrowser.php',
-        'Laravel\\Dusk\\Concerns\\WaitsForElements' => __DIR__ . '/..' . '/laravel/dusk/src/Concerns/WaitsForElements.php',
-        'Laravel\\Dusk\\Console\\ChromeDriverCommand' => __DIR__ . '/..' . '/laravel/dusk/src/Console/ChromeDriverCommand.php',
-        'Laravel\\Dusk\\Console\\ComponentCommand' => __DIR__ . '/..' . '/laravel/dusk/src/Console/ComponentCommand.php',
-        'Laravel\\Dusk\\Console\\DuskCommand' => __DIR__ . '/..' . '/laravel/dusk/src/Console/DuskCommand.php',
-        'Laravel\\Dusk\\Console\\DuskFailsCommand' => __DIR__ . '/..' . '/laravel/dusk/src/Console/DuskFailsCommand.php',
-        'Laravel\\Dusk\\Console\\InstallCommand' => __DIR__ . '/..' . '/laravel/dusk/src/Console/InstallCommand.php',
-        'Laravel\\Dusk\\Console\\MakeCommand' => __DIR__ . '/..' . '/laravel/dusk/src/Console/MakeCommand.php',
-        'Laravel\\Dusk\\Console\\PageCommand' => __DIR__ . '/..' . '/laravel/dusk/src/Console/PageCommand.php',
-        'Laravel\\Dusk\\Dusk' => __DIR__ . '/..' . '/laravel/dusk/src/Dusk.php',
-        'Laravel\\Dusk\\DuskServiceProvider' => __DIR__ . '/..' . '/laravel/dusk/src/DuskServiceProvider.php',
-        'Laravel\\Dusk\\ElementResolver' => __DIR__ . '/..' . '/laravel/dusk/src/ElementResolver.php',
-        'Laravel\\Dusk\\Http\\Controllers\\UserController' => __DIR__ . '/..' . '/laravel/dusk/src/Http/Controllers/UserController.php',
-        'Laravel\\Dusk\\OperatingSystem' => __DIR__ . '/..' . '/laravel/dusk/src/OperatingSystem.php',
-        'Laravel\\Dusk\\Page' => __DIR__ . '/..' . '/laravel/dusk/src/Page.php',
-        'Laravel\\Dusk\\TestCase' => __DIR__ . '/..' . '/laravel/dusk/src/TestCase.php',
         'Laravel\\Socialite\\AbstractUser' => __DIR__ . '/..' . '/laravel/socialite/src/AbstractUser.php',
         'Laravel\\Socialite\\Contracts\\Factory' => __DIR__ . '/..' . '/laravel/socialite/src/Contracts/Factory.php',
         'Laravel\\Socialite\\Contracts\\Provider' => __DIR__ . '/..' . '/laravel/socialite/src/Contracts/Provider.php',
