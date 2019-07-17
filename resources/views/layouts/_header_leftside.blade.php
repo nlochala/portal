@@ -9,7 +9,7 @@
 
     <!-- Open Search Section -->
     <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-    <button type="button" class="btn btn-dual" data-toggle="layout" data-action="header_search_on">
+    <button type="button" class="btn btn-dual" id="header_search_button" data-toggle="layout" data-action="header_search_on">
         <i class="fa fa-fw fa-search"></i> <span class="ml-1 d-none d-sm-inline-block">Search</span>
     </button>
     <!-- END Open Search Section -->

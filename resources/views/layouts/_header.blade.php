@@ -13,9 +13,9 @@
         @include('layouts._header_notifications')
         <!-- Toggle Side Overlay -->
         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-        <button type="button" class="btn btn-dual" data-toggle="layout" data-action="side_overlay_toggle">
-            <i class="far fa-fw fa-list-alt"></i>
-        </button>
+{{--        <button type="button" class="btn btn-dual" data-toggle="layout" data-action="side_overlay_toggle">--}}
+{{--            <i class="far fa-fw fa-list-alt"></i>--}}
+{{--        </button>--}}
         <!-- END Toggle Side Overlay -->
     </div>
     <!-- END Right Section -->
@@ -28,6 +28,6 @@
     @include('layouts._header_search')
 
     <!-- Header Loader -->
-    @include('layouts._header_loader')
+{{--    @include('layouts._header_loader')--}}
 </header>
 <!-- END Header -->

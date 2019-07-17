@@ -97,6 +97,23 @@ class Person extends PortalBaseModel
     }
 
     /**
+     * This is the displayed name used when indexing the persons for searching.
+     *
+     * @return string
+     */
+    public function extendedName()
+    {
+        $name = '';
+        ! $this->title ?: $name .= "$this->title ";
+        $name .= "$this->family_name, $this->given_name";
+        ! $this->name_in_chinese ?: $name .= " $this->name_in_chinese";
+
+        $name .= " ($this->preferred_name)";
+
+        return $name;
+    }
+
+    /**
      * Return the properly formatted full name.
      *
      * @param bool $last_name_first

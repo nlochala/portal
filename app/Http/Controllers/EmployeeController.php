@@ -67,6 +67,7 @@ class EmployeeController extends Controller
         Helpers::flash($employee, 'employee');
 
         if ($employee) {
+            $employee->searchable();
             return redirect()->to('employee/'.$employee->uuid.'/profile');
         }
 

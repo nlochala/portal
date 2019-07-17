@@ -11,6 +11,7 @@
 |
 */
 Route::get('authenticated', 'OAuthController@login')->name('login');
+Route::get('logout', 'OAuthController@logout')->name('logout');
 Route::get('/', 'LandingController')->name('landing');
 
 //TODO: Change the link location to api/download_file
@@ -269,6 +270,8 @@ Route::get('person/{file}/delete', 'PersonController@destroy');
 Route::get('person/{file}', 'PersonController@show');
 //Index
 Route::get('person', 'PersonController@index');
+//Search
+Route::post('person/search', 'PersonController@search');
 
 /*
 |--------------------------------------------------------------------------

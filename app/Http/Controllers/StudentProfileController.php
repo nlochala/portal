@@ -97,6 +97,7 @@ class StudentProfileController extends StudentController
         $values['gender'] = Person::getGender($values['gender']);
 
         Helpers::flash($student->person->update($values), 'student profile', 'updated');
+        $student->searchable();
 
         return redirect()->to('/student/'.$student->uuid.'/profile');
     }

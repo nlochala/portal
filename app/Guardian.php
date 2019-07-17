@@ -4,12 +4,44 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Guardian extends PortalBaseModel
 {
     use SoftDeletes;
+    use Searchable;
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'guardians';
+    }
+
+    protected $touches = ['person'];
+
+    /**
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array = $this->transform($array);
+
+        $array['display_name'] = $this->person->extendedName();
+        $array['email_school'] = $this->person->email_school;
+        $array['email_primary'] = $this->person->email_primary;
+        $array['email_secondary'] = $this->person->email_secondary;
+        $array['url'] = '/guardian/'.$this->uuid;
+
+        return $array;
+    }
 
     /*
     |--------------------------------------------------------------------------

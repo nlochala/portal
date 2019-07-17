@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Laravel\Scout\Searchable;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,39 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Student extends PortalBaseModel
 {
     use SoftDeletes;
+    use Searchable;
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'students';
+    }
+
+
+    protected $touches = ['person', 'gradeLevel'];
+
+    /**
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array = $this->transform($array);
+
+        $array['display_name'] = $this->person->extendedName();
+        $array['grade_level'] = $this->gradeLevel->name;
+        $array['email_school'] = $this->person->email_school;
+        $array['email_primary'] = $this->person->email_primary;
+        $array['email_secondary'] = $this->person->email_secondary;
+        $array['url'] = '/student/'.$this->uuid;
+
+        return $array;
+    }
 
     /*
     |--------------------------------------------------------------------------

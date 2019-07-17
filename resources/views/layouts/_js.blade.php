@@ -20,6 +20,11 @@
 <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('js/datatables_select2.js') }}"></script>
 
+
+<!-- Algolia -->
+<script src="{{ asset('js/plugins/algolia/algoliasearch.min.js') }}"></script>
+<script src="{{ asset('js/plugins/algolia/autocomplete.min.js') }}"></script>
+
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
@@ -47,6 +52,48 @@
 
 
 <script type="text/javascript">
+    ///////////////////////////////////////////////////////
+    // ALGOLIA
+    ///////////////////////////////////////////////////////
+    const client = algoliasearch("{{ env('ALGOLIA_APP_ID') }}", "{{ env('ALGOLIA_CLIENT_SEARCH') }}");
+    const employees = client.initIndex('employees');
+    const students = client.initIndex('students');
+    const guardians = client.initIndex('guardians');
+
+    autocomplete('#aa-search-input', {}, [
+        {
+            source: autocomplete.sources.hits(students, {hitsPerPage: 6}),
+            displayKey: 'display_name',
+            templates: {
+                header: '<div class="aa-suggestions-category">STUDENTS</div>',
+                suggestion({_highlightResult}) {
+                    return `<span>${_highlightResult.display_name.value}</span><span>${_highlightResult.grade_level.value}</span>`;
+                }
+            }
+        },
+        {
+            source: autocomplete.sources.hits(guardians, {hitsPerPage: 6}),
+            displayKey: 'display_name',
+            templates: {
+                header: '<div class="aa-suggestions-category">GUARDIANS</div>',
+                suggestion({_highlightResult}) {
+                    return `<span>${_highlightResult.display_name.value}</span><span>${_highlightResult.email_school.value}</span>`;
+                }
+            }
+        },
+        {
+            source: autocomplete.sources.hits(employees, {hitsPerPage: 6}),
+            displayKey: 'display_name',
+            templates: {
+                header: '<div class="aa-suggestions-category">EMPLOYEES</div>',
+                suggestion({_highlightResult}) {
+                    return `<span>${_highlightResult.display_name.value}</span><span>${_highlightResult.email_school.value}</span>`;
+                }
+            }
+        },
+    ]).on('autocomplete:selected', function (event, suggestion, dataset, context) {
+        window.location.assign(suggestion.url);
+    });
 
     // Return a formatted date where YYYY-MM-DD
     function formatDate(dateString) {
@@ -56,14 +103,14 @@
         let day = date.getDate();
 
         if (month < 10) {
-            month = '0'+month;
+            month = '0' + month;
         }
 
         if (day < 10) {
-            day = '0'+day;
+            day = '0' + day;
         }
 
-        return year+'-'+month+'-'+day;
+        return year + '-' + month + '-' + day;
     }
 
     // Return the age of the person in question by a given string.
@@ -87,5 +134,9 @@
             message: '{{ Session::get('message') }}'
         });
         @endif
+
+        $('#header_search_button').click(function() {
+             $('#aa-search-input').focus();
+        });
     });
 </script>

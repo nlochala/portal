@@ -70,6 +70,7 @@ class GuardianController extends Controller
         Helpers::flash($guardian, 'guardian');
 
         if ($guardian) {
+            $guardian->searchable();
             return redirect()->to('guardian/'.$guardian->uuid.'/profile');
         }
 

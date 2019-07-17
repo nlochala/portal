@@ -4,6 +4,8 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
+use Laravel\Scout\Searchable;
+use Illuminate\Notifications\Notifiable;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +15,38 @@ class Employee extends PortalBaseModel
 {
     use SoftDeletes;
     use FormAccessible;
+    use Notifiable;
+    use Searchable;
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'employees';
+    }
+
+    protected $touches = ['person'];
+
+    /**
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array = $this->transform($array);
+
+        $array['display_name'] = $this->person->extendedName();
+        $array['email_school'] = $this->person->email_school;
+        $array['email_primary'] = $this->person->email_primary;
+        $array['email_secondary'] = $this->person->email_secondary;
+        $array['url'] = '/employee/'.$this->uuid;
+
+        return $array;
+    }
 
     /*
     |--------------------------------------------------------------------------

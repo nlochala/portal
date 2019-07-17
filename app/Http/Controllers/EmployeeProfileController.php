@@ -98,6 +98,11 @@ class EmployeeProfileController extends EmployeeController
         $values['gender'] = Person::getGender($values['gender']);
 
         Helpers::flash($employee->person->update($values), 'employee profile', 'updated');
+        $employee->searchable();
+
+        if ($employee->person->guardian) {
+            $employee->person->guardian->searchable();
+        }
 
         return redirect()->to('/employee/'.$employee->uuid.'/profile');
     }

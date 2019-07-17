@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Phone;
 use App\Person;
-use App\Address;
-use App\Country;
 use App\Student;
-use App\PhoneType;
 use App\GradeLevel;
-use App\AddressType;
 use App\StudentStatus;
 use App\Helpers\Helpers;
 use Illuminate\View\View;
@@ -71,6 +66,8 @@ class StudentController extends Controller
         Helpers::flash($student, 'student');
 
         if ($student) {
+            $student->searchable();
+
             return redirect()->to('student/'.$student->uuid.'/profile');
         }
 

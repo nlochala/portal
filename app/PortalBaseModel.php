@@ -17,4 +17,12 @@ class PortalBaseModel extends Model implements Auditable
         'user_updated_ip',
         'user_updated_id',
     ];
+
+    /**
+     * @return mixed
+     */
+    public function routeNotificationForSlack()
+    {
+        return env('SLACK_HOOK');
+    }
 }

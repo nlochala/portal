@@ -97,6 +97,11 @@ class GuardianProfileController extends GuardianController
         $values['gender'] = Person::getGender($values['gender']);
 
         Helpers::flash($guardian->person->update($values), 'guardian profile', 'updated');
+        $guardian->searchable();
+
+        if ($guardian->person->employee) {
+            $guardian->person->employee->searchable();
+        }
 
         return redirect()->to('/guardian/'.$guardian->uuid.'/profile');
     }
