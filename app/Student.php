@@ -3,8 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
-use Laravel\Scout\Searchable;
 use Webpatser\Uuid\Uuid;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -22,7 +22,6 @@ class Student extends PortalBaseModel
     {
         return 'students';
     }
-
 
     protected $touches = ['person', 'gradeLevel'];
 
@@ -99,6 +98,16 @@ class Student extends PortalBaseModel
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * return the full name of an employee.
+     *
+     * @return mixed
+     */
+    public function getNameAttribute()
+    {
+        return '<a href="/student/'.$this->uuid.'">'.$this->person->fullName().'</a>';
+    }
 
     /**
      * return the full name of a student.

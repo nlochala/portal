@@ -24,6 +24,30 @@ class StudentController extends Controller
     }
 
     /**
+     * Show the dashboard for the student.
+     *
+     * @param Student $student
+     * @return Factory|View
+     */
+    public function dashboard(Student $student)
+    {
+        $student->load(
+            'status',
+            'family.students.person',
+            'family.students.status',
+            'family.students.gradeLevel',
+            'family.guardians.person',
+            'family.guardians.type',
+            'person.user.adGroups',
+            'person.phones',
+            'person.addresses'
+        );
+
+        return view('student.dashboard', compact('student'));
+    }
+
+
+    /**
      * Display an index of all students.
      *
      * @return Factory|View

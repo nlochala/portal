@@ -46,12 +46,16 @@
     @include('layouts._panels_start_panel', ['title' => 'Overview', 'with_block' => false])
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
-    <span class="badge badge-primary"><i class="fa fa-book-open"></i> ID: {{ $course->id }}</span>
-    @if($course->is_active)
-        <span class="badge badge-success"><i class="fa fa-check-circle"></i> ACTIVE - {{ $course->year->name }}</span>
-    @else
-        <span class="badge badge-dark"><i class="fa fa-minus-circle"></i> INACTIVE - {{ $course->year->name }}</span>
-    @endif
+    <h4>
+        <span class="badge badge-primary"><i class="fa fa-book-open"></i> ID: {{ $course->id }}</span>
+        @if($course->is_active)
+            <span class="badge badge-success"><i
+                        class="fa fa-check-circle"></i> ACTIVE - {{ $course->year->name }}</span>
+        @else
+            <span class="badge badge-dark"><i
+                        class="fa fa-minus-circle"></i> INACTIVE - {{ $course->year->name }}</span>
+        @endif
+    </h4>
     @include('_tables.new-table',['class' => 'table-borderless', 'id' => 'overview_table', 'table_head' => ['','']])
     <tr>
         <td><strong>Abbreviation:</strong> {{ $course->short_name }} ({{ $course->type->name }})</td>

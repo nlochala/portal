@@ -94,10 +94,14 @@ Route::get('address/{address}/delete', 'AddressController@delete');
 | EMPLOYEE
 |--------------------------------------------------------------------------
 */
+
 //Directory
 Route::get('employee/index', 'EmployeeController@index');
 Route::post('employee/index', 'EmployeeController@storeNewEmployee');
 Route::get('api/employee/ajaxshowemployee', 'EmployeeAjaxController@ajaxShow');
+
+//Dashboard
+Route::get('employee/{employee}', 'EmployeeController@dashboard');
 
 //Overview
 Route::get('employee/{employee}/profile', 'EmployeeProfileController@profile');
@@ -149,6 +153,9 @@ Route::get('employee/{employee}/position/view_details', 'EmployeePositionControl
 Route::get('student/index', 'StudentController@index');
 Route::post('student/index', 'StudentController@storeNewStudent');
 Route::get('api/student/ajaxshowstudent', 'StudentAjaxController@ajaxShow');
+
+//Dashboard
+Route::get('student/{student}', 'StudentController@dashboard');
 
 //Overview
 Route::get('student/{student}/profile', 'StudentProfileController@profile');
@@ -203,6 +210,9 @@ Route::get('student/{student}/create_new_family', 'StudentFamilyController@creat
 Route::get('guardian/index', 'GuardianController@index');
 Route::post('guardian/index', 'GuardianController@storeNewGuardian');
 Route::get('api/guardian/ajaxshowguardian', 'GuardianAjaxController@ajaxShow');
+
+//Dashboard
+Route::get('guardian/{guardian}', 'GuardianController@dashboard');
 
 //Overview
 Route::get('guardian/{guardian}/profile', 'GuardianProfileController@profile');

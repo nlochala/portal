@@ -4,7 +4,11 @@ $table_head = array of header names
 
 --}}
 
-<table class="table table-hover table-sm table-vcenter {{ $class ?? '' }}" id="{{ $id }}" style="{{ $style ?? '' }}">
+<table class="table
+@if (! isset($no_hover))
+table-hover
+@endif
+table-sm table-vcenter {{ $class ?? '' }}" id="{{ $id }}" style="{{ $style ?? '' }}">
     <thead>
     <tr>
         @foreach($table_head as $name)

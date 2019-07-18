@@ -24,6 +24,29 @@ class GuardianController extends Controller
     }
 
     /**
+     * Show the dashboard for the guardian.
+     *
+     * @param Guardian $guardian
+     * @return Factory|View
+     */
+    public function dashboard(Guardian $guardian)
+    {
+        $guardian->load(
+            'type',
+            'family.students.person',
+            'family.students.status',
+            'family.students.gradeLevel',
+            'family.guardians.person',
+            'family.guardians.type',
+            'person.user.adGroups',
+            'person.phones',
+            'person.addresses'
+        );
+
+        return view('guardian.dashboard', compact('guardian'));
+    }
+
+    /**
      * Display an index of all guardians.
      *
      * @return Factory|View

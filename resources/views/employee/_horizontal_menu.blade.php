@@ -18,6 +18,15 @@ h.item
 h.item
 
 -->
+@include('layouts._horizontal_menu_item_start')
+@include('layouts._horizontal_menu_item', [
+    'url' => 'employee/' . $employee->uuid,
+    'icon' => 'fa fa-arrow-left',
+    'title' => 'EMPLOYEE DASHBOARD',
+    'badge_number' => null,
+    'badge_color' => null
+])
+@include('layouts._horizontal_menu_item_end')
 
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [

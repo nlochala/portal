@@ -138,15 +138,23 @@ class Employee extends PortalBaseModel
     */
 
     /**
-     * return the full name of a student.
-     *
-     * @param $value
+     * return the full name of an employee.
      *
      * @return mixed
      */
     public function getLegalFullNameAttribute()
     {
         return $this->person->family_name.', '.$this->person->given_name;
+    }
+
+    /**
+     * return the full name of an employee.
+     *
+     * @return mixed
+     */
+    public function getNameAttribute()
+    {
+        return '<a href="/employee/'.$this->uuid.'">'.$this->person->fullName().'</a>';
     }
 
     /**

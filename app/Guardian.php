@@ -96,6 +96,16 @@ class Guardian extends PortalBaseModel
     */
 
     /**
+     * return the full name of an employee.
+     *
+     * @return mixed
+     */
+    public function getNameAttribute()
+    {
+        return '<a href="/guardian/'.$this->uuid.'">'.$this->person->fullName().'</a>';
+    }
+
+    /**
      * return the full name of a guardian.
      *
      * @param $value

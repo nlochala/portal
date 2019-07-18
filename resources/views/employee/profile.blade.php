@@ -87,7 +87,7 @@
         ])
 
         <div class="block-content block-content-full block-content-sm bg-body-light text-right">
-            <button type="submit" class="btn btn-sm btn-outline-primary" data-toggle="click-ripple">
+            <button type="submit" id="image_upload_btn" class="btn btn-sm btn-outline-primary" data-toggle="click-ripple" disabled>
                 <i class="fa fa-check"></i> Submit
             </button>
         </div>
@@ -143,6 +143,14 @@
         );
 
         jQuery(document).ready(function () {
+
+            $('#upload').on('FilePond:processfile', function(e) {
+                let selector = $('#image_upload_btn');
+                selector.removeAttr('disabled');
+                selector.removeClass('btn-outline-primary');
+                selector.addClass('btn-primary');
+            });
+
             $("#title").select2({placeholder: "Choose one...",});
             $("#country_of_birth_id").select2({placeholder: "Choose One..."});
             $("#language_primary_id").select2({placeholder: "Choose One..."});

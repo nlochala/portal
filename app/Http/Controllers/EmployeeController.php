@@ -6,9 +6,9 @@ use App\Person;
 use App\Employee;
 use App\EmployeeStatus;
 use App\Helpers\Helpers;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\EmployeeClassification;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
 
 class EmployeeController extends Controller
@@ -21,6 +21,26 @@ class EmployeeController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except('ajaxShow');
+    }
+
+    /**
+     * Show the dashboard for the employee.
+     *
+     * @param Employee $employee
+     * @return Factory|View
+     */
+    public function dashboard(Employee $employee)
+    {
+        $employee->load(
+            'status',
+            'classification',
+            'positions.type',
+            'positions.school',
+            'positions.supervisor',
+            'person.user.adGroups'
+        );
+
+        return view('employee.dashboard', compact('employee'));
     }
 
     /**
@@ -68,6 +88,7 @@ class EmployeeController extends Controller
 
         if ($employee) {
             $employee->searchable();
+
             return redirect()->to('employee/'.$employee->uuid.'/profile');
         }
 
