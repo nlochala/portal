@@ -17,11 +17,11 @@
 </tr>
 <tr>
     <td><strong>Family Name:</strong> {{ $employee->person->family_name }} </td>
-    <td><strong>Employee Status:</strong> {{ $employee->status->name}}</td>
+    <td><strong>Employee Status:</strong> {{ $employee->status->name ?? '--' }}</td>
 </tr>
 <tr>
     <td><strong>Preferred Name:</strong> {{ $employee->person->preferred_name }}</td>
-    <td><strong>Employee Classification:</strong> {{ $employee->classification->name}}</td>
+    <td><strong>Employee Classification:</strong> {{ $employee->classification->name ?? '--' }}</td>
 </tr>
 <tr>
     <td><strong>Nationality:</strong> {{ $employee->person->nationality->name ?? '--' }}</td>

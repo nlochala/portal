@@ -8,7 +8,7 @@
     <span class="badge badge-primary"><i class=""></i> Person ID: {{ $student->person->id }}</span>
     <span class="badge badge-primary"><i class=""></i> Age: {{ $student->person->age }}</span>
     <span class="badge badge-primary"><i class=""></i> Gender: {{ $student->person->gender }}</span>
-    <span style="float: right" class="badge badge-info"><i class=""></i> {{ $student->status->name }}</span>
+    <span style="float: right" class="badge badge-info"><i class=""></i> {{ $student->status->name ?? '--' }}</span>
 </h4>
 
 @include('_tables.new-table',['no_hover' => true, 'class' => 'table-borderless', 'id' => 'info_panel_table', 'table_head' => ['','']])
@@ -22,7 +22,7 @@
 </tr>
 <tr>
     <td><strong>Preferred Name:</strong> {{ $student->person->preferred_name }}</td>
-    <td><strong>Student Type:</strong> {{ $student->status->name}}</td>
+    <td><strong>Student Type:</strong> {{ $student->status->name ?? '--'}}</td>
 </tr>
 <tr>
     <td><strong>Nationality:</strong> {{ $student->person->nationality->name ?? '--' }}</td>

@@ -16,11 +16,11 @@
 </tr>
 <tr>
     <td><strong>Family Name:</strong> {{ $guardian->person->family_name }} </td>
-    <td><strong>Primary Email:</strong> <a href="mailto:{{ $guardian->person->email_primary}}">{{ $guardian->person->email_primary}}</a></td>
+    <td><strong>Primary Email:</strong> <a href="mailto:{{ $guardian->person->email_primary}}">{{ $guardian->person->email_primary ?? '--'}}</a></td>
 </tr>
 <tr>
     <td><strong>Preferred Name:</strong> {{ $guardian->person->preferred_name }}</td>
-    <td><strong>Guardian Type:</strong> {{ $guardian->type->name}}</td>
+    <td><strong>Guardian Type:</strong> {{ $guardian->type->name ?? '--'}}</td>
 </tr>
 <tr>
     <td><strong>Nationality:</strong> {{ $guardian->person->nationality->name ?? '--' }}</td>
