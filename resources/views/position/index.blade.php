@@ -78,8 +78,8 @@
                         data: "supervisor",
                         render: function (data, type, row) {
                             // IF EXPECTING A STRING
-                            if (data == null) {
-                                return '';
+                            if (data == null || data.name === row.name) {
+                                return '--';
                             }
 
                             return data.name;
