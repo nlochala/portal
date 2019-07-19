@@ -26,7 +26,7 @@ class PositionsTableSeeder extends Seeder
             $model->school_id = $position[2];
             $model->position_type_id = $position[3];
             $model->supervisor_position_id = $position[4];
-            $model->stipend = $position[6];
+//            $model->stipend = $position[6];
             $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
