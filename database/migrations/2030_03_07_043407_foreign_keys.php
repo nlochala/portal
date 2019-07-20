@@ -368,6 +368,86 @@ class ForeignKeys extends Migration
             $table->foreign('guardian_type_id')
                 ->references('id')->on('guardian_types');
         });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: CLASSES
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('classes', function (Blueprint $table) {
+            $table->foreign('course_id')
+                ->references('id')->on('courses');
+            $table->foreign('primary_employee_id')
+                ->references('id')->on('employees');
+            $table->foreign('secondary_employee_id')
+                ->references('id')->on('employees');
+            $table->foreign('ta_employee_id')
+                ->references('id')->on('employees');
+            $table->foreign('room_id')
+                ->references('id')->on('rooms');
+            $table->foreign('year_id')
+                ->references('id')->on('years');
+            $table->foreign('class_status_id')
+                ->references('id')->on('class_statuses');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: QUARTERS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('quarters', function (Blueprint $table) {
+            $table->foreign('year_id')
+                ->references('id')->on('years');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: Q1CLASSSTUDENTS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('q1_classes_students_pivot', function (Blueprint $table) {
+            $table->foreign('class_id')
+                ->references('id')->on('classes');
+            $table->foreign('student_id')
+                ->references('id')->on('students');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: Q2CLASSSTUDENTS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('q2_classes_students_pivot', function (Blueprint $table) {
+            $table->foreign('class_id')
+                ->references('id')->on('classes');
+            $table->foreign('student_id')
+                ->references('id')->on('students');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: Q3CLASSSTUDENTS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('q3_classes_students_pivot', function (Blueprint $table) {
+            $table->foreign('class_id')
+                ->references('id')->on('classes');
+            $table->foreign('student_id')
+                ->references('id')->on('students');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: Q4CLASSSTUDENTS
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('q4_classes_students_pivot', function (Blueprint $table) {
+            $table->foreign('class_id')
+                ->references('id')->on('classes');
+            $table->foreign('student_id')
+                ->references('id')->on('students');
+        });
     }
 
     /**

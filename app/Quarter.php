@@ -3,15 +3,20 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class GradeLevel extends PortalBaseModel
+class Quarter extends PortalBaseModel
 {
     use SoftDeletes;
+
+    public static $name = [
+        1 => 'Q1',
+        2 => 'Q2',
+        3 => 'Q3',
+        4 => 'Q4',
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -40,6 +45,8 @@ class GradeLevel extends PortalBaseModel
         return 'uuid';
     }
 
+    protected $casts = ['is_protected' => 'bool'];
+
     /**
      * Add mass-assignment to model.
      *
@@ -47,35 +54,36 @@ class GradeLevel extends PortalBaseModel
      */
     protected $fillable = [
         'uuid',
-        'short_name',
         'name',
         'year_id',
-        'school_id',
+        'start_date',
+        'end_date',
+        'is_protected',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
         'user_updated_ip',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | STATIC METHODS
-    |--------------------------------------------------------------------------
-    */
-
     /**
      * Return a formatted dropdown.
      *
-     * @param null $scope
      * @return array
      */
-    public static function getDropdown($scope = null)
+    public static function getDropdown()
     {
-        if ($scope) {
-            return static::$scope()->get()->pluck('short_name', 'id')->toArray();
-        }
+        return static::$name;
+    }
 
-        return static::all()->pluck('short_name', 'id')->toArray();
+    /**
+     * Get the name of the quarter from the ID.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public static function getName($id)
+    {
+        return static::$name[$id];
     }
 
     /*
@@ -83,6 +91,30 @@ class GradeLevel extends PortalBaseModel
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Return formatted start date.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getStartDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    /**
+     * Return formatted end date.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getEndDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d');
+    }
 
     /**
      * Set created_at to Carbon Object.
@@ -114,16 +146,6 @@ class GradeLevel extends PortalBaseModel
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Current year age levels query scope.
-     *
-     * @param $query
-     */
-    public function scopeCurrent($query)
-    {
-        $query->where('year_id', '=', env('SCHOOL_YEAR_ID'));
-    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -131,39 +153,17 @@ class GradeLevel extends PortalBaseModel
     */
 
     /**
-     *  This grade_level has many students.
+     *  This quarter belongs to a year.
      *
-     * @return HasMany
-     */
-    public function students()
-    {
-        return $this->hasMany('App\Student', 'grade_level_id');
-    }
-
-    /**
-     * This grade_level has a Year.
-     *
-     * @return HasOne
+     * @return BelongsTo
      */
     public function year()
     {
-        // 6 --> this is the key for the relationship on the table defined on 4
-        return $this->hasOne('App\Year', 'id', 'year_id');
+        return $this->belongsTo('App\Year', 'year_id', 'id');
     }
 
     /**
-     * This grade_level has a School.
-     *
-     * @return HasOne
-     */
-    public function school()
-    {
-        // 6 --> this is the key for the relationship on the table defined on 4
-        return $this->hasOne('App\School', 'id', 'school_id');
-    }
-
-    /**
-     *  This grade_level was created by a user.
+     *  This quarter was created by a user.
      *
      * @return BelongsTo
      */
@@ -173,7 +173,7 @@ class GradeLevel extends PortalBaseModel
     }
 
     /**
-     *  This grade_level was updated by a user.
+     *  This quarter was updated by a user.
      *
      * @return BelongsTo
      */

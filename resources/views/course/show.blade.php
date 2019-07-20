@@ -224,7 +224,7 @@
     <!----------------------------------------------------------------------------->
     <!---------------------------New grade_levels[] dropdown----------------------------->
     @include('layouts._forms._input_dropdown_multiple_sm',[
-        'name' => 'grade_levels',
+        'name' => 'grade_levels_scheduling',
         'label' => 'Grade Levels',
         'array' => $grade_level_dropdown,
         'class' => null,
@@ -258,9 +258,12 @@
         jQuery(document).ready(function () {
             $("#course_transcript_type_id").select2({placeholder: "Choose One..."});
             $("#grade_levels").select2({placeholder: "Choose One..."});
-
             $('#grade_levels').val([{{ implode(',', $course->gradeLevels->pluck('id')->toArray()) }}]);
             $('#grade_levels').trigger('change'); // Notify any JS components that the value changed
+
+            $("#grade_levels_scheduling").select2({placeholder: "Choose One..."});
+            $('#grade_levels_scheduling').val([{{ implode(',', $course->gradeLevels->pluck('id')->toArray()) }}]);
+            $('#grade_levels_scheduling').trigger('change'); // Notify any JS components that the value changed
 
                     @include('course._requisites_datatables', ['type' => 'prerequisite'])
                     @include('course._requisites_datatables', ['type' => 'corequisite'])

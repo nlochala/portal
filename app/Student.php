@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Student extends PortalBaseModel
@@ -34,6 +35,7 @@ class Student extends PortalBaseModel
 
         $array = $this->transform($array);
 
+        $array['status'] = $this->status->name;
         $array['display_name'] = $this->person->extendedName();
         $array['grade_level'] = $this->gradeLevel->name;
         $array['email_school'] = $this->person->email_school;
@@ -100,6 +102,16 @@ class Student extends PortalBaseModel
     */
 
     /**
+     * Get this students classes.
+     *
+     * @return mixed
+     */
+    public function getClassesAttribute()
+    {
+        return $this->enrollments->classes;
+    }
+
+    /**
      * return the full name of an employee.
      *
      * @return mixed
@@ -112,13 +124,24 @@ class Student extends PortalBaseModel
     /**
      * return the full name of a student.
      *
-     * @param $value
-     *
      * @return mixed
      */
     public function getLegalFullNameAttribute()
     {
         return $this->person->family_name.', '.$this->person->given_name;
+    }
+
+    /**
+     * return the full name of a student.
+     *
+     * @return mixed
+     */
+    public function getFullNameAttribute()
+    {
+        $first_name = $this->person->preferred_name
+            ?: $this->person->given_name;
+
+        return $this->person->family_name.', '.$first_name;
     }
 
     /**
@@ -189,11 +212,84 @@ class Student extends PortalBaseModel
         $query->whereNotNull('family_id');
     }
 
+    /**
+     * Return the perspective students.
+     *
+     * @param $query
+     */
+    public function scopePerspective($query)
+    {
+        $query->where('student_status_id', '=', 1);
+    }
+
+    /**
+     * Return the incoming students.
+     *
+     * @param $query
+     */
+    public function scopeIncoming($query)
+    {
+        $query->where('student_status_id', '=', 2);
+    }
+
+    /**
+     * Return the current students.
+     *
+     * @param $query
+     */
+    public function scopeCurrent($query)
+    {
+        $query->where('student_status_id', '=', 3);
+    }
+
+    /**
+     * Return the graduated students.
+     *
+     * @param $query
+     */
+    public function scopeGraduated($query)
+    {
+        $query->where('student_status_id', '=', 4);
+    }
+
+    /**
+     * Return the former students.
+     *
+     * @param $query
+     */
+    public function scopeFormer($query)
+    {
+        $query->where('student_status_id', '=', 5);
+    }
+
+    /**
+     * Grade query scope.
+     *
+     * @param $query
+     * @param $grade_short_name
+     */
+    public function scopeGrade($query, $grade_short_name)
+    {
+        $query->whereHas('gradeLevel', static function ($q) use ($grade_short_name) {
+            $q->where('short_name', '=', $grade_short_name);
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This student has many enrollments.
+     *
+     * @return HasMany
+     */
+    public function enrollments()
+    {
+        return $this->hasMany('App\ClassEnrollment', 'student_id');
+    }
 
     /**
      *  This student belongs to a family.

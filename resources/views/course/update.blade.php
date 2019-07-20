@@ -18,7 +18,7 @@
             'page_uri'  => '/course/'.$course->uuid
         ],
         [
-            'page_name' => $course->short_name.' - Edit',
+            'page_name' => 'Edit',
             'page_uri'  => request()->getRequestUri()
         ]
     ]
@@ -54,7 +54,7 @@
     @include('layouts._panels_start_content')
 
     <!-- START FORM----------------------------------------------------------------------------->
-    {!! Form::model($course,['method' => 'PATCH','files' => false, 'id' => 'admin-form','url' => request()->getRequestUri()]) !!}
+    {!! Form::model($course,['method' => 'PATCH','files' => false, 'id' => 'course-form','url' => request()->getRequestUri()]) !!}
     @include('course._course_form', ['type' => 'update'])
     @include('layouts._forms._form_close')
     <!-- END FORM----------------------------------------------------------------------------->
@@ -75,6 +75,14 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
+            $("#course_type_id").select2({ placeholder: "Choose One..." });
+            $("#grade_scale_id").select2({ placeholder: "Choose One..." });
+            $("#department_id").select2({ placeholder: "Choose One..." });
+            $("#course_transcript_type_id").select2({ placeholder: "Choose One..." });
+
+            $("#grade_levels").select2({placeholder: "Choose One..."});
+            $('#grade_levels').val([{{ implode(',', $course->gradeLevels->pluck('id')->toArray()) }}]);
+            $('#grade_levels').trigger('change'); // Notify any JS components that the value changed
         });
     </script>
 @endsection

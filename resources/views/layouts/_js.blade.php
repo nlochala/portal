@@ -19,6 +19,7 @@
 <script src="{{ asset('js/plugins/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('js/datatables_select2.js') }}"></script>
+<script src="{{ asset('js/plugins/multiselect/jquery.multi-select.js') }}"></script>
 
 
 <!-- Algolia -->
@@ -123,6 +124,66 @@
             age--;
         }
         return age;
+    }
+
+    // Return a formatted employee. Must receive an object representing the employee model.
+    function employeeName(employee, last_name_first = true) {
+        let first_name;
+        let name;
+
+        if (employee.person.preferred_name !== null) {
+            first_name  = employee.person.preferred_name;
+        }else{
+            first_name = employee.person.given_name;
+        }
+
+        if (last_name_first) {
+           name = employee.person.family_name+', '+first_name;
+        }else{
+            name = first_name+' '+employee.person.family_name
+        }
+
+        return '<a href="/employee/'+employee.uuid+'">'+name+'</a>';
+    }
+
+    // Return a formatted student. Must receive an object representing the student model.
+    function studentName(student, last_name_first = true) {
+        let first_name;
+        let name;
+
+        if (student.person.preferred_name !== null) {
+            first_name  = student.person.preferred_name;
+        }else{
+            first_name = student.person.given_name;
+        }
+
+        if (last_name_first) {
+            name = student.person.family_name+', '+first_name;
+        }else{
+            name = first_name+' '+student.person.family_name
+        }
+
+        return '<a href="/student/'+student.uuid+'">'+name+'</a>';
+    }
+
+    // Return a formatted guardian. Must receive an object representing the guardian model.
+    function guardianName(guardian, last_name_first = true) {
+        let first_name;
+        let name;
+
+        if (guardian.person.preferred_name !== null) {
+            first_name  = guardian.person.preferred_name;
+        }else{
+            first_name = guardian.person.given_name;
+        }
+
+        if (last_name_first) {
+            name = guardian.person.family_name+', '+first_name;
+        }else{
+            name = first_name+' '+guardian.person.family_name
+        }
+
+        return '<a href="/guardian/'+guardian.uuid+'">'+name+'</a>';
     }
 
     jQuery(document).ready(function () {

@@ -99,11 +99,7 @@ class Year extends PortalBaseModel
      */
     public function isCurrentYear()
     {
-        if ($this->id == env('SCHOOL_YEAR_ID')) {
-            return true;
-        }
-
-        return false;
+        return $this->id === env('SCHOOL_YEAR_ID');
     }
 
     /*
@@ -175,6 +171,16 @@ class Year extends PortalBaseModel
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * current and future years query scope.
+     *
+     * @param $query
+     */
+    public function scopeCurrentFuture($query)
+    {
+        $query->where('id', '>=', env('SCHOOL_YEAR_ID'));
+    }
 
     /*
     |--------------------------------------------------------------------------

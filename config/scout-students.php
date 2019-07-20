@@ -18,6 +18,7 @@ return [
 
     'searchableAttributes' => [
         'uuid',
+        'status',
         'start_date',
         'end_date',
         'grade_level',

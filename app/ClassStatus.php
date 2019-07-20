@@ -6,10 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class GradeLevel extends PortalBaseModel
+class ClassStatus extends PortalBaseModel
 {
     use SoftDeletes;
 
@@ -40,6 +39,8 @@ class GradeLevel extends PortalBaseModel
         return 'uuid';
     }
 
+    protected $casts = ['is_protected' => 'bool'];
+
     /**
      * Add mass-assignment to model.
      *
@@ -47,21 +48,14 @@ class GradeLevel extends PortalBaseModel
      */
     protected $fillable = [
         'uuid',
-        'short_name',
+        'is_protected',
         'name',
-        'year_id',
-        'school_id',
+        'description',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
         'user_updated_ip',
     ];
-
-    /*
-    |--------------------------------------------------------------------------
-    | STATIC METHODS
-    |--------------------------------------------------------------------------
-    */
 
     /**
      * Return a formatted dropdown.
@@ -72,10 +66,10 @@ class GradeLevel extends PortalBaseModel
     public static function getDropdown($scope = null)
     {
         if ($scope) {
-            return static::$scope()->get()->pluck('short_name', 'id')->toArray();
+            return static::$scope()->get()->pluck('name', 'id')->toArray();
         }
 
-        return static::all()->pluck('short_name', 'id')->toArray();
+        return static::all()->pluck('name', 'id')->toArray();
     }
 
     /*
@@ -83,6 +77,16 @@ class GradeLevel extends PortalBaseModel
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This class_status has many classes.
+     *
+     * @return HasMany
+     */
+    public function classes()
+    {
+        return $this->hasMany('App\Class', 'class_status_id');
+    }
 
     /**
      * Set created_at to Carbon Object.
@@ -114,16 +118,6 @@ class GradeLevel extends PortalBaseModel
     |--------------------------------------------------------------------------
     */
 
-    /**
-     * Current year age levels query scope.
-     *
-     * @param $query
-     */
-    public function scopeCurrent($query)
-    {
-        $query->where('year_id', '=', env('SCHOOL_YEAR_ID'));
-    }
-
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -131,39 +125,7 @@ class GradeLevel extends PortalBaseModel
     */
 
     /**
-     *  This grade_level has many students.
-     *
-     * @return HasMany
-     */
-    public function students()
-    {
-        return $this->hasMany('App\Student', 'grade_level_id');
-    }
-
-    /**
-     * This grade_level has a Year.
-     *
-     * @return HasOne
-     */
-    public function year()
-    {
-        // 6 --> this is the key for the relationship on the table defined on 4
-        return $this->hasOne('App\Year', 'id', 'year_id');
-    }
-
-    /**
-     * This grade_level has a School.
-     *
-     * @return HasOne
-     */
-    public function school()
-    {
-        // 6 --> this is the key for the relationship on the table defined on 4
-        return $this->hasOne('App\School', 'id', 'school_id');
-    }
-
-    /**
-     *  This grade_level was created by a user.
+     *  This class_status was created by a user.
      *
      * @return BelongsTo
      */
@@ -173,7 +135,7 @@ class GradeLevel extends PortalBaseModel
     }
 
     /**
-     *  This grade_level was updated by a user.
+     *  This class_status was updated by a user.
      *
      * @return BelongsTo
      */

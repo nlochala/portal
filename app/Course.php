@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -100,10 +101,10 @@ class Course extends PortalBaseModel
     public static function getDropdown($scope = null)
     {
         if ($scope) {
-            return static::$scope()->get()->pluck('name', 'id')->toArray();
+            return static::$scope()->get()->pluck('full_name', 'id')->toArray();
         }
 
-        return static::all()->pluck('name', 'id')->toArray();
+        return static::all()->pluck('full_name', 'id')->toArray();
     }
 
     /*
@@ -247,6 +248,16 @@ class Course extends PortalBaseModel
     */
 
     /**
+     *  This course has many classes.
+     *
+     * @return HasMany
+     */
+    public function classes()
+    {
+        return $this->hasMany('App\CourseClass', 'course_id');
+    }
+
+    /**
      * Many courses belongs to many courses.
      *
      * @return BelongsToMany
@@ -363,5 +374,30 @@ class Course extends PortalBaseModel
     public function updatedBy()
     {
         return $this->belongsTo('App\User', 'user_updated_id', 'id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | HELPERS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * @return bool|array
+     */
+    public function getEnrollmentLists()
+    {
+        $options = [];
+
+        if ($this->gradeLevels->isEmpty()) {
+            return false;
+        }
+
+        foreach ($this->gradeLevels as $grade) {
+            $options[$grade->name] =
+                $grade->students()->current()->with('person')->get()->pluck('full_name', 'id')->toArray();
+        }
+
+        return $options;
     }
 }

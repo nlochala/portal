@@ -57,6 +57,16 @@ class Room extends PortalBaseModel
         'user_updated_ip',
     ];
 
+    /**
+     * Return a formatted dropdown.
+     *
+     * @return array
+     */
+    public static function getDropdown()
+    {
+        return static::all()->pluck('buildingNumber', 'id')->toArray();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
@@ -70,9 +80,9 @@ class Room extends PortalBaseModel
      *
      * @return mixed
      */
-    public function getBuildingNumberAttribute($value)
+    public function getBuildingNumberAttribute()
     {
-        return $this->building->short_name."-$value";
+        return $this->building->short_name."-$this->number";
     }
 
     /**

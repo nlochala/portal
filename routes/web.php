@@ -21,27 +21,6 @@ Route::post('api/store_file', 'MediaController@store');
 
 /*
 |--------------------------------------------------------------------------
-| STAFF
-|--------------------------------------------------------------------------
-*/
-Route::get('employee/lookup', 'EmployeeController@lookup');
-
-/*
-|--------------------------------------------------------------------------
-| PARENTS
-|--------------------------------------------------------------------------
-*/
-//Route::get('parent/lookup', 'ParentController@lookup');
-
-/*
-|--------------------------------------------------------------------------
-| STUDENTS
-|--------------------------------------------------------------------------
-*/
-//Route::get('student/lookup', 'StudentController@lookup');
-
-/*
-|--------------------------------------------------------------------------
 | ADDRESS
 |--------------------------------------------------------------------------
 */
@@ -309,9 +288,14 @@ Route::get('position/{position}/archive', 'PositionController@archive');
 | SCHOOL YEAR
 |--------------------------------------------------------------------------
 */
+//Year
 Route::get('year/index', 'YearController@index');
 Route::get('api/year/ajaxshowyear', 'YearAjaxController@ajaxShow');
 Route::post('api/year/ajaxstoreyear', 'YearAjaxController@ajaxStore');
+//Quarter
+Route::get('quarter/index', 'QuarterController@index');
+Route::get('api/quarter/ajaxshowquarter', 'QuarterAjaxController@ajaxShow');
+Route::post('api/quarter/ajaxstorequarter', 'QuarterAjaxController@ajaxStore');
 
 /*
 |--------------------------------------------------------------------------
@@ -358,7 +342,6 @@ Route::get('room_type/index', 'RoomTypeController@index');
 Route::get('api/room_type/ajaxshowroom_type', 'RoomTypeAjaxController@ajaxShow');
 Route::post('api/room_type/ajaxstoreroom_type', 'RoomTypeAjaxController@ajaxStore');
 
-
 /*
 |--------------------------------------------------------------------------
 | GRADE SCALES
@@ -374,6 +357,26 @@ Route::get('api/grade_scale/{grade_scale}/percentage/ajaxshowitem', 'GradeScaleP
 Route::get('api/grade_scale/{grade_scale}/standards/ajaxshowitem', 'GradeScaleStandardsAjaxController@ajaxShow');
 Route::post('api/grade_scale/{grade_scale}/percentage/ajaxstoreitem', 'GradeScalePercentageAjaxController@ajaxStore');
 Route::post('api/grade_scale/{grade_scale}/standards/ajaxstoreitem', 'GradeScaleStandardsAjaxController@ajaxStore');
+
+/*
+|--------------------------------------------------------------------------
+| CLASSES
+|--------------------------------------------------------------------------
+*/
+Route::get('class/index', 'ClassController@index');
+Route::post('class/index', 'ClassController@store');
+Route::get('class/{class}', 'ClassController@show');
+Route::patch('class/{class}', 'ClassController@storeUpdateShow');
+Route::get('class/{class}/audits', 'ClassController@showAudits');
+//Edit Overview
+Route::get('class/{class}/edit_overview', 'ClassController@update');
+Route::patch('class/{class}/edit_overview', 'ClassController@storeUpdate');
+//Edit Enrollment
+Route::get('class/{class}/edit_enrollment', 'ClassEnrollmentController@enrollment');
+Route::patch('class/{class}/edit_enrollment', 'ClassEnrollmentController@storeEnrollment');
+//AJAX
+Route::post('api/class/ajaxstoreclass', 'ClassAjaxController@ajaxStore');
+Route::get('api/class/ajaxshowclass', 'ClassAjaxController@ajaxShow');
 
 /*
 |--------------------------------------------------------------------------
@@ -404,4 +407,3 @@ Route::get('api/course/{course}/ajaxshowcorequisite', 'CourseCorequisiteAjaxCont
 
 Route::post('api/course/{course}/ajaxstoreequivalent', 'CourseEquivalentAjaxController@ajaxStore');
 Route::get('api/course/{course}/ajaxshowequivalent', 'CourseEquivalentAjaxController@ajaxShow');
-
