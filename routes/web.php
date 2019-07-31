@@ -372,7 +372,7 @@ Route::get('class/{class}/audits', 'ClassController@showAudits');
 Route::get('class/{class}/edit_overview', 'ClassController@update');
 Route::patch('class/{class}/edit_overview', 'ClassController@storeUpdate');
 //Edit Enrollment
-Route::get('class/{class}/edit_enrollment', 'ClassEnrollmentController@enrollment');
+Route::get('class/{class}/edit_enrollment/{filter?}', 'ClassEnrollmentController@enrollment');
 Route::patch('class/{class}/edit_enrollment', 'ClassEnrollmentController@storeEnrollment');
 //AJAX
 Route::post('api/class/ajaxstoreclass', 'ClassAjaxController@ajaxStore');

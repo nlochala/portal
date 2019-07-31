@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -241,6 +242,38 @@ class Course extends PortalBaseModel
         $query->where('is_active', false);
     }
 
+    /**
+     * Show all homeroom courses.
+     *
+     * @param $query
+     */
+    public function scopeHomeroom($query)
+    {
+        $query->where('course_type_id', 2)
+            ->orWhere('department_id', 9);
+    }
+
+    /**
+     * gradeLevel query scope.
+     *
+     * @param $query
+     * @param $grades
+     */
+    public function scopeGradeLevel($query, $grades)
+    {
+        if (is_int($grades)) {
+            $grades = [$grades];
+        }
+
+        if ($grades instanceof Collection) {
+            $grades = $grades->pluck('id')->toArray();
+        }
+
+        $query->whereHas('gradeLevels', function ($q) use ($grades) {
+            $q->whereIn('grade_level_id', $grades);
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
@@ -383,19 +416,38 @@ class Course extends PortalBaseModel
     */
 
     /**
+     * @param $filter
      * @return bool|array
      */
-    public function getEnrollmentLists()
+    public function getEnrollmentLists($filter)
     {
         $options = [];
 
-        if ($this->gradeLevels->isEmpty()) {
+        if ($filter === 'homeroom') {
+            if ($this->gradeLevels->isEmpty()) {
+                return false;
+            }
+
+            $courses = Course::gradeLevel($this->gradeLevels)
+                ->active()
+                ->homeroom()
+                ->with(
+                    'classes.q1students.person',
+                    'classes.q2students.person',
+                    'classes.q3students.person',
+                    'classes.q4students.person'
+                )->get();
+        }
+
+        /* @noinspection PhpVariableVariableInspection */
+        if ($this->$filter->isEmpty()) {
             return false;
         }
 
-        foreach ($this->gradeLevels as $grade) {
-            $options[$grade->name] =
-                $grade->students()->current()->with('person')->get()->pluck('full_name', 'id')->toArray();
+        /* @noinspection PhpVariableVariableInspection */
+        foreach ($this->$filter as $subitem) {
+            $options[$subitem->short_name] =
+                $subitem->students()->current()->with('person')->get()->pluck('full_name', 'id')->toArray();
         }
 
         return $options;

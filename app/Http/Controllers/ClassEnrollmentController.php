@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CourseClass;
+use App\Quarter;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
@@ -12,9 +13,10 @@ class ClassEnrollmentController extends ClassController
      * Display the enrollment form.
      *
      * @param CourseClass $class
+     * @param string $filter
      * @return Factory|View
      */
-    public function enrollment(CourseClass $class)
+    public function enrollment(CourseClass $class, $filter = 'gradeLevels')
     {
         $class->load(
             'course',
@@ -38,9 +40,15 @@ class ClassEnrollmentController extends ClassController
             'status'
         );
 
-        $enrollment_lists = $class->course->getEnrollmentLists();
+        $enrollment_lists = $class->course->getEnrollmentLists($filter);
         $enrollment = $class->q1Students;
+        $quarter_dropdown = Quarter::getDropdown();
 
-        return view('class.edit_enrollment', compact('class', 'enrollment_lists', 'enrollment'));
+        return view('class.edit_enrollment', compact('class', 'enrollment_lists', 'enrollment', 'quarter_dropdown'));
+    }
+
+    public function storeEnrollment()
+    {
+
     }
 }

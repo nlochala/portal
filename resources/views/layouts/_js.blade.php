@@ -20,6 +20,7 @@
 <script src="{{ asset('js/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('js/datatables_select2.js') }}"></script>
 <script src="{{ asset('js/plugins/multiselect/jquery.multi-select.js') }}"></script>
+<script src="{{ asset('js/plugins/multiselect/jquery.quicksearch.js') }}"></script>
 
 
 <!-- Algolia -->

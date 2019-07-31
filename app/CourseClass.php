@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -84,6 +85,18 @@ class CourseClass extends PortalBaseModel
     public function getFullNameAttribute()
     {
         return $this->course->short_name.': '.$this->name;
+    }
+
+    public function getStudentsAttribute()
+    {
+        $students = new Collection();
+
+        $q1 = $this->q1Students()->with('q1Students.person')->get();
+        $q2 = $this->q2Students()->with('q2Students.person')->get();
+        $q3 = $this->q3Students()->with('q3Students.person')->get();
+        $q4 = $this->q4Students()->with('q4Students.person')->get();
+
+        $students->merge([$q1, $q2, $q3, $q4]);
     }
 
     /**
