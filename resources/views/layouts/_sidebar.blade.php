@@ -86,15 +86,19 @@
 'submenu_array' =>
     [
         [
-            'title' => 'Index',
+            'title' => 'Years',
             'uri'   => '/year/index'
+        ],
+        [
+            'title' => 'Quarters',
+            'uri'   => '/quarter/index'
         ],
     ]
 ])
 @include('layouts._sidebar_heading', ['header' => 'Academics'])
 @include('layouts._sidebar_menu_nested_submenu', [
 'section_title' => 'Courses',
-'section_icon' => 'fa fa-chalkboard-teacher',
+'section_icon' => 'fa fa-book-reader',
 'submenu_array' =>
     [
  //       [
@@ -104,6 +108,21 @@
         [
             'title' => 'Index',
             'uri'   => '/course/index'
+        ],
+    ]
+])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Classes',
+'section_icon' => 'fa fa-chalkboard-teacher',
+'submenu_array' =>
+    [
+ //       [
+ //           'title' => 'Dashboard',
+ //           'uri'   => '/course/dashboard'
+ //       ],
+        [
+            'title' => 'Index',
+            'uri'   => '/class/index'
         ],
     ]
 ])

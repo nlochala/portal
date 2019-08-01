@@ -78,9 +78,11 @@
         jQuery(document).ready(function () {
             $("#course_type_id").select2({ placeholder: "Choose One..." });
             $("#grade_scale_id").select2({ placeholder: "Choose One..." });
-            $("#year_id").select2({ placeholder: "Choose One..." });
             $("#department_id").select2({ placeholder: "Choose One..." });
             $("#course_transcript_type_id").select2({ placeholder: "Choose One..." });
+
+            $("#grade_levels").select2({placeholder: "Choose One..."});
+            $('#grade_levels').trigger('change'); // Notify any JS components that the value changed
 
             var tablecourse = $('#course_table').DataTable({
                 dom: "Bfrtip",

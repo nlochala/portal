@@ -124,11 +124,14 @@ class Employee extends PortalBaseModel
     /**
      * Return a formatted dropdown.
      *
+     * @param bool $with_preferred
      * @return array
      */
-    public static function getDropdown()
+    public static function getDropdown($with_preferred = true)
     {
-        return static::with('person')->get()->pluck('legal_full_name', 'id');
+        return $with_preferred
+            ? static::with('person')->get()->pluck('full_name', 'id')
+            : static::with('person')->get()->pluck('legal_full_name', 'id');
     }
 
     /*
@@ -139,6 +142,16 @@ class Employee extends PortalBaseModel
 
     /**
      * return the full name of an employee.
+     *
+     * @return mixed
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->person->fullName(true);
+    }
+
+    /**
+     * return the legal full name of an employee.
      *
      * @return mixed
      */

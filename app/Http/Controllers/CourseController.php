@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Quarter;
 use App\Year;
 use App\Course;
 use App\CourseType;
@@ -35,22 +36,22 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::getDropdown('current');
         $grade_levels = GradeLevel::getDropdown('current');
         $course_types = CourseType::getDropdown();
         $transcript_types = CourseTranscriptType::getDropdown();
         $grade_scales = GradeScale::getDropdown();
         $departments = Department::getDropdown();
-        $years = Year::getDropdown();
+        $year_dropdown = Year::getDropdown();
+        $grade_level_dropdown = GradeLevel::getDropdown('current');
 
         return view('course.index', compact(
-            'courses',
             'grade_levels',
             'course_types',
             'transcript_types',
             'grade_scales',
             'departments',
-            'years'
+            'year_dropdown',
+            'grade_level_dropdown'
         ));
     }
 
@@ -64,7 +65,16 @@ class CourseController extends Controller
         $values = Helpers::dbAddAudit(request()->all());
         $values['short_name'] = strtoupper($values['short_name']);
         $course = Course::create($values);
-        Helpers::flash($course, 'course', 'created');
+        if (! $course->gradeLevels()->sync($values['grade_levels'])) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not save grade levels. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back();
+        }
+        unset($values['grade_levels']);
+        Helpers::flash($course, 'course');
 
         if ($course) {
             return redirect()->to('course/'.$course->uuid);
@@ -89,10 +99,19 @@ class CourseController extends Controller
         $transcript_types = CourseTranscriptType::getDropdown();
         $grade_scales = GradeScale::getDropdown();
         $departments = Department::getDropdown();
-        $years = Year::getDropdown();
+        $year_dropdown = Year::getDropdown();
+
+        $quarter = Quarter::now();
+        $relationship = $quarter->getClassRelationship();
+        $quarter_name = $quarter->name;
 
         $course->load(
             'year',
+            'classes.room.building',
+            'classes.primaryEmployee.person',
+            'classes.secondaryEmployee.person',
+            'classes.taEmployee.person',
+            'classes.'.$relationship,
             'prerequisites',
             'corequisites',
             'equivalents',
@@ -118,7 +137,8 @@ class CourseController extends Controller
             'transcript_types',
             'grade_scales',
             'departments',
-            'years'
+            'year_dropdown',
+            'relationship',
         ));
     }
 
@@ -180,7 +200,8 @@ class CourseController extends Controller
     {
         $values = Helpers::dbAddAudit(request()->all());
 
-        if (! $course->gradeLevels()->sync($values['grade_levels'])) {
+        if (! isset($values['grade_levels_scheduling']) ||
+            ! $course->gradeLevels()->sync($values['grade_levels_scheduling'])) {
             Helpers::flashAlert(
                 'danger',
                 'Could not save grade levels. Please try again.',
@@ -189,7 +210,7 @@ class CourseController extends Controller
             return redirect()->back();
         }
 
-        unset($values['grade_levels']);
+        unset($values['grade_levels_scheduling']);
         Helpers::flash($course->update($values), 'scheduling options', 'update');
 
         return redirect()->back();
@@ -224,7 +245,8 @@ class CourseController extends Controller
         $transcript_types = CourseTranscriptType::getDropdown();
         $grade_scales = GradeScale::getDropdown();
         $departments = Department::getDropdown();
-        $years = Year::getDropdown();
+        $year_dropdown = Year::getDropdown();
+        $grade_level_dropdown = GradeLevel::getDropdown('current');
 
         return view('course.update', compact(
             'course',
@@ -232,7 +254,8 @@ class CourseController extends Controller
             'transcript_types',
             'grade_scales',
             'departments',
-            'years'
+            'year_dropdown',
+            'grade_level_dropdown'
         ));
     }
 
@@ -246,6 +269,17 @@ class CourseController extends Controller
     {
         $values = request()->all();
         $values['short_name'] = strtoupper($values['short_name']);
+
+        if (! $course->gradeLevels()->sync($values['grade_levels'])) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not save grade levels. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back();
+        }
+        unset($values['grade_levels']);
+
         $course = Helpers::dbAddAudit($course);
         Helpers::flash($course->update($values), 'course', 'updated');
 
@@ -262,6 +296,15 @@ class CourseController extends Controller
     {
         $values = request()->all();
         $values['short_name'] = strtoupper($values['short_name']);
+        if (! $course->gradeLevels()->sync($values['grade_levels'])) {
+            Helpers::flashAlert(
+                'danger',
+                'Could not save grade levels. Please try again.',
+                'fa fa-info-circle mr-1');
+
+            return redirect()->back();
+        }
+        unset($values['grade_levels']);
         $course = Helpers::dbAddAudit($course);
         Helpers::flash($course->update($values), 'course', 'updated');
 

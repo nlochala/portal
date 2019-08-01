@@ -4,8 +4,10 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -26,7 +28,7 @@ class Course extends PortalBaseModel
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -100,10 +102,10 @@ class Course extends PortalBaseModel
     public static function getDropdown($scope = null)
     {
         if ($scope) {
-            return static::$scope()->get()->pluck('name', 'id')->toArray();
+            return static::$scope()->get()->pluck('full_name', 'id')->toArray();
         }
 
-        return static::all()->pluck('name', 'id')->toArray();
+        return static::all()->pluck('full_name', 'id')->toArray();
     }
 
     /*
@@ -167,7 +169,7 @@ class Course extends PortalBaseModel
      */
     public function getShortNameUrlAttribute()
     {
-        return '<a href="'.url('course/'.$this->uuid).'">'.$this->short_name.'</a>';
+        return '<a href="' . url('course/' . $this->uuid) . '">' . $this->short_name . '</a>';
     }
 
     /**
@@ -177,7 +179,7 @@ class Course extends PortalBaseModel
      */
     public function getFullNameAttribute()
     {
-        return $this->short_name.' - '.$this->name;
+        return $this->short_name . ' - ' . $this->name;
     }
 
     /**
@@ -240,11 +242,53 @@ class Course extends PortalBaseModel
         $query->where('is_active', false);
     }
 
+    /**
+     * Show all homeroom courses.
+     *
+     * @param $query
+     */
+    public function scopeHomeroom($query)
+    {
+        $query->where('course_type_id', 2)
+            ->orWhere('department_id', 9);
+    }
+
+    /**
+     * gradeLevel query scope.
+     *
+     * @param $query
+     * @param $grades
+     */
+    public function scopeGradeLevel($query, $grades)
+    {
+        if (is_int($grades)) {
+            $grades = [$grades];
+        }
+
+        if ($grades instanceof Collection) {
+            $grades = $grades->pluck('id')->toArray();
+        }
+
+        $query->whereHas('gradeLevels', function ($q) use ($grades) {
+            $q->whereIn('grade_level_id', $grades);
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This course has many classes.
+     *
+     * @return HasMany
+     */
+    public function classes()
+    {
+        return $this->hasMany('App\CourseClass', 'course_id');
+    }
 
     /**
      * Many courses belongs to many courses.
@@ -363,5 +407,59 @@ class Course extends PortalBaseModel
     public function updatedBy()
     {
         return $this->belongsTo('App\User', 'user_updated_id', 'id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | HELPERS
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * @param $filter
+     * @return bool|array
+     */
+    public function getEnrollmentLists($filter)
+    {
+        $options = [];
+
+        if ($filter === 'homeroom') {
+            if ($this->gradeLevels->isEmpty()) {
+                return false;
+            }
+
+            $courses = Course::gradeLevel($this->gradeLevels)
+                ->active()
+                ->homeroom()
+                ->with(
+                    'classes.q1students.person',
+                    'classes.q2students.person',
+                    'classes.q3students.person',
+                    'classes.q4students.person'
+                )->get();
+
+            foreach ($courses as $course) {
+                foreach ($course->classes as $class) {
+                    $relationship = Quarter::now()->getClassRelationship();
+                    $options[$class->fullName()] =
+                        $class->$relationship()->current()->with('person')->get()->pluck('full_name', 'id')->toArray();
+                }
+            }
+
+            return $options;
+        }
+
+        /* @noinspection PhpVariableVariableInspection */
+        if ($this->$filter->isEmpty()) {
+            return false;
+        }
+
+        /* @noinspection PhpVariableVariableInspection */
+        foreach ($this->$filter as $subitem) {
+            $options[$subitem->name] =
+                $subitem->students()->current()->with('person')->get()->pluck('full_name', 'id')->toArray();
+        }
+
+        return $options;
     }
 }

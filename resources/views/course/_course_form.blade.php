@@ -1,23 +1,21 @@
 <!----------------------------------------------------------------------------->
 <!---------------------------New year_id dropdown----------------------------->
 @if(isset($type) && $type == 'update')
-    @include('layouts._forms._input_dropdown',[
+    @include('layouts._forms._input_radio',[
         'name' => 'year_id',
         'label' => 'School Year',
-        'array' => $years,
-        'class' => null,
+        'array' => $year_dropdown,
         'selected' => null,
         'required' => true
-      ])
+    ])
 @else
-    @include('layouts._forms._input_dropdown',[
+    @include('layouts._forms._input_radio',[
         'name' => 'year_id',
         'label' => 'School Year',
-        'array' => $years,
-        'class' => null,
+        'array' => $year_dropdown,
         'selected' => env('SCHOOL_YEAR_ID'),
         'required' => true
-      ])
+    ])
 @endif
 <!----------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------->
@@ -27,6 +25,18 @@
     'name' => 'department_id',
     'label' => 'Department',
     'array' => $departments,
+    'class' => null,
+    'selected' => null,
+    'required' => true
+  ])
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<!---------------------------New grade_levels[] dropdown----------------------------->
+@include('layouts._forms._input_dropdown_multiple',[
+    'name' => 'grade_levels',
+    'label' => 'Grade Levels',
+    'array' => $grade_level_dropdown,
     'class' => null,
     'selected' => null,
     'required' => true

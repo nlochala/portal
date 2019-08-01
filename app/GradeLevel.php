@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class GradeLevel extends PortalBaseModel
 {
@@ -77,6 +79,10 @@ class GradeLevel extends PortalBaseModel
         return static::all()->pluck('short_name', 'id')->toArray();
     }
 
+    public static function getHomerooms()
+    {
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
@@ -128,6 +134,27 @@ class GradeLevel extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Many grade_levels belongs to many courses.
+     *
+     * @return BelongsToMany
+     */
+    public function courses()
+    {
+        // belongsToMany('class','pivot_table','current_models_id','foreign_id')->withTimestamps()
+        return $this->belongsToMany('App\Course', 'courses_grade_levels_pivot', 'grade_level_id', 'course_id')->withTimestamps();
+    }
+
+    /**
+     *  This grade_level has many students.
+     *
+     * @return HasMany
+     */
+    public function students()
+    {
+        return $this->hasMany('App\Student', 'grade_level_id');
+    }
 
     /**
      * This grade_level has a Year.

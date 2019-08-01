@@ -24,7 +24,7 @@ class StoreCourseSchedulingRequest extends FormRequest
     public function rules()
     {
         return [
-            'grade_levels' => 'required',
+            'grade_levels_scheduling' => 'required',
             'max_class_size' => 'required',
         ];
     }

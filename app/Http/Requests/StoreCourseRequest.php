@@ -32,6 +32,7 @@ class StoreCourseRequest extends FormRequest
             'course_type_id' => 'required',
             'grade_scale_id' => 'required',
             'course_transcript_type_id' => 'required',
+            'grade_levels' => 'required',
         ];
     }
 

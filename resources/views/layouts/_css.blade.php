@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="{{ asset('js/plugins/filepond/filepond-plugin-image-preview/filepond-plugin-image-preview.css') }}">
 <link rel="stylesheet" href="{{ asset('js/plugins/summernote/summernote-bs4.css') }}">
 <link rel="stylesheet" href="{{ asset('js/plugins/algolia/searchbar.css') }}">
+<link rel="stylesheet" href="{{ asset('js/plugins/multiselect/multi-select.css') }}">
 
 
 <link rel="stylesheet" id="css-main" href="{{ asset('css/fonts.css') }}">
