@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\CourseClass;
 use App\Quarter;
-use Illuminate\Contracts\View\Factory;
+use App\CourseClass;
+use App\Helpers\Helpers;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
 
 class ClassEnrollmentController extends ClassController
 {
@@ -41,14 +43,69 @@ class ClassEnrollmentController extends ClassController
         );
 
         $enrollment_lists = $class->course->getEnrollmentLists($filter);
-        $enrollment = $class->q1Students;
-        $quarter_dropdown = Quarter::getDropdown();
+        $q1Enrollment = $class->q1Students->pluck('id')->toArray();
+        $q2Enrollment = $class->q2Students->pluck('id')->toArray();
+        $q3Enrollment = $class->q3Students->pluck('id')->toArray();
+        $q4Enrollment = $class->q4Students->pluck('id')->toArray();
+        $quarter_dropdown = Quarter::getDropdown('current');
 
-        return view('class.edit_enrollment', compact('class', 'enrollment_lists', 'enrollment', 'quarter_dropdown'));
+        $quarters = Quarter::current()->get();
+
+        $view = $class->students->count() ? 'class.edit_enrollment' : 'class.new_enrollment';
+
+        return view($view, compact(
+            'class',
+            'enrollment_lists',
+            'q1Enrollment',
+            'q2Enrollment',
+            'q3Enrollment',
+            'q4Enrollment',
+            'quarter_dropdown',
+            'quarters'
+        ));
     }
 
-    public function storeEnrollment()
+    /**
+     * Save the initial enrollment changes.
+     *
+     * @param CourseClass $class
+     * @return RedirectResponse
+     */
+    public function storeEnrollment(CourseClass $class)
     {
+        $values = request()->all();
 
+        if (! isset($values['students'])) {
+            $values['students'] = [];
+        }
+
+        foreach ($values['quarters'] as $quarter) {
+            $relationship = Quarter::find($quarter)->getClassRelationship();
+            Helpers::flash($class->$relationship()->sync($values['students']), 'enrollment', 'updated');
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Update the individual quarter enrollments.
+     *
+     * @param CourseClass $class
+     * @param $filter
+     * @param Quarter $quarter
+     * @return RedirectResponse
+     */
+    public function updateEnrollment(CourseClass $class, $filter, Quarter $quarter)
+    {
+        $values = request()->all();
+
+        if (! isset($values['students'])) {
+            $values['students'] = [];
+        }
+
+        $relationship = $quarter->getClassRelationship();
+        Helpers::flash($class->$relationship()->sync($values['students']), 'enrollment', 'updated');
+
+        return redirect()->back();
     }
 }

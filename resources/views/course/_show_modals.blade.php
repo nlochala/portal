@@ -4,7 +4,29 @@
     'title' => 'Associated Classes'
 ])
 
-<!-- TABLE OF CLASSES -->@include('_tables.new-table',['id' => 'classes_table', 'table_head' => ['ID', 'Name', 'Age Level', 'Enrolled', 'Teacher', 'Actions']])
+<!-- TABLE OF CLASSES -->
+@if($course->classes->isEmpty())
+    <small><em>Nothing to Display</em></small>
+@else
+    @include('_tables.new-table',['id' => 'classes-table', 'table_head' => ['ID','Name','Room Assignment','Teachers','Enrolled','Actions']])
+    @foreach($course->classes as $class)
+        <tr>
+            <td>{{ $class->id }}</td>
+            <td>{!! $class->fullName(true) !!}</td>
+            <td>{{ $class->room->buildingNumber.' - '.$class->room->description }}</td>
+            <td>{!! $class->getTeachers() !!}</td>
+            <td>{{ $class->$relationship()->count() }} / {{ $course->max_class_size ?? '18' }}</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-outline-info" data-toggle="tooltip" title="View Details"
+                        onclick="window.location.href='/class/{{ $class->uuid }}'">
+                    <i class="si si-magnifier"></i>
+                </button>
+            </td>
+        </tr>
+    @endforeach
+    @include('_tables.end-new-table')
+@endif
+
 @include('_tables.end-new-table')
 
 @include('layouts._modal_panel_end')

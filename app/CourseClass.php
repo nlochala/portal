@@ -3,8 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -71,6 +71,42 @@ class CourseClass extends PortalBaseModel
         'user_updated_ip',
     ];
 
+    /**
+     * Generate the full name with the choice of a url.
+     *
+     * @param bool $include_url
+     * @return string
+     */
+    public function fullName($include_url = false)
+    {
+        return $include_url
+            ? '<a href="/course/'.$this->course->uuid.'">'.$this->course->short_name.'</a>: '.$this->name
+            : $this->full_name;
+    }
+
+    /**
+     * Display the teachers of a given class.
+     *
+     * @param bool $display_inline
+     * @return string
+     */
+    public function getTeachers($display_inline = false)
+    {
+        $break = $display_inline ? ' | ' : '<br />';
+        $teachers = '';
+        $teachers .= '<strong>Primary Teacher: </strong><a href="/employee/'.$this->primaryEmployee->uuid.'">'.$this->primaryEmployee->full_name.'</a>';
+
+        if ($this->secondaryEmployee) {
+            $teachers .= $break.'<strong>Secondary Teacher: </strong><a href="/employee/'.$this->secondaryEmployee->uuid.'">'.$this->secondaryEmployee->full_name.'</a>';
+        }
+
+        if ($this->taEmployee) {
+            $teachers .= $break.'<strong>Assistant Teacher: </strong><a href="/employee/'.$this->taEmployee->uuid.'">'.$this->taEmployee->full_name.'</a>';
+        }
+
+        return $teachers;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
@@ -87,16 +123,28 @@ class CourseClass extends PortalBaseModel
         return $this->course->short_name.': '.$this->name;
     }
 
+    /**
+     * Get a list of all the students that are enrolled in a class, regardless of quarter.
+     *
+     * @return mixed
+     */
     public function getStudentsAttribute()
     {
         $students = new Collection();
 
-        $q1 = $this->q1Students()->with('q1Students.person')->get();
-        $q2 = $this->q2Students()->with('q2Students.person')->get();
-        $q3 = $this->q3Students()->with('q3Students.person')->get();
-        $q4 = $this->q4Students()->with('q4Students.person')->get();
+        $q1 = $this->q1Students()->with('person')->get();
+        $merged = $students->merge($q1);
 
-        $students->merge([$q1, $q2, $q3, $q4]);
+        $q2 = $this->q2Students()->with('person')->get();
+        $merged = $merged->merge($q2);
+
+        $q3 = $this->q3Students()->with('person')->get();
+        $merged = $merged->merge($q3);
+
+        $q4 = $this->q4Students()->with('person')->get();
+        $merged = $merged->merge($q4);
+
+        return $merged->unique('id');
     }
 
     /**

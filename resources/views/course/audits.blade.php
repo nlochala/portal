@@ -61,11 +61,17 @@
         <tr>
             <td>{{ $meta['audit_id']  }}</td>
             <td>{{ $meta['audit_event']  }}</td>
-            <td>{{ $meta['user_display_name'] }} ({{ $meta['user_username']  }})</td>
+            <td>{{ $meta['user_display_name'] }} ({{ $meta['user_username'] }})</td>
             <td>{{ $meta['audit_created_at'] }}</td>
             <td>
                 @foreach($modified as $change => $value)
-                    The field, <strong>{{ $change }}</strong> went from <strong>{{ var_export($value['old']) }}</strong>
+                    The field, <strong>{{ $change }}</strong> went from <strong>
+                        @if(isset($value['old']))
+                            {{ var_export($value['old']) }}
+                        @else
+                            <em>[blank]</em>
+                        @endif
+                    </strong>
                     --> <strong>{{ var_export($value['new']) }}</strong>. <br/>
                 @endforeach
             </td>

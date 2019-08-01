@@ -40,7 +40,7 @@ h.item
 
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_item', [
-    'url' => 'class/' . $class->uuid . '/edit_enrollment',
+    'url' => 'class/' . $class->uuid . '/edit_enrollment/gradeLevels',
     'icon' => 'fa fa-user-graduate',
     'title' => 'Enrollment',
     'badge_number' => null,
@@ -48,14 +48,14 @@ h.item
 ])
 @include('layouts._horizontal_menu_item_end')
 
-@include('layouts._horizontal_menu_item_start')
-@include('layouts._horizontal_menu_item', [
-    'url' => 'class/' . $class->uuid . '/edit_gradebook',
-    'icon' => 'fa fa-address-book',
-    'title' => 'Gradebook',
-    'badge_number' => null,
-    'badge_color' => null
-])
-@include('layouts._horizontal_menu_item_end')
+{{--@include('layouts._horizontal_menu_item_start')--}}
+{{--@include('layouts._horizontal_menu_item', [--}}
+{{--    'url' => 'class/' . $class->uuid . '/edit_gradebook',--}}
+{{--    'icon' => 'fa fa-address-book',--}}
+{{--    'title' => 'Gradebook',--}}
+{{--    'badge_number' => null,--}}
+{{--    'badge_color' => null--}}
+{{--])--}}
+{{--@include('layouts._horizontal_menu_item_end')--}}
 @include('.layouts._horizontal_menu_end')
 

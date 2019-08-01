@@ -28,7 +28,7 @@ class Course extends PortalBaseModel
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -169,7 +169,7 @@ class Course extends PortalBaseModel
      */
     public function getShortNameUrlAttribute()
     {
-        return '<a href="'.url('course/'.$this->uuid).'">'.$this->short_name.'</a>';
+        return '<a href="' . url('course/' . $this->uuid) . '">' . $this->short_name . '</a>';
     }
 
     /**
@@ -179,7 +179,7 @@ class Course extends PortalBaseModel
      */
     public function getFullNameAttribute()
     {
-        return $this->short_name.' - '.$this->name;
+        return $this->short_name . ' - ' . $this->name;
     }
 
     /**
@@ -437,6 +437,16 @@ class Course extends PortalBaseModel
                     'classes.q3students.person',
                     'classes.q4students.person'
                 )->get();
+
+            foreach ($courses as $course) {
+                foreach ($course->classes as $class) {
+                    $relationship = Quarter::now()->getClassRelationship();
+                    $options[$class->fullName()] =
+                        $class->$relationship()->current()->with('person')->get()->pluck('full_name', 'id')->toArray();
+                }
+            }
+
+            return $options;
         }
 
         /* @noinspection PhpVariableVariableInspection */
@@ -446,7 +456,7 @@ class Course extends PortalBaseModel
 
         /* @noinspection PhpVariableVariableInspection */
         foreach ($this->$filter as $subitem) {
-            $options[$subitem->short_name] =
+            $options[$subitem->name] =
                 $subitem->students()->current()->with('person')->get()->pluck('full_name', 'id')->toArray();
         }
 

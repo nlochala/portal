@@ -372,8 +372,9 @@ Route::get('class/{class}/audits', 'ClassController@showAudits');
 Route::get('class/{class}/edit_overview', 'ClassController@update');
 Route::patch('class/{class}/edit_overview', 'ClassController@storeUpdate');
 //Edit Enrollment
-Route::get('class/{class}/edit_enrollment/{filter?}', 'ClassEnrollmentController@enrollment');
-Route::patch('class/{class}/edit_enrollment', 'ClassEnrollmentController@storeEnrollment');
+Route::get('class/{class}/edit_enrollment/{filter}', 'ClassEnrollmentController@enrollment');
+Route::patch('class/{class}/edit_enrollment/{filter}', 'ClassEnrollmentController@storeEnrollment');
+Route::patch('class/{class}/edit_enrollment/{filter}/{quarter}', 'ClassEnrollmentController@updateEnrollment');
 //AJAX
 Route::post('api/class/ajaxstoreclass', 'ClassAjaxController@ajaxStore');
 Route::get('api/class/ajaxshowclass', 'ClassAjaxController@ajaxShow');

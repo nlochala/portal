@@ -3,7 +3,7 @@
 @section('content')
     @include('class._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">{{ $class->full_name }} - Overview</h1>
+    <h1 class="font-w400" style="text-align: center">{!! $class->fullName(true)!!} - Overview</h1>
 
     <!--
     panel.row

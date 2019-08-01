@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Quarter;
 use App\Room;
 use App\Year;
 use App\Course;
@@ -55,20 +56,16 @@ class ClassController extends Controller
      */
     public function show(CourseClass $class)
     {
+        $quarter = Quarter::now();
+        $relationship = $quarter->getClassRelationship();
+        $quarter_name = $quarter->name;
+
         $class->load(
             'course',
             'q1Students.person',
-            'q1Students.gradeLevel',
-            'q1Students.status',
             'q2Students.person',
-            'q2Students.gradeLevel',
-            'q2Students.status',
             'q3Students.person',
-            'q3Students.gradeLevel',
-            'q3Students.status',
             'q4Students.person',
-            'q4Students.gradeLevel',
-            'q4Students.status',
             'primaryEmployee.person',
             'secondaryEmployee.person',
             'taEmployee.person',
@@ -77,7 +74,9 @@ class ClassController extends Controller
             'status'
         );
 
-        return view('class.show', compact('class'));
+        $enrollment = $class->$relationship;
+
+        return view('class.show', compact('class', 'quarter_name', 'relationship', 'enrollment'));
     }
 
     /**
@@ -92,7 +91,7 @@ class ClassController extends Controller
         Helpers::flash($class, 'class');
 
         return $class
-            ? redirect()->to('class/'.$class->uuid)
+            ? redirect()->to('class/'.$class->uuid.'/edit_overview')
             : redirect()->back()->withInput();
     }
 

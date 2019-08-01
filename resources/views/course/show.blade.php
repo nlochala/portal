@@ -265,9 +265,9 @@
             $('#grade_levels_scheduling').val([{{ implode(',', $course->gradeLevels->pluck('id')->toArray()) }}]);
             $('#grade_levels_scheduling').trigger('change'); // Notify any JS components that the value changed
 
-                    @include('course._requisites_datatables', ['type' => 'prerequisite'])
-                    @include('course._requisites_datatables', ['type' => 'corequisite'])
-                    @include('course._requisites_datatables', ['type' => 'equivalent'])
+            @include('course._requisites_datatables', ['type' => 'prerequisite'])
+            @include('course._requisites_datatables', ['type' => 'corequisite'])
+            @include('course._requisites_datatables', ['type' => 'equivalent'])
 
             var edit_element = $('#materials-edit');
             var input_element = $('#materials');
@@ -313,7 +313,6 @@
             // IF THERE IS EXISTING TEXT TO PASS THROUGH
             text_data = '{!! old('materials') ?? $course->required_materials !!}';
             edit_element.summernote('code', text_data);
-
         });
     </script>
 @endsection

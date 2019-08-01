@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Quarter;
 use App\Year;
 use App\Course;
 use App\CourseType;
@@ -100,8 +101,17 @@ class CourseController extends Controller
         $departments = Department::getDropdown();
         $year_dropdown = Year::getDropdown();
 
+        $quarter = Quarter::now();
+        $relationship = $quarter->getClassRelationship();
+        $quarter_name = $quarter->name;
+
         $course->load(
             'year',
+            'classes.room.building',
+            'classes.primaryEmployee.person',
+            'classes.secondaryEmployee.person',
+            'classes.taEmployee.person',
+            'classes.'.$relationship,
             'prerequisites',
             'corequisites',
             'equivalents',
@@ -127,7 +137,8 @@ class CourseController extends Controller
             'transcript_types',
             'grade_scales',
             'departments',
-            'year_dropdown'
+            'year_dropdown',
+            'relationship',
         ));
     }
 

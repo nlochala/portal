@@ -3,7 +3,7 @@
 @section('content')
     @include('class._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">{{ $class->full_name }} - Edit Enrollment</h1>
+    <h1 class="font-w400" style="text-align: center">{!! $class->fullName(true)!!} - Edit Enrollment</h1>
 
     <!--
     panel.row
@@ -27,108 +27,151 @@
     @include('layouts._panels_start_column', ['size' => 3])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
-    @include('layouts._panels_start_panel', ['title' => 'Filter Options', 'with_block' => false])
-    {{-- START BLOCK OPTIONS panel.block --}}
-    @include('layouts._panels_start_content')
+        @include('layouts._panels_start_panel', ['title' => 'Filter Options', 'with_block' => false])
+        {{-- START BLOCK OPTIONS panel.block --}}
+        @include('layouts._panels_start_content')
 
-    --<br />
-    --<br />
-    --<br />
-    --<br />
+        <ul>
+            <li>{!! link_to('/class/'.$class->uuid.'/edit_enrollment/gradeLevels', 'Grade Levels') !!}</li>
+            <li>{!! link_to('/class/'.$class->uuid.'/edit_enrollment/homeroom', 'Homerooms') !!}</li>
+        </ul>
 
-    @include('layouts._panels_end_content')
-    @include('layouts._panels_end_panel')
-    <!-------------------------------------------------------------------------------->
-    <!-------------------------------------------------------------------------------->
-    @include('layouts._panels_end_column')
-    @include('layouts._panels_start_column', ['size' => 9])
-    <!-------------------------------------------------------------------------------->
-    <!----------------------------------New Panel ------------------------------------>
-    @include('layouts._panels_start_panel', ['title' => 'Class Enrollment', 'with_block' => false])
-    {{-- START BLOCK OPTIONS panel.block --}}
-    @include('layouts._panels_start_content')
-
-    <!-- START FORM----------------------------------------------------------------------------->
-
-    {!! Form::model($class,['method' => 'PATCH','files' => false, 'id' => 'admin-form','url' => request()->getRequestUri()]) !!}
-    <!----------------------------------------------------------------------------->
-    <!-----------------------New quarters[] radio------------------------------------->
-    @include('layouts._forms._input_checkbox',[
-        'name' => 'quarters[]',
-        'label' => 'School Year Quarters',
-        'array' => $quarter_dropdown,
-        'selected' => null,
-        'required' => true
-    ])
-    <!----------------------------------------------------------------------------->
-    <!----------------------------------------------------------------------------->
-
-    <select multiple="multiple" id="student-list" name="students[]">
-        @foreach($enrollment_lists as $grade => $roster)
-            <optgroup label="{{ $grade }}">
-                @foreach($roster as $id => $student)
-                    <option value="{{ $id }}">{{ $student }}</option>
-                @endforeach
-            </optgroup>
-        @endforeach
-    </select>
-
-    @include('layouts._forms._form_close')
-    <!-- END FORM----------------------------------------------------------------------------->
-
-    @include('layouts._panels_end_content')
-    @include('layouts._panels_end_panel')
+        @include('layouts._panels_end_content')
+        @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->
     <!-------------------------------------------------------------------------------->
     @include('layouts._panels_end_column')
     @include('layouts._panels_end_row')
+    @include('layouts._panels_start_row',['has_uniform_length' => true])
+    @include('layouts._panels_start_column', ['size' => 6])
+    <!-------------------------------------------------------------------------------->
+    <!----------------------------------New Panel ------------------------------------>
+    @include('layouts._panels_start_panel', ['title' => 'Quarter 1 Enrollment', 'with_block' => false])
+    {{-- START BLOCK OPTIONS panel.block --}}
+    @include('layouts._panels_start_content')
+    <!-- START FORM----------------------------------------------------------------------------->
+    {!! Form::model($class,['method' => 'PATCH','files' => false, 'id' => 'admin-form','url' => request()->getRequestUri().'/'.$quarters[0]->uuid]) !!}
+    <select multiple="multiple" id="q1-student-list" name="students[]">
+        @foreach($enrollment_lists as $grade => $roster)
+            <optgroup label="{{ $grade }}">
+                @foreach($roster as $id => $student)
+                    @if(in_array($id, $q1Enrollment))
+                        <option value="{{ $id }}" selected>{{ $student }}</option>
+                    @else
+                        <option value="{{ $id }}">{{ $student }}</option>
+                    @endif
+                @endforeach
+            </optgroup>
+        @endforeach
+    </select>
+    @include('layouts._forms._form_close')
+    <!-- END FORM----------------------------------------------------------------------------->
+    @include('layouts._panels_end_content')
+    @include('layouts._panels_end_panel')
+    <!-------------------------------------------------------------------------------->
+    <!-------------------------------------------------------------------------------->
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_start_column', ['size' => 6])
+    <!-------------------------------------------------------------------------------->
+    <!----------------------------------New Panel ------------------------------------>
+    @include('layouts._panels_start_panel', ['title' => 'Quarter 2 Enrollment', 'with_block' => false])
+    {{-- START BLOCK OPTIONS panel.block --}}
+    @include('layouts._panels_start_content')
+    <!-- START FORM----------------------------------------------------------------------------->
+    {!! Form::model($class,['method' => 'PATCH','files' => false, 'id' => 'admin-form','url' => request()->getRequestUri().'/'.$quarters[1]->uuid]) !!}
+    <select multiple="multiple" id="q2-student-list" name="students[]">
+        @foreach($enrollment_lists as $grade => $roster)
+            <optgroup label="{{ $grade }}">
+                @foreach($roster as $id => $student)
+                    @if(in_array($id, $q2Enrollment))
+                        <option value="{{ $id }}" selected>{{ $student }}</option>
+                    @else
+                        <option value="{{ $id }}">{{ $student }}</option>
+                    @endif
+                @endforeach
+            </optgroup>
+        @endforeach
+    </select>
+    @include('layouts._forms._form_close')
+    <!-- END FORM----------------------------------------------------------------------------->
 
+
+    @include('layouts._panels_end_content')
+    @include('layouts._panels_end_panel')
+    <!-------------------------------------------------------------------------------->
+    <!-------------------------------------------------------------------------------->
+
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_end_row')
+    @include('layouts._panels_start_row',['has_uniform_length' => true])
+    @include('layouts._panels_start_column', ['size' => 6])
+    <!-------------------------------------------------------------------------------->
+    <!----------------------------------New Panel ------------------------------------>
+    @include('layouts._panels_start_panel', ['title' => 'Quarter 3 Enrollment', 'with_block' => false])
+    {{-- START BLOCK OPTIONS panel.block --}}
+    @include('layouts._panels_start_content')
+    <!-- START FORM----------------------------------------------------------------------------->
+    {!! Form::model($class,['method' => 'PATCH','files' => false, 'id' => 'admin-form','url' => request()->getRequestUri().'/'.$quarters[2]->uuid]) !!}
+    <select multiple="multiple" id="q3-student-list" name="students[]">
+        @foreach($enrollment_lists as $grade => $roster)
+            <optgroup label="{{ $grade }}">
+                @foreach($roster as $id => $student)
+                    @if(in_array($id, $q3Enrollment))
+                        <option value="{{ $id }}" selected>{{ $student }}</option>
+                    @else
+                        <option value="{{ $id }}">{{ $student }}</option>
+                    @endif
+                @endforeach
+            </optgroup>
+        @endforeach
+    </select>
+    @include('layouts._forms._form_close')
+    <!-- END FORM----------------------------------------------------------------------------->
+
+
+    @include('layouts._panels_end_content')
+    @include('layouts._panels_end_panel')
+    <!-------------------------------------------------------------------------------->
+    <!-------------------------------------------------------------------------------->
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_start_column', ['size' => 6])
+    <!-------------------------------------------------------------------------------->
+    <!----------------------------------New Panel ------------------------------------>
+    @include('layouts._panels_start_panel', ['title' => 'Quarter 4 Enrollment', 'with_block' => false])
+    {{-- START BLOCK OPTIONS panel.block --}}
+    @include('layouts._panels_start_content')
+    <!-- START FORM----------------------------------------------------------------------------->
+    {!! Form::model($class,['method' => 'PATCH','files' => false, 'id' => 'admin-form','url' => request()->getRequestUri().'/'.$quarters[3]->uuid]) !!}
+    <select multiple="multiple" id="q4-student-list" name="students[]">
+        @foreach($enrollment_lists as $grade => $roster)
+            <optgroup label="{{ $grade }}">
+                @foreach($roster as $id => $student)
+                    @if(in_array($id, $q4Enrollment))
+                        <option value="{{ $id }}" selected>{{ $student }}</option>
+                    @else
+                        <option value="{{ $id }}">{{ $student }}</option>
+                    @endif
+                @endforeach
+            </optgroup>
+        @endforeach
+    </select>
+    @include('layouts._forms._form_close')
+    <!-- END FORM----------------------------------------------------------------------------->
+    @include('layouts._panels_end_content')
+    @include('layouts._panels_end_panel')
+    <!-------------------------------------------------------------------------------->
+    <!-------------------------------------------------------------------------------->
+
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_end_row')
 
     @include('layouts._content_end')
 @endsection
 
 
 @section('js_after')
-    <script type="text/javascript">;
-        jQuery(document).ready(function () {
-
-            $('#student-list').multiSelect({
-                selectableOptgroup: true,
-                selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='Search...'>",
-                selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='Search...'>",
-                afterInit: function(ms){
-                    var that = this,
-                        $selectableSearch = that.$selectableUl.prev(),
-                        $selectionSearch = that.$selectionUl.prev(),
-                        selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
-                        selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
-
-                    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                        .on('keydown', function(e){
-                            if (e.which === 40){
-                                that.$selectableUl.focus();
-                                return false;
-                            }
-                        });
-
-                    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-                        .on('keydown', function(e){
-                            if (e.which == 40){
-                                that.$selectionUl.focus();
-                                return false;
-                            }
-                        });
-                },
-                afterSelect: function(){
-                    this.qs1.cache();
-                    this.qs2.cache();
-                },
-                afterDeselect: function(){
-                    this.qs1.cache();
-                    this.qs2.cache();
-                }
-            });
-
-        });
-    </script>
+    @include('class._enrollment_js_q1')
+    @include('class._enrollment_js_q2')
+    @include('class._enrollment_js_q3')
+    @include('class._enrollment_js_q4')
 @endsection

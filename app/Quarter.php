@@ -11,13 +11,6 @@ class Quarter extends PortalBaseModel
 {
     use SoftDeletes;
 
-    public static $name = [
-        1 => 'Q1',
-        2 => 'Q2',
-        3 => 'Q3',
-        4 => 'Q4',
-    ];
-
     /*
     |--------------------------------------------------------------------------
     | SETUP
@@ -68,22 +61,65 @@ class Quarter extends PortalBaseModel
     /**
      * Return a formatted dropdown.
      *
+     * @param null $scope
      * @return array
      */
-    public static function getDropdown()
+    public static function getDropdown($scope = null)
     {
-        return static::$name;
+        if ($scope) {
+            return static::$scope()->get()->pluck('name', 'id')->toArray();
+        }
+
+        return static::all()->pluck('name', 'id')->toArray();
     }
 
     /**
-     * Get the name of the quarter from the ID.
+     * Return the current quarter.
      *
-     * @param $id
      * @return mixed
      */
-    public static function getName($id)
+    public static function now()
     {
-        return static::$name[$id];
+        $quarters = static::current()->get();
+        $now = Carbon::now();
+        foreach ($quarters as $quarter) {
+            $start_date = Carbon::parse($quarter->start_date);
+            $end_date = Carbon::parse($quarter->end_date);
+
+            // Before school starts
+            if ($quarter->name === 'Q1' && $now->lessThan($start_date)) {
+                return $quarter;
+            }
+
+            if ($now->isBetween($start_date, $end_date)) {
+                return $quarter;
+            }
+        }
+
+        return $quarters->last();
+    }
+
+    /**
+     * Return the relationship.
+     *
+     * @return string
+     */
+    public function getClassRelationship()
+    {
+        switch ($this->name) {
+            case 'Q1':
+                return 'q1Students';
+                break;
+            case 'Q2':
+                return 'q2Students';
+                break;
+            case 'Q3':
+                return 'q3Students';
+                break;
+            case 'Q4':
+                return 'q4Students';
+                break;
+        }
     }
 
     /*
@@ -145,6 +181,16 @@ class Quarter extends PortalBaseModel
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * current query scope.
+     *
+     * @param $query
+     */
+    public function scopeCurrent($query)
+    {
+        $query->where('year_id', '=', env('SCHOOL_YEAR_ID'));
+    }
 
     /*
     |--------------------------------------------------------------------------

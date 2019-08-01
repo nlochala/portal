@@ -14,7 +14,11 @@ $required = bool
     </label>
     <div class="col-sm-8">
         @foreach($array as $value => $description)
-            <div class="custom-control custom-checkbox custom-control-lg mb-1">
+            @if(isset($inline) && $inline === true)
+                <div class="custom-control-lg custom-control custom-checkbox custom-control-inline mb-1">
+            @else
+                <div class="custom-control custom-checkbox custom-control-lg mb-1">
+            @endif
                 @if($selected == $value)
                     {{
                         Form::checkbox($name, $value, true, [
