@@ -17,6 +17,13 @@ class Quarter extends PortalBaseModel
     |--------------------------------------------------------------------------
     */
 
+    public static $name = [
+        1 => 'Q1',
+        2 => 'Q2',
+        3 => 'Q3',
+        4 => 'Q4',
+    ];
+
     /**
      *  Setup model event hooks.
      */
