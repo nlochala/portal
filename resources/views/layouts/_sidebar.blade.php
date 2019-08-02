@@ -150,7 +150,7 @@
 ])
 @include('layouts._sidebar_menu_nested_submenu', [
 'section_title' => 'Departments',
-'section_icon' => 'fa fa-book-reader',
+'section_icon' => 'fa fa-building',
 'submenu_array' =>
     [
         [
