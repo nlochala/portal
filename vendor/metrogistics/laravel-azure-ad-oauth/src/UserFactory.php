@@ -41,9 +41,7 @@ class UserFactory
             $callback($auth_user);
         }
 
-        if ($auth_user->isDirty()) {
-            $auth_user->update();
-        }
+        !$auth_user->isDirty() ?: $auth_user->update();
 
         $this->attachAdGroups($azure_user->user['groups'], $auth_user);
 
@@ -52,6 +50,8 @@ class UserFactory
 
     public function convertAzureUser($azure_user)
     {
+        $user_method = $this->checkUser($azure_user);
+
         $id_field = $this->id_field;
         $new_user = new $this->user_class;
         $new_user->$id_field = $azure_user->id;
@@ -68,19 +68,15 @@ class UserFactory
             $callback($new_user);
         }
 
-        $new_user->save();
-
-        // User is ready to be used: $new_user;
-
-        $student_groups = $this->attachAdGroups($azure_user->user['groups'], $new_user);
-        $person = Person::where('email_school',$new_user->email)->get();
-
+        $person = Person::where('email_school', $new_user->email)->get();
         $person->isEmpty() ? $person = $this->newPerson($new_user) : $person = $person->first();
-
         $new_user->person_id = $person->id;
         $new_user->save();
 
-        empty($student_groups) ? $this->newEmployee($new_user, $person) : $this->newStudent($new_user, $person);
+        // User is ready to be used: $new_user;
+        $groups = $this->attachAdGroups($azure_user->user['groups'], $new_user);
+
+        $this->$user_method($new_user, $person);
 
         return $new_user;
     }
@@ -104,7 +100,6 @@ class UserFactory
     public function attachAdGroups(array $groups, $user)
     {
         $ids_array = [];
-        $student_groups = [];
 
         foreach ($groups as $group) {
             $group_obj = AdGroup::where('azure_id', $group['id'])->first();
@@ -120,15 +115,12 @@ class UserFactory
 
             $group_obj->exists ? $group_obj->update() : $group_obj->save();
 
-            if(preg_match('/^' . env('STUDENT_GROUP_PREFIX') . '/', $group_obj->name)){
-                $student_groups[] = $group_obj->name;
-            }
-
             $ids_array[] = $group_obj->id;
         }
 
         $user->adGroups()->sync($ids_array);
-        return $student_groups;
+
+        return;
     }
 
     public function newPerson(AppUser $user)
@@ -136,7 +128,7 @@ class UserFactory
         $person = new Person();
         $person->email_school = $user->email;
         $person->family_name ?: $person->family_name = $user->family_name;
-        if (! $person->given_name) {
+        if (!$person->given_name) {
             $person->given_name = $user->given_name;
             $person->preferred_name = $user->given_name;
         }
@@ -148,7 +140,30 @@ class UserFactory
 
     public function newStudent(AppUser $user, Person $person)
     {
+        if ($student = Student::where('person_id', $person->id)->first()) {
+            return $student;
+        }
 
+        $student = new Student();
+        $student->person_id = $person->id;
+        $student = Helpers::dbAddAudit($student);
+        $student->save();
+
+        return $student;
+    }
+
+    public function newGuardian(AppUser $user, Person $person)
+    {
+        if ($guardian = Guardian::where('person_id', $person->id)->first()) {
+            return $guardian;
+        }
+
+        $guardian = new Guardian();
+        $guardian->person_id = $person->id;
+        $guardian = Helpers::dbAddAudit($guardian);
+        $guardian->save();
+
+        return $guardian;
     }
 
     public function newEmployee(AppUser $user, Person $person)
@@ -163,5 +178,25 @@ class UserFactory
         $employee->save();
 
         return $employee;
+    }
+
+    public function checkUser($azure_user)
+    {
+        foreach ($azure_user->user['groups'] as $key => $group) {
+            if (preg_match('/^' . env('STUDENT_GROUP_PREFIX') . '/', $key)) {
+                return 'newStudent';
+            }
+
+            if (preg_match('/^' . env('GUARDIAN_GROUP_PREFIX') . '/', $key)) {
+                return 'newGuardian';
+            }
+
+            if (preg_match('/^' . env('EMPLOYEE_GROUP_PREFIX') . '/', $key)) {
+                return 'newEmployee';
+            }
+        }
+
+        abort(403, 'You must belong to a specific AD group to gain access to the portal. 
+                                    Please contact the IT Department.');
     }
 }
