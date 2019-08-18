@@ -7,6 +7,7 @@ $submenu_array =
     [
         'title' => 'Page 1',
         'uri'   => 'page1'
+        'guard' => 'positions.show.positions'
     ],
     [
         'title' => 'Page 1',
@@ -19,10 +20,10 @@ $submenu_array =
 <li class="nav-main-item
 @foreach($submenu_array as $item)
 @if(\App\Helpers\Helpers::isUri($item['uri'], false))
-        open
-        @endif
+    open
+@endif
 @endforeach
-        ">
+    ">
     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
 
        @if(\App\Helpers\Helpers::isUri($item['uri'], false))
@@ -36,15 +37,18 @@ $submenu_array =
     </a>
     <ul class="nav-main-submenu">
         @foreach($submenu_array as $item)
-            <li class="nav-main-item">
-                <a class="nav-main-link
+            @if(isset($item['guard']) && !auth()->user()->can($item['guard']))
+                @continue
+            @endif
+                <li class="nav-main-item">
+                    <a class="nav-main-link
         @if(request()->getRequestUri() == $item['uri'])
                         active
 @endif
                         " href="{{ $item['uri'] }}">
-                    <span class="nav-main-link-name">{{ $item['title'] }}</span>
-                </a>
-            </li>
+                        <span class="nav-main-link-name">{{ $item['title'] }}</span>
+                    </a>
+                </li>
         @endforeach
     </ul>
 </li>

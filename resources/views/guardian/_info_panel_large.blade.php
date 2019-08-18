@@ -30,11 +30,12 @@
     <td><strong>Primary Language:</strong> {{ $guardian->person->primaryLanguage->name ?? '--' }}</td>
 </tr>
 @include('_tables.end-new-table')
-
+@can('guardian.show.full_profile')
 <button type="button" class="btn btn-outline-danger mr-1 mb-3"
         onclick="window.location.href='/guardian/{{ $guardian->uuid }}/profile'">
     <i class="fa fa-pen"></i> Edit Guardian
 </button>
+@endcan
 
 @include('layouts._panels_end_content')
 @include('layouts._panels_end_panel')

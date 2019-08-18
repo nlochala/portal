@@ -1,0 +1,62 @@
+classes.create.classes,Create Classes
+classes.delete.classes,Delete Classes
+classes.show.classes,Show Classes
+classes.update.classes,Update Classes
+courses.create.courses,Create Courses
+courses.delete.courses,Delete Courses
+courses.show.courses,Show Courses
+courses.update.courses,Update Courses
+departments.create.departments,Create Departments
+departments.delete.departments,Delete Departments
+departments.show.departments,Show Departments
+departments.update.departments,Update Departments
+employees.create.employees,Create Employees
+employees.delete.employees,Delete Employees
+employees.show.employees,Show Employees
+employees.show.full_profile,Show Employees Full Profile
+employees.update.biographical,Update Employee Biographical Information
+employees.update.contact,Update Employee Contact Information
+employees.update.employment,Update Employee Employment Details
+employees.update.government_documents,Update Employee Government Documents
+employees.update.official_documents,Update Employee Official Documents
+grade_levels.create.grade_levels,Create Grade Levels
+grade_levels.delete.grade_levels,Delete Grade Levels
+grade_levels.show.grade_levels,Show Grade Levels
+grade_levels.update.grade_levels,Update Grade Levels
+grade_scales.create.grade_scales,Create Grade Scales
+grade_scales.delete.grade_scales,Delete Grade Scales
+grade_scales.show.grade_scales,Show Grade Scales
+grade_scales.update.grade_scales,Update Grade Scales
+guardians.create.guardians,Create Guardians
+guardians.delete.guardians,Delete Guardians
+guardians.show.guardians,Show Guardians
+guardians.show.full_profile,Show Guardians Full Profile
+guardians.update.biographical,Update Guardian Biographical Information
+guardians.update.contact,Update Guardian Contact Information
+guardians.update.government_documents,Update Guardian Government Documents
+guardians.update.official_documents,Update Guardian Official Documents
+permissions,Manage and Modify Permissions and Roles
+positions.create.positions,Create Employment Positions
+positions.delete.positions,Delete Employment Positions
+positions.show.assignments,Show Employee Assignments
+positions.show.positions,Show Employment Positions
+positions.show.stipend,Show Position Stipends
+positions.update.assignments,Update Employee Assignments
+positions.update.positions,Update Employment Positions
+rooms.create.rooms,Create Rooms
+rooms.delete.rooms,Delete Rooms
+rooms.show.rooms,Show Rooms
+rooms.update.rooms,Update Rooms
+students.create.students,Create Students
+students.delete.students,Delete Students
+students.show.full_profile,Show Student Full Profile
+students.show.students,Show Students
+students.update.academics,Update Student Academic Details
+students.update.biographical,Update Student Biographical Information
+students.update.contact,Update Student Contact Information
+students.update.government_documents,Update Student Government Documents
+students.update.official_documents,Update Student Official Documents
+years.create.years,Create Years
+years.delete.years,Delete Years
+years.show.years,Show Years
+years.update.years,Update Years

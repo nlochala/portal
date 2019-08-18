@@ -68,7 +68,9 @@
 
 
 @section('js_after')
-    <script type="text/javascript">;
+    {!! JsValidator::formRequest('\App\Http\Requests\StoreNewEnrollmentRequest','#admin-form') !!}
+
+    <script type="text/javascript">
         jQuery(document).ready(function () {
 
             $('#student-list').multiSelect({

@@ -73,11 +73,13 @@
 
     </tr>
     @include('_tables.end-new-table')
-    <hr/>
-    <button type="button" dusk="btn-modal-block-email" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
-            data-target="#modal-block-email">
-        <i class="fa fa-fw fa-pen mr-1"></i> Update Email Addresses
-    </button>
+    @can('guardians.update.contact')
+        <hr/>
+        <button type="button" dusk="btn-modal-block-email" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+                data-target="#modal-block-email">
+            <i class="fa fa-fw fa-pen mr-1"></i> Update Email Addresses
+        </button>
+    @endcan
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->
@@ -113,22 +115,27 @@
                     @endif
                 </td>
                 <td class="text-center">
-                    <div class="btn-group">
-                        <button type="button" dusk="btn-delete-phone-{{ $phone->uuid }}" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
-                                onclick="window.location.href='/phone/{{ $phone->uuid }}/profile/delete'">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
+                    @can('guardians.update.contact')
+                        <div class="btn-group">
+                            <button type="button" dusk="btn-delete-phone-{{ $phone->uuid }}"
+                                    class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
+                                    onclick="window.location.href='/phone/{{ $phone->uuid }}/profile/delete'">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    @endcan
                 </td>
             </tr>
         @endforeach
         @include('_tables.end-new-table')
     @endif
-    <hr/>
-    <button type="button" dusk="btn-modal-block-phone" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
-            data-target="#modal-block-phone">
-        <i class="fa fa-fw fa-plus mr-1"></i> Add New Phone Number
-    </button>
+    @can('guardians.update.contact')
+        <hr/>
+        <button type="button" dusk="btn-modal-block-phone" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+                data-target="#modal-block-phone">
+            <i class="fa fa-fw fa-plus mr-1"></i> Add New Phone Number
+        </button>
+    @endcan
 
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
@@ -156,9 +163,9 @@
                        data-placement="top" title="Description" data-content="
                    <strong>Street Address 1: {{ $address->address_line_1 }}<br />
                    @if($address->address_line_2)
-                            Street Address 2: {{ $address->address_line_2 }}<br />
+                        Street Address 2: {{ $address->address_line_2 }}<br />
                    @endif
-                            City: {{ $address->city }}<br />
+                        City: {{ $address->city }}<br />
                    Province/State: {{ $address->province }}<br />
                    Country: {{ $address->country->name }}<br />
                    Postal Code: {{ $address->postal_code }}<br /> ">
@@ -172,27 +179,33 @@
                     </a>
                 </td>
                 <td class="text-center">
-                    <div class="btn-group">
-                        <button type="button" dusk="btn-modal-block-address-{{ $address->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal" title="Edit"
-                                data-target="#modal-block-address-{{ $address->id }}">
-                            <i class="fa fa-pen"></i>
-                        </button>
-                        <button type="button" dusk="btn-delete-address-{{ $address->uuid }}" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
-                                onclick="window.location.href='/address/{{ $address->uuid }}/delete'">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
+                    @can('guardians.update.contact')
+                        <div class="btn-group">
+                            <button type="button" dusk="btn-modal-block-address-{{ $address->id }}"
+                                    class="btn btn-sm btn-outline-primary" data-toggle="modal" title="Edit"
+                                    data-target="#modal-block-address-{{ $address->id }}">
+                                <i class="fa fa-pen"></i>
+                            </button>
+                            <button type="button" dusk="btn-delete-address-{{ $address->uuid }}"
+                                    class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
+                                    onclick="window.location.href='/address/{{ $address->uuid }}/delete'">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    @endcan
                 </td>
 
                 @endforeach
                 @include('_tables.end-new-table')
                 @endif
-                <hr/>
-                <button type="button" dusk="btn-modal-block-address-new" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
-                        data-target="#modal-block-address-new">
-                    <i class="fa fa-fw fa-plus mr-1"></i> Add New Address
-                </button>
-
+                @can('guardians.update.contact')
+                    <hr/>
+                    <button type="button" dusk="btn-modal-block-address-new" class="btn btn-outline-success mr-1 mb-3"
+                            data-toggle="modal"
+                            data-target="#modal-block-address-new">
+                        <i class="fa fa-fw fa-plus mr-1"></i> Add New Address
+                    </button>
+                @endcan
                 @include('layouts._panels_end_content')
                 @include('layouts._panels_end_panel')
             <!-------------------------------------------------------------------------------->
@@ -223,7 +236,7 @@
                     'id' => 'modal-block-phone',
                     'title' => 'Add New Phone Number'
                 ])
-                <!-- START FORM----------------------------------------------------------------------------->
+            <!-- START FORM----------------------------------------------------------------------------->
 
                 {!! Form::open(['files' => false, 'id' => 'phone-form','url' => '/guardian/' . $guardian->uuid . '/profile/store_phone']) !!}
                 @include('person._create_form_phone')

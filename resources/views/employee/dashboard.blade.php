@@ -50,7 +50,10 @@
     @include('layouts._panels_start_row',['has_uniform_length' => true])
     @include('layouts._panels_start_column', ['size' => 12])
 
-    @include('employee._position_information')
+    @if($employee->id === auth()->user()->person->employee->id || auth()->user()->can('positions.show.positions'))
+        @include('employee._position_information')
+    @endif
+
 
     @include('layouts._panels_end_column')
     @include('layouts._panels_end_row')

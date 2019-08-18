@@ -64,10 +64,12 @@
     @else
         <hr />
         <h2 class="font-w400" style="text-align: center">{{ $student->person->fullName()}} does not have a family.<br />
+            @can('student.update.biographical')
         <button style="width: 25%" class="btn btn-hero-lg btn-hero-primary"
                 onclick="location.href='/student/{{ $student->uuid }}/new_family'"
                 data-toggle="click-ripple">Add To Family</button></h2>
         <hr />
+        @endcan
     @endif
 
     @if ($student->person->user)

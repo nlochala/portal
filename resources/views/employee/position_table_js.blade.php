@@ -11,19 +11,24 @@ columns: [
 {
 data: "stipend",
 render: function (data, type, row) {
+@if (auth()->user()->can('positions.show.stipend'))
 if (data == null || data == '') {
 return 0 + ' ¥';
 }
-
 return data + ' ¥';
+@else
+    return '---';
+    @endif
 }
 },
 {data: "uuid",
 render: function(data, type, row) {
+@can('employees.update.employment')
 return "<button type=\"button\" class=\"btn btn-sm btn-outline-success\" dusk=\"" + data + "\" data-toggle=\"tooltip\" title=\"Add Position\"\n" +
 "                onclick=\"window.location.href='/employee/{{ $employee->uuid }}/position/" + data + "/add'\">\n" +
 "            <i class=\"fa fa-plus-circle\"></i> Add\n" +
 "        </button>";
+@endcan
 }
 }
 ]

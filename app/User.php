@@ -87,6 +87,17 @@ class User extends Authenticatable
     */
 
     /**
+     * Many users belongs to many roles.
+     *
+     * @return BelongsToMany
+     */
+    public function roles()
+    {
+        // belongsToMany('class','pivot_table','current_models_id','foreign_id')->withTimestamps()
+        return $this->belongsToMany('App\Role', 'roles_users_pivot_table', 'user_id', 'role_id')->withTimestamps();
+    }
+
+    /**
      *  This uer belongs to a person.
      *
      * @return BelongsTo
@@ -123,6 +134,34 @@ class User extends Authenticatable
     | HELPERS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Pass a role name or role object and see if the user is a member.
+     *
+     * @param $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+
+        return (bool) $role->intersect($this->roles)->count();
+    }
+
+    /**
+     * Check if user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        $roles = $this->roles->pluck('name')->toArray();
+
+        return in_array('portal-admin', $roles);
+    }
 
     /**
      * Display a user's thumbnail image.

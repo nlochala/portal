@@ -33,10 +33,12 @@
 </tr>
 @include('_tables.end-new-table')
 
+@can('employees.show.full_profile')
 <button type="button" class="btn btn-outline-danger mr-1 mb-3"
         onclick="window.location.href='/employee/{{ $employee->uuid }}/profile'">
     <i class="fa fa-pen"></i> Edit Employee
 </button>
+@endcan
 
 @include('layouts._panels_end_content')
 @include('layouts._panels_end_panel')

@@ -190,15 +190,13 @@
                                 "            <button dusk=\"btn-show-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-info\" data-toggle=\"tooltip\" title=\"View Details\"\n" +
                                 "                    onclick=\"window.location.href='/employee/" + data + "'\">\n" +
                                 "                <i class=\"si si-magnifier\"></i>\n" +
+                                @can('employees.show.full_profile')
                                 "            </button>\n" +
                                 "            <button dusk=\"btn-edit-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-primary\" data-toggle=\"tooltip\" title=\"Edit\"\n" +
                                 "                    onclick=\"window.location.href='/employee/" + data + "/profile'\">\n" +
                                 "                <i class=\"fa fa-pen\"></i>\n" +
                                 "            </button>\n" +
-                                // "            <button dusk=\"btn-family-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-success\" data-toggle=\"tooltip\" title=\"View Family\"\n" +
-                                // "                    onclick=\"window.location.href='/employee/" + data + "/view_family'\">\n" +
-                                // "                <i class=\"fa fa-users\"></i>\n" +
-                                // "            </button>\n" +
+                                @endcan
                                 "        </div>"
                         }
                     },
@@ -221,6 +219,7 @@
                         fade: true,
                         className: 'btn-sm btn-hero-primary'
                     },
+                    @can('employees.create.employees')
                     {
                         text: '',
                         className: 'btn-sm btn-light',
@@ -235,6 +234,7 @@
                             $('#modal-block-employee').modal('toggle');
                         }
                     },
+                    @endcan
                 ]
             });
         });

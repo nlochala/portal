@@ -3,6 +3,7 @@
 namespace Metrogistics\AzureSocialite;
 
 use App\AdGroup;
+use App\Role;
 use App\Employee;
 use App\Helpers\Helpers;
 use App\Person;
@@ -26,6 +27,8 @@ class UserFactory
 
     public function updateAzureUser($azure_user, $auth_user)
     {
+        $this->checkUser($azure_user);
+
         $id_field = $this->id_field;
         $auth_user->$id_field = $azure_user->id;
 
@@ -100,6 +103,7 @@ class UserFactory
     public function attachAdGroups(array $groups, $user)
     {
         $ids_array = [];
+        $roles_array = [];
 
         foreach ($groups as $group) {
             $group_obj = AdGroup::where('azure_id', $group['id'])->first();
@@ -115,10 +119,32 @@ class UserFactory
 
             $group_obj->exists ? $group_obj->update() : $group_obj->save();
 
+            if ($role = $group_obj->role) {
+                $roles_array[] = $role->id;
+
+            }elseif (preg_match('/^portal-/', $group_obj->name)) {
+                if ($role = Role::where('name',$group_obj->name)->first()){
+                    if ($role->ad_group_id !== $group_obj->id) {
+                        $role->ad_group_id = $group_obj->id;
+                        $role->save();
+                    }
+
+                    $roles_array[] = $role->id;
+                }else{
+                    $role = new Role();
+                    $role->name = $group_obj->name;
+                    $role->ad_group_id = $group_obj->id;
+                    $role->save();
+
+                    $roles_array[] = $role->id;
+                }
+            }
+
             $ids_array[] = $group_obj->id;
         }
 
         $user->adGroups()->sync($ids_array);
+        $user->roles()->sync($roles_array);
 
         return;
     }

@@ -448,7 +448,68 @@ class ForeignKeys extends Migration
             $table->foreign('student_id')
                 ->references('id')->on('students');
         });
+
+        /*
+         |--------------------------------------------------------------------------
+         | TABLE: ATTENDANCE_CLASSES
+         |--------------------------------------------------------------------------
+         */
+        Schema::table('attendance_classes', function (Blueprint $table) {
+            $table->foreign('student_id')
+                ->references('id')->on('students');
+            $table->foreign('class_id')
+                ->references('id')->on('classes');
+            $table->foreign('attendance_type_id')
+                ->references('id')->on('attendance_types');
+        });
+
+        /*
+         |--------------------------------------------------------------------------
+         | TABLE: ATTENDANCE_DAY
+         |--------------------------------------------------------------------------
+         */
+        Schema::table('attendance_days', function (Blueprint $table) {
+            $table->foreign('student_id')
+                ->references('id')->on('students');
+            $table->foreign('attendance_type_id')
+                ->references('id')->on('attendance_types');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: ROLES
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('roles', function (Blueprint $table) {
+            $table->foreign('ad_group_id')
+                ->references('id')->on('ad_groups');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: ROLES_USERS_PIVOT_TABLE
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('roles_users_pivot_table', function (Blueprint $table) {
+            $table->foreign('role_id')
+                ->references('id')->on('roles');
+            $table->foreign('user_id')
+                ->references('id')->on('users');
+        });
+
+        /*
+        |--------------------------------------------------------------------------
+        | TABLE: PERMISSIONS_ROLES_PIVOT_TABLE
+        |--------------------------------------------------------------------------
+        */
+        Schema::table('permissions_roles_pivot_table', function (Blueprint $table) {
+            $table->foreign('permission_id')
+                ->references('id')->on('permissions');
+            $table->foreign('role_id')
+                ->references('id')->on('roles');
+        });
     }
+
 
     /**
      * Reverse the migrations.

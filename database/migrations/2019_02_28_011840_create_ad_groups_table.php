@@ -14,7 +14,7 @@ class CreateAdGroupsTable extends Migration
     public function up()
     {
         Schema::create('ad_groups', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->uuid('uuid')->nullable();
             $table->text('azure_id')->nullable();
             $table->text('name')->nullable();

@@ -1,11 +1,12 @@
 <?php
 
+use App\AttendanceType;
 use App\ClassStatus;
 use App\CourseType;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
-class ClassStatusesTableSeeder extends Seeder
+class AttendanceTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,15 +16,17 @@ class ClassStatusesTableSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('class_statuses')->truncate();
+        DB::table('attendance_types')->truncate();
 
-        $course_types = Helpers::parseCsv('database/seeds/data/class_statuses.csv', false);
+        $types = Helpers::parseCsv('database/seeds/data/attendance_types.csv', false);
 
-        foreach ($course_types as $type) {
-            $model = new ClassStatus();
-            $model->name = $type[0];
-            $model->description = $type[1];
-            $model->is_protected = $type[2];
+        foreach ($types as $type) {
+            $model = new AttendanceType();
+            $model->short_name = $type[0];
+            $model->name = $type[1];
+            $model->description = $type[2];
+            $model->should_alert = $type[3];
+            $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();
         }

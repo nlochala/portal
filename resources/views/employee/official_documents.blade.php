@@ -46,27 +46,34 @@
                 <td>{{ strtoupper($document->file->driver) }}</td>
                 <td>{{ $document->file->created_at }}</td>
                 <td>
-                    <div class="btn-group">
-                        <button type="button" dusk="btn-download-document-{{ $document->id }}" class="btn btn-sm btn-outline-primary" data-toggle="tooltip"
-                                title="Download"
-                                onclick="window.location.href='{{ $document->file->downloadUrl() }}'">
-                            <i class="fa fa-download"></i>
-                        </button>
-                        <button type="button" dusk="btn-delete-document-{{ $document->id }}" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
-                                onclick="window.location.href='/employee/{{ $employee->uuid }}/official_documents/{{ $document->uuid }}/delete'">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
+                    @can('employees.update.official_documents')
+                        <div class="btn-group">
+                            <button type="button" dusk="btn-download-document-{{ $document->id }}"
+                                    class="btn btn-sm btn-outline-primary" data-toggle="tooltip"
+                                    title="Download"
+                                    onclick="window.location.href='{{ $document->file->downloadUrl() }}'">
+                                <i class="fa fa-download"></i>
+                            </button>
+                            <button type="button" dusk="btn-delete-document-{{ $document->id }}"
+                                    class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Delete"
+                                    onclick="window.location.href='/employee/{{ $employee->uuid }}/official_documents/{{ $document->uuid }}/delete'">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    @endcan
                 </td>
             </tr>
         @endforeach
         @include('_tables.end-new-table')
     @endif
-    <hr/>
-    <button type="button" dusk="btn-modal-block-new-document" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
-            data-target="#modal-block-new-document">
-        <i class="fa fa-plus"></i> Upload New Document
-    </button>
+    @can('employees.update.official_documents')
+        <hr/>
+        <button type="button" dusk="btn-modal-block-new-document" class="btn btn-outline-success mr-1 mb-3"
+                data-toggle="modal"
+                data-target="#modal-block-new-document">
+            <i class="fa fa-plus"></i> Upload New Document
+        </button>
+    @endcan
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->

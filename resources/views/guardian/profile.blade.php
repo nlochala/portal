@@ -74,6 +74,7 @@
             </div>
             <hr/>
         @endif
+        @can('guardians.update.biographical')
     <!-- START FORM----------------------------------------------------------------------------->
 
         {!! Form::open(['files' => true, 'id' => 'profile-form','url' => request()->getRequestUri()]) !!}
@@ -93,6 +94,7 @@
         </div>
     {{ Form::close() }}
     <!-- END FORM----------------------------------------------------------------------------->
+            @endcan
     </div>
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')

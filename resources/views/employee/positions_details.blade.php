@@ -72,7 +72,11 @@
         </tr>
         <tr>
             <td><strong>Stipend:</strong></td>
-            <td>{{ $position->formattedStipend }}</td>
+            @if (auth()->user()->can('positions.show.stipend'))
+                <td>{{ $position->formattedStipend }}</td>
+            @else
+                <td>---</td>
+            @endif
         </tr>
         @include('_tables.end-new-table')
         <strong>Position Description</strong>

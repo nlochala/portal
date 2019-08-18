@@ -64,10 +64,12 @@
     @else
         <hr />
         <h2 class="font-w400" style="text-align: center">{{ $guardian->person->fullName()}} does not have a family.<br />
+            @can('guardian.update.biographical')
         <button style="width: 25%" class="btn btn-hero-lg btn-hero-primary"
                 onclick="location.href='/guardian/{{ $guardian->uuid }}/new_family'"
                 data-toggle="click-ripple">Add To Family</button></h2>
         <hr />
+        @endcan
     @endif
 
     @if ($guardian->person->user)

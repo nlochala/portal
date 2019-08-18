@@ -213,10 +213,12 @@
                                 "                    onclick=\"window.location.href='/guardian/" + data + "'\">\n" +
                                 "                <i class=\"si si-magnifier\"></i>\n" +
                                 "            </button>\n" +
+                                @can('guardians.show.full_profile')
                                 "            <button dusk=\"btn-edit-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-primary\" data-toggle=\"tooltip\" title=\"Edit\"\n" +
                                 "                    onclick=\"window.location.href='/guardian/" + data + "/profile'\">\n" +
                                 "                <i class=\"fa fa-pen\"></i>\n" +
                                 "            </button>\n" +
+                                @endcan
                                 "            <button dusk=\"btn-family-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-success\" data-toggle=\"tooltip\" title=\"View Family\"\n" +
                                 "                    onclick=\"window.location.href='/guardian/" + data + "/view_family'\">\n" +
                                 "                <i class=\"fa fa-users\"></i>\n" +
@@ -243,6 +245,7 @@
                         fade: true,
                         className: 'btn-sm btn-hero-primary'
                     },
+                        @can('guardians.create.guardians')
                     {
                         text: '',
                         className: 'btn-sm btn-light',
@@ -270,6 +273,7 @@
                         fade: true,
                         className: 'btn-sm btn-hero-primary'
                     },
+                    @endcan
                 ]
             });
         });

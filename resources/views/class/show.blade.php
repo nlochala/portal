@@ -39,8 +39,8 @@
     |--------------||--------------|
 
 -->
-    @include('layouts._panels_start_row',['has_uniform_length' => true])
-    @include('layouts._panels_start_column', ['size' => 6])
+    @include('layouts._panels_start_row',['has_uniform_length' => false])
+    @include('layouts._panels_start_column', ['size' => 5])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => 'Overview', 'with_block' => false])
@@ -87,7 +87,7 @@
     <!-------------------------------------------------------------------------------->
     <!-------------------------------------------------------------------------------->
     @include('layouts._panels_end_column')
-    @include('layouts._panels_start_column', ['size' => 6])
+    @include('layouts._panels_start_column', ['size' => 7])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => $quarter_name.' Roster', 'with_block' => false])
@@ -97,11 +97,15 @@
     @if($enrollment->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'student-table', 'table_head' => ['ID','Preferred Name - Gender','Date of Birth']])
+        @include('_tables.new-table',['id' => 'student-table', 'table_head' => ['#','Preferred Name - Gender','Today\'s Attendance','Date of Birth']])
+        @php
+        $i = 1;
+        @endphp
         @foreach($enrollment as $student)
-            <tr->
-                <td>{{ $student->id }}</td>
+            <tr>
+                <td>{{ $i++ }}</td>
                 <td>{!! $student->name !!} - {{ $student->person->gender[0] }}</td>
+                <td>Present</td>
                 <td>{{ $student->person->dob->format('m-d') }} ({{ $student->person->age }})</td>
             </tr>
         @endforeach

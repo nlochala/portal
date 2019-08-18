@@ -21,8 +21,6 @@
 --}}
 
 @include('layouts._sidebar_menu')
-
-
 @include('layouts._sidebar_menu_submenu_item', [
 'uri' => '/',
 'icon' => 'si si-globe',
@@ -45,7 +43,8 @@
         ],
         [
             'title' => 'Positions',
-            'uri'   => '/position/index'
+            'uri'   => '/position/index',
+            'guard' => 'positions.show.positions'
         ],
     ]
 ])
@@ -179,7 +178,29 @@
         ],
     ]
 ])
+@can('permissions')
+@include('layouts._sidebar_heading', ['header' => 'Portal Administration'])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Permissions',
+'section_icon' => 'fa fa-user-lock',
+'submenu_array' =>
+    [
+//        [
+//            'title' => 'Users',
+//            'uri'   => '/user/index'
+//        ],
+        [
+            'title' => 'Roles',
+            'uri'   => '/role/index'
+        ],
+        [
+            'title' => 'Permissions',
+            'uri'   => '/permission/index'
+        ],
+    ]
+])
 @include('layouts._end_sidebar_menu')
+@endcan
 <!-- END Side Navigation -->
 </nav>
 <!-- END Sidebar -->

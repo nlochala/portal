@@ -46,6 +46,7 @@
                 <td>{{ strtoupper($document->file->driver) }}</td>
                 <td>{{ $document->file->created_at }}</td>
                 <td>
+                    @can('guardian.update.official_documents')
                     <div class="btn-group">
                         <button type="button" dusk="btn-download-document-{{ $document->id }}" class="btn btn-sm btn-outline-primary" data-toggle="tooltip"
                                 title="Download"
@@ -57,16 +58,19 @@
                             <i class="fa fa-times"></i>
                         </button>
                     </div>
+                        @endcan
                 </td>
             </tr>
         @endforeach
         @include('_tables.end-new-table')
     @endif
-    <hr/>
-    <button type="button" dusk="btn-modal-block-new-document" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+    @can('guardian.update.official_documents')
+        <hr/>
+        <button type="button" dusk="btn-modal-block-new-document" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
             data-target="#modal-block-new-document">
         <i class="fa fa-plus"></i> Upload New Document
     </button>
+        @endcan
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->

@@ -17,6 +17,7 @@
 </div>
 {{-- END BLOCK OPTIONS --}}
 @include('layouts._panels_start_content')
+@can('guardians.update.government_documents')
 @if($id_card->is_active)
     <button type="button" dusk="btn-new-id-card"
             class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/guardian/$guardian->uuid/create_id_card") !!}>
@@ -38,6 +39,7 @@
         <i class="fa fa-trash mr-1"></i> Delete ID Card
     </button>
 @endif
+@endcan
 @include('_tables.new-table-plain',['id' => 'id_card-table'])
 <tr>
     <td><strong>Name: </strong></td>

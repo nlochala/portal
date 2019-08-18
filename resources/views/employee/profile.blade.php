@@ -59,7 +59,8 @@
     <div class="col-md-12 animated fadeIn" style="padding-bottom: 20px">
         @if($image_data)
             <div class="options-container" style="text-align: center">
-                <img dusk="profile-image" class="img-fluid options-item rounded border border-2x border-dark" src="{{ $image_data }}" alt="">
+                <img dusk="profile-image" class="img-fluid options-item rounded border border-2x border-dark"
+                     src="{{ $image_data }}" alt="">
                 <div class="options-overlay bg-black-75">
                     <div class="options-overlay-content">
                         <h3 class="h4 text-white mb-2">Profile Image</h3>
@@ -74,25 +75,28 @@
             </div>
             <hr/>
         @endif
-    <!-- START FORM----------------------------------------------------------------------------->
+        @can('employees.update.biographical')
+        <!-- START FORM----------------------------------------------------------------------------->
 
-        {!! Form::open(['files' => true, 'id' => 'profile-form','url' => request()->getRequestUri()]) !!}
+            {!! Form::open(['files' => true, 'id' => 'profile-form','url' => request()->getRequestUri()]) !!}
 
-        <h5>Upload New Image</h5>
-        @include('layouts._forms._input_file_upload', [
-            'name' => 'upload',
-            'label' => '',
-            'required' => true,
-            'options' => ['class' => 'filepond', 'accept' => 'image/*']
-        ])
+            <h5>Upload New Image</h5>
+            @include('layouts._forms._input_file_upload', [
+                'name' => 'upload',
+                'label' => '',
+                'required' => true,
+                'options' => ['class' => 'filepond', 'accept' => 'image/*']
+            ])
 
-        <div class="block-content block-content-full block-content-sm bg-body-light text-right">
-            <button type="submit" id="image_upload_btn" class="btn btn-sm btn-outline-primary" data-toggle="click-ripple" disabled>
-                <i class="fa fa-check"></i> Submit
-            </button>
-        </div>
-    {{ Form::close() }}
-    <!-- END FORM----------------------------------------------------------------------------->
+            <div class="block-content block-content-full block-content-sm bg-body-light text-right">
+                <button type="submit" id="image_upload_btn" class="btn btn-sm btn-outline-primary"
+                        data-toggle="click-ripple" disabled>
+                    <i class="fa fa-check"></i> Submit
+                </button>
+            </div>
+            {{ Form::close() }}
+        <!-- END FORM----------------------------------------------------------------------------->
+        @endcan
     </div>
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
@@ -144,7 +148,7 @@
 
         jQuery(document).ready(function () {
 
-            $('#upload').on('FilePond:processfile', function(e) {
+            $('#upload').on('FilePond:processfile', function (e) {
                 let selector = $('#image_upload_btn');
                 selector.removeAttr('disabled');
                 selector.removeClass('btn-outline-primary');

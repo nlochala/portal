@@ -13,9 +13,11 @@
             <a class="dropdown-item" href="{{ '/employee/' . auth()->user()->person->employee->uuid}}">
                 <i class="far fa-fw fa-address-card mr-1"></i> Dashboard
             </a>
+            @can('employees.show.full_profile')
             <a class="dropdown-item" href="{{ '/employee/' . auth()->user()->person->employee->uuid . '/profile'}}">
                 <i class="far fa-fw fa-user mr-1"></i> Profile
             </a>
+            @endcan
 
             <div role="separator" class="dropdown-divider"></div>
             <div role="separator" class="dropdown-divider"></div>

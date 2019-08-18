@@ -10,14 +10,50 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('authenticated', 'OAuthController@login')->name('login');
-Route::get('logout', 'OAuthController@logout')->name('logout');
-Route::get('/', 'LandingController')->name('landing');
+Route::get('authenticated', 'OAuthController@login')
+    ->name('login');
+Route::get('logout', 'OAuthController@logout')
+    ->name('logout');
+Route::get('/', 'LandingController')
+    ->name('landing');
 
 //TODO: Change the link location to api/download_file
 Route::get('download_file/{file}', 'MediaController@downloadFile');
 Route::get('api/download_file/{file}', 'MediaController@downloadFile');
 Route::post('api/store_file', 'MediaController@store');
+
+/*
+|--------------------------------------------------------------------------
+| PERMISSIONS
+|--------------------------------------------------------------------------
+*/
+Route::get('permission/index', 'PermissionController@index')
+    ->middleware('can:permissions');
+Route::post('api/permission/ajaxstorepermission', 'PermissionAjaxController@ajaxStore')
+    ->middleware('can:permissions');
+Route::get('api/permission/ajaxshowpermission', 'PermissionAjaxController@ajaxShow')
+    ->middleware('can:permissions');
+
+/*
+|--------------------------------------------------------------------------
+| ROLES
+|--------------------------------------------------------------------------
+*/
+Route::get('role/index', 'RoleController@index')
+    ->middleware('can:permissions');
+Route::get('api/role/ajaxshowrole', 'RoleAjaxController@ajaxShow')
+    ->middleware('can:permissions');
+Route::post('role/index', 'RoleController@store')
+    ->middleware('can:permissions');
+
+Route::get('role/{role}', 'RoleController@show')
+    ->middleware('can:permissions');
+Route::patch('role/{role}', 'RoleController@updatePermissions')
+    ->middleware('can:permissions');
+Route::patch('role/{role}/update_overview', 'RoleController@updateOverview')
+    ->middleware('can:permissions');
+Route::get('role/{role}/archive', 'RoleController@archive')
+    ->middleware('can:permissions');
 
 /*
 |--------------------------------------------------------------------------
@@ -76,52 +112,82 @@ Route::get('address/{address}/delete', 'AddressController@delete');
 
 //Directory
 Route::get('employee/index', 'EmployeeController@index');
-Route::post('employee/index', 'EmployeeController@storeNewEmployee');
+Route::post('employee/index', 'EmployeeController@storeNewEmployee')
+    ->middleware('can:employees.create.employees');
 Route::get('api/employee/ajaxshowemployee', 'EmployeeAjaxController@ajaxShow');
 
 //Dashboard
 Route::get('employee/{employee}', 'EmployeeController@dashboard');
 
 //Overview
-Route::get('employee/{employee}/profile', 'EmployeeProfileController@profile');
-Route::patch('employee/{employee}/profile', 'EmployeeProfileController@updateProfile');
-Route::post('employee/{employee}/profile', 'EmployeeProfileController@updateProfile');
+Route::get('employee/{employee}/profile', 'EmployeeProfileController@profile')
+    ->middleware('can:employees.show.full_profile');
+Route::patch('employee/{employee}/profile', 'EmployeeProfileController@updateProfile')
+    ->middleware('can:employees.update.biographical');
+Route::post('employee/{employee}/profile', 'EmployeeProfileController@updateProfile')
+    ->middleware('can:employees.update.biographical');
 
 //Contact Information
-Route::get('employee/{employee}/contact', 'EmployeeContactController@contact');
-Route::post('employee/{employee}/profile/store_phone', 'EmployeeContactController@storePhone');
-Route::post('employee/{employee}/profile/store_address', 'EmployeeContactController@storeAddress');
-Route::patch('employee/{employee}/profile/store_email', 'EmployeeContactController@storeEmail');
-Route::patch('employee/{employee}/address/{address}/update_address', 'EmployeeContactController@updateAddress');
+Route::get('employee/{employee}/contact', 'EmployeeContactController@contact')
+    ->middleware('can:employees.show.full_profile');
+Route::post('employee/{employee}/profile/store_phone', 'EmployeeContactController@storePhone')
+    ->middleware('can:employees.update.contact');
+Route::post('employee/{employee}/profile/store_address', 'EmployeeContactController@storeAddress')
+    ->middleware('can:employees.update.contact');
+Route::patch('employee/{employee}/profile/store_email', 'EmployeeContactController@storeEmail')
+    ->middleware('can:employees.update.contact');
+Route::patch('employee/{employee}/address/{address}/update_address', 'EmployeeContactController@updateAddress')
+    ->middleware('can:employees.update.contact');
 
 //Passports and Visas
-Route::get('employee/{employee}/passports_visas', 'EmployeePassportVisaController@passportVisa');
-Route::get('employee/{employee}/create_passport', 'EmployeePassportVisaController@createPassport');
-Route::post('employee/{employee}/create_passport', 'EmployeePassportVisaController@storePassport');
-Route::post('employee/{employee}/passport/{passport}/create_visa', 'EmployeePassportVisaController@storeVisa');
-Route::patch('employee/{employee}/visa/{visa}/update_visa', 'EmployeePassportVisaController@updateVisa');
-Route::patch('employee/{employee}/passport/{passport}/update_passport', 'EmployeePassportVisaController@updatePassport');
-Route::get('employee/{employee}/passport/{passport}/update_passport', 'EmployeePassportVisaController@updatePassportForm');
+Route::get('employee/{employee}/passports_visas', 'EmployeePassportVisaController@passportVisa')
+    ->middleware('can:employees.show.full_profile');
+Route::get('employee/{employee}/create_passport', 'EmployeePassportVisaController@createPassport')
+    ->middleware('can:employees.show.full_profile');
+Route::post('employee/{employee}/create_passport', 'EmployeePassportVisaController@storePassport')
+    ->middleware('can:employees.update.government_documents');
+Route::post('employee/{employee}/passport/{passport}/create_visa', 'EmployeePassportVisaController@storeVisa')
+    ->middleware('can:employees.update.government_documents');
+Route::patch('employee/{employee}/visa/{visa}/update_visa', 'EmployeePassportVisaController@updateVisa')
+    ->middleware('can:employees.update.government_documents');
+Route::patch('employee/{employee}/passport/{passport}/update_passport', 'EmployeePassportVisaController@updatePassport')
+    ->middleware('can:employees.update.government_documents');
+Route::get('employee/{employee}/passport/{passport}/update_passport', 'EmployeePassportVisaController@updatePassportForm')
+    ->middleware('can:employees.update.government_documents');
 
 //ID Cards
-Route::get('employee/{employee}/id_card', 'EmployeeIdCardController@idCard');
-Route::get('employee/{employee}/create_id_card', 'EmployeeIdCardController@createForm');
-Route::post('employee/{employee}/create_id_card', 'EmployeeIdCardController@store');
-Route::get('employee/{employee}/id_card/{id_card}/update_id_card', 'EmployeeIdCardController@editForm');
-Route::patch('employee/{employee}/id_card/{id_card}/update_id_card', 'EmployeeIdCardController@update');
+Route::get('employee/{employee}/id_card', 'EmployeeIdCardController@idCard')
+    ->middleware('can:employees.show.full_profile');
+Route::get('employee/{employee}/create_id_card', 'EmployeeIdCardController@createForm')
+    ->middleware('can:employees.show.full_profile');
+Route::post('employee/{employee}/create_id_card', 'EmployeeIdCardController@store')
+    ->middleware('can:employees.update.government_documents');
+Route::get('employee/{employee}/id_card/{id_card}/update_id_card', 'EmployeeIdCardController@editForm')
+    ->middleware('can:employees.update.government_documents');
+Route::patch('employee/{employee}/id_card/{id_card}/update_id_card', 'EmployeeIdCardController@update')
+    ->middleware('can:employees.update.government_documents');
 
 //Official Documents
-Route::get('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@officialDocuments');
-Route::post('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@store');
-Route::post('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@store');
-Route::get('employee/{employee}/official_documents/{document}/delete', 'EmployeeOfficialDocumentsController@delete');
+Route::get('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@officialDocuments')
+    ->middleware('can:employees.show.full_profile');
+Route::post('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@store')
+    ->middleware('can:employees.update.official_documents');
+Route::post('employee/{employee}/official_documents', 'EmployeeOfficialDocumentsController@store')
+    ->middleware('can:employees.update.official_documents');
+Route::get('employee/{employee}/official_documents/{document}/delete', 'EmployeeOfficialDocumentsController@delete')
+    ->middleware('can:employees.update.official_documents');
 
 //Employment Details
-Route::get('employee/{employee}/employment_overview', 'EmployeePositionController@employmentOverview');
-Route::post('employee/{employee}/employment_overview', 'EmployeePositionController@storeOverview');
-Route::get('employee/{employee}/position/{position}/add', 'EmployeePositionController@addPosition');
-Route::get('employee/{employee}/position/{position}/remove', 'EmployeePositionController@removePosition');
-Route::get('employee/{employee}/position/view_details', 'EmployeePositionController@viewPositions');
+Route::get('employee/{employee}/employment_overview', 'EmployeePositionController@employmentOverview')
+    ->middleware('can:employees.show.full_profile');
+Route::post('employee/{employee}/employment_overview', 'EmployeePositionController@storeOverview')
+    ->middleware('can:employees.update.employment');
+Route::get('employee/{employee}/position/{position}/add', 'EmployeePositionController@addPosition')
+    ->middleware('can:employees.update.employment');
+Route::get('employee/{employee}/position/{position}/remove', 'EmployeePositionController@removePosition')
+    ->middleware('can:employees.update.employment');
+Route::get('employee/{employee}/position/view_details', 'EmployeePositionController@viewPositions')
+    ->middleware('can:employees.show.full_profile');
 
 /*
 |--------------------------------------------------------------------------
@@ -268,16 +334,21 @@ Route::post('person/search', 'PersonController@search');
 |--------------------------------------------------------------------------
 */
 //API
-Route::get('api/position/ajaxshowposition', 'PositionAjaxController@ajaxShow');
+Route::get('api/position/ajaxshowposition', 'PositionAjaxController@ajaxShow')
+    ->middleware('can:positions.show.positions');
 //Overview
-Route::get('position/summary', 'PositionController@summary');
-Route::get('position/index', 'PositionController@index');
-Route::get('position/archived', 'PositionController@archived');
+Route::get('position/summary', 'PositionController@summary')
+    ->middleware('can:positions.show.positions');
+Route::get('position/index', 'PositionController@index')
+    ->middleware('can:positions.show.positions');
+Route::get('position/archived', 'PositionController@archived')
+    ->middleware('can:positions.show.positions');
 //New
 Route::get('position/create', 'PositionController@create');
 Route::post('position/create', 'PositionController@store');
 //View
-Route::get('position/{position}', 'PositionController@view');
+Route::get('position/{position}', 'PositionController@view')
+    ->middleware('can:positions.show.positions');
 //Update
 Route::patch('position/{position}/edit', 'PositionController@update');
 Route::get('position/{position}/edit', 'PositionController@updateForm');

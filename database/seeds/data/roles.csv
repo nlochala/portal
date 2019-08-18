@@ -1,0 +1,12 @@
+portal-employees-read,View Employee Information
+portal-students-read,View Student Information
+portal-guardians-read,View Guardian Information
+portal-positions-read,View Position Information
+portal-classes-read,View Classes Information
+portal-classes-rw,View and Modify Classes Information
+portal-employees-rw,View and Modify Employee Information
+portal-guardians-rw,View and Modify Guardian Information
+portal-positions-rw,View and Modify Position Information
+portal-students-rw,View and Modify Student Information
+portal-admin,Control All Aspects of the Portal
+portal-teacher,View and Manage Students and Classes

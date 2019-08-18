@@ -119,10 +119,12 @@
                                 "                    onclick=\"window.location.href='/student/" + data + "'\">\n" +
                                 "                <i class=\"si si-magnifier\"></i>\n" +
                                 "            </button>\n" +
+                                @can('students.show.full_profile')
                                 "            <button dusk=\"btn-edit-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-primary\" data-toggle=\"tooltip\" title=\"Edit\"\n" +
                                 "                    onclick=\"window.location.href='/student/" + data + "/profile'\">\n" +
                                 "                <i class=\"fa fa-pen\"></i>\n" +
                                 "            </button>\n" +
+                                @endcan
                                 "            <button dusk=\"btn-family-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-success\" data-toggle=\"tooltip\" title=\"View Family\"\n" +
                                 "                    onclick=\"window.location.href='/student/" + data + "/view_family'\">\n" +
                                 "                <i class=\"fa fa-users\"></i>\n" +
@@ -149,6 +151,7 @@
                         fade: true,
                         className: 'btn-sm btn-hero-primary'
                     },
+                        @can('students.create.students')
                     {
                         text: '',
                         className: 'btn-sm btn-light',
@@ -163,6 +166,7 @@
                             $('#modal-block-student').modal('toggle');
                         }
                     },
+                    @endcan
                 ]
             });
         });

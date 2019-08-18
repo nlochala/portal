@@ -19,6 +19,7 @@
 @include('layouts._panels_start_content')
 @include('layouts._content_row_start')
 @include('layouts._content_column_start', ['size' => 8, 'class' => '', 'style' => ''])
+@can('guardians.update.government_documents')
 @if($passport->is_active)
     <button type="button" dusk="btn-new-passport"
             class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/guardian/$guardian->uuid/create_passport") !!}>
@@ -42,6 +43,7 @@
         <i class="fa fa-trash mr-1"></i> Delete Passport
     </button>
 @endif
+@endcan
 @include('_tables.new-table-plain',['id' => 'passport-table'])
 <tr>
     <td><strong>Country: </strong></td>
@@ -123,6 +125,7 @@
                 {!! \App\Helpers\Helpers::getExpirationBadge($visa->expiration_date,null,30,180) !!}
             </td>
             <td>
+                @can('guardians.update.government_documents')
                 <div class="btn-group">
                     <button type="button" dusk="btn-download-image-{{ $visa->id }}" class="btn btn-sm btn-outline-info" data-toggle="tooltip"
                             title="Download Info Page"
@@ -148,15 +151,18 @@
                         </button>
                     </div>
                 @endif
+                    @endcan
             </td>
         </tr>
     @endforeach
     @include('_tables.end-new-table')
 @endif
-<button type="button" dusk="btn-modal-block-visa-form-{{ $passport->id }}" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
+@can('guardians.update.government_documents')
+    <button type="button" dusk="btn-modal-block-visa-form-{{ $passport->id }}" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
         data-target="#modal-block-visa-form-{{ $passport->id }}">
     <i class="fa fa-plus"> </i> Add New Visa
 </button>
+    @endcan
 <!------   data-toggle="modal" data-target="#modal-block-visa-form". ----->
 @include('layouts._content_column_end')
 @include('layouts._content_row_end')
@@ -166,6 +172,7 @@
 <!-------------------------------------------------------------------------------->
 @include('layouts._panels_end_column')
 @include('layouts._panels_end_row')
+@can('guardians.update.government_documents')
 @foreach($passport->visas as $visa)
     <!-------------------------------- Modal: Visa Edit Start------------------------------------------->
     @include('layouts._modal_panel_start',[
@@ -195,3 +202,4 @@
 
 @include('layouts._modal_panel_end')
 <!-------------------------------- Modal: New Visa END------------------------------------------->
+@endcan

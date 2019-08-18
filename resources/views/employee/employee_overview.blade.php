@@ -58,17 +58,23 @@
                 <td>{{ $position->name }}</td>
                 <td>{{ $position->type->name }}</td>
                 <td>{{ $position->school->name }}</td>
-                <td>{{ $position->formattedStipend }}</td>
+                @if (auth()->user()->can('positions.show.stipend'))
+                    <td>{{ $position->formattedStipend }}</td>
+                @else
+                    <td>---</td>
+                @endif
                 <td class="text-center">
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="View Details"
                                 onclick="window.location.href='/employee/{{ $employee->uuid }}/position/view_details#{{ $position->uuid }}'">
                             <i class="si si-magnifier"></i>
                         </button>
+                        @can('employees.update.employment')
                         <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="tooltip" title="Remove Position"
                                 onclick="window.location.href='/employee/{{ $employee->uuid }}/position/{{ $position->uuid }}/remove'">
                             <i class="fa fa-times"></i>
                         </button>
+                        @endcan
                     </div>
                 </td>
             </tr>
@@ -76,12 +82,14 @@
         @include('_tables.end-new-table')
     @endif
 
+    @can('employees.update.employment')
     <hr />
 
     <button type="button" dusk="btn-modal-block-positions" class="btn btn-outline-success mr-1 mb-3" data-toggle="modal"
             data-target="#modal-block-positions">
         <i class="fa fa-plus"></i> Add Additional Position
     </button>
+    @endcan
 
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
