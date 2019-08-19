@@ -89,6 +89,8 @@ class Student extends PortalBaseModel
         'start_date',
         'end_date',
         'is_protected',
+        'username',
+        'password',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',

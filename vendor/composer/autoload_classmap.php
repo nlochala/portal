@@ -4963,6 +4963,7 @@ return array(
     'SessionUpdateTimestampHandlerInterface' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
     'StudentFakerTableSeeder' => $baseDir . '/database/seeds/StudentFakerTableSeeder.php',
     'StudentStatusesTableSeeder' => $baseDir . '/database/seeds/StudentStatusesTableSeeder.php',
+    'StudentUsernameTableSeeder' => $baseDir . '/database/seeds/StudentUsernameTableSeeder.php',
     'Symfony\\Component\\Console\\Application' => $vendorDir . '/symfony/console/Application.php',
     'Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface' => $vendorDir . '/symfony/console/CommandLoader/CommandLoaderInterface.php',
     'Symfony\\Component\\Console\\CommandLoader\\ContainerCommandLoader' => $vendorDir . '/symfony/console/CommandLoader/ContainerCommandLoader.php',

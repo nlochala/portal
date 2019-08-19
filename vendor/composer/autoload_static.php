@@ -5583,6 +5583,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'SessionUpdateTimestampHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
         'StudentFakerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StudentFakerTableSeeder.php',
         'StudentStatusesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StudentStatusesTableSeeder.php',
+        'StudentUsernameTableSeeder' => __DIR__ . '/../..' . '/database/seeds/StudentUsernameTableSeeder.php',
         'Symfony\\Component\\Console\\Application' => __DIR__ . '/..' . '/symfony/console/Application.php',
         'Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface' => __DIR__ . '/..' . '/symfony/console/CommandLoader/CommandLoaderInterface.php',
         'Symfony\\Component\\Console\\CommandLoader\\ContainerCommandLoader' => __DIR__ . '/..' . '/symfony/console/CommandLoader/ContainerCommandLoader.php',
