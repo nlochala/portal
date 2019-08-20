@@ -42,7 +42,7 @@
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
 
-    <!-- TABLE OF Class -->@include('_tables.new-table',['id' => 'classes_table', 'table_head' => ['ID', 'Name', 'Status', 'Room', 'Teachers', 'Actions']])
+    <!-- TABLE OF Class -->@include('_tables.new-table',['id' => 'classes_table', 'table_head' => ['ID', 'Name','Grade Level', 'Status', 'Room', 'Teachers', 'Actions']])
     @include('_tables.end-new-table')
 
 
@@ -93,6 +93,21 @@
                     { data: "name",
                         render: function(data, type, row) {
                             return row.course.short_name + ': ' + data;
+                        }
+                    },
+                    {data: "course.grade_levels",
+                        render: function(data, type, row) {
+                            let return_string = '';
+                            for (let i = 0; i < data.length; i++) {
+                                if(i === 0){
+                                    return_string += data[i].short_name;
+                                    continue;
+                                }
+
+                                return_string += ', '+data[i].short_name;
+                            }
+
+                            return return_string;
                         }
                     },
                     {data: "status",

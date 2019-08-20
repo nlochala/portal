@@ -28,7 +28,7 @@ class ClassAjaxController extends Controller
         $this->errors = false;
         $this->request = new StoreClassRequest();
         $this->eagerLoad = [
-            'course',
+            'course.gradeLevels',
             'primaryEmployee.person',
             'secondaryEmployee.person',
             'taEmployee.person',
