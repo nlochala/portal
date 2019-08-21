@@ -72,7 +72,7 @@
     </tr>
     <tr>
         <td><strong>{{ $quarter_name }} Enrollment: </strong>{{ $class->$relationship()->count() }}</td>
-        <td><strong>Assistant Teacher: </strong>{!! $class->taEmployee->name !!}</td>
+        <td><strong>Assistant Teacher: </strong>{!! $class->taEmployee->name ?? '--' !!}</td>
     </tr>
 
     @include('_tables.end-new-table')
