@@ -39,7 +39,11 @@ class AttendanceType extends Model
         return 'uuid';
     }
 
-    protected $casts = ['is_protected' => 'bool'];
+    protected $casts = [
+        'is_protected' => 'bool',
+        'should_alert' => 'bool',
+        'is_present' => 'bool',
+    ];
 
     /**
      * Add mass-assignment to model.
@@ -52,12 +56,28 @@ class AttendanceType extends Model
         'name',
         'description',
         'should_alert',
+        'is_present',
         'is_protected',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
         'user_updated_ip',
     ];
+
+    /**
+     * Return a formatted dropdown.
+     *
+     * @return array
+     */
+    public static function getDropdown()
+    {
+        $dropdown = [];
+        foreach (static::all() as $type) {
+            $dropdown[$type->id] = $type->short_name.' - '.$type->name;
+        }
+
+        return $dropdown;
+    }
 
     /*
     |--------------------------------------------------------------------------

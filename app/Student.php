@@ -147,6 +147,21 @@ class Student extends PortalBaseModel
     }
 
     /**
+     * Return the formal and href name of the student.
+     *
+     * @return string
+     */
+    public function getFormalNameAttribute()
+    {
+        $given_name = $this->person->given_name.' '.$this->person->name_in_chinese;
+        if ($this->person->given_name !== $this->person->preferred_name) {
+            $given_name .= ' ('.$this->person->preferred_name.')';
+        }
+
+        return '<a href="/student/'.$this->uuid.'">'.$this->person->family_name.', '.$given_name.'</a>';
+    }
+
+    /**
      * return start_date as carbon object.
      *
      * @param $value
@@ -282,6 +297,48 @@ class Student extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This student has many dailyAttendance.
+     *
+     * @return HasMany
+     */
+    public function todaysDailyAttendance()
+    {
+        return $this->hasMany('App\AttendanceDay', 'student_id')
+            ->where('date', '=', now()->format('Y-m-d'));
+    }
+
+    /**
+     *  This student has many dailyAttendance.
+     *
+     * @return HasMany
+     */
+    public function todaysClassAttendance()
+    {
+        return $this->hasMany('App\AttendanceClass', 'student_id')
+            ->where('date', '=', now()->format('Y-m-d'));
+    }
+
+    /**
+     *  This student has many dailyAttendance.
+     *
+     * @return HasMany
+     */
+    public function dailyAttendance()
+    {
+        return $this->hasMany('App\AttendanceDay', 'student_id');
+    }
+
+    /**
+     *  This student has many dailyAttendance.
+     *
+     * @return HasMany
+     */
+    public function dailyClassAttendance()
+    {
+        return $this->hasMany('App\AttendanceClass', 'student_id');
+    }
 
     /**
      *  This student has many enrollments.

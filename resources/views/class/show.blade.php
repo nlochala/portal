@@ -20,6 +20,21 @@
     ]
 ])
     @include('layouts._content_start')
+
+    @if($class->canTakeAttendance())
+        @if($class->todaysAttendance()->isEmpty())
+            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-hero-lg btn-hero-warning mr-1 mb-3"
+                    data-toggle="modal" data-target="#modal-block-attendance">
+                <i class="fa fa-user-check"></i> Take Class Attendance
+            </button>
+        @else
+            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-hero-lg btn-hero-success mr-1 mb-3"
+                    data-toggle="modal" data-target="#modal-block-attendance">
+                <i class="fa fa-user-check"></i> Update Class Attendance
+            </button>
+        @endif
+    @endif
+
     <!--
     panel.row
     panel.column
@@ -40,7 +55,7 @@
 
 -->
     @include('layouts._panels_start_row',['has_uniform_length' => false])
-    @include('layouts._panels_start_column', ['size' => 5])
+    @include('layouts._panels_start_column', ['size' => 4])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => 'Overview', 'with_block' => false])
@@ -57,22 +72,43 @@
         @endif
     </h4>
 
-    @include('_tables.new-table',['class' => 'table-borderless', 'id' => 'overview_table', 'table_head' => ['','']])
+    @include('_tables.new-table',['class' => 'table-borderless', 'id' => 'overview_table', 'table_head' => ['']])
     <tr>
         <td><strong>Name: </strong>{{ $class->name }}</td>
+    </tr>
+    <tr>
         <td><strong>Room: </strong>{{ $class->room->buildingNumber }} - {{ $class->room->description }}</td>
     </tr>
     <tr>
         <td><strong>Department: </strong>{{ $class->course->department->name }}</td>
+    </tr>
+    <tr>
+        <td><strong>Course: </strong><a href="/course/{{ $class->course->uuid }}">{{ $class->course->name }} ({{
+                $class->course->short_name }})</a></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
         <td><strong>Primary Teacher: </strong>{!! $class->primaryEmployee->name !!}</td>
     </tr>
     <tr>
-        <td><strong>Course: </strong><a href="/course/{{ $class->course->uuid }}">{{ $class->course->name }} ({{ $class->course->short_name }})</a></td>
         <td><strong>Secondary Teacher: </strong>{!! $class->secondaryEmployee->name ?? '--' !!}</td>
     </tr>
     <tr>
-        <td><strong>{{ $quarter_name }} Enrollment: </strong>{{ $class->$relationship()->count() }}</td>
         <td><strong>Assistant Teacher: </strong>{!! $class->taEmployee->name ?? '--' !!}</td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <td><strong>{{ $quarter_name }} Enrollment: </strong>{{ $class->$relationship()->count() }}</td>
     </tr>
 
     @include('_tables.end-new-table')
@@ -87,7 +123,7 @@
     <!-------------------------------------------------------------------------------->
     <!-------------------------------------------------------------------------------->
     @include('layouts._panels_end_column')
-    @include('layouts._panels_start_column', ['size' => 7])
+    @include('layouts._panels_start_column', ['size' => 8])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => $quarter_name.' Roster', 'with_block' => false])
@@ -97,18 +133,33 @@
     @if($enrollment->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'student-table', 'table_head' => ['#','Preferred Name - Gender','Today\'s Attendance','Date of Birth']])
+        @if($class->canTakeAttendance())
+            @include('_tables.new-table',['id' => 'student-table', 'table_head' => ['#','Preferred Name - Gender','Class Attendance', 'Birthday']])
+        @else
+            @include('_tables.new-table',['id' => 'student-table', 'table_head' => ['#','Preferred Name - Gender','Today\'s Attendance', 'Birthday']])
+        @endif
         @php
-        $i = 1;
+            $i = 1;
         @endphp
-        @foreach($enrollment as $student)
-            <tr>
-                <td>{{ $i++ }}</td>
-                <td>{!! $student->name !!} - {{ $student->person->gender[0] }}</td>
-                <td>Present</td>
-                <td>{{ $student->person->dob->format('m-d') }} ({{ $student->person->age }})</td>
-            </tr>
-        @endforeach
+        @if($class->canTakeAttendance())
+            @foreach($enrollment as $student)
+                <tr>
+                    <td>{{ $i++ }}</td>
+                    <td>{!! $student->name !!} - {{ $student->person->gender[0] }}</td>
+                    <td>{{ $student->todaysClassAttendance->first()->type->name ?? '--' }}</td>
+                    <td>{{ $student->person->dob->format('m-d') }} ({{ $student->person->age }})</td>
+                </tr>
+            @endforeach
+        @else
+            @foreach($enrollment as $student)
+                <tr>
+                    <td>{{ $i++ }}</td>
+                    <td>{!! $student->name !!} - {{ $student->person->gender[0] }}</td>
+                    <td>{{ $student->todaysDailyAttendance->first()->type->name ?? '--' }}</td>
+                    <td>{{ $student->person->dob->format('m-d') }} ({{ $student->person->age }})</td>
+                </tr>
+            @endforeach
+        @endif
         @include('_tables.end-new-table')
     @endif
 
@@ -122,6 +173,12 @@
     @include('layouts._panels_end_row')
 
     @include('layouts._content_end')
+
+    @if($class->todaysAttendance()->isEmpty())
+        @include('class._new_daily_attendance')
+    @else
+        @include('class._update_daily_attendance')
+    @endif
 @endsection
 
 @section('js_after')

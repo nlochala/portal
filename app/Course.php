@@ -28,7 +28,7 @@ class Course extends PortalBaseModel
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string)Uuid::generate(4);
+            $model->uuid = (string) Uuid::generate(4);
         });
     }
 
@@ -169,7 +169,7 @@ class Course extends PortalBaseModel
      */
     public function getShortNameUrlAttribute()
     {
-        return '<a href="' . url('course/' . $this->uuid) . '">' . $this->short_name . '</a>';
+        return '<a href="'.url('course/'.$this->uuid).'">'.$this->short_name.'</a>';
     }
 
     /**
@@ -179,7 +179,7 @@ class Course extends PortalBaseModel
      */
     public function getFullNameAttribute()
     {
-        return $this->short_name . ' - ' . $this->name;
+        return $this->short_name.' - '.$this->name;
     }
 
     /**
@@ -211,6 +211,16 @@ class Course extends PortalBaseModel
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Get attendance courses query scope.
+     *
+     * @param $query
+     */
+    public function scopeHasAttendance($query)
+    {
+        $query->where('has_attendance', true);
+    }
 
     /**
      * Get active courses query scope.

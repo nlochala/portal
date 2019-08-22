@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Person;
 use App\Employee;
+use App\CourseClass;
 use App\EmployeeStatus;
 use App\Helpers\Helpers;
 use Illuminate\View\View;
@@ -40,7 +41,12 @@ class EmployeeController extends Controller
             'person.user.adGroups'
         );
 
-        return view('employee.dashboard', compact('employee'));
+        $classes = CourseClass::where('primary_employee_id', '=', $employee->id)
+            ->orWhere('secondary_employee_id', '=', $employee->id)
+            ->orWhere('ta_employee_id', '=', $employee->id)
+            ->get();
+
+        return view('employee.dashboard', compact('employee', 'classes'));
     }
 
     /**

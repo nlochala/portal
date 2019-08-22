@@ -107,6 +107,33 @@ class Quarter extends PortalBaseModel
     }
 
     /**
+     * Return the current quarter.
+     *
+     * @param string $date
+     * @return mixed
+     */
+    public static function getQuarter(string $date = 'Y-m-d')
+    {
+        $quarters = static::current()->get();
+        $now = Carbon::parse($date);
+        foreach ($quarters as $quarter) {
+            $start_date = Carbon::parse($quarter->start_date);
+            $end_date = Carbon::parse($quarter->end_date);
+
+            // Before school starts
+            if ($quarter->name === 'Q1' && $now->lessThan($start_date)) {
+                return $quarter;
+            }
+
+            if ($now->isBetween($start_date, $end_date)) {
+                return $quarter;
+            }
+        }
+
+        return $quarters->last();
+    }
+
+    /**
      * Return the relationship.
      *
      * @return string

@@ -16,9 +16,10 @@ class CreateAttendanceDaysTable extends Migration
         Schema::create('attendance_days', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->nullable();
-            $table->dateTime('date')->nullable();
+            $table->string('date')->nullable();
             $table->unsignedBigInteger('student_id')->nullable();
             $table->unsignedBigInteger('attendance_type_id')->nullable();
+            $table->unsignedBigInteger('quarter_id')->nullable();
             $table->integer('user_created_id')->nullable();
             $table->string('user_created_ip')->nullable();
             $table->string('user_updated_ip')->nullable();

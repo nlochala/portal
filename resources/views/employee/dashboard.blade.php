@@ -35,13 +35,43 @@
     |--------------||--------------|
 
 -->
+    @php
+        if (! $classes->isEmpty()){
+            $info_size = 6;
+            $image_size = 3;
+        }else{
+            $info_size = 8;
+            $image_size = 4;
+        }
+    @endphp
+
     @include('layouts._panels_start_row',['has_uniform_length' => false])
-    @include('layouts._panels_start_column', ['size' => 8])
+    @if(! $classes->isEmpty())
+        @include('layouts._panels_start_column', ['size' => 3])
+        <!-------------------------------------------------------------------------------->
+        <!----------------------------------New Panel ------------------------------------>
+        @include('layouts._panels_start_panel', ['title' => 'Classes', 'with_block' => false])
+        {{-- START BLOCK OPTIONS panel.block --}}
+        @include('layouts._panels_start_content')
+
+        <ul>
+        @foreach($classes as $class)
+                <li><strong><a href="/class/{{ $class->uuid }}">{{ $class->full_name }}</a></strong> - {{ $class->getTeacherType($employee) }}</li>
+        @endforeach
+        </ul>
+
+        @include('layouts._panels_end_content')
+        @include('layouts._panels_end_panel')
+        <!-------------------------------------------------------------------------------->
+        <!-------------------------------------------------------------------------------->
+        @include('layouts._panels_end_column')
+    @endif
+    @include('layouts._panels_start_column', ['size' => $info_size])
 
     @include('employee._info_panel_large')
 
     @include('layouts._panels_end_column')
-    @include('layouts._panels_start_column', ['size' => 4])
+    @include('layouts._panels_start_column', ['size' => $image_size])
 
     @include('person._profile_image', ['person' => $employee->person])
 

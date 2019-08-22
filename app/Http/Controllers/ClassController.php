@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AttendanceType;
 use App\Quarter;
 use App\Room;
 use App\Year;
@@ -59,6 +60,7 @@ class ClassController extends Controller
         $quarter = Quarter::now();
         $relationship = $quarter->getClassRelationship();
         $quarter_name = $quarter->name;
+        $type_dropdown = AttendanceType::getDropdown();
 
         $class->load(
             'course',
@@ -74,9 +76,9 @@ class ClassController extends Controller
             'status'
         );
 
-        $enrollment = $class->$relationship;
+        $enrollment = $class->$relationship->load('todaysDailyAttendance.type', 'todaysClassAttendance.type');
 
-        return view('class.show', compact('class', 'quarter_name', 'relationship', 'enrollment'));
+        return view('class.show', compact('class', 'quarter_name', 'relationship', 'enrollment', 'type_dropdown'));
     }
 
     /**

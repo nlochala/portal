@@ -26,7 +26,7 @@
 'icon' => 'si si-globe',
 'title' => 'Home'
 ])
-@include('layouts._sidebar_heading', ['header' => '----- Manage -----'])
+@include('layouts._sidebar_heading', ['header' => 'Dashboards'])
 @include('layouts._sidebar_heading', ['header' => 'People'])
 @include('layouts._sidebar_menu_nested_submenu', [
 'section_title' => 'Employees',
@@ -123,6 +123,21 @@
             'title' => 'Index',
             'uri'   => '/class/index'
         ],
+    ]
+])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Attendance',
+'section_icon' => 'fa fa-user-check',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Daily Report',
+            'uri'   => '/attendance/daily_report'
+        ],
+//        [
+//            'title' => 'Modify Attendance',
+//            'uri'   => '/attendance/modify'
+//        ],
     ]
 ])
 @include('layouts._sidebar_menu_nested_submenu', [

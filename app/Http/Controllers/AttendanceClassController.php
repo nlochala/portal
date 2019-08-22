@@ -2,84 +2,106 @@
 
 namespace App\Http\Controllers;
 
+use App\AttendanceDay;
+use App\CourseClass;
 use App\AttendanceClass;
-use Illuminate\Http\Request;
+use App\Helpers\Helpers;
+use App\Events\AttendanceTaken;
+use App\Quarter;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AttendanceClassController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Require users to have been authenticated before reaching this page.
      *
-     * @return \Illuminate\Http\Response
+     * UserController constructor.
      */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display the daily report.
      *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View
      */
-    public function create()
+    public function dailyReport()
     {
-        //
+        //Homeroom list
+        $homeroom_list = CourseClass::classesWithAttendance()->load('attendance');
+        $absent_students = AttendanceDay::today()->absent()->with('student.person', 'type')->get();
+
+        return view('attendance.daily_report', compact('homeroom_list', 'absent_students'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store the class attendance.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CourseClass $class
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CourseClass $class)
     {
-        //
+        $values = request()->all();
+        $date = now()->format('Y-m-d');
+        $quarter = Quarter::now();
+        unset($values['_token']);
+        foreach ($values as $id => $item) {
+            $insert_array = [
+                'date' => $date,
+                'student_id' => $id,
+                'class_id' => $class->id,
+                'attendance_type_id' => $item,
+                'quarter_id' => $quarter->id,
+            ];
+
+            $insert_array = Helpers::dbAddAudit($insert_array);
+            if ($attendance = AttendanceClass::create($insert_array)) {
+                event(new AttendanceTaken($attendance));
+            }
+        }
+        Helpers::flash(true, 'class attendance');
+
+        return redirect()->to('class/'.$class->uuid);
     }
 
     /**
-     * Display the specified resource.
+     * Update the class attendance.
      *
-     * @param  \App\AttendanceClass  $attendanceClass
-     * @return \Illuminate\Http\Response
+     * @param CourseClass $class
+     * @return RedirectResponse
      */
-    public function show(AttendanceClass $attendanceClass)
+    public function update(CourseClass $class)
     {
-        //
-    }
+        $values = request()->all();
+        $date = now()->format('Y-m-d');
+        $quarter = Quarter::now();
+        unset($values['_token']);
+        foreach ($values as $id => $item) {
+            $update_array = [
+                'date' => $date,
+                'student_id' => $id,
+                'class_id' => $class->id,
+                'attendance_type_id' => $item,
+                'quarter_id' => $quarter->id,
+            ];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\AttendanceClass  $attendanceClass
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(AttendanceClass $attendanceClass)
-    {
-        //
-    }
+            $update_array = Helpers::dbAddAudit($update_array);
+            $attendance = AttendanceClass::where('student_id', '=', $id)
+                ->where('date', '=', $date)
+                ->where('class_id', '=', $class->id)
+                ->first();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\AttendanceClass  $attendanceClass
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, AttendanceClass $attendanceClass)
-    {
-        //
-    }
+            if ($attendance->update($update_array)) {
+                event(new AttendanceTaken($attendance));
+            }
+        }
+        Helpers::flash(true, 'class attendance', 'updated');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\AttendanceClass  $attendanceClass
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(AttendanceClass $attendanceClass)
-    {
-        //
+        return redirect()->to('class/'.$class->uuid);
     }
 }

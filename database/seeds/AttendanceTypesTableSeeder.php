@@ -26,6 +26,7 @@ class AttendanceTypesTableSeeder extends Seeder
             $model->name = $type[1];
             $model->description = $type[2];
             $model->should_alert = $type[3];
+            $model->is_present = $type[4];
             $model->is_protected = true;
             $model = Helpers::dbAddAudit($model);
             $model->save();

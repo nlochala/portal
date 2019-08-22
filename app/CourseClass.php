@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -85,6 +86,44 @@ class CourseClass extends PortalBaseModel
     }
 
     /**
+     * When given an employee, determine which kind of teacher
+     * he or she is.
+     *
+     * @param Employee $employee
+     * @return string
+     */
+    public function getTeacherType(Employee $employee)
+    {
+        $type = '--';
+
+        switch ($employee->id) {
+            case $this->primary_employee_id:
+                $type = 'Primary Teacher';
+                break;
+            case $this->secondary_employee_id:
+                $type = 'Secondary Teacher';
+                break;
+            case $this->ta_employee_id:
+                $type = 'Teaching Assistant';
+                break;
+        }
+
+        return $type;
+    }
+
+    /**
+     * Return all classes that need attendance.
+     *
+     * @return mixed
+     */
+    public static function classesWithAttendance()
+    {
+        return static::whereHas('course', function ($q) {
+            $q->active()->hasAttendance();
+        })->get();
+    }
+
+    /**
      * Display the teachers of a given class.
      *
      * @param bool $display_inline
@@ -105,6 +144,26 @@ class CourseClass extends PortalBaseModel
         }
 
         return $teachers;
+    }
+
+    /**
+     * Return today's attendance for a class.
+     *
+     * @return mixed
+     */
+    public function todaysAttendance()
+    {
+        return $this->attendance()->today()->get();
+    }
+
+    /**
+     * Can this class take attendance?
+     *
+     * @return bool
+     */
+    public function canTakeAttendance()
+    {
+        return $this->course->has_attendance ? true : false;
     }
 
     /*
@@ -192,6 +251,16 @@ class CourseClass extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This class has many attendance.
+     *
+     * @return HasMany
+     */
+    public function attendance()
+    {
+        return $this->hasMany('App\AttendanceClass', 'class_id');
+    }
 
     /**
      * Many classes belongs to many students.

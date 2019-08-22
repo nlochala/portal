@@ -431,6 +431,13 @@ Route::post('api/grade_scale/{grade_scale}/standards/ajaxstoreitem', 'GradeScale
 
 /*
 |--------------------------------------------------------------------------
+| ATTENDANCE
+|--------------------------------------------------------------------------
+*/
+Route::get('attendance/daily_report', 'AttendanceClassController@dailyReport');
+
+/*
+|--------------------------------------------------------------------------
 | CLASSES
 |--------------------------------------------------------------------------
 */
@@ -438,6 +445,8 @@ Route::get('class/index', 'ClassController@index');
 Route::post('class/index', 'ClassController@store');
 Route::get('class/{class}', 'ClassController@show');
 Route::patch('class/{class}', 'ClassController@storeUpdateShow');
+Route::post('class/{class}/store_attendance', 'AttendanceClassController@store');
+Route::post('class/{class}/update_attendance', 'AttendanceClassController@update');
 Route::get('class/{class}/audits', 'ClassController@showAudits');
 //Edit Overview
 Route::get('class/{class}/edit_overview', 'ClassController@update');
