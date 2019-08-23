@@ -19,10 +19,17 @@
             <td>{{ $i++ }}</td>
             <td>{!! $student->name !!} - {{ $student->person->gender[0] }}</td>
             <td>
-                {{ Form::select($student->id, $type_dropdown, $student->todaysClassAttendance()->where('class_id','=',$class->id)->first()->type->id, [
-                'id' => $student->id,
-                'class' => 'js-select2 form-control',
-                ]) }}
+                @if($student->todaysClassAttendance()->where('class_id','=',$class->id)->first())
+                    {{ Form::select($student->id, $type_dropdown,$student->todaysClassAttendance()->where('class_id','=',$class->id)->first()->type->id , [
+                    'id' => $student->id,
+                    'class' => 'js-select2 form-control',
+                    ]) }}
+                @else
+                    {{ Form::select($student->id, $type_dropdown,1, [
+                    'id' => $student->id,
+                    'class' => 'js-select2 form-control',
+                    ]) }}
+                @endif
             </td>
         </tr>
     @endforeach
