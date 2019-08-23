@@ -38,7 +38,7 @@
 -->
 
     @include('layouts._panels_start_row',['has_uniform_length' => false])
-    @include('layouts._panels_start_column', ['size' => 4])
+    @include('layouts._panels_start_column', ['size' => 5])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => 'Homerooms Reported', 'with_block' => false])
@@ -49,7 +49,7 @@
     @if($homeroom_list->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'homeroom_table', 'table_head' => ['Class','Attendance','Present', 'Absent']])
+        @include('_tables.new-table',['id' => 'homeroom_table', 'table_head' => ['Class','Completed','Present', 'Absent']])
         @foreach($homeroom_list as $homeroom)
             <tr>
                 <td><a href="/class/{{ $homeroom->uuid }}">{{ $homeroom->full_name }}</a></td>
@@ -72,7 +72,7 @@
     <!-------------------------------------------------------------------------------->
     <!-------------------------------------------------------------------------------->
     @include('layouts._panels_end_column')
-    @include('layouts._panels_start_column', ['size' => 8])
+    @include('layouts._panels_start_column', ['size' => 7])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => 'Absent Students', 'with_block' => false])
@@ -115,6 +115,17 @@
         // Add Filepond initializer form.js.file
 
         jQuery(document).ready(function () {
+            var tableabsent = $('#absent_table').DataTable( {
+                dom: "frt",
+                select: false,
+                paging: false,
+            });
+
+            var tablehomeroom = $('#homeroom_table').DataTable( {
+                dom: "",
+                select: false,
+                paging: false,
+            });
 
 
         });
