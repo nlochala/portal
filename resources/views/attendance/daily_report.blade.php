@@ -90,7 +90,7 @@
                       data-max-spot-color="transparent"
                       data-highlight-spot-color="#3c90df"
                       data-highlight-line-color="#3c90df"
-                      data-tooltip-suffix="Present"></span>
+                      data-tooltip-suffix="Absent"></span>
             </div>
             <div class="ml-3 text-right">
                 <p class="text-muted mb-0">

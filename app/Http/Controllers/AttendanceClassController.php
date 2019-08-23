@@ -35,10 +35,12 @@ class AttendanceClassController extends Controller
         //Homeroom list
         $homeroom_list = CourseClass::classesWithAttendance()->load('attendance');
         $absent_students = AttendanceDay::today()->absent()->with('student.person', 'type')->get();
-        $absent_stats = implode(',', AttendanceDay::getStudentCount('absent'));
+        $absent_stats = implode(',',
+            AttendanceDay::getStudentCount('absent', Helpers::getPreviousWorkingDays(now()->format('Y-m-d'), 15)));
 
         $present_count = AttendanceDay::today()->present()->count();
-        $present_stats = implode(',', AttendanceDay::getStudentCount('present'));
+        $present_stats = implode(',',
+            AttendanceDay::getStudentCount('present', Helpers::getPreviousWorkingDays(now()->format('Y-m-d'), 15)));
 
         $current_student_count = Student::current()->count();
 
