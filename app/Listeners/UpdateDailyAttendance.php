@@ -52,7 +52,7 @@ class UpdateDailyAttendance implements ShouldQueue
         $record->date = $event->attendance->date;
         $record->quarter_id = $event->attendance->quarter_id;
         $record->student_id = $event->attendance->student_id;
-        $record->attendance_type_id = $present_id;
+        $record->attendance_type_id = $type_id;
         $record = Helpers::dbAddAudit($record);
         $record->user_created_id = $event->attendance->user_created_id;
         $record->save();
