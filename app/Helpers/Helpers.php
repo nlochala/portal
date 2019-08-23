@@ -25,6 +25,25 @@ class Helpers
     }
 
     /**
+     * Return the previous working days for reporting purposes.
+     *
+     * @param $starting_date
+     * @param int $number_of_days
+     * @param string $carbon_format
+     * @return array
+     */
+    public static function getPreviousWorkingDays(string $starting_date = 'Y-m-d', $number_of_days = 5, $carbon_format = 'Y-m-d')
+    {
+        $date_array = [];
+        for ($i = ($number_of_days - 1); $i >= 0; $i--) {
+            $start_date = Carbon::parse($starting_date);
+            $date_array[] = $start_date->subWeekdays($i)->format($carbon_format);
+        }
+
+        return $date_array;
+    }
+
+    /**
      * @param $path
      * @param bool $strict
      * @return bool

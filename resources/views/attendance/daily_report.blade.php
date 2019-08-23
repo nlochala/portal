@@ -36,6 +36,74 @@
     |--------------||--------------|
 
 -->
+    @include('layouts._panels_start_row',['has_uniform_length' => true])
+    @include('layouts._panels_start_column', ['size' => 3])
+    <a class="block block-link-pop text-center" href="javascript:void(0)">
+            <div>
+                <div class="font-size-h1 font-w300 text-black">{{ $current_student_count }}</div>
+                <div class="font-w600 mt-2 text-uppercase text-muted">Total Enrolled</div>
+            </div>
+    </a>
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_start_column', ['size' => 3])
+    <a class="block block-rounded block-link-pop" href="javascript:void(0)">
+        <div class="block-content block-content-full d-flex align-items-center justify-content-between">
+            <div>
+                <!-- Sparkline Container -->
+                <span class="js-sparkline" data-type="line"
+                      data-points="[{{ $present_stats }}]"
+                      data-width="90px"
+                      data-height="40px"
+                      data-line-color="#3c90df"
+                      data-fill-color="transparent"
+                      data-spot-color="transparent"
+                      data-min-spot-color="transparent"
+                      data-max-spot-color="transparent"
+                      data-highlight-spot-color="#3c90df"
+                      data-highlight-line-color="#3c90df"
+                      data-tooltip-suffix="Present"></span>
+            </div>
+            <div class="ml-3 text-right">
+                <p class="text-muted mb-0">
+                    Present
+                </p>
+                <p class="font-size-h3 font-w300 mb-0">
+                    {{ $present_count }}
+                </p>
+            </div>
+        </div>
+    </a>
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_start_column', ['size' => 3])
+    <a class="block block-rounded block-link-pop" href="javascript:void(0)">
+        <div class="block-content block-content-full d-flex align-items-center justify-content-between">
+            <div>
+                <!-- Sparkline Container -->
+                <span class="js-sparkline" data-type="line"
+                      data-points="[{{ $absent_stats }}]"
+                      data-width="90px"
+                      data-height="40px"
+                      data-line-color="#3c90df"
+                      data-fill-color="transparent"
+                      data-spot-color="transparent"
+                      data-min-spot-color="transparent"
+                      data-max-spot-color="transparent"
+                      data-highlight-spot-color="#3c90df"
+                      data-highlight-line-color="#3c90df"
+                      data-tooltip-suffix="Present"></span>
+            </div>
+            <div class="ml-3 text-right">
+                <p class="text-muted mb-0">
+                    Absent
+                </p>
+                <p class="font-size-h3 font-w300 mb-0">
+                    {{ $absent_students->count() }}
+                </p>
+            </div>
+        </div>
+    </a>
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_end_row')
 
     @include('layouts._panels_start_row',['has_uniform_length' => false])
     @include('layouts._panels_start_column', ['size' => 5])
@@ -115,13 +183,13 @@
         // Add Filepond initializer form.js.file
 
         jQuery(document).ready(function () {
-            var tableabsent = $('#absent_table').DataTable( {
+            var tableabsent = $('#absent_table').DataTable({
                 dom: "frt",
                 select: false,
                 paging: false,
             });
 
-            var tablehomeroom = $('#homeroom_table').DataTable( {
+            var tablehomeroom = $('#homeroom_table').DataTable({
                 dom: "",
                 select: false,
                 paging: false,

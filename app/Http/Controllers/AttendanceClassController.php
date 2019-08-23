@@ -8,6 +8,7 @@ use App\AttendanceClass;
 use App\Helpers\Helpers;
 use App\Events\AttendanceTaken;
 use App\Quarter;
+use App\Student;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -34,8 +35,21 @@ class AttendanceClassController extends Controller
         //Homeroom list
         $homeroom_list = CourseClass::classesWithAttendance()->load('attendance');
         $absent_students = AttendanceDay::today()->absent()->with('student.person', 'type')->get();
+        $absent_stats = implode(',', AttendanceDay::getStudentCount('absent'));
 
-        return view('attendance.daily_report', compact('homeroom_list', 'absent_students'));
+        $present_count = AttendanceDay::today()->present()->count();
+        $present_stats = implode(',', AttendanceDay::getStudentCount('present'));
+
+        $current_student_count = Student::current()->count();
+
+        return view('attendance.daily_report', compact(
+            'homeroom_list',
+           'absent_students',
+            'absent_stats',
+            'present_count',
+            'present_stats',
+            'current_student_count'
+        ));
     }
 
     /**

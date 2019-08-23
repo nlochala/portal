@@ -23,6 +23,7 @@
 <script src="{{ asset('js/plugins/multiselect/jquery.quicksearch.js') }}"></script>
 
 
+
 <!-- Algolia -->
 <script src="{{ asset('js/plugins/algolia/algoliasearch.min.js') }}"></script>
 <script src="{{ asset('js/plugins/algolia/autocomplete.min.js') }}"></script>
@@ -48,12 +49,17 @@
 <script src="{{ asset('js/plugins/filepond/filepond-plugin-image-transform/filepond-plugin-image-transform.js') }}"></script>
 <script src="{{ asset('js/plugins/filepond/filepond-plugin-image-validate-size/filepond-plugin-image-validate-size.js') }}"></script>
 <script src="{{ asset('js/plugins/filepond/jquery-filepond/filepond.jquery.js') }}"></script>
+<script src="{{ asset('js/plugins/easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
+<script src="{{ asset('js/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+
+
 
 <!-- Summernote Text Editor-->
 <script src="{{ asset('js/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
 
 <script type="text/javascript">
+    jQuery(function(){ Dashmix.helpers(['easy-pie-chart', 'sparkline']); });
     ///////////////////////////////////////////////////////
     // ALGOLIA
     ///////////////////////////////////////////////////////

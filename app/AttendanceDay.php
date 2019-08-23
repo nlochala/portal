@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\Helpers;
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
@@ -59,6 +60,23 @@ class AttendanceDay extends Model
         'user_updated_ip',
     ];
 
+    /**
+     * @param array $dates_array
+     * @param string $attendance_type
+     * @return array
+     */
+    public static function getStudentCount($attendance_type = 'absent or present', array $dates_array = null)
+    {
+        $dates_array = $dates_array ?: Helpers::getPreviousWorkingDays(now()->format('Y-m-d'));
+
+        $count_array = [];
+        foreach ($dates_array as $date) {
+            $count_array[] = static::date($date)->$attendance_type()->count();
+        }
+
+        return $count_array;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
@@ -96,6 +114,17 @@ class AttendanceDay extends Model
     */
 
     /**
+     * Date query scope.
+     *
+     * @param $query
+     * @param string $date
+     */
+    public function scopeDate($query, string $date = 'Y-m-d')
+    {
+        $query->where('date', '=', $date);
+    }
+
+    /**
      * Today's Attendance query scope.
      *
      * @param $query
@@ -128,7 +157,6 @@ class AttendanceDay extends Model
             $q->where('is_present', false);
         });
     }
-
 
     /*
     |--------------------------------------------------------------------------
