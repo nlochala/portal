@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\AttendanceDay;
-use App\CourseClass;
-use App\AttendanceClass;
-use App\Helpers\Helpers;
-use App\Events\AttendanceTaken;
 use App\Quarter;
 use App\Student;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
+use App\CourseClass;
+use App\AttendanceDay;
+use App\AttendanceClass;
+use App\Helpers\Helpers;
 use Illuminate\View\View;
+use App\Events\AttendanceTaken;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
 
 class AttendanceClassController extends Controller
 {
@@ -107,15 +107,20 @@ class AttendanceClassController extends Controller
             ];
 
             $update_array = Helpers::dbAddAudit($update_array);
-            $attendance = AttendanceClass::where('student_id', '=', $id)
+            if ($attendance = AttendanceClass::where('student_id', '=', $id)
                 ->where('date', '=', $date)
                 ->where('class_id', '=', $class->id)
-                ->first();
-
-            if ($attendance->update($update_array)) {
-                event(new AttendanceTaken($attendance));
+                ->first()) {
+                if ($attendance->update($update_array)) {
+                    event(new AttendanceTaken($attendance));
+                }
+            } else {
+                if ($attendance = AttendanceClass::create($update_array)) {
+                    event(new AttendanceTaken($attendance));
+                }
             }
         }
+
         Helpers::flash(true, 'class attendance', 'updated');
 
         return redirect()->to('class/'.$class->uuid);
