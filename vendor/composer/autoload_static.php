@@ -874,6 +874,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Http\\Controllers\\StudentController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentController.php',
         'App\\Http\\Controllers\\StudentFamilyController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentFamilyController.php',
         'App\\Http\\Controllers\\StudentIdCardController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentIdCardController.php',
+        'App\\Http\\Controllers\\StudentLoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentLoginController.php',
         'App\\Http\\Controllers\\StudentOfficialDocumentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentOfficialDocumentsController.php',
         'App\\Http\\Controllers\\StudentPassportVisaController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentPassportVisaController.php',
         'App\\Http\\Controllers\\StudentProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentProfileController.php',

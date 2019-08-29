@@ -341,16 +341,6 @@ class Student extends PortalBaseModel
     }
 
     /**
-     *  This student has many enrollments.
-     *
-     * @return HasMany
-     */
-    public function enrollments()
-    {
-        return $this->hasMany('App\ClassEnrollment', 'student_id');
-    }
-
-    /**
      *  This student belongs to a family.
      *
      * @return BelongsTo

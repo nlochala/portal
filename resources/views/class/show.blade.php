@@ -25,15 +25,19 @@
         @if($class->todaysAttendance()->isEmpty())
             <button type="button" dusk="btn-modal-block-attendance" class="btn btn-hero-lg btn-hero-warning mr-1 mb-3"
                     data-toggle="modal" data-target="#modal-block-attendance">
-                <i class="fa fa-user-check"></i> Take Class Attendance
+                <i class="fa fa-user-check"></i> Take Attendance
             </button>
         @else
             <button type="button" dusk="btn-modal-block-attendance" class="btn btn-hero-lg btn-hero-success mr-1 mb-3"
                     data-toggle="modal" data-target="#modal-block-attendance">
-                <i class="fa fa-user-check"></i> Update Class Attendance
+                <i class="fa fa-user-check"></i> Update Attendance
             </button>
         @endif
     @endif
+    <button type="button" dusk="btn-modal-block-logins" class="btn btn-hero-lg btn-hero-primary mr-1 mb-3"
+            data-toggle="modal" data-target="#modal-block-logins">
+        <i class="fa fa-user-lock"></i> Student Logins
+    </button>
 
     <!--
     panel.row
@@ -179,11 +183,65 @@
     @else
         @include('class._update_daily_attendance')
     @endif
+
+    <!-------------------------------- Modal: Student Logins Start------------------------------------------->
+    @include('layouts._modal_panel_start',[
+        'id' => 'modal-block-logins',
+        'title' => 'Student Logins'
+    ])
+
+    @php
+        $i = 1;
+    @endphp
+
+    <!-- TABLE OF LOGINS -->
+    @if($enrollment->isEmpty())
+        <small><em>Nothing to Display</em></small>
+    @else
+        @include('_tables.new-table',['id' => 'logins_table', 'table_head' => ['#','Name','Username','Password']])
+        @foreach($enrollment as $student)
+            <tr>
+                <td>{{ $i++ }}</td>
+                <td>{!! $student->name !!}</td>
+                <td>{{ $student->username ?? '---' }}</td>
+                <td>{{ $student->password ?? '---' }}</td>
+            </tr>
+        @endforeach
+        @include('_tables.end-new-table')
+    @endif
+
+    @include('layouts._modal_panel_end')
+    <!-------------------------------- Modal: Student Logins END------------------------------------------->
+    <!------   data-toggle="modal" data-target="#modal-block-logins". ----->
 @endsection
 
 @section('js_after')
     <script type="text/javascript">
         jQuery(document).ready(function () {
+            var tablelogins = $('#logins_table').DataTable( {
+                dom: "Bfrt",
+                select: true,
+                paging: false,
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-fw fa-download mr-1"></i>',
+                        buttons: [
+                            'copy',
+                            'excel',
+                            'csv',
+                            {
+                                extend: 'pdf',
+                                orientation: 'landscape',
+                                pageSize: 'LETTER'
+                            },
+                            'print',
+                        ],
+                        fade: true,
+                        className: 'btn-sm btn-hero-primary'
+                    },
+                ]
+            });
         });
     </script>
 @endsection

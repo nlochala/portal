@@ -57,6 +57,16 @@ Route::get('role/{role}/archive', 'RoleController@archive')
 
 /*
 |--------------------------------------------------------------------------
+| STUDENT LOGINS
+|--------------------------------------------------------------------------
+*/
+Route::get('student/logins', 'StudentLoginController@index')
+    ->middleware('can:students.show.full_profile');
+Route::get('student/export_new_logins', 'StudentLoginController@loginsExport')
+    ->middleware('can:students.show.full_profile');
+
+/*
+|--------------------------------------------------------------------------
 | ADDRESS
 |--------------------------------------------------------------------------
 */
@@ -239,6 +249,10 @@ Route::get('student/{student}/official_documents/{document}/delete', 'StudentOff
 //Academics
 Route::get('student/{student}/academics/overview', 'StudentAcademicController@overview');
 Route::patch('student/{student}/academics/overview', 'StudentAcademicController@storeOverview');
+
+//Logins
+Route::get('student/{student}/logins', 'StudentLoginController@viewStudent');
+Route::patch('student/{student}/logins', 'StudentLoginController@updateStudent');
 
 //Family
 Route::get('student/{student}/new_family', 'StudentFamilyController@newFamily');

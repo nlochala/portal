@@ -61,6 +61,11 @@
             'title' => 'Directory',
             'uri'   => '/student/index'
         ],
+        [
+            'title' => 'Office 365 Logins',
+            'uri'   => '/student/logins',
+            'guard' => 'students.show.full_profile'
+        ],
     ]
 ])
 @include('layouts._sidebar_menu_nested_submenu', [
