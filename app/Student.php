@@ -113,7 +113,7 @@ class Student extends PortalBaseModel
     public function getEmailAttribute($value)
     {
         return $this->username
-            ? '<a href="mailto:'.$this->username.'@tlcdg.com'.'">'.$this->username.'@tlcdg.com'.'</a>'
+            ? '<a href="mailto:'.$this->username.'">'.$this->username.'</a>'
             : '---';
     }
 
