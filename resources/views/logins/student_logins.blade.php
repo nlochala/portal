@@ -51,12 +51,13 @@
     @if($students->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'student_table', 'table_head' => ['ID','Name','Grade Level','Username','Password','Actions']])
+        @include('_tables.new-table',['id' => 'student_table', 'table_head' => ['ID','Name','Grade Level','School Email','Username','Password','Actions']])
         @foreach($students as $student)
             <tr>
                 <td>{{ $student->id }}</td>
                 <td>{!! $student->formal_name !!}</td>
                 <td>{{ $student->gradeLevel->name }}</td>
+                <td>{!! $student->email!!}</td>
                 <td>{{ $student->username ?? '---' }}</td>
                 <td>{{ $student->password ?? '---' }}</td>
                 <td>

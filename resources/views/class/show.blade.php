@@ -198,11 +198,12 @@
     @if($enrollment->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'logins_table', 'table_head' => ['#','Name','Username','Password']])
+        @include('_tables.new-table',['id' => 'logins_table', 'table_head' => ['#','Name','School Email','Username','Password']])
         @foreach($enrollment as $student)
             <tr>
                 <td>{{ $i++ }}</td>
                 <td>{!! $student->name !!}</td>
+                <td>{!! $student->email!!}</td>
                 <td>{{ $student->username ?? '---' }}</td>
                 <td>{{ $student->password ?? '---' }}</td>
             </tr>

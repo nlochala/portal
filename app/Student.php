@@ -104,6 +104,20 @@ class Student extends PortalBaseModel
     */
 
     /**
+     * get student email attribute.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getEmailAttribute($value)
+    {
+        return $this->username
+            ? '<a href="mailto:'.$this->username.'@tlcdg.com'.'">'.$this->username.'@tlcdg.com'.'</a>'
+            : '---';
+    }
+
+    /**
      * Get this students classes.
      *
      * @return mixed
