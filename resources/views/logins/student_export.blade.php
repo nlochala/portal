@@ -50,20 +50,9 @@
         @foreach($students as $student)
             <tr>
                 <td>{{ $student->username }}</td>
-                <td>
-                    {{ $student->person->given_name }}
-                    @if($student->person->preferred_name !== $student->person->given_name)
-                        ({{ $student->person->given_name }})
-                    @endif
-                </td>
+                <td>{{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
                 <td>{{ $student->person->family_name }}</td>
-                <td>
-                    {{ $student->person->family_name }},
-                    {{ $student->person->given_name }}
-                    @if($student->person->preferred_name !== $student->person->given_name)
-                        ({{ $student->person->given_name }})
-                    @endif
-                </td>
+                <td>{{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
                 <td>student</td>
                 <td>{{ $student->password }}</td>
             </tr>
