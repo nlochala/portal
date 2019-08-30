@@ -175,10 +175,6 @@ class GradeScale extends PortalBaseModel
         if ($this->is_standards_based) {
             return $this->hasMany('App\GradeScaleStandard', 'grade_scale_id');
         }
-
-        return throwException(new ErrorException(
-            'The grade scale must be either percentage-based or standards-based. This grade scale is neither.'
-        ));
     }
 
     /**

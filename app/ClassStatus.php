@@ -85,7 +85,7 @@ class ClassStatus extends PortalBaseModel
      */
     public function classes()
     {
-        return $this->hasMany('App\Class', 'class_status_id');
+        return $this->hasMany('App\CourseClass', 'class_status_id');
     }
 
     /**
