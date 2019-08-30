@@ -46,14 +46,24 @@
     @if($students->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'student_table', 'table_head' => ['User Name','First Name','Last Name','Display Name','Department','TLC Password']])
+        @include('_tables.new-table',['id' => 'student_table', 'table_head' => ['User Name','First Name','Last Name','Display Name','Job Title','Department','Office Number','Office Phone','Mobile Phone','Fax','Address','City','State or Province','ZIP or Postal Code','Country or Region','TLC Password']])
         @foreach($students as $student)
             <tr>
                 <td>{{ $student->username }}</td>
                 <td>{{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
                 <td>{{ $student->person->family_name }}</td>
                 <td>{{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
+                <td></td>
                 <td>student</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{{ $student->password }}</td>
             </tr>
         @endforeach
