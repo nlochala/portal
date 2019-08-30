@@ -42,7 +42,7 @@ class StudentLoginController extends Controller
             $lastname = preg_replace('/[^A-Za-z0-9]/', '', $student->person->family_name);
             $student->username = $student->id.strtolower($lastname).'@tlcdg.com';
             $student->password = 'tlc123'.chr(rand(65, 90)).chr(rand(65, 90));
-//            $student->save();
+            $student->save();
         }
 
         return view('logins.student_export', compact('students'));
