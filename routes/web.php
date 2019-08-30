@@ -62,8 +62,8 @@ Route::get('role/{role}/archive', 'RoleController@archive')
 */
 Route::get('student/logins', 'StudentLoginController@index')
     ->middleware('can:students.show.full_profile');
-Route::get('student/export_new_logins', 'StudentLoginController@loginsExport')
-    ->middleware('can:students.show.full_profile');
+Route::get('student/export_student_logins', 'StudentLoginController@loginsExport')
+    ->middleware('can:permissions');
 
 /*
 |--------------------------------------------------------------------------

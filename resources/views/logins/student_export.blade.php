@@ -46,20 +46,26 @@
     @if($students->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'student_table', 'table_head' => ['ID','Name','Grade Level','Username','Password','Actions']])
+        @include('_tables.new-table',['id' => 'student_table', 'table_head' => ['User Name','First Name','Last Name','Display Name','Department','TLC Password']])
         @foreach($students as $student)
             <tr>
-                <td>{{ $student->id }}</td>
-                <td>{!! $student->formal_name !!}</td>
-                <td>{{ $student->gradeLevel->name }}</td>
-                <td>{{ $student->username ?? '---' }}</td>
-                <td>{{ $student->password ?? '---' }}</td>
+                <td>{{ $student->username }}</td>
                 <td>
-                    <button class="btn btn-sm btn-outline-info" data-toggle="tooltip" disabled=true title="Edit Login"
-                            onclick="window.location.href='/student/{{ $student->uuid }}/logins'">
-                        <i class="fa fa-pen"></i>
-                    </button>
+                    {{ $student->person->given_name }}
+                    @if($student->person->preferred_name !== $student->person->given_name)
+                        ({{ $student->person->given_name }})
+                    @endif
                 </td>
+                <td>{{ $student->person->family_name }}</td>
+                <td>
+                    {{ $student->person->family_name }},
+                    {{ $student->person->given_name }}
+                    @if($student->person->preferred_name !== $student->person->given_name)
+                        ({{ $student->person->given_name }})
+                    @endif
+                </td>
+                <td>student</td>
+                <td>{{ $student->password }}</td>
             </tr>
         @endforeach
         @include('_tables.end-new-table')

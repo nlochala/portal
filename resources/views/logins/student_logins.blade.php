@@ -17,10 +17,12 @@
 ])
     @include('layouts._content_start')
 
+    @if(env('EXPORT_STUDENT_LOGINS') && auth()->user()->can('permissions'))
     <button type="button" class="btn btn-hero-lg btn-hero-primary mr-1 mb-3"
-            onclick="window.location.href='/student/export_new_logins'" disabled>
+            onclick="window.location.href='/student/export_student_logins'">
         <i class="fa fa-file-export"></i> Generate New Student Logins
     </button>
+    @endif
     <!--
     panel.row
     panel.column
