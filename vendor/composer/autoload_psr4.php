@@ -105,4 +105,5 @@ return array(
     'App\\' => array($baseDir . '/app'),
     'Algolia\\ScoutExtended\\' => array($vendorDir . '/algolia/scout-extended/src'),
     'Algolia\\AlgoliaSearch\\' => array($vendorDir . '/algolia/algoliasearch-client-php/src'),
+    'Ajthinking\\Tinx\\' => array($vendorDir . '/ajthinking/tinx/src'),
 );

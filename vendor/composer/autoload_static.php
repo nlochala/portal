@@ -25,9 +25,9 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '979dffec6fa5205cabd2c2cd1e9e6b3a' => __DIR__ . '/..' . '/algolia/algoliasearch-client-php/src/Http/Psr7/functions.php',
         '6783aef8c489bbc166eee2536fe605d5' => __DIR__ . '/..' . '/algolia/algoliasearch-client-php/src/functions.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '34122c0574b76bf21c9a8db62b5b9cf3' => __DIR__ . '/..' . '/cakephp/chronos/src/carbon_compat.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
@@ -192,6 +192,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
             'App\\' => 4,
             'Algolia\\ScoutExtended\\' => 22,
             'Algolia\\AlgoliaSearch\\' => 22,
+            'Ajthinking\\Tinx\\' => 16,
         ),
     );
 
@@ -594,6 +595,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         array (
             0 => __DIR__ . '/..' . '/algolia/algoliasearch-client-php/src',
         ),
+        'Ajthinking\\Tinx\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ajthinking/tinx/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -637,6 +642,19 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
 
     public static $classMap = array (
         'AddressTypesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AddressTypesTableSeeder.php',
+        'Ajthinking\\Tinx\\Console\\NamesTable' => __DIR__ . '/..' . '/ajthinking/tinx/src/Console/NamesTable.php',
+        'Ajthinking\\Tinx\\Console\\State' => __DIR__ . '/..' . '/ajthinking/tinx/src/Console/State.php',
+        'Ajthinking\\Tinx\\Console\\TinxCommand' => __DIR__ . '/..' . '/ajthinking/tinx/src/Console/TinxCommand.php',
+        'Ajthinking\\Tinx\\Includes\\IncludeManager' => __DIR__ . '/..' . '/ajthinking/tinx/src/Includes/IncludeManager.php',
+        'Ajthinking\\Tinx\\Models\\Model' => __DIR__ . '/..' . '/ajthinking/tinx/src/Models/Model.php',
+        'Ajthinking\\Tinx\\Models\\ModelValidator' => __DIR__ . '/..' . '/ajthinking/tinx/src/Models/ModelValidator.php',
+        'Ajthinking\\Tinx\\Models\\Models' => __DIR__ . '/..' . '/ajthinking/tinx/src/Models/Models.php',
+        'Ajthinking\\Tinx\\Naming\\ForbiddenNames' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/ForbiddenNames.php',
+        'Ajthinking\\Tinx\\Naming\\PascalStrategy' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/PascalStrategy.php',
+        'Ajthinking\\Tinx\\Naming\\ShortestUniqueStrategy' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/ShortestUniqueStrategy.php',
+        'Ajthinking\\Tinx\\Naming\\Strategy' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/Strategy.php',
+        'Ajthinking\\Tinx\\Naming\\StrategyFactory' => __DIR__ . '/..' . '/ajthinking/tinx/src/Naming/StrategyFactory.php',
+        'Ajthinking\\Tinx\\TinxServiceProvider' => __DIR__ . '/..' . '/ajthinking/tinx/src/TinxServiceProvider.php',
         'Algolia\\AlgoliaSearch\\AccountClient' => __DIR__ . '/..' . '/algolia/algoliasearch-client-php/src/AccountClient.php',
         'Algolia\\AlgoliaSearch\\Algolia' => __DIR__ . '/..' . '/algolia/algoliasearch-client-php/src/Algolia.php',
         'Algolia\\AlgoliaSearch\\AnalyticsClient' => __DIR__ . '/..' . '/algolia/algoliasearch-client-php/src/AnalyticsClient.php',
