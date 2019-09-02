@@ -28,7 +28,6 @@ final class MbStrFunctionsFixer extends AbstractFunctionReferenceFixer
      * @var array the list of the string-related function names and their mb_ equivalent
      */
     private static $functionsMap = [
-        'str_split' => ['alternativeName' => 'mb_str_split', 'argumentCount' => [1, 2, 3]],
         'stripos' => ['alternativeName' => 'mb_stripos', 'argumentCount' => [2, 3]],
         'stristr' => ['alternativeName' => 'mb_stristr', 'argumentCount' => [2, 3]],
         'strlen' => ['alternativeName' => 'mb_strlen', 'argumentCount' => [1]],
@@ -86,15 +85,8 @@ $a = substr_count($a, $b);
      */
     protected function applyFix(\SplFileInfo $file, Tokens $tokens)
     {
-        $functions = array_filter(
-            self::$functionsMap,
-            static function ($mapping) {
-                return \function_exists($mapping['alternativeName']);
-            }
-        );
-
         $argumentsAnalyzer = new ArgumentsAnalyzer();
-        foreach ($functions as $functionIdentity => $functionReplacement) {
+        foreach (self::$functionsMap as $functionIdentity => $functionReplacement) {
             $currIndex = 0;
             while (null !== $currIndex) {
                 // try getting function reference and translate boundaries for humans
