@@ -157,6 +157,17 @@ class CourseClass extends PortalBaseModel
     }
 
     /**
+     * Return today's attendance for a class.
+     *
+     * @param string $date
+     * @return mixed
+     */
+    public function attendanceOn($date = 'Y-m-d')
+    {
+        return $this->attendance()->date($date)->get();
+    }
+
+    /**
      * Can this class take attendance?
      *
      * @return bool

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Quarter;
 use App\Student;
+use Carbon\Carbon;
 use App\CourseClass;
 use App\AttendanceDay;
 use App\AttendanceClass;
@@ -32,21 +33,28 @@ class AttendanceClassController extends Controller
      */
     public function dailyReport()
     {
+        $date_string = request()->get('date');
+        $date = $date_string ? Carbon::parse($date_string) : now();
+
+        $date_iso = $date->isoFormat('dddd, MMMM Do, YYYY');
+
         //Homeroom list
         $homeroom_list = CourseClass::classesWithAttendance()->load('attendance');
-        $absent_students = AttendanceDay::today()->absent()->with('student.person', 'type')->get();
+        $absent_students = AttendanceDay::date($date->format('Y-m-d'))->absent()->with('student.person', 'type')->get();
         $absent_stats = implode(',',
-            AttendanceDay::getStudentCount('absent', Helpers::getPreviousWorkingDays(now()->format('Y-m-d'), 15)));
+            AttendanceDay::getStudentCount('absent', Helpers::getPreviousWorkingDays($date->format('Y-m-d'), 15)));
 
-        $present_count = AttendanceDay::today()->present()->count();
+        $present_count = AttendanceDay::date($date->format('Y-m-d'))->present()->count();
         $present_stats = implode(',',
-            AttendanceDay::getStudentCount('present', Helpers::getPreviousWorkingDays(now()->format('Y-m-d'), 15)));
+            AttendanceDay::getStudentCount('present', Helpers::getPreviousWorkingDays($date->format('Y-m-d'), 15)));
 
         $current_student_count = Student::current()->count();
 
         return view('attendance.daily_report', compact(
             'homeroom_list',
            'absent_students',
+            'date',
+            'date_iso',
             'absent_stats',
             'present_count',
             'present_stats',

@@ -350,7 +350,6 @@ namespace App{
  * @property string|null $date
  * @property int|null $student_id
  * @property int|null $attendance_type_id
- * @property int|null $quarter_id
  * @property int|null $user_created_id
  * @property string|null $user_created_ip
  * @property string|null $user_updated_ip
@@ -359,6 +358,7 @@ namespace App{
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed $created_at
  * @property mixed $updated_at
+ * @property int|null $quarter_id
  * @property-read \App\User|null $createdBy
  * @property-read \App\Student|null $student
  * @property-read \App\AttendanceType|null $type
@@ -1003,6 +1003,7 @@ namespace App{
  * @property mixed $created_at
  * @property mixed $updated_at
  * @property bool|null $is_present
+ * @property int|null $quarter_id
  * @property-read \App\User|null $createdBy
  * @property-read \App\User|null $updatedBy
  * @method static bool|null forceDelete()
@@ -1018,6 +1019,7 @@ namespace App{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceType whereIsPresent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceType whereIsProtected($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceType whereQuarterId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceType whereShortName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceType whereShouldAlert($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceType whereUpdatedAt($value)
@@ -1902,7 +1904,6 @@ namespace App{
  * @property int|null $student_id
  * @property int|null $class_id
  * @property int|null $attendance_type_id
- * @property int|null $quarter_id
  * @property int|null $user_created_id
  * @property string|null $user_created_ip
  * @property string|null $user_updated_ip
@@ -1911,12 +1912,14 @@ namespace App{
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed $created_at
  * @property mixed $updated_at
+ * @property int|null $quarter_id
  * @property-read \App\CourseClass|null $class
  * @property-read \App\User|null $createdBy
  * @property-read \App\Student|null $student
  * @property-read \App\AttendanceType|null $type
  * @property-read \App\User|null $updatedBy
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceClass absent()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceClass date($date = 'Y-m-d')
  * @method static bool|null forceDelete()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceClass newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\AttendanceClass newQuery()

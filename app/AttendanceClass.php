@@ -107,6 +107,17 @@ class AttendanceClass extends Model
     }
 
     /**
+     * Date query scope.
+     *
+     * @param $query
+     * @param string $date
+     */
+    public function scopeDate($query, string $date = 'Y-m-d')
+    {
+        $query->where('date', '=', $date);
+    }
+
+    /**
      * Students who are present query scope.
      *
      * @param $query

@@ -4,7 +4,7 @@
     <!-- Add Content Title Here b.breadcrumbs -->
     @include('layouts._breadcrumbs', [
     'title' => 'Daily Attendance Report',
-    'subtitle' => now()->isoFormat('dddd, MMMM Do, YYYY'),
+    'subtitle' => $date_iso.' - <small><em><a data-toggle="modal" data-target="#modal-block-date" href="#modal-block-date">Change Date</a></em></small>',
     'breadcrumbs' => [
         [
             'page_name' => 'Portal',
@@ -121,14 +121,14 @@
         @foreach($homeroom_list as $homeroom)
             <tr>
                 <td><a href="/class/{{ $homeroom->uuid }}">{{ $homeroom->full_name }}</a></td>
-                @if($homeroom->todaysAttendance()->isEmpty())
+                @if($homeroom->attendanceOn($date->format('Y-m-d'))->isEmpty())
                     <td><span class="badge badge-danger"><i class="fa fa-times"></i></span></td>
                     <td>--</td>
                     <td>--</td>
                 @else
                     <td><span class="badge badge-success"><i class="fa fa-check"></i></span></td>
-                    <td>{{ $homeroom->attendance()->today()->present()->count() }}</td>
-                    <td>{{ $homeroom->attendance()->today()->absent()->count() }}</td>
+                    <td>{{ $homeroom->attendance()->date($date->format('Y-m-d'))->present()->count() }}</td>
+                    <td>{{ $homeroom->attendance()->date($date->format('Y-m-d'))->absent()->count() }}</td>
                 @endif
             </tr>
         @endforeach
@@ -172,6 +172,32 @@
     @include('layouts._panels_end_row')
 
     @include('layouts._content_end')
+
+    <!-------------------------------- Modal: Change Date Start------------------------------------------->
+    @include('layouts._modal_panel_start',[
+        'id' => 'modal-block-date',
+        'title' => 'Change Date'
+    ])
+    <!-- START FORM----------------------------------------------------------------------------->
+
+    {!! Form::open(['files' => false, 'id' => 'admin-form','url' => request()->getRequestUri()]) !!}
+    <!----------------------------------------------------------------------------->
+    <!---------------------------New date date field----------------------------->
+    @include('layouts._forms._input_date',[
+        'name' => 'date',
+        'label' => 'Historical Date',
+        'format' => 'yyyy-mm-dd',
+        'required' => true,
+        'selected' => null
+    ])
+    {{-- MUST ADD form.date.js TO BOTTOM OF PAGE --}}
+    <!----------------------------------------------------------------------------->
+    <!----------------------------------------------------------------------------->
+    @include('layouts._forms._form_close')
+    <!-- END FORM----------------------------------------------------------------------------->
+    @include('layouts._modal_panel_end')
+    <!-------------------------------- Modal: Change Date END------------------------------------------->
+    <!------   data-toggle="modal" data-target="#modal-block-date". ----->
 @endsection
 
 @section('js_after')
@@ -183,6 +209,7 @@
         // Add Filepond initializer form.js.file
 
         jQuery(document).ready(function () {
+            $("#date").datepicker();
             var tableabsent = $('#absent_table').DataTable({
                 dom: "frt",
                 select: false,
