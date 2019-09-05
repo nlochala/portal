@@ -202,16 +202,16 @@ class CourseClass extends PortalBaseModel
     {
         $students = new Collection();
 
-        $q1 = $this->q1Students()->with('person')->get();
+        $q1 = $this->q1Students()->current()->with('person')->get();
         $merged = $students->merge($q1);
 
-        $q2 = $this->q2Students()->with('person')->get();
+        $q2 = $this->q2Students()->current()->with('person')->get();
         $merged = $merged->merge($q2);
 
-        $q3 = $this->q3Students()->with('person')->get();
+        $q3 = $this->q3Students()->current()->with('person')->get();
         $merged = $merged->merge($q3);
 
-        $q4 = $this->q4Students()->with('person')->get();
+        $q4 = $this->q4Students()->current()->with('person')->get();
         $merged = $merged->merge($q4);
 
         return $merged->unique('id');

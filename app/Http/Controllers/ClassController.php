@@ -76,7 +76,7 @@ class ClassController extends Controller
             'status'
         );
 
-        $enrollment = $class->$relationship->load('todaysDailyAttendance.type', 'todaysClassAttendance.type');
+        $enrollment = $class->$relationship()->current()->with('todaysDailyAttendance.type', 'todaysClassAttendance.type')->get();
 
         return view('class.show', compact('class', 'quarter_name', 'relationship', 'enrollment', 'type_dropdown'));
     }
