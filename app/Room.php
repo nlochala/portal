@@ -64,7 +64,7 @@ class Room extends PortalBaseModel
      */
     public static function getDropdown()
     {
-        return static::all()->pluck('buildingNumber', 'id')->toArray();
+        return static::with('building')->get()->pluck('buildingNumber', 'id')->toArray();
     }
 
     /*

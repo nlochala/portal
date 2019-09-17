@@ -213,6 +213,30 @@ class Course extends PortalBaseModel
     */
 
     /**
+     * Standards-based query scope.
+     *
+     * @param $query
+     */
+    public function scopeIsStandardsBased($query)
+    {
+        $query->whereHas('gradeScale', function ($q) {
+            $q->where('is_standards_based', true);
+        });
+    }
+
+    /**
+     * Percentage-based query scope.
+     *
+     * @param $query
+     */
+    public function scopeIsPercentageBased($query)
+    {
+        $query->whereHas('gradeScale', function ($q) {
+            $q->where('is_percentage_based', true);
+        });
+    }
+
+    /**
      * Get attendance courses query scope.
      *
      * @param $query

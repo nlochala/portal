@@ -2,14 +2,14 @@
 
 namespace App;
 
-use App\Helpers\Helpers;
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AttendanceDay extends PortalBaseModel
+class AssignmentType extends PortalBaseModel
 {
     use SoftDeletes;
 
@@ -49,10 +49,10 @@ class AttendanceDay extends PortalBaseModel
      */
     protected $fillable = [
         'uuid',
-        'date',
-        'student_id',
-        'quarter_id',
-        'attendance_type_id',
+        'class_id',
+        'name',
+        'weight',
+        'description',
         'is_protected',
         'user_created_id',
         'user_created_ip',
@@ -61,20 +61,19 @@ class AttendanceDay extends PortalBaseModel
     ];
 
     /**
-     * @param array $dates_array
-     * @param string $attendance_type
+     * Return a formatted dropdown.
+     *
+     * @param null $scope
+     * @param string $scope_parameter
      * @return array
      */
-    public static function getStudentCount($attendance_type = 'absent or present', array $dates_array = null)
+    public static function getDropdown($scope = null, $scope_parameter = '')
     {
-        $dates_array = $dates_array ?: Helpers::getPreviousWorkingDays(now()->format('Y-m-d'));
-
-        $count_array = [];
-        foreach ($dates_array as $date) {
-            $count_array[] = static::date($date)->$attendance_type()->count();
+        if ($scope) {
+            return static::$scope($scope_parameter)->get()->pluck('name', 'id')->toArray();
         }
 
-        return $count_array;
+        return static::all()->pluck('name', 'id')->toArray();
     }
 
     /*
@@ -114,48 +113,13 @@ class AttendanceDay extends PortalBaseModel
     */
 
     /**
-     * Date query scope.
-     *
-     * @param $query
-     * @param string $date
-     */
-    public function scopeDate($query, string $date = 'Y-m-d')
-    {
-        $query->where('date', '=', $date);
-    }
-
-    /**
-     * Today's Attendance query scope.
+     * Class query scope.
      *
      * @param $query
      */
-    public function scopeToday($query)
+    public function scopeCourseClass($query, $class_id)
     {
-        $query->where('date', '=', now()->format('Y-m-d'));
-    }
-
-    /**
-     * Students who are present query scope.
-     *
-     * @param $query
-     */
-    public function scopePresent($query)
-    {
-        $query->whereHas('type', function ($q) {
-            $q->where('is_present', true);
-        });
-    }
-
-    /**
-     * Students who are absent query scope.
-     *
-     * @param $query
-     */
-    public function scopeAbsent($query)
-    {
-        $query->whereHas('type', function ($q) {
-            $q->where('is_present', false);
-        });
+        $query->where('class_id', '=', $class_id);
     }
 
     /*
@@ -165,27 +129,28 @@ class AttendanceDay extends PortalBaseModel
     */
 
     /**
-     *  This class_attendance belongs to a student.
+     *  This assignment_type has many assignments.
      *
-     * @return BelongsTo
+     * @return HasMany
      */
-    public function student()
+    public function assignments()
     {
-        return $this->belongsTo('App\Student', 'student_id', 'id');
+        return $this->hasMany('App\Assignment', 'assignment_type_id');
     }
 
     /**
-     *  This class_attendance belongs to a type.
+     * This assignment_type has a CourseClass.
      *
-     * @return BelongsTo
+     * @return HasOne
      */
-    public function type()
+    public function class()
     {
-        return $this->belongsTo('App\AttendanceType', 'attendance_type_id', 'id');
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\CourseClass', 'id', 'class_id');
     }
 
     /**
-     *  This daily attendance was created by a user.
+     *  This assignment_type was created by a user.
      *
      * @return BelongsTo
      */
@@ -195,7 +160,7 @@ class AttendanceDay extends PortalBaseModel
     }
 
     /**
-     *  This daily attendance was updated by a user.
+     *  This assignment_type was updated by a user.
      *
      * @return BelongsTo
      */

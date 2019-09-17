@@ -177,6 +177,20 @@ class CourseClass extends PortalBaseModel
         return $this->course->has_attendance ? true : false;
     }
 
+    /**
+     * Return the current students.
+     *
+     * @param Quarter $quarter
+     * @param string $status
+     * @return mixed
+     */
+    public function currentStudents(Quarter $quarter, $status = 'current')
+    {
+        $relationship = $quarter->getClassRelationship();
+
+        return $this->$relationship()->$status()->with('person', 'status')->get()->sortBy('person.preferred_name');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
@@ -246,6 +260,34 @@ class CourseClass extends PortalBaseModel
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Standards-based query scope.
+     *
+     * @param $query
+     */
+    public function scopeIsStandardsBased($query)
+    {
+        $query->whereHas('course', function ($q) {
+            $q->whereHas('gradeScale', function ($q1) {
+                $q1->where('is_standards_based', true);
+            });
+        });
+    }
+
+    /**
+     * Percentage-based query scope.
+     *
+     * @param $query
+     */
+    public function scopeIsPercentageBased($query)
+    {
+        $query->whereHas('course', function ($q) {
+            $q->whereHas('gradeScale', function ($q1) {
+                $q1->where('is_percentage_based', true);
+            });
+        });
+    }
 
     /**
      * Return active classes query scope.

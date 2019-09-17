@@ -2,14 +2,13 @@
 
 namespace App;
 
-use App\Helpers\Helpers;
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AttendanceDay extends PortalBaseModel
+class AssignmentGrade extends PortalBaseModel
 {
     use SoftDeletes;
 
@@ -40,7 +39,10 @@ class AttendanceDay extends PortalBaseModel
         return 'uuid';
     }
 
-    protected $casts = ['is_protected' => 'bool'];
+    protected $casts = [
+        'is_protected' => 'bool',
+        'is_excused' => 'bool',
+    ];
 
     /**
      * Add mass-assignment to model.
@@ -49,10 +51,12 @@ class AttendanceDay extends PortalBaseModel
      */
     protected $fillable = [
         'uuid',
-        'date',
+        'assignment_id',
         'student_id',
-        'quarter_id',
-        'attendance_type_id',
+        'points_earned',
+        'date_completed',
+        'notes',
+        'is_excused',
         'is_protected',
         'user_created_id',
         'user_created_ip',
@@ -60,28 +64,27 @@ class AttendanceDay extends PortalBaseModel
         'user_updated_ip',
     ];
 
-    /**
-     * @param array $dates_array
-     * @param string $attendance_type
-     * @return array
-     */
-    public static function getStudentCount($attendance_type = 'absent or present', array $dates_array = null)
-    {
-        $dates_array = $dates_array ?: Helpers::getPreviousWorkingDays(now()->format('Y-m-d'));
-
-        $count_array = [];
-        foreach ($dates_array as $date) {
-            $count_array[] = static::date($date)->$attendance_type()->count();
-        }
-
-        return $count_array;
-    }
-
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * Get carbon object and format.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public function getDateCompletedAttribute($value)
+    {
+        if (empty($value)) {
+            return '--';
+        }
+
+        return Carbon::parse($value)->format('Y-m-d');
+    }
 
     /**
      * Set created_at to Carbon Object.
@@ -114,48 +117,25 @@ class AttendanceDay extends PortalBaseModel
     */
 
     /**
-     * Date query scope.
+     * Assignment query scope.
      *
      * @param $query
-     * @param string $date
+     * @param $assignment_id
      */
-    public function scopeDate($query, string $date = 'Y-m-d')
+    public function scopeIsAssignment($query, $assignment_id)
     {
-        $query->where('date', '=', $date);
+        $query->where('assignment_id', '=', $assignment_id);
     }
 
     /**
-     * Today's Attendance query scope.
+     * Student query scope.
      *
      * @param $query
+     * @param $student_id
      */
-    public function scopeToday($query)
+    public function scopeIsStudent($query, $student_id)
     {
-        $query->where('date', '=', now()->format('Y-m-d'));
-    }
-
-    /**
-     * Students who are present query scope.
-     *
-     * @param $query
-     */
-    public function scopePresent($query)
-    {
-        $query->whereHas('type', function ($q) {
-            $q->where('is_present', true);
-        });
-    }
-
-    /**
-     * Students who are absent query scope.
-     *
-     * @param $query
-     */
-    public function scopeAbsent($query)
-    {
-        $query->whereHas('type', function ($q) {
-            $q->where('is_present', false);
-        });
+        $query->where('student_id', '=', $student_id);
     }
 
     /*
@@ -165,27 +145,29 @@ class AttendanceDay extends PortalBaseModel
     */
 
     /**
-     *  This class_attendance belongs to a student.
+     * This grade has a Assignment.
      *
-     * @return BelongsTo
+     * @return HasOne
+     */
+    public function assignment()
+    {
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\Assignment', 'id', 'assignment_id');
+    }
+
+    /**
+     * This grade has a Student.
+     *
+     * @return HasOne
      */
     public function student()
     {
-        return $this->belongsTo('App\Student', 'student_id', 'id');
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\Student', 'id', 'student_id');
     }
 
     /**
-     *  This class_attendance belongs to a type.
-     *
-     * @return BelongsTo
-     */
-    public function type()
-    {
-        return $this->belongsTo('App\AttendanceType', 'attendance_type_id', 'id');
-    }
-
-    /**
-     *  This daily attendance was created by a user.
+     *  This grade was created by a user.
      *
      * @return BelongsTo
      */
@@ -195,7 +177,7 @@ class AttendanceDay extends PortalBaseModel
     }
 
     /**
-     *  This daily attendance was updated by a user.
+     *  This grade was updated by a user.
      *
      * @return BelongsTo
      */

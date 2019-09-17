@@ -503,3 +503,28 @@ Route::get('api/course/{course}/ajaxshowcorequisite', 'CourseCorequisiteAjaxCont
 
 Route::post('api/course/{course}/ajaxstoreequivalent', 'CourseEquivalentAjaxController@ajaxStore');
 Route::get('api/course/{course}/ajaxshowequivalent', 'CourseEquivalentAjaxController@ajaxShow');
+
+/*
+|--------------------------------------------------------------------------
+| GRADEBOOK
+|--------------------------------------------------------------------------
+*/
+Route::get('class/{class}/{quarter}/gradebook', 'GradebookController@show');
+Route::get('class/{class}/{quarter}/gradebook/assignments', 'AssignmentController@index');
+Route::get('class/{class}/{quarter}/gradebook/assignment_type', 'AssignmentTypeController@index');
+
+Route::get('api/class/{class}/{quarter}/gradebook/assignment/ajaxshowassignment', 'AssignmentAjaxController@ajaxShow');
+Route::post('api/class/{class}/{quarter}/gradebook/assignment/ajaxstoreassignment', 'AssignmentAjaxController@ajaxStore');
+
+Route::get('class/{class}/{quarter}/gradebook/assignment/{assignment}', 'AssignmentController@grade');
+Route::get('api/class/{class}/{quarter}/gradebook/assignment/{assignment}/ajaxshowassessment', 'AssignmentGradeAjaxController@ajaxShow');
+Route::post('api/class/{class}/{quarter}/gradebook/assignment/{assignment}/ajaxstoreassessment', 'AssignmentGradeAjaxController@ajaxStore');
+
+/*
+|--------------------------------------------------------------------------
+| GRADE ASSIGNMENT TYPES
+|--------------------------------------------------------------------------
+*/
+Route::get('class/{class}/{quarter}/gradebook/assignment_type', 'AssignmentTypeController@index');
+Route::get('api/class/{class}/gradebook/assignment_type/ajaxshowassignment_type', 'AssignmentTypeAjaxController@ajaxShow');
+Route::post('api/class/{class}/gradebook/assignment_type/ajaxstoreassignment_type', 'AssignmentTypeAjaxController@ajaxStore');

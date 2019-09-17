@@ -21,24 +21,6 @@
 ])
     @include('layouts._content_start')
 
-    @if($class->canTakeAttendance())
-        @if($class->todaysAttendance()->isEmpty())
-            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-hero-lg btn-hero-warning mr-1 mb-3"
-                    data-toggle="modal" data-target="#modal-block-attendance">
-                <i class="fa fa-user-check"></i> Take Attendance
-            </button>
-        @else
-            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-hero-lg btn-hero-success mr-1 mb-3"
-                    data-toggle="modal" data-target="#modal-block-attendance">
-                <i class="fa fa-user-check"></i> Update Attendance
-            </button>
-        @endif
-    @endif
-    <button type="button" dusk="btn-modal-block-logins" class="btn btn-hero-lg btn-hero-primary mr-1 mb-3"
-            data-toggle="modal" data-target="#modal-block-logins">
-        <i class="fa fa-user-lock"></i> Student Logins
-    </button>
-
     <!--
     panel.row
     panel.column
@@ -59,7 +41,7 @@
 
 -->
     @include('layouts._panels_start_row',['has_uniform_length' => false])
-    @include('layouts._panels_start_column', ['size' => 4])
+    @include('layouts._panels_start_column', ['size' => 3])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => 'Overview', 'with_block' => false])
@@ -127,7 +109,7 @@
     <!-------------------------------------------------------------------------------->
     <!-------------------------------------------------------------------------------->
     @include('layouts._panels_end_column')
-    @include('layouts._panels_start_column', ['size' => 8])
+    @include('layouts._panels_start_column', ['size' => 6])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
     @include('layouts._panels_start_panel', ['title' => $quarter_name.' Roster', 'with_block' => false])
@@ -169,6 +151,40 @@
 
 
 
+    @include('layouts._panels_end_content')
+    @include('layouts._panels_end_panel')
+    <!-------------------------------------------------------------------------------->
+    <!-------------------------------------------------------------------------------->
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_start_column', ['size' => 3])
+    <!-------------------------------------------------------------------------------->
+    <!----------------------------------New Panel ------------------------------------>
+    @include('layouts._panels_start_panel', ['title' => 'Options', 'with_block' => false])
+    {{-- START BLOCK OPTIONS panel.block --}}
+    @include('layouts._panels_start_content')
+    @if($class->canTakeAttendance())
+        @if($class->todaysAttendance()->isEmpty())
+            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-hero-lg btn-hero-warning mb-3 mr-1 w-100"
+                    data-toggle="modal" data-target="#modal-block-attendance">
+                <i class="fa fa-user-check"></i> Take Attendance
+            </button>
+        @else
+            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-outline-primary mb-3 w-100"
+                    data-toggle="modal" data-target="#modal-block-attendance">
+                <i class="fa fa-user-check"></i> Update Attendance
+            </button>
+        @endif
+    @endif
+    @if($class->course->gradeScale->is_percentage_based)
+    <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
+            onclick="window.location.href='/class/{{ $class->uuid }}/{{ \App\Quarter::now()->uuid }}/gradebook'">
+        <i class="fa fa-book-open"></i> Gradebook
+    </button>
+    @endif
+    <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
+            data-toggle="modal" data-target="#modal-block-logins">
+        <i class="fa fa-user-lock"></i> Student Logins
+    </button>
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->

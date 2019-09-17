@@ -12,7 +12,7 @@ table-sm table-vcenter {{ $class ?? '' }}" id="{{ $id }}" style="{{ $style ?? ''
     <thead>
     <tr>
         @foreach($table_head as $name)
-            <th>{{ $name }}</th>
+            <th>{!! $name !!}</th>
         @endforeach
     </tr>
     </thead>

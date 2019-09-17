@@ -101,7 +101,6 @@
     @include('layouts._panels_start_panel', ['title' => 'Options', 'with_block' => false])
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
-    <div class="btn-group-vertical" style="width: 100%">
         <button type="button" dusk="btn-modal-block-classes" class="btn btn-outline-secondary mr-1 mb-3"
                 data-toggle="modal"
                 data-target="#modal-block-classes" style="width: 100%">
@@ -127,7 +126,6 @@
                 data-target="#modal-block-equivalents" style="width: 100%">
             <i class="fa fa-list"></i> Equivalent Courses
         </button>
-    </div>
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->

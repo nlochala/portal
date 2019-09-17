@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AttendanceType extends Model
+class AttendanceType extends PortalBaseModel
 {
     use SoftDeletes;
 

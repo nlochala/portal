@@ -63,7 +63,7 @@ class ClassController extends Controller
         $type_dropdown = AttendanceType::getDropdown();
 
         $class->load(
-            'course',
+            'course.gradeScale',
             'q1Students.person',
             'q2Students.person',
             'q3Students.person',
