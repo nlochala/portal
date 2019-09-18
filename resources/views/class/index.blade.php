@@ -42,7 +42,7 @@
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
 
-    <!-- TABLE OF Class -->@include('_tables.new-table',['id' => 'classes_table', 'table_head' => ['ID', 'Name','Grade Level', 'Status', 'Room', 'Teachers', 'Actions']])
+    <!-- TABLE OF Class -->@include('_tables.new-table',['id' => 'classes_table', 'table_head' => ['ID', 'Course Name','Class Section', 'Status', 'Room', 'Teachers', 'Actions']])
     @include('_tables.end-new-table')
 
 
@@ -90,26 +90,16 @@
                 ajax: {"url": "{{ url('api/class/ajaxshowclass') }}", "dataSrc": ""},
                 columns: [
                     {data: "id"},
-                    { data: "name",
+                    { data: "course.name",
                         render: function(data, type, row) {
-                            return row.course.short_name + ': ' + data;
-                        }
-                    },
-                    {data: "course.grade_levels",
-                        render: function(data, type, row) {
-                            let return_string = '';
-                            for (let i = 0; i < data.length; i++) {
-                                if(i === 0){
-                                    return_string += data[i].short_name;
-                                    continue;
-                                }
-
-                                return_string += ', '+data[i].short_name;
+                            if(row.course.description !== data) {
+                                return '<strong>'+data+'</strong><br />'+'<em>'+row.course.description+'</em>';
                             }
 
-                            return return_string;
+                            return '<strong>'+data+'</strong>';
                         }
                     },
+                    {data: "name"},
                     {data: "status",
                         render: function(data, type, row) {
                             let status;
