@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\AttendanceType;
-use App\Quarter;
 use App\Room;
 use App\Year;
 use App\Course;
+use App\Quarter;
 use App\Employee;
 use App\ClassStatus;
 use App\CourseClass;
+use App\AttendanceType;
 use App\Helpers\Helpers;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
 
 class ClassController extends Controller
 {
@@ -76,7 +76,7 @@ class ClassController extends Controller
             'status'
         );
 
-        $enrollment = $class->$relationship()->current()->with('todaysDailyAttendance.type', 'todaysClassAttendance.type')->get();
+        $enrollment = $class->$relationship()->current()->with('todaysDailyAttendance.type', 'todaysClassAttendance.type', 'person')->get();
 
         return view('class.show', compact('class', 'quarter_name', 'relationship', 'enrollment', 'type_dropdown'));
     }
@@ -136,6 +136,5 @@ class ClassController extends Controller
         return $result
             ? redirect()->to('class/'.$class->uuid)
             : redirect()->back()->withInput();
-
     }
 }

@@ -56,7 +56,8 @@
 
         <ul>
         @foreach($classes as $class)
-                <li><strong><a href="/class/{{ $class->uuid }}">{{ $class->full_name }}</a></strong> - {{ $class->getTeacherType($employee) }}</li>
+{{--                <li><strong><a href="/class/{{ $class->uuid }}">{{ $class->full_name }}</a></strong> - {{ $class->getTeacherType($employee) }}</li>--}}
+                <li><strong><a href="/class/{{ $class->uuid }}">{{ $class->full_name }}</a></strong></li>
         @endforeach
         </ul>
 

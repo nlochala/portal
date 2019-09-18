@@ -81,7 +81,7 @@ class CourseClass extends PortalBaseModel
     public function fullName($include_url = false)
     {
         return $include_url
-            ? '<a href="/course/'.$this->course->uuid.'">'.$this->course->short_name.'</a>: '.$this->name
+            ? '<a href="/course/'.$this->course->uuid.'">'.$this->course->name.'</a>: '.$this->name
             : $this->full_name;
     }
 
@@ -204,7 +204,7 @@ class CourseClass extends PortalBaseModel
      */
     public function getFullNameAttribute()
     {
-        return $this->course->short_name.': '.$this->name;
+        return $this->course->name.': '.$this->name;
     }
 
     /**

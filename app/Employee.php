@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Webpatser\Uuid\Uuid;
 use Laravel\Scout\Searchable;
 use Illuminate\Notifications\Notifiable;
@@ -233,6 +234,36 @@ class Employee extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This primary_employee has many primaryTeacher.
+     *
+     * @return HasMany
+     */
+    public function primaryTeacher()
+    {
+        return $this->hasMany('App\CourseClass', 'primary_employee_id');
+    }
+
+    /**
+     *  This secondary_employee has many secondaryTeacher.
+     *
+     * @return HasMany
+     */
+    public function secondaryTeacher()
+    {
+        return $this->hasMany('App\CourseClass', 'secondary_employee_id');
+    }
+
+    /**
+     *  This ta_employee has many taTeacher.
+     *
+     * @return HasMany
+     */
+    public function taTeacher()
+    {
+        return $this->hasMany('App\CourseClass', 'ta_employee_id');
+    }
 
     /**
      *  This employee belongs to a status.
