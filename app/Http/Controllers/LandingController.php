@@ -17,6 +17,8 @@ class LandingController extends Controller
     {
         if (! auth()->user()) {
             return redirect()->route('login');
+        } elseif ($employee = auth()->user()->person->employee) {
+            return redirect()->to('employee/'.$employee->uuid);
         }
 
         return view('landing');
