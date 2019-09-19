@@ -97,6 +97,18 @@ class Student extends PortalBaseModel
         'user_updated_ip',
     ];
 
+    /**
+     * Return the wifi username.
+     *
+     * @return mixed|string
+     */
+    public function getWifiUsername()
+    {
+        return empty($this->username)
+            ? '---'
+            : str_replace('@tlcdg.com', '', $this->username);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES

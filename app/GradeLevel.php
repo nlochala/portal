@@ -129,6 +129,17 @@ class GradeLevel extends PortalBaseModel
         $query->where('year_id', '=', env('SCHOOL_YEAR_ID'));
     }
 
+    /**
+     * Get grade query scope.
+     *
+     * @param $query
+     * @param $grade
+     */
+    public function scopeGrade($query, $grade)
+    {
+        $query->where('short_name', '=', $grade);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

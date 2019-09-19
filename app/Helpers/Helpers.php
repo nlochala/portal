@@ -4,7 +4,9 @@ namespace App\Helpers;
 
 use Storage;
 use App\File;
+use App\Course;
 use Carbon\Carbon;
+use App\GradeLevel;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -22,6 +24,30 @@ class Helpers
     public function __construct()
     {
         $this->today = Carbon::today();
+    }
+
+    /**
+     * Set the assignment types for all specific classes in a grade level.
+     *
+     * @param array $grade_levels
+     * @return array|int
+     */
+    public static function prepopulateAssignmentTypes(array $grade_levels)
+    {
+        $names = [];
+
+        foreach ($grade_levels as $grade) {
+            $grade_model = GradeLevel::current()->grade($grade)->first();
+            $courses = Course::with('classes')->active()->gradeLevel($grade_model->id)->get();
+
+            foreach ($courses as $course) {
+                foreach ($course->classes as $class) {
+                    $names[] = $course->name.' - '.$class->name;
+                }
+            }
+        }
+
+        return $names;
     }
 
     /**

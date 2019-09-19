@@ -299,6 +299,19 @@ class CourseClass extends PortalBaseModel
         $query->where('class_status_id', '=', '1');
     }
 
+//    /**
+//     * Return the classes that include the following grade level.
+//     *
+//     * @param $query
+//     * @param $grade_level_id
+//     */
+//    public function scopeGradeLevel($query, $grade_level_id)
+//    {
+//        $query->whereHas('course', function($q) use($grade_level_id) {
+//
+//        });
+//    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
