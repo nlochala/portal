@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\AssignmentType;
 use Storage;
 use App\File;
 use App\Course;
@@ -36,13 +37,42 @@ class Helpers
     {
         $names = [];
 
+        $ms_types = [
+            [
+                'name' => 'Tests and Projects',
+                'description' => 'Tests and Projects',
+                'weight' => '45',
+            ],
+            [
+                'name' => 'Homework',
+                'description' => 'Homework',
+                'weight' => '10',
+            ],
+            [
+                'name' => 'Participation and Class Work',
+                'description' => 'Participation and Class Work',
+                'weight' => '20',
+            ],
+            [
+                'name' => 'Quizzes',
+                'description' => 'Quizzes',
+                'weight' => '25',
+            ],
+        ];
+
         foreach ($grade_levels as $grade) {
             $grade_model = GradeLevel::current()->grade($grade)->first();
             $courses = Course::with('classes')->active()->gradeLevel($grade_model->id)->get();
 
             foreach ($courses as $course) {
                 foreach ($course->classes as $class) {
-                    $names[] = $course->name.' - '.$class->name;
+                    foreach ($ms_types as $type) {
+                        $type['class_id'] = $class->id;
+                        $type['user_created_id'] = 1;
+                        $type['user_created_ip'] = '127.0.0.1';
+                        $type['is_protected'] = true;
+                        $assignment_type = AssignmentType::create($type);
+                    }
                 }
             }
         }

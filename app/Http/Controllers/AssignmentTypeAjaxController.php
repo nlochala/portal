@@ -149,6 +149,11 @@ class AssignmentTypeAjaxController extends Controller
         $type = Helpers::dbAddAudit($type);
         $this->attemptAction($type->update($values), 'type', 'update');
 
+        if ($type->is_protected) {
+            $this->attemptAction(false, 'assignment type', 'update', 'Can not update. This assignment type is protected.');
+            return;
+        }
+
         return $type;
     }
 
@@ -161,6 +166,11 @@ class AssignmentTypeAjaxController extends Controller
     public function destroy(AssignmentType $type)
     {
         $type = Helpers::dbAddAudit($type);
+
+        if ($type->is_protected) {
+            $this->attemptAction(false, 'assignment type', 'delete', 'Can not delete. This assignment type is protected.');
+            return;
+        }
 
         $message = 'Could not delete this assignment type. The reason is because there are assignments already created with this type.';
         $message .= 'Please change the assigned type on those assignments and try again.';
