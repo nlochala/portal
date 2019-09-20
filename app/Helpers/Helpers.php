@@ -2,12 +2,12 @@
 
 namespace App\Helpers;
 
-use App\AssignmentType;
 use Storage;
 use App\File;
 use App\Course;
 use Carbon\Carbon;
 use App\GradeLevel;
+use App\AssignmentType;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -31,34 +31,56 @@ class Helpers
      * Set the assignment types for all specific classes in a grade level.
      *
      * @param array $grade_levels
+     * @param string $types
      * @return array|int
      */
-    public static function prepopulateAssignmentTypes(array $grade_levels)
+    public static function prepopulateAssignmentTypes(array $grade_levels, $types = 'hs_types or ms_types')
     {
         $names = [];
-
-        $ms_types = [
-            [
-                'name' => 'Tests and Projects',
-                'description' => 'Tests and Projects',
-                'weight' => '45',
-            ],
-            [
-                'name' => 'Homework',
-                'description' => 'Homework',
-                'weight' => '10',
-            ],
-            [
-                'name' => 'Participation and Class Work',
-                'description' => 'Participation and Class Work',
-                'weight' => '20',
-            ],
-            [
-                'name' => 'Quizzes',
-                'description' => 'Quizzes',
-                'weight' => '25',
-            ],
-        ];
+        if ($types === 'hs_types') {
+            $types = [
+                [
+                    'name' => 'Tests and Projects',
+                    'description' => 'Tests and Projects',
+                    'weight' => '40',
+                ],
+                [
+                    'name' => 'Participation and Class Work',
+                    'description' => 'Participation and Class Work',
+                    'weight' => '30',
+                ],
+                [
+                    'name' => 'Quizzes',
+                    'description' => 'Quizzes',
+                    'weight' => '30',
+                ],
+            ];
+        } elseif ($types === 'ms_types') {
+            $types = [
+                [
+                    'name' => 'Tests and Projects',
+                    'description' => 'Tests and Projects',
+                    'weight' => '45',
+                ],
+                [
+                    'name' => 'Homework',
+                    'description' => 'Homework',
+                    'weight' => '10',
+                ],
+                [
+                    'name' => 'Participation and Class Work',
+                    'description' => 'Participation and Class Work',
+                    'weight' => '20',
+                ],
+                [
+                    'name' => 'Quizzes',
+                    'description' => 'Quizzes',
+                    'weight' => '25',
+                ],
+            ];
+        } else {
+            $types = [];
+        }
 
         foreach ($grade_levels as $grade) {
             $grade_model = GradeLevel::current()->grade($grade)->first();
@@ -66,7 +88,7 @@ class Helpers
 
             foreach ($courses as $course) {
                 foreach ($course->classes as $class) {
-                    foreach ($ms_types as $type) {
+                    foreach ($types as $type) {
                         $type['class_id'] = $class->id;
                         $type['user_created_id'] = 1;
                         $type['user_created_ip'] = '127.0.0.1';
@@ -160,8 +182,8 @@ class Helpers
      *
      * @param Carbon $expiration_date
      * @param string $item_name
-     * @param int    $danger
-     * @param int    $warning
+     * @param int $danger
+     * @param int $warning
      *
      * @return string
      */
@@ -447,7 +469,7 @@ class Helpers
      *
      * @param        $color
      * @param        $message
-     * @param null   $icon
+     * @param null $icon
      * @param string $location
      */
     public static function flashAlert($color, $message, $icon = null, $location = 'bottom')
