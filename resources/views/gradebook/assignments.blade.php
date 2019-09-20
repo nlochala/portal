@@ -156,7 +156,7 @@
                         render: function (data, type, row) {
                             return "    <div class=\"btn-group\">\n" +
                                 "            <button dusk=\"btn-show-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-info\" data-toggle=\"tooltip\" title=\"View Details\"\n" +
-                                "                    onclick=\"window.location.href='/class/" + data + "'\">\n" +
+                                "                    onclick=\"window.location.href='/class/{{ $class->uuid }}/{{ $quarter->uuid }}/gradebook/assignment/"+ data +"'\">\n" +
                                 "                <i class=\"si si-magnifier\"></i>\n" +
                                 "            </button>\n" +
                                 "        </div>"
