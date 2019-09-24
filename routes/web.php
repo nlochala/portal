@@ -528,3 +528,10 @@ Route::post('api/class/{class}/{quarter}/gradebook/assignment/{assignment}/ajaxs
 Route::get('class/{class}/{quarter}/gradebook/assignment_type', 'AssignmentTypeController@index');
 Route::get('api/class/{class}/gradebook/assignment_type/ajaxshowassignment_type', 'AssignmentTypeAjaxController@ajaxShow');
 Route::post('api/class/{class}/gradebook/assignment_type/ajaxstoreassignment_type', 'AssignmentTypeAjaxController@ajaxStore');
+
+/*
+|--------------------------------------------------------------------------
+| MAP ROSTER EXPORT
+|--------------------------------------------------------------------------
+*/
+Route::get('map/export', 'MapRosterController@index');
