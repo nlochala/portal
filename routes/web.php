@@ -535,3 +535,11 @@ Route::post('api/class/{class}/gradebook/assignment_type/ajaxstoreassignment_typ
 |--------------------------------------------------------------------------
 */
 Route::get('map/export', 'MapRosterController@index');
+
+/*
+|--------------------------------------------------------------------------
+| HOW TO VIDEOS HOSTED BY MICROSOFT STEAM
+|--------------------------------------------------------------------------
+*/
+Route::get('videos/channel/how-to', 'HowToVideosController@channel');
+
