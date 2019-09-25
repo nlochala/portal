@@ -35,16 +35,23 @@
         <small><em>Nothing to Display</em></small>
     @else
         @include('_tables.new-table',['id' => 'student_table', 'table_head' => [
+        'School State Code',
         'School Name',
+        'Previous Instructor ID',
         'Instructor ID',
+        'Instructor State ID',
         'Instructor Last Name',
         'Instructor First Name',
+        'Instructor Middle Initial',
         'User Name',
         'Email Address',
         'Class Name',
+        'Previous Student ID',
         'Student ID',
+        'Student State ID',
         'Student Last Name',
         'Student First Name',
+        'Student Middle Initial',
         'Student Date Of Birth',
         'Student Gender',
         'Student Grade',
@@ -55,19 +62,30 @@
         @foreach($classes as $class)
             @foreach($class->q1Students as $student)
                 <tr>
+                    <td></td>
                     <td>TLC International School</td>
+                    <td></td>
                     <td>{{ $class->primaryEmployee->id ?? '---' }}</td>
+                    <td></td>
                     <td>{{ $class->primaryEmployee->person->family_name ?? '---' }}</td>
                     <td>{{ $class->primaryEmployee->person->given_name ?? '---' }}</td>
+                    <td></td>
                     <td>{{ $class->primaryEmployee->person->email_school ?? '---' }}</td>
                     <td>{{ $class->primaryEmployee->person->email_school ?? '---' }}</td>
                     <td>{{ $class->full_name ?? '---' }}</td>
+                    <td></td>
                     <td>{{ $student->id ?? '---' }}</td>
+                    <td></td>
                     <td>{{ $student->person->family_name ?? '---' }}</td>
-                    <td>{{ $student->person->given_name ?? '---' }}</td>
+                    @if($student->person->given_name === $student->person->preferred_name)
+                        <td>{{ $student->person->given_name ?? '---' }}</td>
+                    @else
+                        <td>{{ $student->person->given_name ?? '---' }} ({{ $student->person->preferred_name ?? '---' }})</td>
+                    @endif
+                    <td></td>
                     <td>{{ $student->person->dob->format('m/d/Y') ?? '---' }}</td>
                     <td>{{ substr($student->person->gender,0,1) ?? '---' }}</td>
-                    <td>{{ $student->gradeLevel->short_name ?? '---' }}</td>
+                    <td>{{ $student->gradeLevel->map_grade_level ?? '---' }}</td>
                     <td>{{ $student->person->ethnicity->name ?? 'Multi-ethnic' }}</td>
                     <td>{{ $student->username ?? '---' }}</td>
                     <td>{{ $student->username ?? '---' }}</td>
@@ -95,7 +113,7 @@
 
         jQuery(document).ready(function () {
 
-            var tablestudent = $('#student_table').DataTable( {
+            var tablestudent = $('#student_table').DataTable({
                 dom: "Bfrtp",
                 select: true,
                 paging: true,
