@@ -74,7 +74,7 @@
                     <td>{{ $class->primaryEmployee->person->email_school ?? '---' }}</td>
                     <td>{{ $class->full_name ?? '---' }}</td>
                     <td></td>
-                    <td>{{ $student->id ?? '---' }}</td>
+                    <td>m-{{ $student->id ?? '---' }}</td> {{-- We add the m- do destinguish the IDs from legacy uploads. --}}
                     <td></td>
                     <td>{{ $student->person->family_name ?? '---' }}</td>
                     @if($student->person->given_name === $student->person->preferred_name)
