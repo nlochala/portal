@@ -121,10 +121,6 @@
         return year + '-' + month + '-' + day;
     }
 
-    function submitFormOnClick(){
-        $('#submit_button').attr('disabled', true).html("<i class=\"fa fa-sync fa-spin \"></i> Processing");
-    }
-
     // Return the age of the person in question by a given string.
     function getAge(dateString) {
         var today = new Date();

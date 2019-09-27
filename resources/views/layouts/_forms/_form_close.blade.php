@@ -2,7 +2,7 @@
     <button type="reset" class="btn btn-sm btn-hero-light" data-dismiss="modal" data-toggle="click-ripple">
         <i class="fa fa-repeat"></i> Reset
     </button>
-    <button type="submit" class="btn btn-sm btn-hero-primary" onclick="submitFormOnClick(); submit()" id="submit_button" data-toggle="click-ripple">
+    <button type="submit" class="btn btn-sm btn-hero-primary" onclick="" id="submit_button" data-toggle="click-ripple">
         <i class="fa fa-check"></i> Submit
     </button>
 </div>
