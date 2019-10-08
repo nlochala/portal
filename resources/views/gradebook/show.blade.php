@@ -75,7 +75,7 @@
                 dom: "Bfrt",
                 select: true,
                 paging: false,
-                // scrollX: true,
+                scrollX: true,
                 buttons: [
                     {
                         extend: 'collection',
