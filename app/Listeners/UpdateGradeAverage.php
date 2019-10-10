@@ -102,14 +102,13 @@ class UpdateGradeAverage implements ShouldQueue
             foreach ($grade_scale->items->sortByDesc('from') as $item) {
                 if (round($percentage) >= $item->from && $x === 0) {
                     $name = $item->result;
-                    $x++;
-
-                    break;
                 }
 
                 if (round($percentage) <= $item->from && round($percentage) >= $item->to) {
                     $name = $item->result;
                 }
+
+                $x++;
             }
         }
 
