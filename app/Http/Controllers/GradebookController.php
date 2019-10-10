@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Quarter;
 use App\Assignment;
 use App\CourseClass;
+use App\Student;
 use Illuminate\View\View;
 use Illuminate\Contracts\View\Factory;
 
@@ -57,5 +58,11 @@ class GradebookController extends Controller
             'grades_array',
             'excused_array'
         ));
+    }
+
+    public function studentDetails(CourseClass $class, Quarter $quarter, Student $student)
+    {
+        $types = $class->assignmentTypes()->with('assignments.grades')->get();
+
     }
 }

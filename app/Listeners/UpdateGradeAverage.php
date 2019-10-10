@@ -40,7 +40,7 @@ class UpdateGradeAverage implements ShouldQueue
                 'max_points' => 0,
                 'points_earned' => 0,
             ];
-            $assignments = $type->assignments;
+            $assignments = $type->assignments()->quarter($event->quarter->id)->get();
 
             foreach ($assignments as $assignment) {
                 if ($grade = $assignment->grades()->isStudent($event->student->id)->first()) {
