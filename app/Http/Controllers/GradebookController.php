@@ -29,9 +29,9 @@ class GradebookController extends Controller
      */
     public function show(CourseClass $class, Quarter $quarter)
     {
-        $current_students = $class->currentStudents($quarter, 'current');
-        $former_students = $class->currentStudents($quarter, 'former');
-        $incoming_students = $class->currentStudents($quarter, 'incoming');
+        $current_students = $class->currentStudents($quarter, 'current', ['gradeAverages', 'gradeQuarterAverages']);
+        $former_students = $class->currentStudents($quarter, 'former', ['gradeAverages', 'gradeQuarterAverages']);
+        $incoming_students = $class->currentStudents($quarter, 'incoming', ['gradeAverages', 'gradeQuarterAverages']);
         $assignments = Assignment::courseClass($class->id)->quarter($quarter->id)->with('grades.student', 'type')->get();
         $grades_array = [];
         $excused_array = [];
@@ -41,7 +41,7 @@ class GradebookController extends Controller
             $excused_array[$assignment->id] = $assignment->grades->pluck('is_excused', 'student.id')->toArray();
         }
 
-        $table_head = ['Name'];
+        $table_head = ['Name', 'TOTAL'];
         foreach ($assignments as $assignment) {
             $table_head[] = "<a href='/class/$class->uuid/$quarter->uuid/gradebook/assignment/$assignment->uuid'>$assignment->name</a>";
         }

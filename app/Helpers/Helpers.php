@@ -2,12 +2,17 @@
 
 namespace App\Helpers;
 
+use DB;
 use Storage;
 use App\File;
 use App\Course;
+use App\Quarter;
+use App\Student;
 use Carbon\Carbon;
 use App\GradeLevel;
+use App\CourseClass;
 use App\AssignmentType;
+use App\Events\AssignmentGraded;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -25,6 +30,21 @@ class Helpers
     public function __construct()
     {
         $this->today = Carbon::today();
+    }
+
+    public static function populateAssignmentAverages()
+    {
+        ini_set('memory_limit', '4G');
+
+        $classes = CourseClass::isPercentageBased()->active()->with('q1Students')->get();
+        $quarter = Quarter::now();
+
+        foreach ($classes as $class) {
+            foreach ($class->q1Students as $student) {
+                event(new AssignmentGraded($student, $class, $quarter));
+            }
+        }
+
     }
 
     /**

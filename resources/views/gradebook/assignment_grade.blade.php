@@ -138,7 +138,8 @@
                             if (row.points_earned === null || row.is_excused) {
                                 return '--';
                             }
-                            $number = parseFloat(row.points_earned) / parseInt(row.assignment.max_points) * 100;
+                            $number = (parseFloat(row.points_earned) / parseInt(row.assignment.max_points)) * 100;
+                            $number = +(Math.round($number + "e+2") + "e-2");
                             return $number + '%';
                         }
                     },

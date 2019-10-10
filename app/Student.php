@@ -325,6 +325,26 @@ class Student extends PortalBaseModel
     */
 
     /**
+     *  This student has many gradeQuarterAverages.
+     *
+     * @return HasMany
+     */
+    public function gradeQuarterAverages()
+    {
+        return $this->hasMany('App\GradeQuarterAverage', 'student_id');
+    }
+
+    /**
+     *  This student has many gradeAverages.
+     *
+     * @return HasMany
+     */
+    public function gradeAverages()
+    {
+        return $this->hasMany('App\GradeAverage', 'student_id');
+    }
+
+    /**
      *  This student has many dailyAttendance.
      *
      * @return HasMany

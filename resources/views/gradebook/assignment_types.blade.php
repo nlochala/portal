@@ -3,7 +3,7 @@
 @section('content')
     @include('gradebook._horizontal_menu')
     @include('layouts._content_start')
-    <h1 class="font-w400" style="text-align: center">{{ $class->name }} - Assignment Types</h1>
+    <h1 class="font-w400" style="text-align: center">Assignment Types</h1>
     <!--
     panel.row
     panel.column

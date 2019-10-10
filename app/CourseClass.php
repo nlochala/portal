@@ -182,13 +182,17 @@ class CourseClass extends PortalBaseModel
      *
      * @param Quarter $quarter
      * @param string $status
+     * @param array $eager_load
      * @return mixed
      */
-    public function currentStudents(Quarter $quarter, $status = 'current')
+    public function currentStudents(Quarter $quarter, $status = 'current', $eager_load = [])
     {
         $relationship = $quarter->getClassRelationship();
 
-        return $this->$relationship()->$status()->with('person', 'status')->get()->sortBy('person.preferred_name');
+        $eager_load[] = 'person';
+        $eager_load[] = 'status';
+
+        return $this->$relationship()->$status()->with($eager_load)->get()->sortBy('person.preferred_name');
     }
 
     /*
@@ -317,6 +321,26 @@ class CourseClass extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This class has many assignmentTypes.
+     *
+     * @return HasMany
+     */
+    public function assignmentTypes()
+    {
+        return $this->hasMany('App\AssignmentType', 'class_id');
+    }
+
+    /**
+     *  This class has many assignments.
+     *
+     * @return HasMany
+     */
+    public function assignments()
+    {
+        return $this->hasMany('App\Assignment', 'class_id');
+    }
 
     /**
      *  This class has many attendance.

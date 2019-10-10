@@ -8,6 +8,7 @@ use App\Assignment;
 use App\CourseClass;
 use App\AssignmentGrade;
 use App\Helpers\Helpers;
+use App\Events\AssignmentGraded;
 use App\Helpers\FieldValidation;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\StoreAssignmentGradeRequest;
@@ -153,7 +154,15 @@ class AssignmentGradeAjaxController extends Controller
     {
         $values = Helpers::dbAddAudit($values);
 
-        return $this->attemptAction(AssignmentGrade::create($values), 'grade', 'create');
+        if ($grade = $this->attemptAction(AssignmentGrade::create($values), 'grade', 'create')) {
+            event(new AssignmentGraded(
+                $grade->student,
+                $grade->assignment->class,
+                $grade->assignment->quarter
+            ));
+
+            return $grade;
+        }
     }
 
     /**
@@ -175,7 +184,13 @@ class AssignmentGradeAjaxController extends Controller
             $values['date_completed'] = null;
         }
 
-        $this->attemptAction($grade->update($values), 'grade', 'update');
+        if ($this->attemptAction($grade->update($values), 'grade', 'update')) {
+            event(new AssignmentGraded(
+                $grade->student,
+                $grade->assignment->class,
+                $grade->assignment->quarter
+            ));
+        }
 
         return $grade;
     }
