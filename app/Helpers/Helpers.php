@@ -7,7 +7,6 @@ use Storage;
 use App\File;
 use App\Course;
 use App\Quarter;
-use App\Student;
 use Carbon\Carbon;
 use App\GradeLevel;
 use App\CourseClass;
@@ -44,7 +43,6 @@ class Helpers
                 event(new AssignmentGraded($student, $class, $quarter));
             }
         }
-
     }
 
     /**
@@ -65,15 +63,35 @@ class Helpers
                     'weight' => '40',
                 ],
                 [
+                    'name' => 'Homework',
+                    'description' => 'Homework',
+                    'weight' => '20',
+                ],
+                [
                     'name' => 'Participation and Class Work',
                     'description' => 'Participation and Class Work',
-                    'weight' => '30',
+                    'weight' => '15',
                 ],
                 [
                     'name' => 'Quizzes',
                     'description' => 'Quizzes',
-                    'weight' => '30',
+                    'weight' => '25',
                 ],
+//                [
+//                    'name' => 'Tests and Projects',
+//                    'description' => 'Tests and Projects',
+//                    'weight' => '40',
+//                ],
+//                [
+//                    'name' => 'Participation and Class Work',
+//                    'description' => 'Participation and Class Work',
+//                    'weight' => '30',
+//                ],
+//                [
+//                    'name' => 'Quizzes',
+//                    'description' => 'Quizzes',
+//                    'weight' => '30',
+//                ],
             ];
         } elseif ($types === 'ms_types') {
             $types = [
@@ -98,6 +116,24 @@ class Helpers
                     'weight' => '25',
                 ],
             ];
+        } elseif ($types === 'el_types') {
+            $types = [
+                [
+                    'name' => 'Tests and Projects',
+                    'description' => 'Tests and Projects',
+                    'weight' => '50',
+                ],
+                [
+                    'name' => 'Homework',
+                    'description' => 'Homework',
+                    'weight' => '15',
+                ],
+                [
+                    'name' => 'Quizzes',
+                    'description' => 'Quizzes',
+                    'weight' => '35',
+                ],
+            ];
         } else {
             $types = [];
         }
@@ -108,12 +144,14 @@ class Helpers
 
             foreach ($courses as $course) {
                 foreach ($course->classes as $class) {
-                    foreach ($types as $type) {
-                        $type['class_id'] = $class->id;
-                        $type['user_created_id'] = 1;
-                        $type['user_created_ip'] = '127.0.0.1';
-                        $type['is_protected'] = true;
-                        $assignment_type = AssignmentType::create($type);
+                    if ($class->assignmentTypes->isEmpty()) {
+                        foreach ($types as $type) {
+                            $type['class_id'] = $class->id;
+                            $type['user_created_id'] = 1;
+                            $type['user_created_ip'] = '127.0.0.1';
+                            $type['is_protected'] = true;
+                            $assignment_type = AssignmentType::create($type);
+                        }
                     }
                 }
             }
