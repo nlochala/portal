@@ -46,6 +46,33 @@ class Helpers
     }
 
     /**
+     * Get colored badges given a specific percentage.
+     *
+     * @param $percentage
+     * @param $badge_text
+     * @return string
+     */
+    public static function colorPercentages($percentage, $badge_text)
+    {
+        switch ($number = round($percentage)) {
+            case $number >= 90:
+                $color = 'success';
+                break;
+            case $number >= 80:
+                $color = 'primary';
+                break;
+            case $number >= 70:
+                $color = 'warning';
+                break;
+            default:
+                $color = 'danger';
+                break;
+        }
+
+        return '<span class="badge badge-'.$color.'">'.$badge_text.'</span>';
+    }
+
+    /**
      * Set the assignment types for all specific classes in a grade level.
      *
      * @param array $grade_levels

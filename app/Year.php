@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Year extends PortalBaseModel
@@ -187,6 +188,16 @@ class Year extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This year has many quarters.
+     *
+     * @return HasMany
+     */
+    public function quarters()
+    {
+        return $this->hasMany('App\Quarter', 'year_id');
+    }
 
     /**
      *  This year was created by a user.

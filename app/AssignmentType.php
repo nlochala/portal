@@ -129,6 +129,16 @@ class AssignmentType extends PortalBaseModel
     */
 
     /**
+     *  This assignment_type has many gradeAverages.
+     *
+     * @return HasMany
+     */
+    public function gradeAverages()
+    {
+        return $this->hasMany('App\GradeAverage', 'assignment_type_id');
+    }
+
+    /**
      *  This assignment_type has many assignments.
      *
      * @return HasMany

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Student;
+use App\Helpers\Helpers;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
 
 class StudentLoginController extends Controller
@@ -37,14 +39,35 @@ class StudentLoginController extends Controller
      */
     public function loginsExport()
     {
-        $students = Student::with('person')->current()->whereNull('username')->orWhereNull('password')->get();
+        $students = Student::with('person')->current()->isImported(false)->get();
+
         foreach ($students as $student) {
-            $lastname = preg_replace('/[^A-Za-z0-9]/', '', $student->person->family_name);
-            $student->username = $student->id.strtolower($lastname).'@tlcdg.com';
-            $student->password = 'tlc123'.chr(rand(65, 90)).chr(rand(65, 90));
-            $student->save();
+            if ($student->username === null) {
+                $lastname = preg_replace('/[^A-Za-z0-9]/', '', $student->person->family_name);
+                $student->username = $student->id.strtolower($lastname).'@tlcdg.com';
+                $student->password = 'tlc123'.chr(rand(65, 90)).chr(rand(65, 90));
+                $student->save();
+            }
         }
 
         return view('logins.student_export', compact('students'));
+    }
+
+    /**
+     * Mark a student as imported.
+     *
+     * @return RedirectResponse
+     */
+    public function imported()
+    {
+        $students = Student::with('person')->current()->isImported(false)->get();
+
+        foreach ($students as $student) {
+            $student = Helpers::dbAddAudit($student);
+            $student->is_imported = true;
+            Helpers::flash($student->save(), 'student', 'updated');
+        }
+
+        return redirect()->back();
     }
 }

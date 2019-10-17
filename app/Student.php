@@ -73,7 +73,10 @@ class Student extends PortalBaseModel
         return 'uuid';
     }
 
-    protected $casts = ['is_protected' => 'bool'];
+    protected $casts = [
+        'is_protected' => 'bool',
+        'is_imported' => 'bool',
+    ];
 
     /**
      * Add mass-assignment to model.
@@ -316,6 +319,17 @@ class Student extends PortalBaseModel
         $query->whereHas('gradeLevel', static function ($q) use ($grade_short_name) {
             $q->where('short_name', '=', $grade_short_name);
         });
+    }
+
+    /**
+     * Student has been imported into AD query scope.
+     *
+     * @param $query
+     * @param bool $parameter
+     */
+    public function scopeIsImported($query, bool $parameter)
+    {
+        $query->where('is_imported', $parameter);
     }
 
     /*

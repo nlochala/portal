@@ -64,6 +64,8 @@ Route::get('student/logins', 'StudentLoginController@index')
     ->middleware('can:students.show.full_profile');
 Route::get('student/export_student_logins', 'StudentLoginController@loginsExport')
     ->middleware('can:permissions');
+Route::get('student/export_student_logins/imported', 'StudentLoginController@imported')
+    ->middleware('can:permissions');
 
 /*
 |--------------------------------------------------------------------------
@@ -542,4 +544,11 @@ Route::get('map/export', 'MapRosterController@index');
 |--------------------------------------------------------------------------
 */
 Route::get('videos/channel/how-to', 'HowToVideosController@channel');
+
+/*
+|--------------------------------------------------------------------------
+| REPORTS
+|--------------------------------------------------------------------------
+*/
+Route::get('report/grades/{class}/{quarter}/{student}', 'GradebookController@studentDetails');
 

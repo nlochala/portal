@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Quarter extends PortalBaseModel
@@ -231,6 +232,26 @@ class Quarter extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This quarter has many gradeAverages.
+     *
+     * @return HasMany
+     */
+    public function gradeAverages()
+    {
+        return $this->hasMany('App\GradeAverage', 'quarter_id');
+    }
+
+    /**
+     *  This quarter has many gradeQuarterAverages.
+     *
+     * @return HasMany
+     */
+    public function gradeQuarterAverages()
+    {
+        return $this->hasMany('App\GradeQuarterAverage', 'quarter_id');
+    }
 
     /**
      *  This quarter belongs to a year.

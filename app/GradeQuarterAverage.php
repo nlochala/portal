@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\Helpers;
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
@@ -78,22 +79,7 @@ class GradeQuarterAverage extends Model
             return $average;
         }
 
-        switch ($number = round($average->percentage)) {
-            case $number >= 90:
-                $color = 'success';
-                break;
-            case $number >= 80:
-                $color = 'primary';
-                break;
-            case $number >= 70:
-                $color = 'warning';
-                break;
-            default:
-                $color = 'danger';
-                break;
-        }
-
-        return '<span class="badge badge-'.$color.'">'.$average->percentage.'% '.$average->grade_name.'</span>';
+        return Helpers::colorPercentages($average->percentage, $average->percentage.'% '.$average->grade_name);
     }
 
     /*

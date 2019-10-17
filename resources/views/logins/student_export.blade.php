@@ -35,18 +35,35 @@
     |--------------||--------------|
 
 -->
+    @if(env('EXPORT_STUDENT_LOGINS') && auth()->user()->can('permissions') && ! $students->isEmpty())
+        <button type="button" class="btn btn-hero-lg btn-hero-success mr-1 mb-3"
+                onclick="window.location.href='/student/export_student_logins/imported'">
+            <i class="fa fa-check-circle"></i> Mark All Students As Imported
+        </button>
+    @endif
+    <u><h1 class="flex-sm-fill font-size-h3 font-w400 mt-2 mb-0 mb-sm-2">Office 365</h1></u>
+    <ul>
+        <li>Login to Office 365</li>
+        <li>Access the Admin Panel</li>
+        <li>Go to Users -> Active Users</li>
+        <li>Click on "Add multiple users" Option Above the Table of Users</li>
+        <li>Export the Below Table as a CSV File</li>
+        <li>Import File Into Office 365 and Click Verify</li>
+        <li>Select Next and Choose the Student S1 License</li>
+    </ul>
+
     @include('layouts._panels_start_row',['has_uniform_length' => false])
     @include('layouts._panels_start_column', ['size' => 12])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
-    @include('layouts._panels_start_panel', ['title' => 'Logins', 'with_block' => false])
+    @include('layouts._panels_start_panel', ['title' => 'OFFICE 365 - Batch Import', 'with_block' => false])
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
     <!-- TABLE OF LOGINS -->
     @if($students->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'student_table', 'table_head' => ['User Name','First Name','Last Name','Display Name','Job Title','Department','Office Number','Office Phone','Mobile Phone','Fax','Address','City','State or Province','ZIP or Postal Code','Country or Region','TLC Password']])
+        @include('_tables.new-table',['id' => 'o365_table','class' => 'display nowrap', 'style' => 'width:10%', 'table_head' => ['User Name','First Name','Last Name','Display Name','Job Title','Department','Office Number','Office Phone','Mobile Phone','Fax','Address','City','State or Province','ZIP or Postal Code','Country or Region']])
         @foreach($students as $student)
             <tr>
                 <td>{{ $student->username }}</td>
@@ -64,7 +81,40 @@
                 <td></td>
                 <td></td>
                 <td></td>
+            </tr>
+        @endforeach
+        @include('_tables.end-new-table')
+    @endif
+
+
+    @include('layouts._panels_end_content')
+    @include('layouts._panels_end_panel')
+    <!-------------------------------------------------------------------------------->
+    <!-------------------------------------------------------------------------------->
+    @include('layouts._panels_end_column')
+    @include('layouts._panels_end_row')
+    @include('layouts._panels_start_row',['has_uniform_length' => false])
+    @include('layouts._panels_start_column', ['size' => 12])
+    <!-------------------------------------------------------------------------------->
+    <!----------------------------------New Panel ------------------------------------>
+    @include('layouts._panels_start_panel', ['title' => 'ACTIVE DIRECTORY - Batch Import', 'with_block' => false])
+    {{-- START BLOCK OPTIONS panel.block --}}
+    @include('layouts._panels_start_content')
+    <!-- TABLE OF LOGINS -->
+    @if($students->isEmpty())
+        <small><em>Nothing to Display</em></small>
+    @else
+        @include('_tables.new-table',['id' => 'ad_table', 'table_head' => ['firstname','displayname','lastname','email','username','password','ou','department']])
+        @foreach($students as $student)
+            <tr>
+                <td>{{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
+                <td>{{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
+                <td>{{ $student->person->family_name }}</td>
+                <td>{{ $student->username }}</td>
+                <td>{{ preg_replace('/@tlcdg.com/','',$student->username) }}</td>
                 <td>{{ $student->password }}</td>
+                <td>{{ env('STUDENT_OU') }}</td>
+                <td>student</td>
             </tr>
         @endforeach
         @include('_tables.end-new-table')
@@ -91,7 +141,34 @@
 
         jQuery(document).ready(function () {
 
-            var tablestudent = $('#student_table').DataTable( {
+            var tablestudent = $('#o365_table').DataTable( {
+                dom: "Bfrtip",
+                pageLength: 50,
+                select: true,
+                paging: true,
+                scrollX: true,
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: '<i class="fa fa-fw fa-download mr-1"></i>',
+                        buttons: [
+                            'copy',
+                            'excel',
+                            'csv',
+                            {
+                                extend: 'pdf',
+                                orientation: 'landscape',
+                                pageSize: 'LETTER'
+                            },
+                            'print',
+                        ],
+                        fade: true,
+                        className: 'btn-sm btn-hero-primary'
+                    },
+                ]
+            });
+
+            var tablestudent1 = $('#ad_table').DataTable( {
                 dom: "Bfrtip",
                 pageLength: 50,
                 select: true,

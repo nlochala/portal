@@ -12,6 +12,7 @@ $sub_title = optional
                  <br /><em><small><small>{!! $subtitle !!}</small></small></em>
             @endif
                 </h1>
+            <div class="d-print-none">
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     @foreach($breadcrumbs as $crumb)
@@ -23,6 +24,7 @@ $sub_title = optional
                     @endforeach
                 </ol>
             </nav>
+            </div>
         </div>
     </div>
 </div>

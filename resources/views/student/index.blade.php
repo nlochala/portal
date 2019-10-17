@@ -76,6 +76,7 @@
 @section('js_after')
     {!! JsValidator::formRequest('\App\Http\Requests\StoreStudentRequest','#student-form') !!}
 
+
     <script type="text/javascript">
         jQuery(document).ready(function () {
             $('#dob').datepicker();

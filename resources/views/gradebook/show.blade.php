@@ -38,7 +38,7 @@
         @include('_tables.new-table',['id' => 'grades_table', 'table_head' => $table_head, 'class' => 'display nowrap', 'style' => 'width:100%'])
         @foreach($current_students as $student)
             <tr>
-                <td>{!! $student->name !!}</td>
+                <td><a href="/report/grades/{{ $class->uuid }}/{{ $quarter->uuid }}/{{ $student->uuid }}">{!! $student->person->fullName()!!}</a></td>
                 <td>{!! \App\GradeQuarterAverage::displayByClassQuarter($student->gradeQuarterAverages, $class->id, $quarter->id) !!}</td>
                 @foreach($assignments as $assignment)
                     @if(isset($excused_array[$assignment->id][$student->id]) && $excused_array[$assignment->id][$student->id])

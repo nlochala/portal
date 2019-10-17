@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="{{ asset('js/plugins/summernote/summernote-bs4.css') }}">
 <link rel="stylesheet" href="{{ asset('js/plugins/algolia/searchbar.css') }}">
 <link rel="stylesheet" href="{{ asset('js/plugins/multiselect/multi-select.css') }}">
-
+<link rel="stylesheet" href="{{ asset('css/tlcportal.css') }}">
 
 <link rel="stylesheet" id="css-main" href="{{ asset('css/fonts.css') }}">
 <link rel="stylesheet" id="css-theme" href="{{ asset(mix('css/dashmix.css')) }}">
