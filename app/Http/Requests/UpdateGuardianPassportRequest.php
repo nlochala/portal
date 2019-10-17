@@ -28,7 +28,7 @@ class UpdateGuardianPassportRequest extends FormRequest
             'country_id' => 'required',
             'given_name' => 'required',
             'family_name' => 'required',
-            'number' => 'required|numeric',
+            'number' => 'required',
             'issue_date' => 'required',
             'expiration_date' => 'required',
         ];
