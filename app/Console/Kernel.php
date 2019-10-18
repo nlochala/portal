@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('portal:process-file-sizes')->everyTenMinutes();
+        $schedule->command('portal:calculate-quarter-grade')->everyThirtyMinutes();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->command('telescope:prune')->sundays();
     }

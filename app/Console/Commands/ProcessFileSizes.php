@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Storage;
 use App\File;
 use Illuminate\Console\Command;
-use Storage;
 
 class ProcessFileSizes extends Command
 {
@@ -40,14 +40,12 @@ class ProcessFileSizes extends Command
     public function handle()
     {
         $files = File::emptySize()->get();
-        if($files->isEmpty()){
+        if ($files->isEmpty()) {
             return;
         }
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $file->update(['size' => Storage::disk($file->driver)->size($file->getFullPath())]);
         }
-
-        return;
     }
 }

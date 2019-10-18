@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
 use App\File;
 use App\FileAudit;
 use http\Client\Response;
-use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\UploadedFile;
-use Storage;
+use Illuminate\Contracts\Routing\ResponseFactory;
 
 class MediaController extends Controller
 {
@@ -49,21 +49,21 @@ class MediaController extends Controller
         $errors = [];
         $stored_files = [];
 
-        if (!isset($values['upload'])) {
+        if (! isset($values['upload'])) {
             // Check to see if we are seeing a file upload key of upload_*
             // This might happen if there are more than one upload fields in form.
             foreach ($values as $key => $value) {
-                !preg_match('/upload_/', $key) ?: $values['upload'] = $value;
+                ! preg_match('/upload_/', $key) ?: $values['upload'] = $value;
             }
 
-            if (!isset($values['upload'])) {
+            if (! isset($values['upload'])) {
                 $errors[] = 'A file was not attached to this request.';
 
                 return response(json_encode($errors), 444);
             }
         }
 
-        if (!is_array($values['upload']) && $values['upload'] instanceof UploadedFile) {
+        if (! is_array($values['upload']) && $values['upload'] instanceof UploadedFile) {
             $values['upload'] = [$values['upload']];
         }
 
