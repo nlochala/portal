@@ -551,4 +551,5 @@ Route::get('videos/channel/how-to', 'HowToVideosController@channel');
 |--------------------------------------------------------------------------
 */
 Route::get('report/grades/{class}/{quarter}/{student}', 'GradebookController@studentDetails');
+Route::get('report/grades/{class}/{quarter}/{student}/print', 'GradebookController@printStudentDetails');
 

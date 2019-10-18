@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helpers;
 use App\Quarter;
 use App\Student;
 use App\Assignment;
@@ -73,11 +72,46 @@ class GradebookController extends Controller
      */
     public function studentDetails(CourseClass $class, Quarter $quarter, Student $student)
     {
-        $summary_array = [];
         $quarters = $quarter->year->quarters;
+        $class->load('primaryEmployee.person');
         $assignment_types = $class->assignmentTypes()->with('assignments.grades', 'gradeAverages')->get();
+        $summary_array = $this->calculateDetails($assignment_types, $class, $quarters, $student);
+
+        return view('gradebook.student', compact('class', 'quarter', 'student', 'assignment_types', 'quarters', 'summary_array'));
+    }
+
+    /**
+     * Display the student details page for a specific class.
+     *
+     * @param CourseClass $class
+     * @param Quarter $quarter
+     * @param Student $student
+     * @return Factory|View
+     */
+    public function printStudentDetails(CourseClass $class, Quarter $quarter, Student $student)
+    {
+        $quarters = $quarter->year->quarters;
+        $class->load('primaryEmployee.person');
+        $assignment_types = $class->assignmentTypes()->with('assignments.grades', 'gradeAverages')->get();
+        $summary_array = $this->calculateDetails($assignment_types, $class, $quarters, $student);
+
+        return view('gradebook.student_print', compact('class', 'quarter', 'student', 'assignment_types', 'quarters', 'summary_array'));
+    }
+
+    /**
+     * Return the student details.
+     *
+     * @param $assignment_types
+     * @param $class
+     * @param $quarters
+     * @param $student
+     * @return array
+     */
+    private function calculateDetails($assignment_types, $class, $quarters, $student)
+    {
+        $summary_array = [];
+
         foreach ($assignment_types as $type) {
-//            dd($type->assignments->first());
             $type_name = $type->name.' -- '.$type->weight.'%';
             foreach ($quarters as $q) {
                 $percentage = '--';
@@ -98,8 +132,6 @@ class GradebookController extends Controller
             $summary_array['TOTAL'][$q->name] = $total;
         }
 
-//        dd($summary_array);
-
-        return view('gradebook.student', compact('class', 'quarter', 'student', 'assignment_types', 'quarters', 'summary_array'));
+        return $summary_array;
     }
 }

@@ -1,26 +1,14 @@
 @extends('layouts.backend')
 
 @section('content')
-    <!-- Add Content Title Here b.breadcrumbs -->
-    @include('layouts._breadcrumbs', [
-    'title' => $student->name.' - Grade Report',
-    'subtitle' => $class->fullName(true),
-    'breadcrumbs' => [
-        [
-            'page_name' => 'Portal',
-            'page_uri'  => '/'
-        ],
-        [
-            'page_name' => 'Class Gradebook',
-            'page_uri'  => "/class/$class->uuid/$quarter->uuid/gradebook"
-        ],
-        [
-            'page_name' => 'Student Report',
-            'page_uri'  => request()->getRequestUri()
-        ]
-    ]
-])
     @include('layouts._content_start')
+    <h1 class="flex-sm-fill font-size-h1 font-w400 mt-2 mb-0 mb-sm-2">
+        {{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)
+            ({{ $student->person->preferred_name }})@endif - Grade Report
+        <br />
+        <em><small><small>{{ $class->fullName(false) }} | {{ $class->primaryEmployee->person->fullName() }}</small></small></em>
+    </h1>
+    <br/>
     <!--
     panel.row
     panel.column
@@ -40,25 +28,14 @@
     |--------------||--------------|
 
 -->
-    <div style="text-align: right">
-        <button type="button" class="btn btn-hero-primary btn-hero-sm mb-2 d-print-none"
-                onclick="window.location.href='/report/grades/{{ $class->uuid }}/{{ $quarter->uuid }}/{{ $student->uuid }}/print'">
-            <i class="si si-printer mr-1"></i> Print Report
-        </button>
+    <div style="text-align: center">
+        <h3>{{ $quarter->year->name }} Summary</h3>
     </div>
-    @include('layouts._panels_start_row',['has_uniform_length' => true])
-    @include('layouts._panels_start_column', ['size' => 12])
-    <!-------------------------------------------------------------------------------->
-    <!----------------------------------New Panel ------------------------------------>
-    @include('layouts._panels_start_panel', ['title' => 'Grades By Type', 'with_block' => false])
-    {{-- START BLOCK OPTIONS panel.block --}}
-    @include('layouts._panels_start_content')
-
     <!-- TABLE OF TYPES -->
     @if($assignment_types->isEmpty())
         <small><em>Nothing to Display</em></small>
     @else
-        @include('_tables.new-table',['id' => 'types_table', 'table_head' => ['Type and Weight', 'Quarter 1','Quarter 2', 'Quarter 3', 'Quarter 4']])
+        @include('_tables.new-table',['id' => 'types_table', 'style' => 'border: 1px solid lightgray', 'table_head' => ['Type and Weight', 'Quarter 1','Quarter 2', 'Quarter 3', 'Quarter 4']])
         @foreach($summary_array as $type_name => $averages)
             <tr>
                 @if ($type_name === 'TOTAL')
@@ -76,27 +53,19 @@
         @endforeach
         @include('_tables.end-new-table')
     @endif
-
-    @include('layouts._panels_end_content')
-    @include('layouts._panels_end_panel')
-    <!-------------------------------------------------------------------------------->
-    <!-------------------------------------------------------------------------------->
-    @include('layouts._panels_end_column')
-    @include('layouts._panels_end_row')
-
+    <br />
+    <br />
+    <br />
+    <div style="text-align: center">
+        <h3>Quarter {{ preg_replace('/Q/','',$quarter->name) }} Details</h3>
+    </div>
     @foreach($assignment_types as $type)
-        @include('layouts._panels_start_row',['has_uniform_length' => true])
-        @include('layouts._panels_start_column', ['size' => 12])
-        <!-------------------------------------------------------------------------------->
-        <!----------------------------------New Panel ------------------------------------>
-        @include('layouts._panels_start_panel', ['title' => $type->name, 'with_block' => false])
-        {{-- START BLOCK OPTIONS panel.block --}}
-        @include('layouts._panels_start_content')
+        <h4>{{ $type->name }}</h4>
         <!-- TABLE OF ASSIGNMENTS -->
         @if($type->assignments->isEmpty())
             <small><em>Nothing to Display</em></small>
         @else
-            @include('_tables.new-table',['id' => 'assignment_id', 'table_head' => ['Name','Date Assigned','Points Earned', 'Percentage', 'Date Turned In']])
+            @include('_tables.new-table',['no_hover' => true, 'style' => 'border: 1px solid lightgray', 'id' => 'assignment_id', 'table_head' => ['Name','Date Assigned','Points Earned', 'Percentage', 'Date Turned In']])
             @foreach($type->assignments as $assignment)
                 <tr>
                     <td>{{ $assignment->name }}</td>
@@ -126,12 +95,7 @@
             @endforeach
             @include('_tables.end-new-table')
         @endif
-        @include('layouts._panels_end_content')
-        @include('layouts._panels_end_panel')
-        <!-------------------------------------------------------------------------------->
-        <!-------------------------------------------------------------------------------->
-        @include('layouts._panels_end_column')
-        @include('layouts._panels_end_row')
+        <br />
     @endforeach
     @include('layouts._content_end')
 @endsection
@@ -142,11 +106,18 @@
 
     <script type="text/javascript">
 
-        // Add Filepond initializer form.js.file
+        {{--jQuery(function(){  });--}}
+        {{--window.location.replace('/report/grades/{{ $class->uuid }}/{{ $quarter->uuid }}/{{ $student->uuid }}');--}}
 
         jQuery(document).ready(function () {
-
+            Dashmix.helpers(['print']);
+            setTimeout('closePrintView()', 3000);
 
         });
+
+        function closePrintView() {
+            window.location.href = '/report/grades/{{ $class->uuid }}/{{ $quarter->uuid }}/{{ $student->uuid }}';
+        }
+
     </script>
 @endsection
