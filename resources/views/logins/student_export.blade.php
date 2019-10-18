@@ -44,12 +44,15 @@
     <u><h1 class="flex-sm-fill font-size-h3 font-w400 mt-2 mb-0 mb-sm-2">Office 365</h1></u>
     <ul>
         <li>Login to Office 365</li>
-        <li>Access the Admin Panel</li>
+        <li>Access the admin panel</li>
         <li>Go to Users -> Active Users</li>
-        <li>Click on "Add multiple users" Option Above the Table of Users</li>
-        <li>Export the Below Table as a CSV File</li>
-        <li>Import File Into Office 365 and Click Verify</li>
-        <li>Select Next and Choose the Student S1 License</li>
+        <li>Click on "Add multiple users" option above the table of users</li>
+        <li>Export the below-table as a csv file</li>
+        <li>Import file into Office 365 and click verify</li>
+        <li>Select next and choose the Student S1 License</li>
+        <li>Click finish and it will create the student accounts</li>
+        <li>Lastly, you need to go to the all-students@tlcdg.com group</li>
+        <li>Add the newly created students to that group</li>
     </ul>
 
     @include('layouts._panels_start_row',['has_uniform_length' => false])
@@ -93,6 +96,16 @@
     <!-------------------------------------------------------------------------------->
     @include('layouts._panels_end_column')
     @include('layouts._panels_end_row')
+    <u><h1 class="flex-sm-fill font-size-h3 font-w400 mt-2 mb-0 mb-sm-2">Active Directory</h1></u>
+    <ul>
+        <li>Remote into the Active Directory server.</li>
+        <li>Login using the tsupport account</li>
+        <li>Export the students in the below-table as a csv file</li>
+        <li>Paste them into the Documents/AD Import.csv file</li>
+        <li>Click on "Run ISE as Administrator"</li>
+        <li>Open the file Documents/ADImportFromO365.ps1</li>
+        <li>Run the script</li>
+    </ul>
     @include('layouts._panels_start_row',['has_uniform_length' => false])
     @include('layouts._panels_start_column', ['size' => 12])
     <!-------------------------------------------------------------------------------->
