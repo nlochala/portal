@@ -233,6 +233,9 @@
 @endsection
 
 @section('js_after')
+
+    {!! JsValidator::formRequest('\App\Http\Requests\StoreDefaultRequest','#admin-form') !!}
+
     <script type="text/javascript">
         jQuery(document).ready(function () {
             var tablelogins = $('#logins_table').DataTable( {
