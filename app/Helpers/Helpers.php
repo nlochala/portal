@@ -7,10 +7,12 @@ use Storage;
 use App\File;
 use App\Course;
 use App\Quarter;
+use App\Student;
 use Carbon\Carbon;
 use App\GradeLevel;
 use App\CourseClass;
 use App\AssignmentType;
+use App\AttendanceClass;
 use App\Events\AssignmentGraded;
 use Intervention\Image\Constraint;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -43,6 +45,74 @@ class Helpers
                 event(new AssignmentGraded($student, $class, $quarter));
             }
         }
+    }
+
+    /**
+     * Check and delete any duplicate attendance.
+     *
+     * @param string $start_date
+     * @param string $end_date
+     */
+    public static function checkDuplicateAttendance($start_date = 'Y-m-d', $end_date = 'Y-m-d')
+    {
+        $start = Carbon::parse($start_date);
+        $end = Carbon::parse($end_date);
+        $delete_array = [];
+
+//        if ($start == $end) {
+//            $students = Student::current()->get();
+//            foreach ($students as $student) {
+//                $attendance_list = AttendanceClass::where('date', $start->format('Y-m-d'))->where('student_id', $student->id)->get();
+//                if ($attendance_list->count() > 1) {
+//                    $x = 0;
+//                    foreach ($attendance_list as $attendance) {
+//                        if ($x === 0) {
+//                            $x++;
+//                            continue;
+//                        }
+//                        $delete_array[] = $attendance->id;
+//                        $attendance->delete();
+//                    }
+//                }
+//            }
+//
+//            return $delete_array;
+//        }
+
+        while ($start <= $end) {
+            $students = Student::current()->get();
+            foreach ($students as $student) {
+                $attendance_list = AttendanceClass::where('date', $start->format('Y-m-d'))->where('student_id', $student->id)->get();
+                if ($attendance_list->count() > 1) {
+                    $x = 0;
+                    foreach ($attendance_list as $attendance) {
+                        if ($x === 0) {
+                            $x++;
+                            continue;
+                        }
+                        $delete_array[] = $attendance->id;
+                        $attendance->delete();
+                    }
+                }
+            }
+
+            $start->addDay();
+        }
+
+        return $delete_array;
+    }
+
+    public static function checkAssignmentTypeCount()
+    {
+        $check_array = [];
+        $classes = CourseClass::active()->with('assignmentTypes')->get();
+        foreach ($classes as $class) {
+            if ($class->assignmentTypes->count() > 4) {
+                $check_array[] = $class->id;
+            }
+        }
+
+        dd($check_array);
     }
 
     /**

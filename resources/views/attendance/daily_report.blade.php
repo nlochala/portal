@@ -39,10 +39,10 @@
     @include('layouts._panels_start_row',['has_uniform_length' => true])
     @include('layouts._panels_start_column', ['size' => 3])
     <a class="block block-link-pop text-center" href="javascript:void(0)">
-            <div>
-                <div class="font-size-h1 font-w300 text-black">{{ $current_student_count }}</div>
-                <div class="font-w600 mt-2 text-uppercase text-muted">Total Enrolled</div>
-            </div>
+        <div>
+            <div class="font-size-h1 font-w300 text-black">{{ $current_student_count }}</div>
+            <div class="font-w600 mt-2 text-uppercase text-muted">Total Enrolled</div>
+        </div>
     </a>
     @include('layouts._panels_end_column')
     @include('layouts._panels_start_column', ['size' => 3])
@@ -114,21 +114,22 @@
     @include('layouts._panels_start_content')
 
     <!-- TABLE OF CLASSES -->
-    @if($homeroom_list->isEmpty())
+    @if(!isset($homeroom_array))
         <small><em>Nothing to Display</em></small>
     @else
         @include('_tables.new-table',['id' => 'homeroom_table', 'table_head' => ['Class','Completed','Present', 'Absent']])
-        @foreach($homeroom_list as $homeroom)
+        @foreach($homeroom_array as $homeroom_name => $homeroom)
             <tr>
-                <td><a href="/class/{{ $homeroom->uuid }}">{{ $homeroom->full_name }}</a></td>
-                @if($homeroom->attendanceOn($date->format('Y-m-d'))->isEmpty())
+                <td><a href="/class/{{ $homeroom['uuid'] }}">{{ $homeroom_name }}</a></td>
+                {{--                @if($homeroom->attendanceOn($date->format('Y-m-d'))->isEmpty())--}}
+                @if($homeroom['present'] === 0)
                     <td><span class="badge badge-danger"><i class="fa fa-times"></i></span></td>
                     <td>--</td>
                     <td>--</td>
                 @else
                     <td><span class="badge badge-success"><i class="fa fa-check"></i></span></td>
-                    <td>{{ $homeroom->attendance()->date($date->format('Y-m-d'))->present()->count() }}</td>
-                    <td>{{ $homeroom->attendance()->date($date->format('Y-m-d'))->absent()->count() }}</td>
+                    <td>{{ $homeroom['present'] }}</td>
+                    <td>{{ $homeroom['absent'] }}</td>
                 @endif
             </tr>
         @endforeach

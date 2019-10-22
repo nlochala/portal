@@ -35,12 +35,18 @@ class AttendanceClassController extends Controller
     {
         $date_string = request()->get('date');
         $date = $date_string ? Carbon::parse($date_string) : now();
-
         $date_iso = $date->isoFormat('dddd, MMMM Do, YYYY');
+        $homeroom_array = [];
 
         //Homeroom list
-        $homeroom_list = CourseClass::classesWithAttendance()->load('attendance');
-        $absent_students = AttendanceDay::date($date->format('Y-m-d'))->absent()->with('student.person', 'type')->get();
+        $homeroom_list = CourseClass::hasAttendance()->with('course')->get();
+        foreach ($homeroom_list as $homeroom) {
+            $homeroom_array[$homeroom->full_name]['present'] = $homeroom->attendance()->date($date->format('Y-m-d'))->present()->count();
+            $homeroom_array[$homeroom->full_name]['absent'] = $homeroom->attendance()->date($date->format('Y-m-d'))->absent()->count();
+            $homeroom_array[$homeroom->full_name]['uuid'] = $homeroom->uuid;
+        }
+
+        $absent_students = AttendanceDay::date($date->format('Y-m-d'))->absent()->with('student.person', 'type', 'student.gradeLevel')->get();
         $absent_stats = implode(',',
             AttendanceDay::getStudentCount('absent', Helpers::getPreviousWorkingDays($date->format('Y-m-d'), 15)));
 
@@ -51,7 +57,7 @@ class AttendanceClassController extends Controller
         $current_student_count = Student::current()->count();
 
         return view('attendance.daily_report', compact(
-            'homeroom_list',
+            'homeroom_array',
            'absent_students',
             'date',
             'date_iso',

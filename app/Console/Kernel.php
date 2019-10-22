@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('portal:process-file-sizes')->everyTenMinutes();
         $schedule->command('portal:calculate-quarter-grade')->everyThirtyMinutes();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
-        $schedule->command('telescope:prune')->sundays();
+        $schedule->command('telescope:prune')->daily();
     }
 
     /**

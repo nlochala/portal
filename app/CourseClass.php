@@ -112,18 +112,6 @@ class CourseClass extends PortalBaseModel
     }
 
     /**
-     * Return all classes that need attendance.
-     *
-     * @return mixed
-     */
-    public static function classesWithAttendance()
-    {
-        return static::whereHas('course', function ($q) {
-            $q->active()->hasAttendance();
-        })->get();
-    }
-
-    /**
      * Display the teachers of a given class.
      *
      * @param bool $display_inline
@@ -266,6 +254,20 @@ class CourseClass extends PortalBaseModel
     */
 
     /**
+     * Has enrolled student query scope.
+     *
+     * @param $query
+     * @param $student_id
+     * @param $relationship
+     */
+    public function scopeIsStudent($query, $student_id, $relationship)
+    {
+        $query->whereHas($relationship, function ($q) use ($student_id) {
+            $q->where('student_id', $student_id);
+        });
+    }
+
+    /**
      * Standards-based query scope.
      *
      * @param $query
@@ -301,6 +303,54 @@ class CourseClass extends PortalBaseModel
     public function scopeActive($query)
     {
         $query->where('class_status_id', '=', '1');
+    }
+
+    /**
+     * Has attendance query scope.
+     *
+     * @param $query
+     */
+    public function scopeHasAttendance($query)
+    {
+        $query->whereHas('course', function ($q) {
+            $q->active()->hasAttendance();
+        });
+    }
+
+    /**
+     * Has attendance on date query scope.
+     *
+     * @param $query
+     */
+    public function scopeAttendanceOnDate($query, $date = 'Y-m-d')
+    {
+        $query->whereHas('attendance', function ($q) use ($date) {
+            $q->where('date', $date);
+        });
+    }
+
+    /**
+     * Get attendance for present students.
+     *
+     * @param $query
+     */
+    public function scopeAttendancePresent($query)
+    {
+        $query->whereHas('attendance', function ($q) {
+            $q->present();
+        });
+    }
+
+    /**
+     * Get attendance for absent students.
+     *
+     * @param $query
+     */
+    public function scopeAttendanceAbsent($query)
+    {
+        $query->whereHas('attendance', function ($q) {
+            $q->absent();
+        });
     }
 
 //    /**

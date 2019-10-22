@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CourseClass;
+use App\GradeQuarterAverage;
 use App\Person;
+use App\Quarter;
 use App\Student;
 use App\GradeLevel;
 use App\StudentStatus;
@@ -31,6 +34,9 @@ class StudentController extends Controller
      */
     public function dashboard(Student $student)
     {
+        $quarter = Quarter::now();
+        $relationship = $quarter->getClassRelationship();
+
         $student->load(
             'status',
             'family.students.person',
@@ -43,7 +49,10 @@ class StudentController extends Controller
             'person.addresses'
         );
 
-        return view('student.dashboard', compact('student'));
+        $grades = GradeQuarterAverage::isQuarter($quarter->id)->isStudent($student->id)->get();
+        $classes = CourseClass::isStudent($student->id, $relationship)->with('course')->get();
+
+        return view('student.dashboard', compact('student', 'grades', 'classes', 'quarter'));
     }
 
 
