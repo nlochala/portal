@@ -28,6 +28,7 @@ class StoreQuarterRequest extends FormRequest
             'year_id' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
+            'instructional_days' => 'numeric|required',
         ];
     }
 
@@ -53,4 +54,3 @@ class StoreQuarterRequest extends FormRequest
         return [];
     }
 }
-

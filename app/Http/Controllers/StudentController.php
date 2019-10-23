@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\CourseClass;
-use App\GradeQuarterAverage;
+use App\AttendanceClass;
 use App\Person;
 use App\Quarter;
 use App\Student;
 use App\GradeLevel;
+use App\CourseClass;
+use App\AttendanceDay;
 use App\StudentStatus;
 use App\Helpers\Helpers;
 use Illuminate\View\View;
+use App\GradeQuarterAverage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
 
@@ -51,10 +53,33 @@ class StudentController extends Controller
 
         $grades = GradeQuarterAverage::isQuarter($quarter->id)->isStudent($student->id)->get();
         $classes = CourseClass::isStudent($student->id, $relationship)->with('course')->get();
+        $absences = AttendanceDay::isStudent($student->id)->isQuarter($quarter->id)->absent()->with('type')->get();
 
-        return view('student.dashboard', compact('student', 'grades', 'classes', 'quarter'));
+        $attendance_summary_array = [];
+
+        foreach (Quarter::current()->get() as $quarter_model) {
+            $attendance_summary_array['Present'][$quarter_model->name] =
+                AttendanceDay::isStudent($student->id)->isQuarter($quarter_model->id)->present()->count();
+            $attendance_summary_array['Absent'][$quarter_model->name] =
+                AttendanceDay::isStudent($student->id)->isQuarter($quarter_model->id)->absent()->count();
+            $attendance_summary_array['Unexcused Tardies'][$quarter_model->name] =
+                AttendanceClass::isStudent($student->id)->isQuarter($quarter_model->id)->unexcusedTardy()->count();
+            $attendance_summary_array['Instructional Days'][$quarter_model->name] = $quarter_model->instructional_days;
+        }
+
+        $keys = array_keys($attendance_summary_array);
+        array_unshift($keys, '');
+
+        return view('student.dashboard', compact(
+            'student',
+            'grades',
+            'classes',
+            'quarter',
+            'attendance_summary_array',
+            'keys',
+            'absences'
+        ));
     }
-
 
     /**
      * Display an index of all students.

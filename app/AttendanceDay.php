@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Helpers\Helpers;
 use Carbon\Carbon;
+use App\Helpers\Helpers;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -112,6 +112,28 @@ class AttendanceDay extends PortalBaseModel
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * isQuarter query scope.
+     *
+     * @param $query
+     * @param $quarter_id
+     */
+    public function scopeIsQuarter($query, $quarter_id)
+    {
+        $query->where('quarter_id', $quarter_id);
+    }
+
+    /**
+     * isStudent query scope.
+     *
+     * @param $query
+     * @param $student_id
+     */
+    public function scopeIsStudent($query, $student_id)
+    {
+        $query->where('student_id', $student_id);
+    }
 
     /**
      * Date query scope.

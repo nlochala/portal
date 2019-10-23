@@ -308,6 +308,18 @@ class Course extends PortalBaseModel
         });
     }
 
+    /**
+     * isMandarin query scope.
+     *
+     * @param $query
+     */
+    public function scopeIsMandarin($query)
+    {
+        $query->whereHas('department', function ($q) {
+            $q->where('name', 'Mandarin');
+        });
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

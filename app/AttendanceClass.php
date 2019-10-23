@@ -96,6 +96,28 @@ class AttendanceClass extends PortalBaseModel
     */
 
     /**
+     * isStudent query scope.
+     *
+     * @param $query
+     * @param $student_id
+     */
+    public function scopeIsStudent($query, $student_id)
+    {
+        $query->where('student_id', $student_id);
+    }
+
+    /**
+     * isQuarter query scope.
+     *
+     * @param $query
+     * @param $quarter_id
+     */
+    public function scopeIsQuarter($query, $quarter_id)
+    {
+        $query->where('quarter_id', $quarter_id);
+    }
+
+    /**
      * Today's Attendance query scope.
      *
      * @param $query
@@ -137,6 +159,18 @@ class AttendanceClass extends PortalBaseModel
     {
         $query->whereHas('type', function ($q) {
             $q->where('is_present', false);
+        });
+    }
+
+    /**
+     * Students who are unexcused tardy.
+     *
+     * @param $query
+     */
+    public function scopeUnexcusedTardy($query)
+    {
+        $query->whereHas('type', function ($q) {
+            $q->where('name', 'Tardy - Unexcused');
         });
     }
 

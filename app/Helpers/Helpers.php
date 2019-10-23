@@ -52,32 +52,13 @@ class Helpers
      *
      * @param string $start_date
      * @param string $end_date
+     * @return array
      */
     public static function checkDuplicateAttendance($start_date = 'Y-m-d', $end_date = 'Y-m-d')
     {
         $start = Carbon::parse($start_date);
         $end = Carbon::parse($end_date);
         $delete_array = [];
-
-//        if ($start == $end) {
-//            $students = Student::current()->get();
-//            foreach ($students as $student) {
-//                $attendance_list = AttendanceClass::where('date', $start->format('Y-m-d'))->where('student_id', $student->id)->get();
-//                if ($attendance_list->count() > 1) {
-//                    $x = 0;
-//                    foreach ($attendance_list as $attendance) {
-//                        if ($x === 0) {
-//                            $x++;
-//                            continue;
-//                        }
-//                        $delete_array[] = $attendance->id;
-//                        $attendance->delete();
-//                    }
-//                }
-//            }
-//
-//            return $delete_array;
-//        }
 
         while ($start <= $end) {
             $students = Student::current()->get();
@@ -147,9 +128,10 @@ class Helpers
      *
      * @param array $grade_levels
      * @param string $types
+     * @param bool $is_mandarin
      * @return array|int
      */
-    public static function prepopulateAssignmentTypes(array $grade_levels, $types = 'hs_types or ms_types')
+    public static function prepopulateAssignmentTypes(array $grade_levels, $types = 'hs_types or ms_types', $is_mandarin = false)
     {
         $names = [];
         if ($types === 'hs_types') {
@@ -223,12 +205,17 @@ class Helpers
                 [
                     'name' => 'Homework',
                     'description' => 'Homework',
-                    'weight' => '15',
+                    'weight' => '10',
+                ],
+                [
+                    'name' => 'Participation',
+                    'description' => 'Participation',
+                    'weight' => '10',
                 ],
                 [
                     'name' => 'Quizzes',
                     'description' => 'Quizzes',
-                    'weight' => '35',
+                    'weight' => '30',
                 ],
             ];
         } else {
@@ -237,11 +224,16 @@ class Helpers
 
         foreach ($grade_levels as $grade) {
             $grade_model = GradeLevel::current()->grade($grade)->first();
-            $courses = Course::with('classes')->active()->gradeLevel($grade_model->id)->get();
+            if ($is_mandarin) {
+                $courses = Course::with('classes')->active()->isMandarin()->gradeLevel($grade_model->id)->get();
+            } else {
+                $courses = Course::with('classes')->active()->gradeLevel($grade_model->id)->get();
+            }
 
             foreach ($courses as $course) {
                 foreach ($course->classes as $class) {
                     if ($class->assignmentTypes->isEmpty()) {
+                        $names[] = $class->course->name.' - '.$class->name;
                         foreach ($types as $type) {
                             $type['class_id'] = $class->id;
                             $type['user_created_id'] = 1;
@@ -253,7 +245,6 @@ class Helpers
                 }
             }
         }
-
         return $names;
     }
 

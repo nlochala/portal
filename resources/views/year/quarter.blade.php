@@ -49,7 +49,7 @@
     @include('layouts._panels_start_content')
 
     <!-- TABLE OF YEARS -->
-    @include('_tables.new-table',['id' => 'quarter_table', 'table_head' => ['ID','School Year', 'Name', 'Start Date', 'End Date']])
+    @include('_tables.new-table',['id' => 'quarter_table', 'table_head' => ['ID','School Year', 'Name', 'Start Date', 'End Date', 'Instructional Days']])
     @include('_tables.end-new-table')
 
 
@@ -71,7 +71,7 @@
                 table: "#quarter_table",
                 idSrc: 'id',
                 fields: [{
-                    label: "School Year",
+                    label: "School Year:",
                     name: "year_id",
                     type: "select2",
                     def: "{{ env('SCHOOL_YEAR_ID') }}",
@@ -86,7 +86,7 @@
                         @endforeach
                     ]
                 }, {
-                    label: "Name",
+                    label: "Name:",
                     name: "name",
                     type: "select2",
                     opts: {
@@ -116,6 +116,10 @@
                         format: 'YYYY-MM-DD'
                     }
                 },
+                    {
+                        label: "Instructional Days:",
+                        name: "instructional_days",
+                    }
                 ]
             });
 
@@ -127,14 +131,16 @@
                 ajax: {"url": "{{ url('api/quarter/ajaxshowquarter') }}", "dataSrc": ""},
                 columns: [
                     {data: "id"},
-                    { data: "year",
-                        render: function(data, type, row) {
-                            return "<a target='_blank' href='/year/index'>" + data.year_start + "-" + data.year_end +"</a>"
+                    {
+                        data: "year",
+                        render: function (data, type, row) {
+                            return "<a target='_blank' href='/year/index'>" + data.year_start + "-" + data.year_end + "</a>"
                         }
                     },
                     {data: "name"},
                     {data: "start_date"},
-                    {data: "end_date"}
+                    {data: "end_date"},
+                    {data: "instructional_days"}
                 ],
                 buttons: [
                     {

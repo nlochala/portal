@@ -59,12 +59,24 @@ class Quarter extends PortalBaseModel
         'year_id',
         'start_date',
         'end_date',
+        'instructional_days',
         'is_protected',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
         'user_updated_ip',
     ];
+
+    /**
+     * Return the text name of the quarter based on the ID.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public static function getName($id)
+    {
+        return static::$name[$id];
+    }
 
     /**
      * Return a formatted dropdown.
