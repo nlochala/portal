@@ -137,8 +137,11 @@ class HolidayAjaxController extends Controller
     {
         $values = Helpers::dbAddAudit($values);
         if ($values['is_staff_workday'] === 'false') {
+            $values['is_staff_workday'] = false;
             $quarter = Quarter::getQuarter($values['start_date'], true, Year::find($values['year']));
             $values['quarter_id'] = $quarter ? $quarter->id : null;
+        } else {
+            $values['is_staff_workday'] = true;
         }
 
         $start = Carbon::parse($values['start_date']);
@@ -148,14 +151,7 @@ class HolidayAjaxController extends Controller
             return $this->attemptAction(false, 'holiday', 'create', 'The Start Date must be a date before the End Date.');
         }
 
-        if ($holiday = Holiday::create($values)) {
-            //Do something to change the days table.
-            //TODO:  1. Change quarter create/update to create/update days.
-            //TODO:  2. Change make sure a quarter doesn't overlap the start/end of another quarter.
-            //TODO:  3. When a holiday is created, loop through those given days and update the day table for no_school.
-        }
-
-        return $this->attemptAction($holiday, 'holiday', 'create');
+        return $this->attemptAction(Holiday::create($values), 'holiday', 'create');
     }
 
     /**

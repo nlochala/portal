@@ -45,7 +45,7 @@ class UpdateSchoolCalendar implements ShouldQueue
                 if ($date->isWeekday()) {
                     if ($day = Day::where('date', $formatted)->first()) {
                         // Day exists, make sure the quarter is correct.
-                        $day->quarter_id === $quarter->id ?: $day->update(['quarter_id' => $quarter->id]);
+                        $day->quarter_id === $quarter->id ?: $day->update(['quarter_id' => $quarter->id, 'name' => null]);
                     } else {
                         $insert_array = [
                             'quarter_id' => $quarter->id,
