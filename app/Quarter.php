@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -33,6 +34,11 @@ class Quarter extends PortalBaseModel
         parent::boot();
         self::creating(function ($model) {
             $model->uuid = (string) Uuid::generate(4);
+        });
+
+        // Order by name ASC
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('name', 'asc');
         });
     }
 
@@ -121,13 +127,21 @@ class Quarter extends PortalBaseModel
 
     /**
      * Return the current quarter.
+     * If allow_null is set, it will return false if the date is not within the dates of a quarter.
      *
      * @param string $date
+     * @param bool $allow_null
+     * @param Year $year
      * @return mixed
      */
-    public static function getQuarter(string $date = 'Y-m-d')
+    public static function getQuarter(string $date = 'Y-m-d', $allow_null = false, Year $year = null)
     {
-        $quarters = static::current()->get();
+        if (empty($year)) {
+            $quarters = static::current()->get();
+        } else {
+            $quarters = $year->quarters;
+        }
+
         $now = Carbon::parse($date);
         foreach ($quarters as $quarter) {
             $start_date = Carbon::parse($quarter->start_date);
@@ -143,7 +157,7 @@ class Quarter extends PortalBaseModel
             }
         }
 
-        return $quarters->last();
+        return $allow_null ? null : $quarters->last();
     }
 
     /**
@@ -244,6 +258,26 @@ class Quarter extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This quarter has many holidays.
+     *
+     * @return HasMany
+     */
+    public function holidays()
+    {
+        return $this->hasMany('App\Holiday', 'quarter_id');
+    }
+
+    /**
+     *  This quarter has many days.
+     *
+     * @return HasMany
+     */
+    public function days()
+    {
+        return $this->hasMany('App\Day', 'quarter_id');
+    }
 
     /**
      *  This quarter has many gradeAverages.

@@ -22,7 +22,11 @@
 <script src="{{ asset('js/plugins/multiselect/jquery.multi-select.js') }}"></script>
 <script src="{{ asset('js/plugins/multiselect/jquery.quicksearch.js') }}"></script>
 
-
+<!-- FullCalendar -->
+<script src="{{ asset('js/plugins/fullcalendar/packages/core/main.min.js') }}"></script>
+<script src="{{ asset('js/plugins/fullcalendar/packages/daygrid/main.min.js') }}"></script>
+<script src="{{ asset('js/plugins/fullcalendar/packages/bootstrap/main.min.js') }}"></script>
+<script src="{{ asset('js/plugins/fullcalendar/packages/interaction/main.min.js') }}"></script>
 
 <!-- Algolia -->
 <script src="{{ asset('js/plugins/algolia/algoliasearch.min.js') }}"></script>
@@ -36,7 +40,6 @@
 
 <!-- Filepond -->
 <script src="{{ asset('js/plugins/filepond/filepond.js') }}"></script>
-
 <script src="{{ asset('js/plugins/filepond/filepond-plugin-file-encode/filepond-plugin-file-encode.js') }}"></script>
 <script src="{{ asset('js/plugins/filepond/filepond-plugin-file-metadata/filepond-plugin-file-metadata.js') }}"></script>
 <script src="{{ asset('js/plugins/filepond/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.js') }}"></script>
@@ -51,8 +54,6 @@
 <script src="{{ asset('js/plugins/filepond/jquery-filepond/filepond.jquery.js') }}"></script>
 <script src="{{ asset('js/plugins/easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
 <script src="{{ asset('js/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
-
-
 
 <!-- Summernote Text Editor-->
 <script src="{{ asset('js/plugins/summernote/summernote-bs4.min.js') }}"></script>

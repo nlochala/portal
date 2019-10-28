@@ -653,4 +653,15 @@ class Helpers
 
         return Carbon::now()->diffInMonths($dob).' Months Old';
     }
+
+    /**
+     * Parse a given string and return a carbon object.
+     *
+     * @param string $date
+     * @return Carbon
+     */
+    public static function parseDate($date = 'Y-m-d')
+    {
+        return Carbon::parse($date);
+    }
 }

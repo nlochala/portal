@@ -19,6 +19,11 @@
 <link rel="stylesheet" href="{{ asset('js/plugins/multiselect/multi-select.css') }}">
 <link rel="stylesheet" href="{{ asset('css/tlcportal.css') }}">
 
+<!-- FullCalendar -->
+<link rel="stylesheet" href="{{ asset('js/plugins/fullcalendar/packages/core/main.min.css') }}">
+<link rel="stylesheet" href="{{ asset('js/plugins/fullcalendar/packages/daygrid/main.min.css') }}">
+<link rel="stylesheet" href="{{ asset('js/plugins/fullcalendar/packages/bootstrap/main.min.css') }}">
+
 <link rel="stylesheet" id="css-main" href="{{ asset('css/fonts.css') }}">
 <link rel="stylesheet" id="css-theme" href="{{ asset(mix('css/dashmix.css')) }}">
 

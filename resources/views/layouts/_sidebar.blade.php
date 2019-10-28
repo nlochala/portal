@@ -31,17 +31,12 @@
 'icon' => 'si si-question',
 'title' => 'How-To Videos'
 ])
-{{--@include('layouts._sidebar_heading', ['header' => 'Dashboards'])--}}
 @include('layouts._sidebar_heading', ['header' => 'People'])
 @include('layouts._sidebar_menu_nested_submenu', [
 'section_title' => 'Employees',
 'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
-//       [
-//           'title' => 'Dashboard',
-//           'uri'   => '/employee/dashboard'
-//  ],
         [
             'title' => 'Directory',
             'uri'   => '/employee/index'
@@ -58,10 +53,6 @@
 'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
- //       [
- //           'title' => 'Summary',
- //           'uri'   => '/student/dashboard'
- //       ],
         [
             'title' => 'Directory',
             'uri'   => '/student/index'
@@ -78,10 +69,6 @@
 'section_icon' => 'fa fa-users-cog',
 'submenu_array' =>
     [
-  //      [
-  //          'title' => 'Summary',
-  //          'uri'   => '/guardian/dashboard'
-  //      ],
         [
             'title' => 'Directory',
             'uri'   => '/guardian/index'
@@ -101,6 +88,14 @@
         [
             'title' => 'Quarters',
             'uri'   => '/quarter/index'
+        ],
+        [
+            'title' => 'Days',
+            'uri'   => '/day/'.App\Year::currentYear()->uuid.'/index'
+        ],
+        [
+            'title' => 'Holidays',
+            'uri'   => '/holiday/'.App\Year::currentYear()->uuid.'/index'
         ],
     ]
 ])

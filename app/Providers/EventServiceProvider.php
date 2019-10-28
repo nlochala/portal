@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Events\AttendanceTaken;
 use App\Events\AssignmentGraded;
+use App\Events\SchoolDaysChanged;
 use App\Listeners\UpdateGradeAverage;
+use App\Listeners\UpdateSchoolCalendar;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\UpdateDailyAttendance;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AssignmentGraded::class => [
             UpdateGradeAverage::class,
+        ],
+        SchoolDaysChanged::class => [
+            UpdateSchoolCalendar::class,
         ],
     ];
 

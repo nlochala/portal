@@ -383,6 +383,13 @@ Route::post('api/year/ajaxstoreyear', 'YearAjaxController@ajaxStore');
 Route::get('quarter/index', 'QuarterController@index');
 Route::get('api/quarter/ajaxshowquarter', 'QuarterAjaxController@ajaxShow');
 Route::post('api/quarter/ajaxstorequarter', 'QuarterAjaxController@ajaxStore');
+//Day
+Route::get('day/{year}/index', 'DayController@index');
+//Holiday
+Route::get('holiday/{year}/index', 'HolidayController@index');
+Route::get('api/holiday/ajaxshowholiday', 'HolidayAjaxController@ajaxShow');
+Route::post('api/holiday/ajaxstoreholiday', 'HolidayAjaxController@ajaxStore');
+
 
 /*
 |--------------------------------------------------------------------------

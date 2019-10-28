@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use App\Quarter;
 use App\Helpers\Helpers;
@@ -133,6 +134,14 @@ class QuarterAjaxController extends Controller
     {
         $values = Helpers::dbAddAudit($values);
         $values['name'] = Quarter::getName($values['name']);
+        dd($values);
+
+        $start = Carbon::parse($values['start_date']);
+        $end = Carbon::parse($values['end_date']);
+
+        if ($start > $end) {
+            return $this->attemptAction(false, 'quarter', 'create', 'The Start Date must be a date before the End Date.');
+        }
 
         return $this->attemptAction(Quarter::create($values), 'quarter', 'create');
     }
@@ -148,6 +157,14 @@ class QuarterAjaxController extends Controller
     {
         $quarter = Helpers::dbAddAudit($quarter);
         $values['name'] = Quarter::getName($values['name']);
+
+        $start = Carbon::parse($values['start_date']);
+        $end = Carbon::parse($values['end_date']);
+
+        if ($start > $end) {
+            return $this->attemptAction(false, 'quarter', 'create', 'The Start Date must be a date before the End Date.');
+        }
+
 
         $this->attemptAction($quarter->update($values), 'quarter', 'update');
 
