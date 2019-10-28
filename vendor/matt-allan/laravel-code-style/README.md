@@ -4,13 +4,15 @@
 [![Build Status](https://secure.travis-ci.org/matt-allan/laravel-code-style.png?branch=master)](https://travis-ci.org/matt-allan/laravel-code-style)
 
 
-This package provides automatic code style checking and formatting for Laravel applications and packages.
+This package provides automatic code style checking and formatting for Laravel applications and packages. Your code is formatted following Laravel's code style guide.
 
 The package adds the [php-cs-fixer](https://github.com/FriendsOfPhp/PHP-CS-Fixer) tool and a community maintained ruleset to your application.  The ruleset is a best effort attempt to match the code style the Laravel framework itself uses.  Check out an [example](./examples/User.php) to see what the code style looks like.
 
 You might want to use this package if you are writing a Laravel application, package or tutorial and you want to match the framework's code style.
 
-![example code formatting](https://repository-images.githubusercontent.com/182856423/6d64dc80-6526-11e9-835c-d54082bd2196)
+If you are wondering why this package exists you can [read the announcement post](https://mattallan.me/posts/automate-code-formatting-for-laravel-projects/).
+
+![example code formatting](https://repository-images.githubusercontent.com/182856423/07c42600-6fe5-11e9-88fb-dd2e7451c77a)
 
 ## Installation
 

@@ -27,6 +27,14 @@
 
 ![LaRecipe Screenshot](https://larecipe.binarytorch.com.my/images/screenshot.png#)
 
+## Official Tools and Assets Support
+
+| Title | v1.x | v2.x |
+| :- | :-: | :-: |
+| [LaRecipe Dark Theme](https://larecipe.binarytorch.com.my/packages/binarytorch/larecipe-dark-theme) | ❌ | ✅ |
+| [LaRecipe RTL Support](https://larecipe.binarytorch.com.my/packages/binarytorch/larecipe-rtl) | ❌ | ✅ |
+| [LaRecipe Feedback](https://larecipe.binarytorch.com.my/packages/binarytorch/larecipe-feedback) | ❌ | ✅ |
+| [LaRecipe Swagger](https://larecipe.binarytorch.com.my/packages/binarytorch/larecipe-swagger) | ❌ | ✅ |
 
 ## Getting Started
 
@@ -48,6 +56,8 @@ Visit your app domain with `/docs` endpoint. That's it.
 * [Zino](https://zino.saleemhadad.me/docs/1.0/installation) - 🤖 Custom Arduino library made for humans.
 * [Blogged](https://blogged.binarytorch.com.my/docs/1.0/overview) - Blogged is a package provides an easy way to create beautiful blog inside your Laravel projects.
 * [Wave](https://wave.devdojo.com/docs) - Wave is the perfect starter kit for building your next great idea
+* [Inspector](https://www.inspector.dev/larecipe-is-now-our-docs-center/) - Laravel real-time performance & error alerting
+* [Nova ADC](https://nova-adc.com/docs/1.0/overview) - Nova is a cloud-based (or on-premise) SaaS application delivery controller.
 * Put your docs here 😍👌
 
 
@@ -56,14 +66,18 @@ Visit your app domain with `/docs` endpoint. That's it.
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/larecipe#sponsor)]
 
-<a href="https://www.logengine.dev/" target="_blank">
-    <img width="200px" height="200px" src="https://opencollective-production.s3-us-west-1.amazonaws.com/badd02d0-61fc-11e9-bd81-b7f6a515acbf.png">
-</a>
+| Nova ADC | Inspector |
+| :-: | :-: |
+| <a href="https://nova-adc.com/"><img width="200px" src="https://images.opencollective.com/nova-adc/f507268/logo.png" /></a> | <a href="https://www.inspector.dev/"> <img width="300px" src="https://www.inspector.dev/wp-content/uploads/2018/10/logo-horizontal-shadow-transparent-768x225.png" /> </a> |
 
 ## Bronze Sponsors
 
 <a href="https://github.com/mrgfrederic" target="_blank">
     <img width="100px" height="100px" src="https://avatars0.githubusercontent.com/u/42940842?s=460&v=4">
+</a>
+
+<a href="https://cierra.de/" target="_blank">
+    <img width="200px" src="https://images.opencollective.com/cierrasoftware/1c2b298/logo.png">
 </a>
 
 
