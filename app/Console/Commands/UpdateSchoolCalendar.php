@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Day;
 use App\Year;
 use Illuminate\Console\Command;
 use App\Events\SchoolDaysChanged;
@@ -40,5 +41,22 @@ class UpdateSchoolCalendar extends Command
     public function handle()
     {
         event(new SchoolDaysChanged(Year::currentYear()));
+        $this->info('Sleeping for 15 seconds so event can run.');
+        sleep(15);
+        $this->info('Checking for instructional days and quarter school days consistencies.');
+        $year = Year::currentYear();
+        $quarters = $year->quarters;
+
+
+        foreach ($quarters as $quarter) {
+            $count = Day::isQuarter($quarter->id)->isSchoolDay()->count();
+            if ($count !== $quarter->instructional_days) {
+                $this->line('-----------------------------------');
+                $this->line($quarter->name.'\'s day count doesn\'t match the days table.');
+                $this->info($quarter->name.'_instructional_days = '.$quarter->instructional_days);
+                $this->info('Days table shows '.$count.' instructional days.');
+                $this->line('-----------------------------------');
+            }
+        }
     }
 }
