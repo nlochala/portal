@@ -339,6 +339,16 @@ class Student extends PortalBaseModel
     */
 
     /**
+     *  This student has many behaviorGrade.
+     *
+     * @return HasMany
+     */
+    public function behaviorGrades()
+    {
+        return $this->hasMany('App\GradeBehaviorQuarter', 'student_id');
+    }
+
+    /**
      *  This student has many gradeQuarterAverages.
      *
      * @return HasMany

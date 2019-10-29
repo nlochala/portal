@@ -164,7 +164,8 @@
     @include('layouts._panels_start_content')
     @if($class->canTakeAttendance())
         @if($class->todaysAttendance()->isEmpty())
-            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-hero-lg btn-hero-warning mb-3 mr-1 w-100"
+            <button type="button" dusk="btn-modal-block-attendance"
+                    class="btn btn-hero-lg btn-hero-warning mb-3 mr-1 w-100"
                     data-toggle="modal" data-target="#modal-block-attendance">
                 <i class="fa fa-user-check"></i> Take Attendance
             </button>
@@ -174,12 +175,18 @@
                 <i class="fa fa-user-check"></i> Update Attendance
             </button>
         @endif
+        @if(substr($class->room->buildingNumber,0,1) === 'C')
+            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-outline-primary mb-3 w-100"
+                    onclick="window.location.href='/report/behavior/{{ $class->uuid }}/{{$quarter->uuid}}'">
+                <i class="fa fa-hands"></i> {{ $quarter_name }} Behavior Assessment
+            </button>
+        @endif
     @endif
     @if($class->course->gradeScale->is_percentage_based)
-    <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
-            onclick="window.location.href='/class/{{ $class->uuid }}/{{ \App\Quarter::now()->uuid }}/gradebook'">
-        <i class="fa fa-book-open"></i> Gradebook
-    </button>
+        <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
+                onclick="window.location.href='/class/{{ $class->uuid }}/{{ \App\Quarter::now()->uuid }}/gradebook'">
+            <i class="fa fa-book-open"></i> Gradebook
+        </button>
     @endif
     <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
             data-toggle="modal" data-target="#modal-block-logins">
@@ -238,7 +245,7 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            var tablelogins = $('#logins_table').DataTable( {
+            var tablelogins = $('#logins_table').DataTable({
                 dom: "Bfrt",
                 select: true,
                 paging: false,

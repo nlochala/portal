@@ -4,11 +4,12 @@ namespace App;
 
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class GradeScaleStandard extends PortalBaseModel
+class GradeBehaviorQuarter extends PortalBaseModel
 {
     use SoftDeletes;
 
@@ -39,6 +40,8 @@ class GradeScaleStandard extends PortalBaseModel
         return 'uuid';
     }
 
+    protected $casts = ['is_protected' => 'bool'];
+
     /**
      * Add mass-assignment to model.
      *
@@ -46,40 +49,17 @@ class GradeScaleStandard extends PortalBaseModel
      */
     protected $fillable = [
         'uuid',
-        'short_name',
-        'name',
-        'description',
+        'student_id',
         'grade_scale_id',
+        'grade_scale_item_id',
+        'quarter_id',
+        'comment',
+        'is_protected',
         'user_created_id',
         'user_created_ip',
         'user_updated_id',
         'user_updated_ip',
     ];
-
-    /**
-     * Return the standards that are equivalent to the percentages.
-     *
-     * @return mixed
-     */
-    public static function getEquivalentStandardsDropdown()
-    {
-        return static::where('grade_scale_id', 2)->get();
-    }
-
-    /**
-     * Return a formatted dropdown.
-     *
-     * @param null $grade_scale_id
-     * @return array
-     */
-    public static function getDropdown($grade_scale_id = null)
-    {
-        if ($grade_scale_id) {
-            return static::where('grade_scale_id', $grade_scale_id)->get()->pluck('name', 'id')->toArray();
-        }
-
-        return static::all()->pluck('name', 'id')->toArray();
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -124,7 +104,18 @@ class GradeScaleStandard extends PortalBaseModel
     */
 
     /**
-     * This grade_scale_standard has a GradeScale.
+     * This grade has a Student.
+     *
+     * @return HasOne
+     */
+    public function student()
+    {
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\Student', 'id', 'student_id');
+    }
+
+    /**
+     * This grade has a GradeScale.
      *
      * @return HasOne
      */
@@ -135,7 +126,29 @@ class GradeScaleStandard extends PortalBaseModel
     }
 
     /**
-     *  This grade_scale_standard was created by a user.
+     * This grade has a GradeScaleStandard.
+     *
+     * @return HasOne
+     */
+    public function item()
+    {
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\GradeScaleStandard', 'id', 'grade_scale_item_id');
+    }
+
+    /**
+     * This grade has a Quarter.
+     *
+     * @return HasOne
+     */
+    public function quarter()
+    {
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\Quarter', 'id', 'quarter_id');
+    }
+
+    /**
+     *  This behaviorGrade was created by a user.
      *
      * @return BelongsTo
      */
@@ -145,7 +158,7 @@ class GradeScaleStandard extends PortalBaseModel
     }
 
     /**
-     *  This grade_scale_standard was updated by a user.
+     *  This behaviorGrade was updated by a user.
      *
      * @return BelongsTo
      */

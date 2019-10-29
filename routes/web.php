@@ -558,5 +558,7 @@ Route::get('videos/channel/how-to', 'HowToVideosController@channel');
 |--------------------------------------------------------------------------
 */
 Route::get('report/grades/{class}/{quarter}/{student}', 'GradebookController@studentDetails');
+Route::get('report/behavior/{class}/{quarter}', 'GradeBehaviorQuarterController@grade');
+Route::post('report/behavior/{class}/{quarter}', 'GradeBehaviorQuarterController@processGrades');
 Route::get('report/grades/{class}/{quarter}/{student}/print', 'GradebookController@printStudentDetails');
 
