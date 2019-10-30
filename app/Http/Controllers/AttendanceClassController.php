@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AttendanceType;
 use App\Quarter;
 use App\Student;
 use Carbon\Carbon;
@@ -66,6 +67,20 @@ class AttendanceClassController extends Controller
             'present_stats',
             'current_student_count'
         ));
+    }
+
+    /**
+     * @return Factory|View
+     */
+    public function attendanceUpdate()
+    {
+        $date_string = request()->get('date');
+        $date = $date_string ? Carbon::parse($date_string) : now();
+        $date_iso = $date->isoFormat('dddd, MMMM Do, YYYY');
+
+        $attendance_types = AttendanceType::all();
+
+        return view('attendance.update', compact('date_iso', 'date', 'attendance_types'));
     }
 
     /**

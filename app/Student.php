@@ -178,16 +178,21 @@ class Student extends PortalBaseModel
     /**
      * Return the formal and href name of the student.
      *
+     * @param bool $include_url
      * @return string
      */
-    public function getFormalNameAttribute()
+    public function getFormalNameAttribute($include_url = true)
     {
         $given_name = $this->person->given_name.' '.$this->person->name_in_chinese;
         if ($this->person->given_name !== $this->person->preferred_name) {
             $given_name .= ' ('.$this->person->preferred_name.')';
         }
 
-        return '<a href="/student/'.$this->uuid.'">'.$this->person->family_name.', '.$given_name.'</a>';
+        if ($include_url) {
+            return '<a href="/student/'.$this->uuid.'">'.$this->person->family_name.', '.$given_name.'</a>';
+        }
+
+        return $this->person->family_name.', '.$given_name;
     }
 
     /**
@@ -247,6 +252,17 @@ class Student extends PortalBaseModel
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * activeOn query scope.
+     *
+     * @param $query
+     * @param Carbon $date
+     */
+    public function scopeActiveOn($query, Carbon $date)
+    {
+        $query->where('start_date', '<=', $date);
+    }
 
     /**
      * Family query scope.

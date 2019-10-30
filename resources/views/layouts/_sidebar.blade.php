@@ -139,10 +139,10 @@
             'title' => 'Daily Report',
             'uri'   => '/attendance/daily_report'
         ],
-//        [
-//            'title' => 'Modify Attendance',
-//            'uri'   => '/attendance/modify'
-//        ],
+      [
+          'title' => 'Update Attendance',
+          'uri'   => '/attendance/update'
+      ],
     ]
 ])
 @include('layouts._sidebar_menu_nested_submenu', [
@@ -210,27 +210,27 @@
     ]
 ])
 @can('permissions')
-@include('layouts._sidebar_heading', ['header' => 'Portal Administration'])
-@include('layouts._sidebar_menu_nested_submenu', [
-'section_title' => 'Permissions',
-'section_icon' => 'fa fa-user-lock',
-'submenu_array' =>
-    [
-//        [
-//            'title' => 'Users',
-//            'uri'   => '/user/index'
-//        ],
+    @include('layouts._sidebar_heading', ['header' => 'Portal Administration'])
+    @include('layouts._sidebar_menu_nested_submenu', [
+    'section_title' => 'Permissions',
+    'section_icon' => 'fa fa-user-lock',
+    'submenu_array' =>
         [
-            'title' => 'Roles',
-            'uri'   => '/role/index'
-        ],
-        [
-            'title' => 'Permissions',
-            'uri'   => '/permission/index'
-        ],
-    ]
-])
-@include('layouts._end_sidebar_menu')
+    //        [
+    //            'title' => 'Users',
+    //            'uri'   => '/user/index'
+    //        ],
+            [
+                'title' => 'Roles',
+                'uri'   => '/role/index'
+            ],
+            [
+                'title' => 'Permissions',
+                'uri'   => '/permission/index'
+            ],
+        ]
+    ])
+    @include('layouts._end_sidebar_menu')
 @endcan
 <!-- END Side Navigation -->
 </nav>
