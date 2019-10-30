@@ -11,6 +11,7 @@ use App\Student;
 use Carbon\Carbon;
 use App\GradeLevel;
 use App\CourseClass;
+use App\AttendanceDay;
 use App\AssignmentType;
 use App\AttendanceClass;
 use App\Events\AssignmentGraded;
@@ -245,6 +246,7 @@ class Helpers
                 }
             }
         }
+
         return $names;
     }
 
@@ -550,6 +552,44 @@ class Helpers
         }
 
         return $return_array;
+    }
+
+    /**
+     * Change the entire school populations' attendance.
+     *
+     * @param $start_date
+     * @param $end_date
+     * @param $default_status
+     */
+    public static function batchPresentAttendance($start_date, $end_date, $default_status)
+    {
+        $start_date = Carbon::parse($start_date);
+        $date = $start_date;
+        $end_date = Carbon::parse($end_date);
+
+        while ($date <= $end_date) {
+            if ($date->isWeekend()) {
+                $date->addDay();
+                continue;
+            }
+
+            $students = Student::current()->activeOn($date)->get();
+            foreach ($students as $student) {
+                if ($attendance = AttendanceDay::date($date->format('Y-m-d'))->isStudent($student->id)->with('type')->first()) {
+                    continue;
+                }
+
+                $values['student_id'] = $student->id;
+                $values['date'] = $date->format('Y-m-d');
+                $values['attendance_type_id'] = $default_status;
+                $values['quarter_id'] = Quarter::getQuarter($date)->id;
+                $values = Helpers::dbAddAudit($values);
+
+                AttendanceDay::create($values);
+            }
+
+            $date->addDay();
+        }
     }
 
     /**
