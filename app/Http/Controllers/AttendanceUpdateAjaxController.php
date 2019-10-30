@@ -75,7 +75,7 @@ class AttendanceUpdateAjaxController extends Controller
 
         $quarter = Quarter::getQuarter($date);
         $date = Carbon::parse($date);
-        $students = Student::activeOn($date)->with('person', 'gradeLevel')->get();
+        $students = Student::current()->activeOn($date)->with('person', 'gradeLevel')->get();
 
         foreach ($students as $student) {
             $attendance = AttendanceDay::date($date->format('Y-m-d'))->isStudent($student->id)->with('type')->first();
