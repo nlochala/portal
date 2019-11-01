@@ -555,6 +555,33 @@ class Helpers
     }
 
     /**
+     * Show missing attendance for a given quarter.
+     *
+     * @param Quarter $quarter
+     * @return array
+     */
+    public static function reportMissingAttendance(Quarter $quarter)
+    {
+        ini_set('memory_limit', '4G');
+        $days = $quarter->days()->isSchoolDay()->get();
+        $return_array = [];
+
+        foreach ($days as $day) {
+            if (Carbon::parse($day->date)->isFuture() || $day->date === now()->format('Y-m-d')) {
+                continue;
+            }
+            $students = Student::current()->activeOn(Carbon::parse($day->date))->get();
+            foreach ($students as $student) {
+                if (AttendanceDay::isStudent($student->id)->date($day->date)->count() === 0) {
+                    $return_array[$student->id][] = $day->date;
+                }
+            }
+        }
+
+        return $return_array;
+    }
+
+    /**
      * Change the entire school populations' attendance.
      *
      * @param $start_date
