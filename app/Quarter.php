@@ -3,8 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -114,6 +114,10 @@ class Quarter extends PortalBaseModel
 
             // Before school starts
             if ($quarter->name === 'Q1' && $now->lessThan($start_date)) {
+                return $quarter;
+            }
+
+            if ($quarter->start_date === $now->format('Y-m-d') || $quarter->end_date === $now->format('Y-m-d')) {
                 return $quarter;
             }
 
