@@ -113,21 +113,28 @@ class Quarter extends PortalBaseModel
     {
         $quarters = static::current()->get();
         $now = Carbon::now();
-        foreach ($quarters as $quarter) {
-            $start_date = Carbon::parse($quarter->start_date);
-            $end_date = Carbon::parse($quarter->end_date);
+        for ($i = 0; $i < $quarters->count(); $i++) {
+            $start_date = Carbon::parse($quarters[$i]->start_date);
+            $end_date = Carbon::parse($quarters[$i]->end_date);
 
             // Before school starts
-            if ($quarter->name === 'Q1' && $now->lessThan($start_date)) {
-                return $quarter;
+            if ($quarters[$i]->name === 'Q1' && $now->lessThan($start_date)) {
+                return $quarters[$i];
             }
 
-            if ($quarter->start_date === $now->format('Y-m-d') || $quarter->end_date === $now->format('Y-m-d')) {
-                return $quarter;
+            // In between Quarters
+            if ($quarters[$i]->name !== 'Q4') {
+                if ($now->greaterThan($end_date) && $now->lessThan(Carbon::parse($quarters[$i + 1]->start_date))) {
+                    return $quarters[$i];
+                }
+            }
+
+            if ($quarters[$i]->start_date === $now->format('Y-m-d') || $quarters[$i]->end_date === $now->format('Y-m-d')) {
+                return $quarters[$i];
             }
 
             if ($now->isBetween($start_date, $end_date)) {
-                return $quarter;
+                return $quarters[$i];
             }
         }
 
