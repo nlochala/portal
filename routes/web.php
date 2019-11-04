@@ -463,6 +463,9 @@ Route::get('attendance/update', 'AttendanceClassController@attendanceUpdate');
 Route::post('attendance/update', 'AttendanceClassController@attendanceUpdate');
 Route::get('api/attendance/update/{date}/ajaxshowattendance', 'AttendanceUpdateAjaxController@ajaxShow');
 Route::post('api/attendance/update/{date}/ajaxstoreattendance', 'AttendanceUpdateAjaxController@ajaxStore');
+Route::get('attendance/quarterly_report_form', 'AttendanceQuarterlyReportController@reportForm');
+Route::post('attendance/quarterly_report_form', 'AttendanceQuarterlyReportController@processForm');
+Route::get('attendance/quarterly_report/{quarter}/{class}', 'AttendanceQuarterlyReportController@report');
 
 /*
 |--------------------------------------------------------------------------
@@ -561,8 +564,16 @@ Route::get('videos/channel/how-to', 'HowToVideosController@channel');
 | REPORTS
 |--------------------------------------------------------------------------
 */
+// Class Reports
 Route::get('report/grades/{class}/{quarter}/{student}', 'GradebookController@studentDetails');
+Route::get('report/grades/{class}/{quarter}/{student}/print', 'GradebookController@printStudentDetails');
+
+// Behavior Reports
 Route::get('report/behavior/{class}/{quarter}', 'GradeBehaviorQuarterController@grade');
 Route::post('report/behavior/{class}/{quarter}', 'GradeBehaviorQuarterController@processGrades');
-Route::get('report/grades/{class}/{quarter}/{student}/print', 'GradebookController@printStudentDetails');
+
+// Print Report Cards
+Route::get('report/report_cards/{year}/print_form', 'ReportCardPrintController@reportForm');
+Route::post('report/report_cards/{year}/print_form', 'ReportCardPrintController@changeYear');
+Route::post('report/report_cards/{year}/print', 'ReportCardPrintController@generateReports');
 

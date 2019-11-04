@@ -112,6 +112,29 @@ class CourseClass extends PortalBaseModel
     }
 
     /**
+     * Return a formatted dropdown.
+     *
+     * @param null $scope
+     * @return array
+     */
+    public static function getDropdown($scope = null)
+    {
+        $dropdown_array = [];
+
+        if ($scope) {
+            $classes = static::$scope()->with('course')->get();
+        } else {
+            $classes = static::with('course')->get();
+        }
+
+        foreach ($classes as $class) {
+            $dropdown_array[$class->id] = $class->fullName;
+        }
+
+        return $dropdown_array;
+    }
+
+    /**
      * Display the teachers of a given class.
      *
      * @param bool $display_inline

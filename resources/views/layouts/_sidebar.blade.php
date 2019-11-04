@@ -135,10 +135,14 @@
 'section_icon' => 'fa fa-user-check',
 'submenu_array' =>
     [
-        [
-            'title' => 'Daily Report',
-            'uri'   => '/attendance/daily_report'
-        ],
+      [
+          'title' => 'Daily Report',
+          'uri'   => '/attendance/daily_report'
+      ],
+      [
+          'title' => 'Quarterly Report',
+          'uri'   => '/attendance/quarterly_report_form'
+      ],
       [
           'title' => 'Update Attendance',
           'uri'   => '/attendance/update'
@@ -189,6 +193,17 @@
         ],
     ]
 ])
+{{--@include('layouts._sidebar_menu_nested_submenu', [--}}
+{{--'section_title' => 'Reports',--}}
+{{--'section_icon' => 'fa fa-clipboard-list',--}}
+{{--'submenu_array' =>--}}
+{{--    [--}}
+{{--        [--}}
+{{--            'title' => 'Print Report Cards',--}}
+{{--            'uri'   => '/report/report_cards/'.\App\Year::currentYear()->uuid.'/print_form'--}}
+{{--        ],--}}
+{{--    ]--}}
+{{--])--}}
 @include('layouts._sidebar_heading', ['header' => 'Facilities'])
 @include('layouts._sidebar_menu_nested_submenu', [
 'section_title' => 'Room Assignments',

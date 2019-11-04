@@ -88,12 +88,17 @@ class Quarter extends PortalBaseModel
      * Return a formatted dropdown.
      *
      * @param null $scope
+     * @param null $year_id
      * @return array
      */
-    public static function getDropdown($scope = null)
+    public static function getDropdown($scope = null, $year_id = null)
     {
         if ($scope) {
             return static::$scope()->get()->pluck('name', 'id')->toArray();
+        }
+
+        if ($year_id) {
+            return static::isYear($year_id)->get()->pluck('name', 'id')->toArray();
         }
 
         return static::all()->pluck('name', 'id')->toArray();
@@ -255,6 +260,17 @@ class Quarter extends PortalBaseModel
     public function scopeCurrent($query)
     {
         $query->where('year_id', '=', env('SCHOOL_YEAR_ID'));
+    }
+
+    /**
+     * isYear query scope.
+     *
+     * @param $query
+     * @param $year_id
+     */
+    public function scopeIsYear($query, $year_id)
+    {
+        $query->where('year_id', $year_id);
     }
 
     /*

@@ -106,7 +106,6 @@ class AttendanceUpdateAjaxController extends Controller
         $return_array = [];
 
         foreach ($data as $id => $form_data) {
-//            $this->validation->checkForm($this->request, $form_data);
 
             if ($errors = $this->validation->hasErrors()) {
                 return $errors;
