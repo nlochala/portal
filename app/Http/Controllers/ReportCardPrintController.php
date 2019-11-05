@@ -64,7 +64,7 @@ class ReportCardPrintController extends Controller
         $grades = [];
         $homeroom = [];
 
-        $students = Student::grade($grade_level->short_name)
+        $students = Student::grade($grade_level->short_name)->current()
             ->with('person', 'reportCardPercentages.classGrades.class.course', 'reportCardPercentages.behaviorGrade', 'reportCardPercentages.quarter')->get();
 
         foreach ($students as $student) {
