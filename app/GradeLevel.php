@@ -68,19 +68,20 @@ class GradeLevel extends PortalBaseModel
      * Return a formatted dropdown.
      *
      * @param null $scope
+     * @param null $second_scope
      * @return array
      */
-    public static function getDropdown($scope = null)
+    public static function getDropdown($scope = null, $second_scope = null)
     {
         if ($scope) {
+            if ($second_scope) {
+                return static::$scope()->$second_scope()->get()->pluck('short_name', 'id')->toArray();
+            }
+
             return static::$scope()->get()->pluck('short_name', 'id')->toArray();
         }
 
         return static::all()->pluck('short_name', 'id')->toArray();
-    }
-
-    public static function getHomerooms()
-    {
     }
 
     /*
@@ -138,6 +139,20 @@ class GradeLevel extends PortalBaseModel
     public function scopeGrade($query, $grade)
     {
         $query->where('short_name', '=', $grade);
+    }
+
+    /**
+     * @param $query
+     */
+    public function scopeSecondary($query)
+    {
+        $query->where('short_name', '06')
+            ->orWhere('short_name', '07')
+            ->orWhere('short_name', '08')
+            ->orWhere('short_name', '09')
+            ->orWhere('short_name', '10')
+            ->orWhere('short_name', '11')
+            ->orWhere('short_name', '12');
     }
 
     /*
