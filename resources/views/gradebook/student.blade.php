@@ -3,7 +3,7 @@
 @section('content')
     <!-- Add Content Title Here b.breadcrumbs -->
     @include('layouts._breadcrumbs', [
-    'title' => $student->name.' - Grade Report',
+    'title' => $student->name.' - '.$quarter->name.' Grade Report',
     'subtitle' => $class->fullName(true),
     'breadcrumbs' => [
         [
@@ -93,11 +93,11 @@
         {{-- START BLOCK OPTIONS panel.block --}}
         @include('layouts._panels_start_content')
         <!-- TABLE OF ASSIGNMENTS -->
-        @if($type->assignments->isEmpty())
+        @if($type->assignments()->where('quarter_id',$quarter->id)->get()->isEmpty())
             <small><em>Nothing to Display</em></small>
         @else
             @include('_tables.new-table',['id' => 'assignment_id', 'table_head' => ['Name','Date Assigned','Points Earned', 'Percentage', 'Date Turned In']])
-            @foreach($type->assignments as $assignment)
+            @foreach($type->assignments()->where('quarter_id',$quarter->id)->get() as $assignment)
                 <tr>
                     <td>{{ $assignment->name }}</td>
                     <td>{{ $assignment->date_assigned }}</td>

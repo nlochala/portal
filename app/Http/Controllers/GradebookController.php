@@ -7,6 +7,7 @@ use App\Student;
 use App\Assignment;
 use App\CourseClass;
 use App\GradeAverage;
+use Carbon\Carbon;
 use Illuminate\View\View;
 use App\GradeQuarterAverage;
 use Illuminate\Contracts\View\Factory;
@@ -117,7 +118,7 @@ class GradebookController extends Controller
                 $percentage = '--';
                 $total = '--';
                 if ($average = GradeAverage::isStudent($student->id)->isQuarter($q->id)->isAssignmentType($type->id)->first()) {
-                    $percentage = empty($average->max_points) ?: round((($average->points_earned / $average->max_points) * 100), 2).'%';
+                    $percentage = empty($average->max_points) ? '--' : round((($average->points_earned / $average->max_points) * 100), 2).'%';
                 }
                 $summary_array[$type_name][$q->name] = $percentage;
             }
@@ -125,6 +126,9 @@ class GradebookController extends Controller
         foreach ($quarters as $q) {
             if ($quarter_average = GradeQuarterAverage::isStudent($student->id)->isQuarter($q->id)->isClass($class->id)->first()) {
                 $total = $quarter_average->percentage.'% '.$quarter_average->grade_name;
+                if (Carbon::parse($q->start_date)->isFuture()) {
+                    $total = '--';
+                }
             } else {
                 $total = '--';
             }
