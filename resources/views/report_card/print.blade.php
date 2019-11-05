@@ -97,15 +97,15 @@
         <br/>
         <h1 class="flex-sm-fill font-size-h4 font-w400 mt-2 mb-0 mb-sm-2">STUDENT BEHAVIOR</h1>
         <!-- TABLE OF ATTENDANCE -->
-        @if($student->reportCardPercentages->isEmpty())
+        @if(!isset($behavior_scale) || $behavior_scale->items->isEmpty())
             <small><em>Nothing to Display</em></small>
         @else
             @include('_tables.new-table',['id' => 'behavior_table', 'style' => 'border: 1px solid lightgray', 'table_head' => ['Quarter','Class','Grade','Comment']])
             @foreach($student->behaviorGrades as $behavior)
                 <tr>
-                    <td>{{ $behavior->quarter->name }}</td>
+                    <td>{{ $behavior->quarter->name ?? '--'}}</td>
                     <td>{{ $homeroom[$student->id]->fullName }}</td>
-                    <td>{{ $behavior->item->short_name }} - {{ $behavior->item->name }}</td>
+                    <td>{{ $behavior->item->short_name ?? '--'}} - {{ $behavior->item->name ?? '--' }}</td>
                     <td>{{ $behavior->comment  ?? '--'}}</td>
                 </tr>
             @endforeach
@@ -116,7 +116,7 @@
         <br/>
         <h1 class="flex-sm-fill font-size-h4 font-w400 mt-2 mb-0 mb-sm-2">BEHAVIOR GRADING SCALE</h1>
         <!-- TABLE OF SCALE -->
-        @if($behavior_scale->items->isEmpty())
+        @if(!isset($behavior_scale) || $behavior_scale->items->isEmpty())
             <small><em>Nothing to Display</em></small>
         @else
             @include('_tables.new-table',['id' => 'scale_table_1', 'style' => 'border: 1px solid lightgray', 'table_head' => ['Abbreviation','Name','Description']])
