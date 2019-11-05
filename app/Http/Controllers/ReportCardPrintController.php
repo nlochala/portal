@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\GradeScale;
 use App\Year;
 use App\Quarter;
 use App\Student;
 use App\GradeLevel;
+use App\GradeScale;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\Factory;
@@ -78,8 +78,6 @@ class ReportCardPrintController extends Controller
                 }
             }
         }
-
-//        dd($students->first()->reportCardPercentages->first());
 
         return view('report_card.print',
             compact('students', 'quarter', 'grades', 'quarters', 'homeroom', 'percentage_scale', 'behavior_scale'));

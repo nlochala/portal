@@ -97,6 +97,36 @@ class Helpers
         dd($check_array);
     }
 
+    public static function honorRoll(Quarter $quarter)
+    {
+        $all_as_array = [];
+        $all_ab_array = [];
+
+        $grade_levels = [
+            '06',
+            '07',
+            '08',
+            '09',
+            '10',
+            '11',
+            '12',
+        ];
+
+        foreach ($grade_levels as $short_name) {
+            $students = Student::current()->with('gradeQuarterAverages')->grade($short_name)->get();
+            foreach ($students as $student) {
+                $grades = $student->gradeQuarterAverages()->where('quarter_id', $quarter->id)->get();
+                if ($grades->where('percentage', '<', 90)->count() === 0) {
+                    $all_as_array[$short_name][] = $student->getFormalNameAttribute(false);
+                } elseif ($grades->where('percentage', '<', 80)->count() === 0) {
+                    $all_ab_array[$short_name][] = $student->getFormalNameAttribute(false);
+                }
+            }
+        }
+
+        return ['all a' => $all_as_array, 'all ab' => $all_ab_array];
+    }
+
     /**
      * Get colored badges given a specific percentage.
      *
