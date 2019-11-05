@@ -3,10 +3,12 @@
 @section('content')
     @include('layouts._content_start')
     <h1 class="flex-sm-fill font-size-h1 font-w400 mt-2 mb-0 mb-sm-2">
-        {{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)
+        {{ $student->person->family_name }}
+        , {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)
             ({{ $student->person->preferred_name }})@endif - Grade Report
-        <br />
-        <em><small><small>{{ $class->fullName(false) }} | {{ $class->primaryEmployee->person->fullName() }}</small></small></em>
+        <br/>
+        <em><small><small>{{ $class->fullName(false) }}
+                    | {{ $class->primaryEmployee->person->fullName() }}</small></small></em>
     </h1>
     <br/>
     <!--
@@ -53,16 +55,16 @@
         @endforeach
         @include('_tables.end-new-table')
     @endif
-    <br />
-    <br />
-    <br />
+    <br/>
+    <br/>
+    <br/>
     <div style="text-align: center">
         <h3>Quarter {{ preg_replace('/Q/','',$quarter->name) }} Details</h3>
     </div>
     @foreach($assignment_types as $type)
         <h4>{{ $type->name }}</h4>
         <!-- TABLE OF ASSIGNMENTS -->
-        @if($type->assignments->isEmpty())
+        @if($type->assignments()->where('quarter_id',$quarter->id)->get()->isEmpty())
             <small><em>Nothing to Display</em></small>
         @else
             @include('_tables.new-table',['no_hover' => true, 'style' => 'border: 1px solid lightgray', 'id' => 'assignment_id', 'table_head' => ['Name','Date Assigned','Points Earned', 'Percentage', 'Date Turned In']])
@@ -95,7 +97,7 @@
             @endforeach
             @include('_tables.end-new-table')
         @endif
-        <br />
+        <br/>
     @endforeach
     @include('layouts._content_end')
 @endsection
