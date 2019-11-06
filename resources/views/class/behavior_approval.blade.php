@@ -165,12 +165,13 @@
                         data: 'grade_scale_item_id',
                         className: 'editable',
                         render: function (data, type, row) {
-                            return row.item.name;
+                            return '<strong>'+row.item.name+'</strong>';
                         }
                     },
                     {
                         data: 'comment',
                         className: 'editable',
+                        width: '40%'
                     },
                     {
                         data: "is_approved",
