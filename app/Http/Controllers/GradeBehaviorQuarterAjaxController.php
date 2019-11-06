@@ -149,7 +149,7 @@ class GradeBehaviorQuarterAjaxController extends Controller
     public function update(GradeBehaviorQuarter $item, $values)
     {
         $item = Helpers::dbAddAudit($item);
-        if ($values['is_approved'] === '1') {
+        if (isset($values['is_approved']) && $values['is_approved'] === '1') {
             $values['is_approved'] = true;
             $values['approved_on'] = now();
             $values['approved_by_employee_id'] = auth()->user()->person->employee->id;

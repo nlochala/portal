@@ -177,7 +177,7 @@
                         data: "is_approved",
                         className: 'editable',
                         render: function (data, type, row) {
-                            if (data === 0 || data === "0") {
+                            if (data === 0 || data === "0" || data === false) {
                                 return '--';
                             }
                             return '<i class="fa fa-check-circle"></i>';
