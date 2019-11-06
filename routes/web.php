@@ -569,8 +569,12 @@ Route::get('report/grades/{class}/{quarter}/{student}', 'GradebookController@stu
 Route::get('report/grades/{class}/{quarter}/{student}/print', 'GradebookController@printStudentDetails');
 
 // Behavior Reports
+Route::get('report/behavior/approve/{quarter}', 'GradeBehaviorQuarterController@approvalForm');
+Route::post('report/behavior/approve/{quarter}', 'GradeBehaviorQuarterController@processChangeQuarter');
 Route::get('report/behavior/{class}/{quarter}', 'GradeBehaviorQuarterController@grade');
 Route::post('report/behavior/{class}/{quarter}', 'GradeBehaviorQuarterController@processGrades');
+Route::get('api/report/behavior/approve/{quarter}/ajaxshowreports', 'GradeBehaviorQuarterAjaxController@ajaxShow');
+Route::post('api/report/behavior/approve/{quarter}/ajaxstorereports', 'GradeBehaviorQuarterAjaxController@ajaxStore');
 
 // Print Report Cards
 Route::get('report/report_cards/{year}/print_form', 'ReportCardPrintController@reportForm');

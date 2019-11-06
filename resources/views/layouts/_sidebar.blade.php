@@ -194,13 +194,17 @@
     ]
 ])
 @include('layouts._sidebar_menu_nested_submenu', [
-'section_title' => 'Reports',
+'section_title' => 'Report Cards',
 'section_icon' => 'fa fa-clipboard-list',
 'submenu_array' =>
     [
         [
             'title' => 'Print Report Cards',
             'uri'   => '/report/report_cards/'.\App\Year::currentYear()->uuid.'/print_form'
+        ],
+        [
+            'title' => 'Behavior Approvals',
+            'uri'   => '/report/behavior/approve/'.\App\Quarter::now()->uuid,
         ],
     ]
 ])

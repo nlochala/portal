@@ -54,6 +54,9 @@ class GradeBehaviorQuarter extends PortalBaseModel
         'grade_scale_item_id',
         'quarter_id',
         'comment',
+        'is_approved',
+        'approved_by_employee_id',
+        'approved_on',
         'is_protected',
         'user_created_id',
         'user_created_ip',
@@ -102,6 +105,17 @@ class GradeBehaviorQuarter extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * This grade has a Employee.
+     *
+     * @return HasOne
+     */
+    public function approvedBy()
+    {
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\Employee', 'id', 'approved_by_employee_id');
+    }
 
     /**
      * This grade has a Student.

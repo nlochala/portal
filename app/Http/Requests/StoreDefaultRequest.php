@@ -24,7 +24,6 @@ class StoreDefaultRequest extends FormRequest
     public function rules()
     {
         return [
-            '☄' => 'required',
         ];
     }
 

@@ -15,6 +15,49 @@ use Illuminate\Contracts\View\Factory;
 class GradeBehaviorQuarterController extends Controller
 {
     /**
+     * Require users to have been authenticated before reaching this page.
+     *
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the approval form.
+     *
+     * @param Quarter $quarter
+     * @return Factory|View
+     */
+    public function approvalForm(Quarter $quarter)
+    {
+        $quarter_dropdown = Quarter::getDropdown(null, env('SCHOOL_YEAR_ID'));
+        $grade_scale = GradeScale::findOrFail(env('BEHAVIOR_GRADE_SCALE_ID'));
+        $grade_scale_dropdown = GradeScaleStandard::getDropdown($grade_scale->id);
+
+        return view('class.behavior_approval', compact(
+            'quarter',
+            'quarter_dropdown',
+            'grade_scale',
+            'grade_scale_dropdown'
+        ));
+    }
+
+    /**
+     * Process the change of quarter form.
+     *
+     * @return RedirectResponse
+     */
+    public function processChangeQuarter()
+    {
+        $quarter_id = request('quarter_id');
+        $quarter = Quarter::findOrFail($quarter_id);
+
+        return redirect()->to('/report/behavior/approve/'.$quarter->uuid);
+    }
+
+    /**
      * Show the grade entry point for behavior assessments.
      *
      * @param CourseClass $class
@@ -75,7 +118,6 @@ class GradeBehaviorQuarterController extends Controller
                 $insert_values = Helpers::dbAddAudit($insert_values);
                 GradeBehaviorQuarter::create($insert_values);
             }
-
         }
 
         Helpers::flash(true, 'student grade', 'updated');
