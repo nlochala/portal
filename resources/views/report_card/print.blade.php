@@ -104,7 +104,7 @@
             @foreach($student->behaviorGrades->where('quarter_id', $quarter->id) as $behavior)
                 <tr>
                     <td>{{ $behavior->quarter->name ?? '--'}}</td>
-                    <td style="width: 20%">{{ $homeroom[$student->id]->fullName }}</td>
+                    <td style="width: 25%">{{ $homeroom[$student->id]->fullName }}</td>
                     <td>{{ $behavior->item->short_name ?? '--'}}</td>
                     <td>{{ $behavior->comment  ?? '--'}}</td>
                 </tr>
