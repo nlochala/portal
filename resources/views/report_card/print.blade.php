@@ -101,11 +101,11 @@
             <small><em>Nothing to Display</em></small>
         @else
             @include('_tables.new-table',['id' => 'behavior_table', 'style' => 'border: 1px solid lightgray', 'table_head' => ['Quarter','Class','Grade','Comment']])
-            @foreach($student->behaviorGrades as $behavior)
+            @foreach($student->behaviorGrades->where('quarter_id', $quarter->id) as $behavior)
                 <tr>
                     <td>{{ $behavior->quarter->name ?? '--'}}</td>
-                    <td>{{ $homeroom[$student->id]->fullName }}</td>
-                    <td>{{ $behavior->item->short_name ?? '--'}} - {{ $behavior->item->name ?? '--' }}</td>
+                    <td style="width: 20%">{{ $homeroom[$student->id]->fullName }}</td>
+                    <td>{{ $behavior->item->short_name ?? '--'}}</td>
                     <td>{{ $behavior->comment  ?? '--'}}</td>
                 </tr>
             @endforeach
@@ -130,9 +130,6 @@
             @include('_tables.end-new-table')
         @endif
 
-        <br/>
-        <br/>
-        <br/>
         <br/>
         <div style="text-align: center">
             <img src="/storage/report_card_20192020_foot.png" class="img-fluid options-item">
