@@ -14,7 +14,9 @@ class CalculateQuarterGrade extends Command
      *
      * @var string
      */
-    protected $signature = 'portal:calculate-quarter-grade';
+    protected $signature = 'portal:calculate-quarter-grade
+    {--quarter= : What is the quarter_id to process?}
+    ';
 
     /**
      * The console command description.
@@ -44,7 +46,11 @@ class CalculateQuarterGrade extends Command
 
         $class = '';
         $student = '';
-        $quarter = Quarter::now();
+        if ($this->options('quarter')) {
+            $quarter = Quarter::find($this->option('quarter'));
+        } else {
+            $quarter = Quarter::now();
+        }
         $relationship = $quarter->getClassRelationship();
 
         $classes = CourseClass::active()->isPercentageBased()->with($relationship)->get();

@@ -8,7 +8,8 @@ use App\GradeQuarterAverage;
 use App\Events\AssignmentGraded;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UpdateGradeAverage implements ShouldQueue
+//class UpdateGradeAverage implements ShouldQueue
+class UpdateGradeAverage
 {
     /**
      * Create the event listener.
@@ -59,12 +60,11 @@ class UpdateGradeAverage implements ShouldQueue
             // credit for that type. Otherwise, if we calculate it the best case outcome is the overall
             // cumuluative grade will be 100% minus the weight of the missing type.
             if (empty($item['max_points'])) {
+                echo $event->class->fullName;
                 $student_grade_array[] = ($item['weight'] / 100);
             } else {
                 $student_grade_array[] = ($item['points_earned'] / $item['max_points']) * ($item['weight'] / 100);
             }
-
-
 
             if ($average = GradeAverage::isStudent($event->student->id)->isQuarter($event->quarter->id)->isClass($event->class->id)->isAssignmentType($assignment_type_id)->first()) {
                 $average = Helpers::dbAddAudit($average);
@@ -114,7 +114,7 @@ class UpdateGradeAverage implements ShouldQueue
 
         if ($quarter_average = GradeQuarterAverage::isStudent($event->student->id)->isQuarter($event->quarter->id)->isClass($event->class->id)->first()) {
             $quarter_average = Helpers::dbAddAudit($quarter_average);
-            $quarter_average->percentage = round($percentage, 3);
+            $quarter_average->percentage = round($percentage);
             $quarter_average->grade_name = $name;
             $quarter_average->save();
 
@@ -123,7 +123,7 @@ class UpdateGradeAverage implements ShouldQueue
 
         $quarter_average = new GradeQuarterAverage();
         $quarter_average = Helpers::dbAddAudit($quarter_average);
-        $quarter_average->percentage = round($percentage, 3);
+        $quarter_average->percentage = round($percentage);
         $quarter_average->grade_name = $name;
         $quarter_average->quarter_id = $event->quarter->id;
         $quarter_average->student_id = $event->student->id;

@@ -128,6 +128,31 @@ class Helpers
     }
 
     /**
+     * Check and make sure all assignment_types have some assignments assigned.
+     *
+     * @param Quarter $quarter
+     */
+    public static function checkAssignmentCountPerType(Quarter $quarter)
+    {
+        $relationship = $quarter->getClassRelationship();
+
+        $classes = CourseClass::active()->isPercentageBased()->with($relationship)->get();
+        $class_array = [];
+
+        foreach ($classes as $class) {
+            if ($class->$relationship->count() !== 0) {
+                foreach ($class->assignmentTypes as $type) {
+                    if ($type->assignments()->where('quarter_id', $quarter->id)->count() === 0) {
+                        $class_array[$class->fullName()] = $type->name;
+                    }
+                }
+            }
+        }
+
+        dd($class_array);
+    }
+
+    /**
      * Get colored badges given a specific percentage.
      *
      * @param $percentage
