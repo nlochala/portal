@@ -8,8 +8,7 @@ use App\GradeQuarterAverage;
 use App\Events\AssignmentGraded;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-//class UpdateGradeAverage implements ShouldQueue
-class UpdateGradeAverage
+class UpdateGradeAverage implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -60,7 +59,6 @@ class UpdateGradeAverage
             // credit for that type. Otherwise, if we calculate it the best case outcome is the overall
             // cumuluative grade will be 100% minus the weight of the missing type.
             if (empty($item['max_points'])) {
-                echo $event->class->fullName;
                 $student_grade_array[] = ($item['weight'] / 100);
             } else {
                 $student_grade_array[] = ($item['points_earned'] / $item['max_points']) * ($item['weight'] / 100);
