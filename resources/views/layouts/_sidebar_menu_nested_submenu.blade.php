@@ -17,6 +17,7 @@ $submenu_array =
 
 
 --}}
+@if(!empty($submenu_array))
 <li class="nav-main-item
 @foreach($submenu_array as $item)
 @if(\App\Helpers\Helpers::isUri($item['uri'], false))
@@ -52,3 +53,4 @@ $submenu_array =
         @endforeach
     </ul>
 </li>
+    @endif

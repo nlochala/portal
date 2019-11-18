@@ -73,6 +73,11 @@
             'title' => 'Directory',
             'uri'   => '/guardian/index'
         ],
+        [
+            'title' => 'Parent Portal Logins',
+            'uri'   => '/guardian/logins',
+            'guard' => 'guardians.show.full_profile'
+        ],
     ]
 ])
 @include('layouts._sidebar_heading', ['header' => 'Calendar'])

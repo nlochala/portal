@@ -209,8 +209,9 @@ class Person extends PortalBaseModel
     public function emails()
     {
         $emails = '';
-        $emails .= "<strong>Primary Email:</strong> <a href='mailto:$this->email_primary'>
-            $this->email_primary</a>";
+        $email = $this->email_primary ? $this->email_primary : '--';
+        $emails .= "<strong>Primary Email:</strong> <a href='mailto:$email'>
+            $email</a>";
 
         ! $this->email_secondary ?: $emails .= "<br /><strong>Secondary Email:</strong> 
             <a href='mailto:$this->email_secondary'>$this->email_secondary</a>";

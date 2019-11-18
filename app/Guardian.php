@@ -70,7 +70,7 @@ class Guardian extends PortalBaseModel
         return 'uuid';
     }
 
-    protected $casts = ['is_protected' => 'bool'];
+    protected $casts = ['is_protected' => 'bool', 'is_imported' => 'bool'];
 
     /**
      * Add mass-assignment to model.
@@ -94,6 +94,19 @@ class Guardian extends PortalBaseModel
     | ATTRIBUTES
     |--------------------------------------------------------------------------
     */
+
+    /**
+     * return the full name of a guardian.
+     *
+     * @return mixed
+     */
+    public function getFullNameAttribute()
+    {
+        $first_name = $this->person->preferred_name
+            ?: $this->person->given_name;
+
+        return $this->person->family_name.', '.$first_name;
+    }
 
     /**
      * return the full name of an employee.
@@ -155,6 +168,17 @@ class Guardian extends PortalBaseModel
     public function scopeHasFamily($query)
     {
         $query->whereNotNull('family_id');
+    }
+
+    /**
+     * isImported query scope
+     *
+     * @param $query
+     * @param $imported
+     */
+    public function scopeIsImported($query, $imported)
+    {
+        $query->where('is_imported',$imported);
     }
 
     /*

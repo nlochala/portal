@@ -11,7 +11,11 @@
             'page_uri'  => '/'
         ],
         [
-            'page_name' => $role->name,
+            'page_name' => 'Roles',
+            'page_uri'  => '/role/index'
+        ],
+        [
+            'page_name' => 'Role: '.$role->name,
             'page_uri'  => request()->getRequestUri()
         ]
     ]
@@ -87,7 +91,7 @@
     @else
         <ul>
             @foreach($role->users as $user)
-                <li>{!! $user->person->employee->name !!}</li>
+                <li>{!! $user->person->extendedName() !!}</li>
             @endforeach
         </ul>
     @endif

@@ -112,6 +112,23 @@ class Student extends PortalBaseModel
             : str_replace('@tlcdg.com', '', $this->username);
     }
 
+    /**
+     * Does this guardian belong to a student.
+     *
+     * @param $guardian_id
+     * @return bool
+     */
+    public function isMyGuardian($guardian_id)
+    {
+        if ($this->family && $this->family->guardians) {
+            $guardian_ids = $this->family->guardians->pluck('id')->toArray();
+
+            return in_array($guardian_id, $guardian_ids);
+        }
+
+        return false;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES

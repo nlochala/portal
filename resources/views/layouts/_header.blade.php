@@ -25,7 +25,9 @@
     <!-- END Header Content -->
 
     <!-- Header Search -->
+    @can('employee-only')
     @include('layouts._header_search')
+    @endcan
 
     <!-- Header Loader -->
 {{--    @include('layouts._header_loader')--}}

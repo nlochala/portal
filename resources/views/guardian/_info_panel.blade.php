@@ -36,10 +36,12 @@
 
 @include('_tables.end-new-table')
 
+@cannot('guardian-only')
 <button type="button" class="btn btn-outline-danger mr-1 mb-3"
         onclick="window.location.href='/guardian/{{ $guardian->uuid }}/profile'">
     <i class="fa fa-pen"></i> Edit Guardian
 </button>
+@endcannot
 
 
 @include('layouts._panels_end_content')

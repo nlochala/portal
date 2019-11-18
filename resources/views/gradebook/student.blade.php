@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
+
     <!-- Add Content Title Here b.breadcrumbs -->
     @include('layouts._breadcrumbs', [
     'title' => $student->name.' - '.$quarter->name.' Grade Report',
@@ -20,7 +21,10 @@
         ]
     ]
 ])
+
     @include('layouts._content_start')
+
+
     <!--
     panel.row
     panel.column

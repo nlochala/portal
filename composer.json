@@ -55,6 +55,7 @@
   },
   "autoload": {
     "files": [
+        "app/Helpers/GlobalHelpers.php"
     ],
     "psr-4": {
       "App\\": "app/"

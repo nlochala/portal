@@ -6,21 +6,25 @@
         <i class="fa fa-fw fa-angle-down ml-1 d-none d-sm-inline-block"></i>
     </button>
     <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
-        <div class="bg-primary-darker rounded-top font-w600 text-white text-center p-3">
+        @can('employee-only')
+            <div class="bg-primary-darker rounded-top font-w600 text-white text-center p-3">
             User Options
         </div>
+        @endcan
         <div class="p-2">
+            @can('employee-only')
             <a class="dropdown-item" href="{{ '/employee/' . auth()->user()->person->employee->uuid}}">
                 <i class="far fa-fw fa-address-card mr-1"></i> Dashboard
             </a>
+                <div role="separator" class="dropdown-divider"></div>
+                <div role="separator" class="dropdown-divider"></div>
+            @endcan
             @can('employees.show.full_profile')
             <a class="dropdown-item" href="{{ '/employee/' . auth()->user()->person->employee->uuid . '/profile'}}">
                 <i class="far fa-fw fa-user mr-1"></i> Profile
             </a>
             @endcan
 
-            <div role="separator" class="dropdown-divider"></div>
-            <div role="separator" class="dropdown-divider"></div>
 
             <a class="dropdown-item" href="/logout">
                 <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i> Sign Out

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Permission;
+use App\Policies\StudentPolicy;
+use App\Student;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        Student::class => StudentPolicy::class,
     ];
 
     /**
@@ -30,6 +32,9 @@ class AuthServiceProvider extends ServiceProvider
 
         foreach ($this->getPermissions() as $permission) {
             Gate::define($permission->name, function ($user) use ($permission) {
+                if ($permission->name === 'student-only' || $permission->name === 'guardian-only') {
+                    return $user->hasRole($permission->roles);
+                }
 
                 if ($user->isAdmin() || $user->hasRole($permission->roles)) {
                     return true;

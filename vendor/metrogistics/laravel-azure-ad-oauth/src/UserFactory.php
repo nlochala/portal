@@ -5,6 +5,8 @@ namespace Metrogistics\AzureSocialite;
 use App\AdGroup;
 use App\Role;
 use App\Employee;
+use App\Guardian;
+use App\Student;
 use App\Helpers\Helpers;
 use App\Person;
 use App\User as AppUser;
@@ -71,14 +73,24 @@ class UserFactory
             $callback($new_user);
         }
 
-        $person = Person::where('email_school', $new_user->email)->get();
-        $person->isEmpty() ? $person = $this->newPerson($new_user) : $person = $person->first();
+        if ($user_method === 'newGuardian') {
+            $guardian = Guardian::where('username',$new_user->email)->first();
+            $person = $guardian->person;
+        }
+        if ($user_method === 'newStudent') {
+            $student = Student::where('username',$new_user->email)->first();
+            $person = $student->person;
+        }
+        if ($user_method === 'newEmployee') {
+            $person = Person::where('email_school', $new_user->email)->get();
+            $person->isEmpty() ? $person = $this->newPerson($new_user) : $person = $person->first();
+        }
+
         $new_user->person_id = $person->id;
         $new_user->save();
 
         // User is ready to be used: $new_user;
         $groups = $this->attachAdGroups($azure_user->user['groups'], $new_user);
-
         $this->$user_method($new_user, $person);
 
         return $new_user;
@@ -121,7 +133,27 @@ class UserFactory
 
             if ($role = $group_obj->role) {
                 $roles_array[] = $role->id;
-
+            }elseif (preg_match('/^All Students/', $group_obj->name)) {
+                $role = Role::where('name','student')->first();
+                if ($role->ad_group_id !== $group_obj->id) {
+                    $role->ad_group_id = $group_obj->id;
+                    $role->save();
+                }
+                $roles_array[] = $role->id;
+            }elseif (preg_match('/^All Guardians/', $group_obj->name)) {
+                $role = Role::where('name','guardian')->first();
+                if ($role->ad_group_id !== $group_obj->id) {
+                    $role->ad_group_id = $group_obj->id;
+                    $role->save();
+                }
+                $roles_array[] = $role->id;
+            }elseif (preg_match('/^All Staff/', $group_obj->name)) {
+                $role = Role::where('name','employee')->first();
+                if ($role->ad_group_id !== $group_obj->id) {
+                    $role->ad_group_id = $group_obj->id;
+                    $role->save();
+                }
+                $roles_array[] = $role->id;
             }elseif (preg_match('/^portal-/', $group_obj->name)) {
                 if ($role = Role::where('name',$group_obj->name)->first()){
                     if ($role->ad_group_id !== $group_obj->id) {
@@ -166,30 +198,14 @@ class UserFactory
 
     public function newStudent(AppUser $user, Person $person)
     {
-        if ($student = Student::where('person_id', $person->id)->first()) {
-            return $student;
-        }
-
-        $student = new Student();
-        $student->person_id = $person->id;
-        $student = Helpers::dbAddAudit($student);
-        $student->save();
-
-        return $student;
+        // Just in case there are things we want to do.
+        return;
     }
 
     public function newGuardian(AppUser $user, Person $person)
     {
-        if ($guardian = Guardian::where('person_id', $person->id)->first()) {
-            return $guardian;
-        }
-
-        $guardian = new Guardian();
-        $guardian->person_id = $person->id;
-        $guardian = Helpers::dbAddAudit($guardian);
-        $guardian->save();
-
-        return $guardian;
+        // Just in case there are things we want to do.
+        return;
     }
 
     public function newEmployee(AppUser $user, Person $person)

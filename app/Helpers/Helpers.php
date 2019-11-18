@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Guardian;
+use App\Person;
 use DB;
 use Storage;
 use App\File;
@@ -46,6 +48,70 @@ class Helpers
                 event(new AssignmentGraded($student, $class, $quarter));
             }
         }
+    }
+
+    public static function checkPersonName(Person $person = null)
+    {
+        if (!$person) {
+            $persons = Person::all();
+        } else {
+            $persons = Person::where('id',$person->id)->get();
+        }
+
+        foreach ($persons as $person) {
+            $person->family_name = self::fixStringForName($person->family_name);
+            $person->given_name = self::fixStringForName($person->given_name);
+            $person->preferred_name = self::fixStringForName($person->preferred_name);
+
+            $person->save();
+        }
+    }
+
+    /**
+     * @param $string
+     * @return string
+     */
+    public static function fixStringForName($string)
+    {
+        $string = strtolower($string);
+        $string = str_replace(',', '', $string);
+
+        if (substr_count($string, ' ')) {
+            $string = implode(' ', array_map('ucfirst', explode(' ', $string)));
+        }
+
+        if (substr_count($string, '-')) {
+            $string = implode('-', array_map('ucfirst', explode('-', $string)));
+        }
+
+        $string = ucwords($string);
+
+        return $string;
+    }
+
+    /**
+     * Get a quick nationality breakdown.
+     *
+     * @return array
+     */
+    public static function getEthnicBreakdown()
+    {
+        $nationality_array['OTHER'] = 0;
+        $students = Student::current()->with('person.nationality')->get();
+        foreach($students as $student) {
+            if(! $student->person->nationality) {
+                $nationality_array['OTHER'] = $nationality_array['OTHER'] + 1;
+                continue;
+            }
+            if (isset($nationality_array[$student->person->nationality->name])) {
+                $nationality_array[$student->person->nationality->name] = $nationality_array[$student->person->nationality->name] + 1;
+                continue;
+            }
+
+            $nationality_array[$student->person->nationality->name] = 1;
+        }
+
+        return $nationality_array;
     }
 
     /**

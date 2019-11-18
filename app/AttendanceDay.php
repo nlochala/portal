@@ -26,7 +26,7 @@ class AttendanceDay extends PortalBaseModel
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -125,6 +125,19 @@ class AttendanceDay extends PortalBaseModel
     }
 
     /**
+     * isYear query scope
+     *
+     * @param $query
+     * @param $year_id
+     */
+    public function scopeIsYear($query, $year_id)
+    {
+        $query->whereHas('quarter', function ($q) use ($year_id) {
+            $q->where('year_id', $year_id);
+        });
+    }
+
+    /**
      * isStudent query scope.
      *
      * @param $query
@@ -185,6 +198,17 @@ class AttendanceDay extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This attendance belongs to a quarter
+     *
+     * @return BelongsTo
+     */
+    public function quarter()
+    {
+        return $this->belongsTo('App\Quarter', 'quarter_id', 'id');
+    }
+
 
     /**
      *  This class_attendance belongs to a student.
