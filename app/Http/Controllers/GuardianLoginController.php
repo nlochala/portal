@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Guardian;
+use App\Helpers\Helpers;
 use App\Student;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -62,7 +63,7 @@ class GuardianLoginController extends Controller
      */
     public function imported()
     {
-        $guardians = Guardian::with('person')->current()->isImported(false)->get();
+        $guardians = Guardian::with('person')->isImported(false)->get();
 
         foreach ($guardians as $guardian) {
             $guardian = Helpers::dbAddAudit($guardian);
