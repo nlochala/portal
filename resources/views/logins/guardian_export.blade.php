@@ -80,7 +80,7 @@
                 <td>{{ $guardian->username }}</td>
                 <td>{{ $guardian->person->given_name }} @if($guardian->person->preferred_name !== $guardian->person->given_name)({{ $guardian->person->preferred_name }})@endif</td>
                 <td>{{ $guardian->person->family_name }}</td>
-                <td>{{ $guardian->person->family_name }}, {{ $guardian->person->given_name }} @if($guardian->person->preferred_name !== $guardian->person->given_name)({{ $guardian->person->preferred_name }})@endif</td>
+                <td>{{ $guardian->person->family_name }}, {{ $guardian->person->given_name }} @if($guardian->person->preferred_name !== $guardian->person->given_name)({{ $guardian->person->preferred_name }})@endif {{ $guardian->id }}</td>
                 <td></td>
                 <td>guardian</td>
                 <td></td>
@@ -129,7 +129,7 @@
         @foreach($guardians as $guardian)
             <tr>
                 <td>{{ $guardian->person->given_name }} @if($guardian->person->preferred_name !== $guardian->person->given_name)({{ $guardian->person->preferred_name }})@endif</td>
-                <td>{{ $guardian->person->family_name }}, {{ $guardian->person->given_name }} @if($guardian->person->preferred_name !== $guardian->person->given_name)({{ $guardian->person->preferred_name }})@endif</td>
+                <td>{{ $guardian->person->family_name }}, {{ $guardian->person->given_name }} @if($guardian->person->preferred_name !== $guardian->person->given_name)({{ $guardian->person->preferred_name }})@endif {{ $guardian->id }}</td>
                 <td>{{ $guardian->person->family_name }}</td>
                 <td>{{ $guardian->username }}</td>
                 <td>{{ preg_replace('/@tlcdg.com/','',$guardian->username) }}</td>

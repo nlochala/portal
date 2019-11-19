@@ -72,7 +72,7 @@
                 <td>{{ $student->username }}</td>
                 <td>{{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
                 <td>{{ $student->person->family_name }}</td>
-                <td>{{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
+                <td>{{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif {{ $student->id }}</td>
                 <td></td>
                 <td>student</td>
                 <td></td>
@@ -121,7 +121,7 @@
         @foreach($students as $student)
             <tr>
                 <td>{{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
-                <td>{{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif</td>
+                <td>{{ $student->person->family_name }}, {{ $student->person->given_name }} @if($student->person->preferred_name !== $student->person->given_name)({{ $student->person->preferred_name }})@endif {{ $student->id }}</td>
                 <td>{{ $student->person->family_name }}</td>
                 <td>{{ $student->username }}</td>
                 <td>{{ preg_replace('/@tlcdg.com/','',$student->username) }}</td>
