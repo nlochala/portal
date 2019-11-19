@@ -53,11 +53,11 @@
 'icon' => 'si si-globe',
 'title' => 'Home'
 ])
-@include('layouts._sidebar_menu_submenu_item', [
-'uri' => '/videos/channel/how-to',
-'icon' => 'si si-question',
-'title' => 'How-To Videos'
-])
+{{--@include('layouts._sidebar_menu_submenu_item', [--}}
+{{--'uri' => '/videos/channel/how-to',--}}
+{{--'icon' => 'si si-question',--}}
+{{--'title' => 'How-To Videos'--}}
+{{--])--}}
 @include('layouts._sidebar_heading', ['header' => 'PEOPLE'])
 @include('layouts._sidebar_menu_nested_submenu', [
 'section_title' => 'My Students',
