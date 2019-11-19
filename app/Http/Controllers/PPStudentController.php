@@ -78,9 +78,18 @@ class PPStudentController extends Controller
                     $grades_summary_array[$class->fullName][$q->name]['badge'] = Helpers::colorPercentages($grade->percentage, $grade->percentage.'% '.$grade->grade_name);
                     $grades_summary_array[$class->fullName][$q->name]['link'] = "<a href=\"/s_student/report/grades/$class->uuid/$q->uuid/$student->uuid\">view</a>";
                 }else{
-                    $grades_summary_array[$class->fullName][$q->name]['badge'] = null;
+                    $grades_summary_array[$class->fullName][$q->name]['badge'] = '--';
+                    $grades_summary_array[$class->fullName][$q->name]['link'] = null;
                 }
+            }
+        }
 
+        foreach ($grades_summary_array as $name => $class) {
+            foreach ($quarters as $q) {
+                if (!isset($class[$q->name])) {
+                    $grades_summary_array[$name][$q->name]['badge'] = '--';
+                    $grades_summary_array[$name][$q->name]['link'] = null;
+                }
             }
         }
 
