@@ -9,7 +9,7 @@ $title
 
 <div dusk="{{ $id }}" class="modal fade" id="{{ $id }}" tabindex="-1" role="dialog"
       aria-labelledby="{{ $id }}" aria-hidden="true" data-focus="false">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">

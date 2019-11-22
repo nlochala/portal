@@ -189,8 +189,16 @@
         </button>
     @endif
     <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
+            onclick="window.location.href='/class/{{ $class->uuid }}/message/dashboard'">
+        <i class="fa fa-comments"></i> Parent Messages
+    </button>
+    <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
             data-toggle="modal" data-target="#modal-block-logins">
         <i class="fa fa-user-lock"></i> Student Logins
+    </button>
+    <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
+            data-toggle="modal" data-target="#modal-block-guardian-logins">
+        <i class="fa fa-user-lock"></i> Guardian Logins
     </button>
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
@@ -206,6 +214,42 @@
     @else
         @include('class._update_daily_attendance')
     @endif
+
+    <!-------------------------------- Modal: Guardian Logins Start------------------------------------------->
+    @include('layouts._modal_panel_start',[
+        'id' => 'modal-block-guardian-logins',
+        'title' => 'Guardian Logins'
+    ])
+
+    <!-- TABLE OF GUARDIANS -->
+    @if($enrollment->isEmpty())
+        <small><em>Nothing to Display</em></small>
+    @else
+        @include('_tables.new-table',['id' => 'guardian-table', 'table_head' => ['','Name','Username','Password']])
+        @foreach($enrollment as $student)
+            @if (isset($student->family) && !$student->family->guardians->isEmpty())
+                <tr>
+                    <td>--</td>
+                    <td>{!! $student->name !!}</td>
+                    <td>--</td>
+                    <td>--</td>
+                </tr>
+                @foreach($student->family->guardians as $guardian)
+                    <tr>
+                        <td></td>
+                        <td>{!! $guardian->person->extendedName() !!}</td>
+                        <td><code>{{ $guardian->username }}</code></td>
+                        <td><code>{{ $guardian->password }}</code></td>
+                    </tr>
+                @endforeach
+            @endif
+        @endforeach
+        @include('_tables.end-new-table')
+    @endif
+
+    @include('layouts._modal_panel_end')
+    <!-------------------------------- Modal: Guardian Logins END------------------------------------------->
+    <!------   data-toggle="modal" data-target="#modal-block-guardian-logins". ----->
 
     <!-------------------------------- Modal: Student Logins Start------------------------------------------->
     @include('layouts._modal_panel_start',[
@@ -227,8 +271,8 @@
                 <td>{{ $i++ }}</td>
                 <td>{!! $student->name !!}</td>
                 <td>{!! $student->email!!}</td>
-                <td>{{ $student->getWifiUsername() }}</td>
-                <td>{{ $student->password ?? '---' }}</td>
+                <td><code>{{ $student->getWifiUsername() }}</code></td>
+                <td><code>{{ $student->password ?? '---' }}</code></td>
             </tr>
         @endforeach
         @include('_tables.end-new-table')
