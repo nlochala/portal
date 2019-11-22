@@ -192,10 +192,6 @@
             data-toggle="modal" data-target="#modal-block-logins">
         <i class="fa fa-user-lock"></i> Student Logins
     </button>
-    <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
-            onclick="window.location.href='/class/{{ $class->uuid }}/message/dashboard'">
-        <i class="fa fa-comments"></i> Parent Messages
-    </button>
     @include('layouts._panels_end_content')
     @include('layouts._panels_end_panel')
     <!-------------------------------------------------------------------------------->

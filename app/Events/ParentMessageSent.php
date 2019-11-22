@@ -11,11 +11,13 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ParentMessageSent
+class ParentMessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
+
+    public $broadcastQueue = 'broadcast-queue';
 
     /**
      * Create a new event instance.
@@ -34,6 +36,21 @@ class ParentMessageSent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('parent-message-channel');
+        return new PrivateChannel('user.'.$this->message->to->person->user->uuid);
+    }
+
+    /**
+     * What to send.
+     *
+     * @return array
+     */
+    public function broadcastWith()
+    {
+        return [
+            'icon' => 'info',
+            'title' => 'New Message: ',
+            'text' => $this->message->subject,
+        ];
+
     }
 }

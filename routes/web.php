@@ -23,6 +23,10 @@ Route::get('download_file/{file}', 'MediaController@downloadFile');
 Route::get('api/download_file/{file}', 'MediaController@downloadFile');
 Route::post('api/store_file', 'MediaController@store');
 
+//Route::get('pusher', function () {
+//  return view('broadcast.test');
+//});
+
 /*
 |--------------------------------------------------------------------------
 | PARENT PORTAL
@@ -141,6 +145,11 @@ Route::get('guardian/export_guardian_logins', 'GuardianLoginController@loginsExp
     ->middleware('can:permissions');
 Route::get('guardian/export_guardian_logins/imported', 'GuardianLoginController@imported')
     ->middleware('can:permissions');
+//Welcome Letter
+Route::get('guardian/welcome_letter/', 'GuardianLoginLetterController@form')
+    ->middleware('can:employee-only');
+Route::post('guardian/welcome_letter/', 'GuardianLoginLetterController@print')
+    ->middleware('can:employee-only');
 
 /*
 |--------------------------------------------------------------------------

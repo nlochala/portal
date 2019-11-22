@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notification;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,6 +33,26 @@ class User extends Authenticatable
     | SETUP
     |--------------------------------------------------------------------------
     */
+    /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'user.'.$this->uuid;
+    }
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @param  Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForSlack($notification)
+    {
+        return env('SLACK_HOOK');
+    }
 
     /**
      *  Setup model event hooks.

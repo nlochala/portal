@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -57,3 +56,86 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+//
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     forceTLC: true
+// });
+//
+// // window.Echo.private(`message.${message}`)
+// //     .listen('ParentMessageSent', (data) => {
+// //         alert(JSON.stringify(data));
+// //     });
+//
+// var channel = Echo.channel('my-channel');
+// channel.listen('.my-event', function(data) {
+//     alert(JSON.stringify(data));
+// });
+// SweetAlert
+import Echo from "laravel-echo"
+
+window.Pusher = require('pusher-js');
+
+const SwalToast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer),
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+
+// SwalToast.fire({
+//     icon: data.icon,
+//     title: data.text,
+// });
+
+var user_uuid = document.getElementById('authenticated_user_uuid').value;
+var user_id = document.getElementById('authenticated_user_id').value;
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
+
+window.Echo.private('employees');
+
+window.Echo.private('guardians');
+
+window.Echo.private('students');
+
+window.Echo.private('all');
+
+// window.Echo.private('App.User.' + user_id)
+//     .notification((data) => {
+//         SwalToast.fire({
+//             title: data.title,
+//             icon: data.icon,
+//             text: data.text,
+//         });
+//     });
+
+window.Echo.private('user.' + user_uuid)
+    .listen('ParentMessageSent', (data) => {
+        SwalToast.fire({
+            title: data.title,
+            icon: data.icon,
+            text: data.text,
+        })
+    })
+    .notification((data) => {
+        SwalToast.fire({
+            title: data.title,
+            icon: data.icon,
+            text: data.text,
+        })
+    });
+
+

@@ -78,6 +78,11 @@
             'uri'   => '/guardian/logins',
             'guard' => 'guardians.show.full_profile'
         ],
+        [
+            'title' => 'Portal Welcome Letter',
+            'uri'   => '/guardian/welcome_letter',
+            'guard' => 'guardians.show.full_profile'
+        ],
     ]
 ])
 @include('layouts._sidebar_heading', ['header' => 'Calendar'])

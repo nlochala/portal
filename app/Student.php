@@ -129,6 +129,29 @@ class Student extends PortalBaseModel
         return false;
     }
 
+    /**
+     * Return a formatted dropdown.
+     *
+     * @param null $scope
+     * @return array
+     */
+    public static function getDropdown($scope = null)
+    {
+        $dropdown_array = [];
+
+        if ($scope) {
+            $students = static::with('person','gradeLevel')->$scope()->get();
+        } else {
+            $students = static::with('person','gradeLevel')->get();
+        }
+
+        foreach ($students as $student) {
+            $dropdown_array[$student->id] = $student->person->fullName().' - '.$student->gradeLevel->name;
+        }
+
+        return $dropdown_array;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ATTRIBUTES

@@ -69,19 +69,22 @@ class GradeLevel extends PortalBaseModel
      *
      * @param null $scope
      * @param null $second_scope
+     * @param bool $use_short_name
      * @return array
      */
-    public static function getDropdown($scope = null, $second_scope = null)
+    public static function getDropdown($scope = null, $second_scope = null, $use_short_name = true)
     {
+        $name = $use_short_name ? 'short_name' : 'name';
+
         if ($scope) {
             if ($second_scope) {
-                return static::$scope()->$second_scope()->get()->pluck('short_name', 'id')->toArray();
+                return static::$scope()->$second_scope()->get()->pluck($name, 'id')->toArray();
             }
 
-            return static::$scope()->get()->pluck('short_name', 'id')->toArray();
+            return static::$scope()->get()->pluck($name, 'id')->toArray();
         }
 
-        return static::all()->pluck('short_name', 'id')->toArray();
+        return static::all()->pluck($name, 'id')->toArray();
     }
 
     /*

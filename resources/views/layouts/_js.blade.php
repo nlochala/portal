@@ -1,3 +1,5 @@
+<script src="{{ asset('js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+
 {{--<!-- Dashmix Core JS -->--}}
 <script src="{{ asset(mix('js/dashmix.app.js')) }}"></script>
 
@@ -17,7 +19,6 @@
 <script src="{{ asset('js/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 <script src="{{ asset('js/plugins/cropperjs/cropper.min.js') }}"></script>
 <script src="{{ asset('js/plugins/datatables/datatables.min.js') }}"></script>
-<script src="{{ asset('js/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 <script src="{{ asset('js/datatables_select2.js') }}"></script>
 <script src="{{ asset('js/plugins/multiselect/jquery.multi-select.js') }}"></script>
 <script src="{{ asset('js/plugins/multiselect/jquery.quicksearch.js') }}"></script>

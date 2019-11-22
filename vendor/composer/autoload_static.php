@@ -29,6 +29,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         '34122c0574b76bf21c9a8db62b5b9cf3' => __DIR__ . '/..' . '/cakephp/chronos/src/carbon_compat.php',
         '17d016dc52a631c1e74d2eb8fdd57342' => __DIR__ . '/..' . '/laravel/helpers/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
@@ -92,6 +93,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         ),
         'P' => 
         array (
+            'Pusher\\' => 7,
             'Psy\\' => 4,
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
@@ -344,6 +346,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
+        ),
+        'Pusher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pusher/pusher-php-server/src',
         ),
         'Psy\\' => 
         array (
@@ -790,6 +796,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Ethnicity' => __DIR__ . '/../..' . '/app/Ethnicity.php',
         'App\\Events\\AssignmentGraded' => __DIR__ . '/../..' . '/app/Events/AssignmentGraded.php',
         'App\\Events\\AttendanceTaken' => __DIR__ . '/../..' . '/app/Events/AttendanceTaken.php',
+        'App\\Events\\MyEvent' => __DIR__ . '/../..' . '/app/Events/MyEvent.php',
         'App\\Events\\ParentMessageSent' => __DIR__ . '/../..' . '/app/Events/ParentMessageSent.php',
         'App\\Events\\SchoolDaysChanged' => __DIR__ . '/../..' . '/app/Events/SchoolDaysChanged.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -885,6 +892,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Http\\Controllers\\GuardianController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianController.php',
         'App\\Http\\Controllers\\GuardianFamilyController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianFamilyController.php',
         'App\\Http\\Controllers\\GuardianIdCardController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianIdCardController.php',
+        'App\\Http\\Controllers\\GuardianLoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianLoginController.php',
         'App\\Http\\Controllers\\GuardianOfficialDocumentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianOfficialDocumentsController.php',
         'App\\Http\\Controllers\\GuardianPassportVisaController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianPassportVisaController.php',
         'App\\Http\\Controllers\\GuardianProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianProfileController.php',
@@ -1026,6 +1034,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Listeners\\UpdateDailyAttendance' => __DIR__ . '/../..' . '/app/Listeners/UpdateDailyAttendance.php',
         'App\\Listeners\\UpdateGradeAverage' => __DIR__ . '/../..' . '/app/Listeners/UpdateGradeAverage.php',
         'App\\Listeners\\UpdateSchoolCalendar' => __DIR__ . '/../..' . '/app/Listeners/UpdateSchoolCalendar.php',
+        'App\\Notifications\\ParentMessageSent' => __DIR__ . '/../..' . '/app/Notifications/ParentMessageSent.php',
         'App\\Notifications\\SearchableExceptionNotification' => __DIR__ . '/../..' . '/app/Notifications/SearchableExceptionNotification.php',
         'App\\OfficialDocument' => __DIR__ . '/../..' . '/app/OfficialDocument.php',
         'App\\OfficialDocumentType' => __DIR__ . '/../..' . '/app/OfficialDocumentType.php',
@@ -5821,6 +5830,11 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'Psy\\VersionUpdater\\GitHubChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/GitHubChecker.php',
         'Psy\\VersionUpdater\\IntervalChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/IntervalChecker.php',
         'Psy\\VersionUpdater\\NoopChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/NoopChecker.php',
+        'Pusher\\Pusher' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/Pusher.php',
+        'Pusher\\PusherCrypto' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/PusherCrypto.php',
+        'Pusher\\PusherException' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/PusherException.php',
+        'Pusher\\PusherInstance' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/PusherInstance.php',
+        'Pusher\\Webhook' => __DIR__ . '/..' . '/pusher/pusher-php-server/src/Webhook.php',
         'QuartersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/QuartersTableSeeder.php',
         'Ramsey\\Uuid\\BinaryUtils' => __DIR__ . '/..' . '/ramsey/uuid/src/BinaryUtils.php',
         'Ramsey\\Uuid\\Builder\\DefaultUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DefaultUuidBuilder.php',
