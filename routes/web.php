@@ -18,6 +18,7 @@ Route::get('/', 'LandingController')
     ->name('landing');
 Route::get('/loginas/{user}', 'LoginAsController');
 
+Route::impersonate();
 //TODO: Change the link location to api/download_file
 Route::get('download_file/{file}', 'MediaController@downloadFile');
 Route::get('api/download_file/{file}', 'MediaController@downloadFile');
