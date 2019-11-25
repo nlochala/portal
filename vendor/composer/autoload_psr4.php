@@ -67,6 +67,7 @@ return array(
     'Laravel\\Socialite\\' => array($vendorDir . '/laravel/socialite/src'),
     'Laravel\\Scout\\' => array($vendorDir . '/laravel/scout/src'),
     'Laravel\\Horizon\\' => array($vendorDir . '/laravel/horizon/src'),
+    'Lab404\\Impersonate\\' => array($vendorDir . '/lab404/laravel-impersonate/src'),
     'JsonSchema\\' => array($vendorDir . '/justinrainbow/json-schema/src/JsonSchema'),
     'JakubOnderka\\PhpConsoleHighlighter\\' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
     'JakubOnderka\\PhpConsoleColor\\' => array($vendorDir . '/jakub-onderka/php-console-color/src'),

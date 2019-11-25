@@ -115,7 +115,8 @@
                     {
                         data: "uuid",
                         render: function (data, type, row) {
-                            return "    <div class=\"btn-group\">\n" +
+                            let $return_string = '';
+                            $return_string = "    <div class=\"btn-group\">\n" +
                                 "            <button dusk=\"btn-show-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-info\" data-toggle=\"tooltip\" title=\"View Details\"\n" +
                                 "                    onclick=\"window.location.href='/student/" + data + "'\">\n" +
                                 "                <i class=\"si si-magnifier\"></i>\n" +
@@ -130,7 +131,20 @@
                                 "                    onclick=\"window.location.href='/student/" + data + "/view_family'\">\n" +
                                 "                <i class=\"fa fa-users\"></i>\n" +
                                 "            </button>\n" +
-                                "        </div>"
+                                "        </div>";
+
+
+                        @canImpersonate
+                        if (row.person.user !== null) {
+                                let id = row.person.user.id;
+                                    $return_string += "            <button dusk=\"btn-edit-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-danger\" data-toggle=\"tooltip\" title=\"IMPERSONATE\"\n" +
+                                    "                    onclick=\"window.location.href='/impersonate/take/" + id + "'\">\n" +
+                                    "                <i class=\"fa fa-street-view\"></i>\n" +
+                                    "            </button>\n";
+                            }
+                        @endCanImpersonate
+
+                        return $return_string;
                         }
                     },
                 ],

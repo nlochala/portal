@@ -7,6 +7,11 @@
 
     <!-- Right Section -->
     <div>
+        @impersonating
+        <button type="button" class="btn btn-hero-danger" onclick="window.location.href='{{ route('impersonate.leave') }}'">
+            <i class="fa fa-fw fa-street-view"></i> IMPERSONATING USER - CLICK TO LEAVE
+        </button>
+        @endImpersonating
         <!-- User Dropdown -->
         @include('layouts._header_user_dropdown')
         <!-- Notifications Dropdown -->

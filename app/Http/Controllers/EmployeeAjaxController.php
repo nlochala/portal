@@ -29,7 +29,7 @@ class EmployeeAjaxController extends EmployeeController
         $this->errors = false;
         $this->request = new StoreEmployeeRequest();
         $this->eagerLoad = [
-            'person.phones',
+            'person.user',
             'person.phones.phoneType',
             'person.phones.country',
             'classification',

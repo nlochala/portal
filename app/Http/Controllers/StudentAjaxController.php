@@ -27,7 +27,7 @@ class StudentAjaxController extends Controller
         $this->validation = new FieldValidation();
         $this->errors = false;
         $this->request = new StoreStudentRequest();
-        $this->eagerLoad = ['gradeLevel', 'person', 'status', 'family'];
+        $this->eagerLoad = ['gradeLevel', 'person.user', 'status', 'family'];
     }
 
     /**

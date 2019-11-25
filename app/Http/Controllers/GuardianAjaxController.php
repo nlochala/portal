@@ -27,7 +27,7 @@ class GuardianAjaxController extends Controller
         $this->validation = new FieldValidation();
         $this->errors = false;
         $this->request = new StoreGuardianRequest();
-        $this->eagerLoad = ['person.phones', 'person.phones.phoneType', 'person.phones.country', 'type', 'family'];
+        $this->eagerLoad = ['person.user', 'person.phones.phoneType', 'person.phones.country', 'type', 'family'];
     }
 
     /**

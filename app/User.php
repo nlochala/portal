@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notification;
+use Lab404\Impersonate\Models\Impersonate;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+    use Impersonate;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -26,7 +28,31 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-//    protected $with = ['person'];
+    /**
+     * Return true or false if the user can impersonate an other user.
+     *
+     * @param void
+     * @return  bool
+     */
+    public function canImpersonate()
+    {
+        return $this->can('permissions');
+    }
+
+    /**
+     * Return true or false if the user can be impersonate.
+     *
+     * @param void
+     * @return  bool
+     */
+    public function canBeImpersonated()
+    {
+        if ($this->can('positions.show.stipend') || $this->id === 1) {
+            return false;
+        }
+
+        return true;
+    }
 
     /*
     |--------------------------------------------------------------------------

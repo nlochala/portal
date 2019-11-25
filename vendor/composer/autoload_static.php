@@ -15,10 +15,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
@@ -32,6 +32,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         '0d8253363903f0ac7b0978dcde4e28a0' => __DIR__ . '/..' . '/beyondcode/laravel-dump-server/helpers.php',
+        '507d7a825db0ba8319f9dd335c46057a' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         'dca4b6f87939eebdf6812110e3e7d845' => __DIR__ . '/../..' . '/app/Helpers/GlobalHelpers.php',
     );
@@ -130,6 +131,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
             'Laravel\\Socialite\\' => 18,
             'Laravel\\Scout\\' => 14,
             'Laravel\\Horizon\\' => 16,
+            'Lab404\\Impersonate\\' => 19,
         ),
         'J' => 
         array (
@@ -446,6 +448,10 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'Laravel\\Horizon\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/horizon/src',
+        ),
+        'Lab404\\Impersonate\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lab404/laravel-impersonate/src',
         ),
         'JsonSchema\\' => 
         array (
@@ -893,6 +899,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Http\\Controllers\\GuardianFamilyController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianFamilyController.php',
         'App\\Http\\Controllers\\GuardianIdCardController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianIdCardController.php',
         'App\\Http\\Controllers\\GuardianLoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianLoginController.php',
+        'App\\Http\\Controllers\\GuardianLoginLetterController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianLoginLetterController.php',
         'App\\Http\\Controllers\\GuardianOfficialDocumentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianOfficialDocumentsController.php',
         'App\\Http\\Controllers\\GuardianPassportVisaController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianPassportVisaController.php',
         'App\\Http\\Controllers\\GuardianProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/GuardianProfileController.php',
@@ -907,6 +914,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Http\\Controllers\\LoginAsController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginAsController.php',
         'App\\Http\\Controllers\\MapRosterController' => __DIR__ . '/../..' . '/app/Http/Controllers/MapRosterController.php',
         'App\\Http\\Controllers\\MediaController' => __DIR__ . '/../..' . '/app/Http/Controllers/MediaController.php',
+        'App\\Http\\Controllers\\NotificationsDisplayController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationsDisplayController.php',
         'App\\Http\\Controllers\\OAuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/OAuthController.php',
         'App\\Http\\Controllers\\OfficialDocumentController' => __DIR__ . '/../..' . '/app/Http/Controllers/OfficialDocumentController.php',
         'App\\Http\\Controllers\\OfficialDocumentTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/OfficialDocumentTypeController.php',
@@ -1056,6 +1064,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Providers\\HorizonServiceProvider' => __DIR__ . '/../..' . '/app/Providers/HorizonServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Providers\\TelescopeServiceProvider' => __DIR__ . '/../..' . '/app/Providers/TelescopeServiceProvider.php',
+        'App\\Providers\\ViewServiceProvider' => __DIR__ . '/../..' . '/app/Providers/ViewServiceProvider.php',
         'App\\Quarter' => __DIR__ . '/../..' . '/app/Quarter.php',
         'App\\QuarterGrade' => __DIR__ . '/../..' . '/app/QuarterGrade.php',
         'App\\ReportCardPercentage' => __DIR__ . '/../..' . '/app/ReportCardPercentage.php',
@@ -3614,6 +3623,15 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'JsonSchema\\Uri\\UriResolver' => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema/Uri/UriResolver.php',
         'JsonSchema\\Uri\\UriRetriever' => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema/Uri/UriRetriever.php',
         'JsonSchema\\Validator' => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema/Validator.php',
+        'Lab404\\Impersonate\\Controllers\\ImpersonateController' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Controllers/ImpersonateController.php',
+        'Lab404\\Impersonate\\Events\\LeaveImpersonation' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Events/LeaveImpersonation.php',
+        'Lab404\\Impersonate\\Events\\TakeImpersonation' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Events/TakeImpersonation.php',
+        'Lab404\\Impersonate\\Guard\\SessionGuard' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Guard/SessionGuard.php',
+        'Lab404\\Impersonate\\Impersonate' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Impersonate.php',
+        'Lab404\\Impersonate\\ImpersonateServiceProvider' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/ImpersonateServiceProvider.php',
+        'Lab404\\Impersonate\\Middleware\\ProtectFromImpersonation' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Middleware/ProtectFromImpersonation.php',
+        'Lab404\\Impersonate\\Models\\Impersonate' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Models/Impersonate.php',
+        'Lab404\\Impersonate\\Services\\ImpersonateManager' => __DIR__ . '/..' . '/lab404/laravel-impersonate/src/Services/ImpersonateManager.php',
         'LanguagesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/LanguagesTableSeeder.php',
         'Laravel\\Horizon\\AutoScaler' => __DIR__ . '/..' . '/laravel/horizon/src/AutoScaler.php',
         'Laravel\\Horizon\\BackgroundProcess' => __DIR__ . '/..' . '/laravel/horizon/src/BackgroundProcess.php',
