@@ -90,7 +90,6 @@
         <br />
             <br />
             <br />
-
             <div class="block-content block-content-full block-content-sm bg-body-light text-right">
                 <button type="submit" id="image_upload_btn" class="btn btn-sm btn-outline-primary"
                         data-toggle="click-ripple" disabled>
