@@ -129,7 +129,6 @@
 
         <br/>
         <br/>
-        <br/>
         <div style="text-align: center">
             <img src="/storage/report_card_20192020_foot.png" class="img-fluid options-item">
         </div>
