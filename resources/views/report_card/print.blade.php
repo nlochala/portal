@@ -75,7 +75,6 @@
         @endif
 
         <br/>
-        <br/>
         <h1 class="flex-sm-fill font-size-h4 font-w400 mt-2 mb-0 mb-sm-2">CLASS GRADES</h1>
         <!-- TABLE OF GRADES -->
         @if(empty($grades[$student->id]))
@@ -93,7 +92,6 @@
             @include('_tables.end-new-table')
         @endif
 
-        <br/>
         <br/>
         <h1 class="flex-sm-fill font-size-h4 font-w400 mt-2 mb-0 mb-sm-2">STUDENT BEHAVIOR</h1>
         <!-- TABLE OF ATTENDANCE -->
@@ -113,7 +111,6 @@
         @endif
 
         <br/>
-        <br/>
         <h1 class="flex-sm-fill font-size-h4 font-w400 mt-2 mb-0 mb-sm-2">BEHAVIOR GRADING SCALE</h1>
         <!-- TABLE OF SCALE -->
         @if(!isset($behavior_scale) || $behavior_scale->items->isEmpty())
@@ -130,6 +127,8 @@
             @include('_tables.end-new-table')
         @endif
 
+        <br/>
+        <br/>
         <br/>
         <div style="text-align: center">
             <img src="/storage/report_card_20192020_foot.png" class="img-fluid options-item">
