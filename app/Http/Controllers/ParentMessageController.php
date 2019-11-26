@@ -6,6 +6,7 @@ use App\CourseClass;
 use App\Employee;
 use App\Guardian;
 use App\Helpers\Helpers;
+use App\Notifications\ParentMessageSent;
 use App\ParentMessage;
 use App\Quarter;
 use Illuminate\Contracts\View\Factory;
@@ -146,7 +147,11 @@ class ParentMessageController extends Controller
         $message->subject = $values['subject'];
         $message->body = $values['message_body'];
 
-        return $message->save();
+        if ($message->save()) {
+            if ($user = $employee->person->user) {
+                $user->notify( new ParentMessageSent($message));
+            }
+        }
     }
 }
 

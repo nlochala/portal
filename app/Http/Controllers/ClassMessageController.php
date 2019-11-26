@@ -6,6 +6,7 @@ use App\CourseClass;
 use App\Employee;
 use App\Guardian;
 use App\Helpers\Helpers;
+use App\Notifications\ParentMessageSent;
 use App\ParentMessage;
 use App\Quarter;
 use App\Student;
@@ -114,6 +115,12 @@ class ClassMessageController extends Controller
         $message->class_id = $class->id;
         $message->subject = $values['subject'];
         $message->body = $values['message_body'];
+
+        if ($message->save()) {
+            if ($user = $guardian->user) {
+                $user->notify( new ParentMessageSent($message));
+            }
+        }
 
         return $message->save();
     }

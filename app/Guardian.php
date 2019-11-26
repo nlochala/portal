@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Webpatser\Uuid\Uuid;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -186,6 +187,16 @@ class Guardian extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+    /**
+     * This guardian has a User
+     *
+     * @return HasOne
+     */
+    public function user()
+    {
+        // 6 --> this is the key for the relationship on the table defined on 4
+        return $this->hasOne('App\User','email','username');
+    }
 
     /**
      *  This guardian belongs to a family.
