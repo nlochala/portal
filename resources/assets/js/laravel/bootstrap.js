@@ -101,8 +101,13 @@ var user_id = document.getElementById('authenticated_user_id').value;
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    forceTLS: true
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    wssPort: 6001,
+    disableStats: true,
+    encrypted: true,
+    // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    // forceTLS: true
 });
 
 window.Echo.private('employees');
@@ -112,15 +117,6 @@ window.Echo.private('guardians');
 window.Echo.private('students');
 
 window.Echo.private('all');
-
-// window.Echo.private('App.User.' + user_id)
-//     .notification((data) => {
-//         SwalToast.fire({
-//             title: data.title,
-//             icon: data.icon,
-//             text: data.text,
-//         });
-//     });
 
 window.Echo.private('user.' + user_uuid)
     .listen('ParentMessageSent', (data) => {

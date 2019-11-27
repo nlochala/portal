@@ -11,5 +11,6 @@ return array(
     'ParsedownExtra' => array($vendorDir . '/erusev/parsedown-extra'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
+    'Evenement' => array($vendorDir . '/evenement/evenement/src'),
     'Barryvdh' => array($vendorDir . '/barryvdh/reflection-docblock/src'),
 );

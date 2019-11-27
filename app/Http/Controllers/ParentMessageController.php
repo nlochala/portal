@@ -138,6 +138,8 @@ class ParentMessageController extends Controller
      */
     public function sendMessage(Guardian $guardian, Employee $employee, CourseClass $class, $values)
     {
+        $employee = Employee::find(1);
+
         $message = Helpers::dbAddAudit(new ParentMessage());
         $message->to_model = 'employee';
         $message->to_id = $employee->id;

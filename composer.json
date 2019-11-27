@@ -14,6 +14,7 @@
     "algolia/scout-extended": "^1.6",
     "arrilot/laravel-widgets": "^3.13",
     "barryvdh/laravel-ide-helper": "^2.5",
+    "beyondcode/laravel-websockets": "^1.3",
     "binarytorch/larecipe": "^2.0",
     "fideloper/proxy": "^4.0",
     "intervention/image": "^2.4",
@@ -29,7 +30,6 @@
     "owen-it/laravel-auditing": "^9.2",
     "predis/predis": "^1.1",
     "proengsoft/laravel-jsvalidation": "^2.2.1",
-    "pusher/pusher-php-server": "^4.1",
     "webpatser/laravel-uuid": "^3.0"
   },
   "require-dev": {
