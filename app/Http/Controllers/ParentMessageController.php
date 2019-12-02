@@ -79,8 +79,15 @@ class ParentMessageController extends Controller
      */
     public function all()
     {
-        $guardian = auth()->user()->person->guardian;
+        $auth_user = auth()->user();
+        $guardian = $auth_user->person->guardian;
         $messages = ParentMessage::recipient($guardian)->get();
+
+        foreach ($auth_user->unreadNotifications as $notification) {
+            if ($notification->type === 'App\\Notifications\\ParentMessageSent') {
+                $notification->markAsRead();
+            }
+        }
 
         return view('parent_portal.all_message', compact('guardian', 'messages'));
     }
@@ -138,6 +145,8 @@ class ParentMessageController extends Controller
      */
     public function sendMessage(Guardian $guardian, Employee $employee, CourseClass $class, $values)
     {
+        $employee = Employee::find(1);
+
         $message = Helpers::dbAddAudit(new ParentMessage());
         $message->to_model = 'employee';
         $message->to_id = $employee->id;

@@ -1121,10 +1121,14 @@ window.Echo.private('user.' + user_uuid).listen('ParentMessageSent', function (d
     text: data.text
   });
 }).notification(function (data) {
+  // Add to the notification list.
+  $("#layout-notification-dropdown").append('<li> <a class="text-dark media py-2" href="\'' + data.uri + '\'"> <div class="mx-3"> ' + data.icon + ' </div> <div class="media-body font-size-sm pr-2"> <div class="font-w600">' + data.name + '</div> <div class="text-muted font-italic">' + data.created_at + '</div> </div> </a> </li>');
+  var notification_count = parseInt($("#layout-notification-badge").text());
+  $("#layout-notification-badge").html(notification_count + 1);
   SwalToast.fire({
-    title: data.title,
-    icon: data.icon,
-    text: data.text
+    title: data.name,
+    icon: 'info',
+    text: ''
   });
 });
 

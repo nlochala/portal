@@ -15,7 +15,7 @@
         <!-- User Dropdown -->
         @include('layouts._header_user_dropdown')
         <!-- Notifications Dropdown -->
-{{--        @include('layouts._header_notifications')--}}
+        @include('layouts._header_notifications')
         <!-- Toggle Side Overlay -->
         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
 {{--        <button type="button" class="btn btn-dual" data-toggle="layout" data-action="side_overlay_toggle">--}}

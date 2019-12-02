@@ -39,6 +39,12 @@ class ClassMessageController extends Controller
         $class->load($relationship.'.person');
         $messages = ParentMessage::recipient(auth()->user()->person->employee)->isClass($class->id)->get();
 
+        foreach (auth()->user()->unreadNotifications as $notification) {
+            if ($notification->type === 'App\\Notifications\\ParentMessageSent') {
+                $notification->markAsRead();
+            }
+        }
+
         $student_dropdown = [];
 
         foreach ($class->$relationship as $student) {

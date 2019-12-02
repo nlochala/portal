@@ -62,11 +62,7 @@ class ParentMessageSent extends Notification implements ShouldQueue
      */
     public function toBroadcast($notifiable)
     {
-        return new BroadcastMessage([
-            'icon' => 'info',
-            'title' => 'New Message: ',
-            'text' => $this->message->subject,
-        ]);
+        return new BroadcastMessage($this->toArray($notifiable));
     }
 
     /**
@@ -92,10 +88,10 @@ class ParentMessageSent extends Notification implements ShouldQueue
     {
         return [
             'notification_type' => 'Parent Message',
-            'icon' => '<i class"fa fa-fw fa-user-plus text-info"></i>',
-            'uri' => $this->message->body,
-            'name' => $this->message->subject,
-            'description' => $this->message->body,
+            'icon' => '<i class="fa fa-fw fa-comment text-info"></i>',
+            'uri' => '/class/'.$this->message->class->uuid.'/message/dashboard',
+            'name' => 'New Message: '.shorten_string($this->message->subject, 55),
+            'description' => null,
             'created_at' => Carbon::parse($this->message->created_at)->diffForHumans(),
         ];
     }

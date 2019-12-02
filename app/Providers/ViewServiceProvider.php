@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\View\Composers\NotificationComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,11 +25,6 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $notifications = auth()->user() ? auth()->user()->notifications : [];
-
-        // Using Closure based composers...
-        View::composer('layouts._header_notifications', function ($view) use ($notifications) {
-            $view->with('notifications', $notifications);
-        });
+        View::composer('layouts._header_notifications', NotificationComposer::class);
     }
 }
