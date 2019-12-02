@@ -204,7 +204,7 @@
     ]
 ])
 @include('layouts._sidebar_menu_nested_submenu', [
-'section_title' => 'Report Cards',
+'section_title' => 'Reports',
 'section_icon' => 'fa fa-clipboard-list',
 'submenu_array' =>
     [
@@ -215,6 +215,10 @@
         [
             'title' => 'Behavior Approvals',
             'uri'   => '/report/behavior/approve/'.\App\Quarter::now()->uuid,
+        ],
+        [
+            'title' => 'Academic Danger',
+            'uri'   => '/report/academic_danger',
         ],
     ]
 ])

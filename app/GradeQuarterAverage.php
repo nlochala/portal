@@ -51,6 +51,11 @@ class GradeQuarterAverage extends Model
      */
     protected $fillable = [
         'uuid',
+        'student_id',
+        'quarter_id',
+        'class_id',
+        'percentage',
+        'grade_name',
         'is_protected',
         'user_created_id',
         'user_created_ip',

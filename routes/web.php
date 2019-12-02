@@ -834,6 +834,9 @@ Route::get('videos/channel/how-to', 'HowToVideosController@channel')
 | REPORTS
 |--------------------------------------------------------------------------
 */
+Route::get('report/academic_danger', 'MidQuarterReportController@academicDanger')
+    ->middleware('can:employee-only');
+
 // Class Reports
 Route::get('report/grades/{class}/{quarter}/{student}', 'GradebookController@studentDetails')
     ->middleware('can:employee-only');

@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Webpatser\Uuid\Uuid;
@@ -104,6 +105,16 @@ class School extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+
+    /**
+     *  This school has many gradeLevels
+     *
+     * @return HasMany
+     */
+    public function gradeLevels()
+    {
+        return $this->hasMany('App\GradeLevel','school_id');
+    }
 
     /**
      *  This school was created by a user.

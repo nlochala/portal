@@ -41,7 +41,7 @@ class Student extends PortalBaseModel
         $array['email_school'] = $this->person->email_school;
         $array['email_primary'] = $this->person->email_primary;
         $array['email_secondary'] = $this->person->email_secondary;
-        $array['url'] = '/student/'.$this->uuid;
+        $array['url'] = '/student/' . $this->uuid;
 
         return $array;
     }
@@ -59,7 +59,7 @@ class Student extends PortalBaseModel
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->uuid = (string) Uuid::generate(4);
+            $model->uuid = (string)Uuid::generate(4);
         });
     }
 
@@ -140,13 +140,13 @@ class Student extends PortalBaseModel
         $dropdown_array = [];
 
         if ($scope) {
-            $students = static::with('person','gradeLevel')->$scope()->get();
+            $students = static::with('person', 'gradeLevel')->$scope()->get();
         } else {
-            $students = static::with('person','gradeLevel')->get();
+            $students = static::with('person', 'gradeLevel')->get();
         }
 
         foreach ($students as $student) {
-            $dropdown_array[$student->id] = $student->person->fullName().' - '.$student->gradeLevel->name;
+            $dropdown_array[$student->id] = $student->person->fullName() . ' - ' . $student->gradeLevel->name;
         }
 
         return $dropdown_array;
@@ -168,7 +168,7 @@ class Student extends PortalBaseModel
     public function getEmailAttribute($value)
     {
         return $this->username
-            ? '<a href="mailto:'.$this->username.'">'.$this->username.'</a>'
+            ? '<a href="mailto:' . $this->username . '">' . $this->username . '</a>'
             : '---';
     }
 
@@ -189,7 +189,7 @@ class Student extends PortalBaseModel
      */
     public function getNameAttribute()
     {
-        return '<a href="/student/'.$this->uuid.'">'.$this->person->fullName().'</a>';
+        return '<a href="/student/' . $this->uuid . '">' . $this->person->fullName() . '</a>';
     }
 
     /**
@@ -199,7 +199,7 @@ class Student extends PortalBaseModel
      */
     public function getLegalFullNameAttribute()
     {
-        return $this->person->family_name.', '.$this->person->given_name;
+        return $this->person->family_name . ', ' . $this->person->given_name;
     }
 
     /**
@@ -212,7 +212,7 @@ class Student extends PortalBaseModel
         $first_name = $this->person->preferred_name
             ?: $this->person->given_name;
 
-        return $this->person->family_name.', '.$first_name;
+        return $this->person->family_name . ', ' . $first_name;
     }
 
     /**
@@ -223,16 +223,16 @@ class Student extends PortalBaseModel
      */
     public function getFormalNameAttribute($include_url = true)
     {
-        $given_name = $this->person->given_name.' '.$this->person->name_in_chinese;
+        $given_name = $this->person->given_name . ' ' . $this->person->name_in_chinese;
         if ($this->person->given_name !== $this->person->preferred_name) {
-            $given_name .= ' ('.$this->person->preferred_name.')';
+            $given_name .= ' (' . $this->person->preferred_name . ')';
         }
 
         if ($include_url) {
-            return '<a href="/student/'.$this->uuid.'">'.$this->person->family_name.', '.$given_name.'</a>';
+            return '<a href="/student/' . $this->uuid . '">' . $this->person->family_name . ', ' . $given_name . '</a>';
         }
 
-        return $this->person->family_name.', '.$given_name;
+        return $this->person->family_name . ', ' . $given_name;
     }
 
     /**
@@ -374,6 +374,20 @@ class Student extends PortalBaseModel
     {
         $query->whereHas('gradeLevel', static function ($q) use ($grade_short_name) {
             $q->where('short_name', '=', $grade_short_name);
+        });
+    }
+
+    /**
+     * AcademicDanger query scope
+     *
+     * @param $query
+     * @param $quarter_id
+     */
+    public function scopeAcademicDanger($query, $quarter_id)
+    {
+        $query->whereHas('gradeQuarterAverages', function ($q) use ($quarter_id) {
+            $q->where('percentage', '<', 70)
+                ->where('quarter_id', $quarter_id);
         });
     }
 

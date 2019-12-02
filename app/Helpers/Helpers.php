@@ -54,9 +54,10 @@ class Helpers
      * Remove duplicate enrollments.
      *
      * @param null $class_id
+     * @param bool $audit_only
      * @return array
      */
-    public static function checkDuplicateEnrollment($class_id = null)
+    public static function checkDuplicateEnrollment($class_id = null, $audit_only = true)
     {
         $return_array = [];
         $relationship_array = ['q1Students','q2Students','q3Students','q4Students'];
@@ -71,9 +72,14 @@ class Helpers
             foreach($relationship_array as $relationship) {
                 $enrollment = $class->$relationship;
                 if ($enrollment->count() !== $enrollment->unique()->count()) {
-                    $unique_ids = $enrollment->unique()->pluck('id')->toArray();
-                    $class->$relationship()->sync([]);
-                    $class->$relationship()->sync($unique_ids);
+                    if ($audit_only) {
+                        $return_array['INFO'] = 'You are running in audit only. If you want to make changes, run with false. checkDuplicateEnrollment(xxx, false)';
+                        $return_array[$class->fullName()][] = $relationship;
+                    } else {
+                        $unique_ids = $enrollment->unique()->pluck('id')->toArray();
+                        $class->$relationship()->sync([]);
+                        $class->$relationship()->sync($unique_ids);
+                    }
                 }
             }
         }

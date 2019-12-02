@@ -3,6 +3,7 @@
 namespace App;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -28,6 +29,12 @@ class GradeLevel extends PortalBaseModel
         parent::boot();
         self::creating(function ($model) {
             $model->uuid = (string) Uuid::generate(4);
+        });
+
+
+        // Order by name ASC
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('short_name', 'desc');
         });
     }
 
