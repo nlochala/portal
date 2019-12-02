@@ -50,6 +50,42 @@ class Helpers
         }
     }
 
+    /**
+     * Remove duplicate enrollments.
+     *
+     * @param null $class_id
+     * @return array
+     */
+    public static function checkDuplicateEnrollment($class_id = null)
+    {
+        $return_array = [];
+        $relationship_array = ['q1Students','q2Students','q3Students','q4Students'];
+
+        if($class_id) {
+            $classes = CourseClass::where('id',$class_id)->get();
+        } else {
+            $classes = CourseClass::with($relationship_array)->get();
+        }
+
+        foreach($classes as $class) {
+            foreach($relationship_array as $relationship) {
+                $enrollment = $class->$relationship;
+                if ($enrollment->count() !== $enrollment->unique()->count()) {
+                    $unique_ids = $enrollment->unique()->pluck('id')->toArray();
+                    $class->$relationship()->sync([]);
+                    $class->$relationship()->sync($unique_ids);
+                }
+            }
+        }
+
+        return $return_array;
+    }
+
+    /**
+     * Clean up people's names.
+     *
+     * @param Person|null $person
+     */
     public static function checkPersonName(Person $person = null)
     {
         if (!$person) {
