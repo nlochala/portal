@@ -1,0 +1,55 @@
+{
+    "name": "astrotomic/ignition-stackoverflow",
+    "description": "A tab that fetches stackoverflow questions",
+    "keywords": [
+        "laravel",
+        "flare",
+        "ignition"
+    ],
+    "homepage": "https://github.com/astrotomic/ignition-stackoverflow",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Witkowski",
+            "email": "dev.gummibeer@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "facade/ignition": "^1.0",
+        "facade/ignition-contracts": "^1.0",
+        "illuminate/support": "5.8.* || ^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.* || ^4.0",
+        "phpunit/phpunit": "^8.3"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Astrotomic\\IgnitionStackOverflowTab\\TabServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Astrotomic\\IgnitionStackOverflowTab\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Astrotomic\\IgnitionStackOverflowTab\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html=build"
+    },
+    "prefer-stable": true
+}

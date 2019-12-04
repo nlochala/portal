@@ -15,6 +15,7 @@
     "arrilot/laravel-widgets": "^3.13",
     "barryvdh/laravel-ide-helper": "^2.5",
     "binarytorch/larecipe": "^2.0",
+    "facade/ignition": "^1.13",
     "fideloper/proxy": "^4.0",
     "intervention/image": "^2.4",
     "lab404/laravel-impersonate": "^1.4",
@@ -34,15 +35,19 @@
   },
   "require-dev": {
     "ajthinking/tinx": "^2.4",
+    "astrotomic/ignition-stackoverflow": "^1.4",
     "barryvdh/laravel-debugbar": "^3.2",
     "beyondcode/laravel-dump-server": "^1.0",
     "doctrine/dbal": "^2.9",
+    "facade/ignition-code-editor": "^1.0",
+    "facade/ignition-self-diagnosis": "^1.0",
     "filp/whoops": "^2.0",
     "fzaninotto/faker": "^1.4",
     "matt-allan/laravel-code-style": "^0.4.0",
     "mockery/mockery": "^1.0",
     "nunomaduro/collision": "^2.0",
-    "phpunit/phpunit": "^7.0"
+    "phpunit/phpunit": "^7.0",
+    "stefanbauer/ignition-laracasts-tab": "^0.2.0"
   },
   "config": {
     "optimize-autoloader": true,

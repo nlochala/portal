@@ -11,5 +11,7 @@ return array(
     'ParsedownExtra' => array($vendorDir . '/erusev/parsedown-extra'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
+    'Highlight\\' => array($vendorDir . '/scrivo/highlight.php'),
+    'HighlightUtilities\\' => array($vendorDir . '/scrivo/highlight.php'),
     'Barryvdh' => array($vendorDir . '/barryvdh/reflection-docblock/src'),
 );
