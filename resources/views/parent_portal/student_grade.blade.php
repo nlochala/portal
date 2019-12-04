@@ -2,25 +2,25 @@
 
 @section('content')
 
-        <!-- Add Content Title Here b.breadcrumbs -->
-        @include('layouts._breadcrumbs', [
-        'title' => $student->person->fullName().' - '.$quarter->name.' Grade Report',
-        'subtitle' => $class->fullName(false),
-        'breadcrumbs' => [
-            [
-                'page_name' => 'Portal',
-                'page_uri'  => '/'
-            ],
-            [
-                'page_name' => $student->person->fullName(),
-                'page_uri'  => '/g_student/student/'.$student->uuid,
-            ],
-            [
-                'page_name' => 'Student Report',
-                'page_uri'  => request()->getRequestUri()
-            ]
+    <!-- Add Content Title Here b.breadcrumbs -->
+    @include('layouts._breadcrumbs', [
+    'title' => $student->person->fullName().' - '.$quarter->name.' Grade Report',
+    'subtitle' => $class->fullName(false),
+    'breadcrumbs' => [
+        [
+            'page_name' => 'Portal',
+            'page_uri'  => '/'
+        ],
+        [
+            'page_name' => $student->person->fullName(),
+            'page_uri'  => '/g_student/student/'.$student->uuid,
+        ],
+        [
+            'page_name' => 'Student Report',
+            'page_uri'  => request()->getRequestUri()
         ]
-    ])
+    ]
+])
 
     @include('layouts._content_start')
 
@@ -103,7 +103,13 @@
             @include('_tables.new-table',['id' => 'assignment_id', 'table_head' => ['Name','Date Assigned','Points Earned', 'Percentage', 'Date Turned In']])
             @foreach($type->assignments()->where('quarter_id',$quarter->id)->get() as $assignment)
                 <tr>
-                    <td>{{ $assignment->name }}</td>
+                    <td>
+                        @if ($assignment->description)
+                            @include('layouts._popover', ['content' => $assignment->name, 'title' => 'Description', 'description' => $assignment->description])
+                        @else
+                            {{ $assignment->name }}
+                        @endif
+                    </td>
                     <td>{{ $assignment->date_assigned }}</td>
                     @if (isset($assignment->grades->where('student_id', $student->id)->first()->points_earned) && $assignment->grades->where('student_id', $student->id)->first()->points_earned !== null)
                         <td>{{ $assignment->grades->where('student_id', $student->id)->first()->points_earned }}

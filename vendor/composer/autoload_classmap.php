@@ -266,6 +266,7 @@ return array(
     'App\\Http\\Controllers\\LoginAsController' => $baseDir . '/app/Http/Controllers/LoginAsController.php',
     'App\\Http\\Controllers\\MapRosterController' => $baseDir . '/app/Http/Controllers/MapRosterController.php',
     'App\\Http\\Controllers\\MediaController' => $baseDir . '/app/Http/Controllers/MediaController.php',
+    'App\\Http\\Controllers\\MidQuarterReportController' => $baseDir . '/app/Http/Controllers/MidQuarterReportController.php',
     'App\\Http\\Controllers\\NotificationsDisplayController' => $baseDir . '/app/Http/Controllers/NotificationsDisplayController.php',
     'App\\Http\\Controllers\\OAuthController' => $baseDir . '/app/Http/Controllers/OAuthController.php',
     'App\\Http\\Controllers\\OfficialDocumentController' => $baseDir . '/app/Http/Controllers/OfficialDocumentController.php',

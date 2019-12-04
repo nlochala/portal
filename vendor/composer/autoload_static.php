@@ -915,6 +915,7 @@ class ComposerStaticInit9713b5f615e10528953a3e0c96707913
         'App\\Http\\Controllers\\LoginAsController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginAsController.php',
         'App\\Http\\Controllers\\MapRosterController' => __DIR__ . '/../..' . '/app/Http/Controllers/MapRosterController.php',
         'App\\Http\\Controllers\\MediaController' => __DIR__ . '/../..' . '/app/Http/Controllers/MediaController.php',
+        'App\\Http\\Controllers\\MidQuarterReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/MidQuarterReportController.php',
         'App\\Http\\Controllers\\NotificationsDisplayController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationsDisplayController.php',
         'App\\Http\\Controllers\\OAuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/OAuthController.php',
         'App\\Http\\Controllers\\OfficialDocumentController' => __DIR__ . '/../..' . '/app/Http/Controllers/OfficialDocumentController.php',
