@@ -3,6 +3,7 @@
 namespace Metrogistics\AzureSocialite;
 
 use App\AdGroup;
+use App\Helpers\DatabaseHelpers;
 use App\Role;
 use App\Employee;
 use App\Guardian;
@@ -127,7 +128,7 @@ class UserFactory
             $group_obj->azure_id = $group['id'];
             array_key_exists('mail', $group) ? $group_obj->email = $group['mail'] : $group_obj->email = null;
             $group_obj->name = $group['displayName'];
-            $group_obj = Helpers::dbAddAudit($group_obj);
+            $group_obj = DatabaseHelpers::dbAddAudit($group_obj);
 
             $group_obj->exists ? $group_obj->update() : $group_obj->save();
 
@@ -190,7 +191,7 @@ class UserFactory
             $person->given_name = $user->given_name;
             $person->preferred_name = $user->given_name;
         }
-        $person = Helpers::dbAddAudit($person);
+        $person = DatabaseHelpers::dbAddAudit($person);
         $person->save();
 
         return $person;
@@ -216,7 +217,7 @@ class UserFactory
 
         $employee = new Employee();
         $employee->person_id = $person->id;
-        $employee = Helpers::dbAddAudit($employee);
+        $employee = DatabaseHelpers::dbAddAudit($employee);
         $employee->save();
 
         return $employee;
@@ -238,7 +239,7 @@ class UserFactory
             }
         }
 
-        abort(403, 'You must belong to a specific AD group to gain access to the portal. 
+        abort(403, 'You must belong to a specific AD group to gain access to the portal.
                                     Please contact the IT Department.');
     }
 }
