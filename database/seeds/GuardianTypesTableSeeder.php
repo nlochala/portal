@@ -1,6 +1,8 @@
 <?php
 
 use App\GuardianType;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\File\App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -14,14 +16,14 @@ class GuardianTypesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('guardian_types')->truncate();
 
-        $student_statuses = Helpers::parseCsv('database/seeds/data/guardian_types.csv', false);
+        $student_statuses = FileHelpers::parseCsv('database/seeds/data/guardian_types.csv', false);
 
         foreach ($student_statuses as $type) {
             $model = new GuardianType();
             $model->name = $type[0];
             $model->description = $type[1];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

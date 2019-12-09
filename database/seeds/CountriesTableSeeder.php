@@ -1,6 +1,8 @@
 <?php
 
 use App\Country;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -16,14 +18,14 @@ class CountriesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('countries')->truncate();
 
-        $countries = Helpers::parseCsv('database/seeds/data/countries.csv', true);
+        $countries = FileHelpers::parseCsv('database/seeds/data/countries.csv', true);
 
         foreach ($countries as $country) {
             $model = new Country();
             $model->name = $country[0];
             $model->country_code = $country[1];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

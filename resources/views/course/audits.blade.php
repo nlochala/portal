@@ -56,7 +56,7 @@
     @foreach($audits as $audit)
         @php
             $meta = $audit->getMetadata();
-            $modified = $audit->getModified();
+            $modified = $audit->getModified()
         @endphp
         <tr>
             <td>{{ $meta['audit_id']  }}</td>

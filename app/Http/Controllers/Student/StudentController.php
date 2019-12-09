@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\AttendanceClass;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Person;
 use App\Quarter;
 use App\Student;
@@ -108,7 +110,7 @@ class StudentController extends Controller
      */
     public function storeNewStudent()
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $values['gender'] = Person::getGender($values['gender']);
         $person = Person::create($values);
 
@@ -118,10 +120,10 @@ class StudentController extends Controller
         $student_values['start_date'] = $values['start_date'];
         $student_values['end_date'] = $values['end_date'];
 
-        $values = Helpers::dbAddAudit($student_values);
+        $values = DatabaseHelpers::dbAddAudit($student_values);
         $student = Student::create($values);
 
-        Helpers::flash($student, 'student');
+       ViewHelpers::flash($student, 'student');
 
         if ($student) {
             $student->searchable();

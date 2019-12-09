@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Role;
 use App\Permission;
 use App\Helpers\Helpers;
@@ -51,8 +53,8 @@ class RoleController extends Controller
      */
     public function store()
     {
-        $values = Helpers::dbAddAudit(request()->all());
-        Helpers::flash(Role::create($values), 'role');
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
+       ViewHelpers::flash(Role::create($values), 'role');
 
         return redirect()->back();
     }
@@ -65,8 +67,8 @@ class RoleController extends Controller
      */
     public function updateOverview(Role $role)
     {
-        $values = Helpers::dbAddAudit(request()->all());
-        Helpers::flash($role->update($values), 'role', 'updated');
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
+       ViewHelpers::flash($role->update($values), 'role', 'updated');
 
         return redirect()->back();
     }
@@ -83,10 +85,10 @@ class RoleController extends Controller
             ? request()->all()['permissions']
             : [];
 
-        $role = Helpers::dbAddAudit($role);
+        $role = DatabaseHelpers::dbAddAudit($role);
         $role->save();
 
-        Helpers::flash($role->permissions()->sync($permission_ids), 'role permissions', 'updated');
+       ViewHelpers::flash($role->permissions()->sync($permission_ids), 'role permissions', 'updated');
 
         return redirect()->back();
     }
@@ -99,9 +101,9 @@ class RoleController extends Controller
      */
     public function archive(Role $role)
     {
-        $role = Helpers::dbAddAudit($role);
+        $role = DatabaseHelpers::dbAddAudit($role);
         $role->save();
-        Helpers::flash($role->delete(), 'role', 'archived');
+       ViewHelpers::flash($role->delete(), 'role', 'archived');
 
         return redirect()->back();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Family;
 use App\Helpers\Helpers;
@@ -129,7 +130,7 @@ class FamilyAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Family::create($values), 'family', 'create');
     }
@@ -143,7 +144,7 @@ class FamilyAjaxController extends Controller
      */
     public function update(Family $family, $values)
     {
-        $family = Helpers::dbAddAudit($family);
+        $family = DatabaseHelpers::dbAddAudit($family);
         $this->attemptAction($family->update($values), 'family', 'update');
 
         return $family;
@@ -157,7 +158,7 @@ class FamilyAjaxController extends Controller
      */
     public function destroy(Family $family)
     {
-        $family = Helpers::dbAddAudit($family);
+        $family = DatabaseHelpers::dbAddAudit($family);
         $this->attemptAction($family->delete(), 'family', 'delete');
     }
 }

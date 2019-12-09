@@ -51,7 +51,7 @@
             @include('_tables.new-table',['id' => 'student_table', 'table_head' => ['ID','Name','Class','Percentage']])
             @foreach($students as $student)
                 @php
-                    $x = 0;
+                    $x = 0
                 @endphp
                 @foreach($student->gradeQuarterAverages->where('percentage','<',70)->where('quarter_id',$quarter->id) as $grade)
                     <tr>
@@ -59,7 +59,7 @@
                             <td>{{ $student->id }}</td>
                             <td>{!! $student->name !!}</td>
                             @php
-                                $x = 1;
+                                $x = 1
                             @endphp
                         @else
                             <td></td>

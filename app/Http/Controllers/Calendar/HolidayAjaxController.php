@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use App\Year;
 use Exception;
 use App\Holiday;
@@ -135,7 +136,7 @@ class HolidayAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
         if ($values['is_staff_workday'] === 'false') {
             $values['is_staff_workday'] = false;
             $quarter = Quarter::getQuarter($values['start_date'], true, Year::find($values['year']));
@@ -163,7 +164,22 @@ class HolidayAjaxController extends Controller
      */
     public function update(Holiday $holiday, $values)
     {
-        $holiday = Helpers::dbAddAudit($holiday);
+        $holiday = DatabaseHelpers::dbAddAudit($holiday);
+
+        if ($values['is_staff_workday'] === 'false') {
+            $values['is_staff_workday'] = false;
+            $quarter = Quarter::getQuarter($values['start_date'], true, Year::find($values['year']));
+            $values['quarter_id'] = $quarter ? $quarter->id : null;
+        } else {
+            $values['is_staff_workday'] = true;
+        }
+
+        $start = Carbon::parse($values['start_date']);
+        $end = Carbon::parse($values['end_date']);
+
+        if ($start > $end) {
+            return $this->attemptAction(false, 'holiday', 'create', 'The Start Date must be a date before the End Date.');
+        }
         $this->attemptAction($holiday->update($values), 'holiday', 'update');
 
         return $holiday;
@@ -177,7 +193,7 @@ class HolidayAjaxController extends Controller
      */
     public function destroy(Holiday $holiday)
     {
-        $holiday = Helpers::dbAddAudit($holiday);
+        $holiday = DatabaseHelpers::dbAddAudit($holiday);
         $this->attemptAction($holiday->delete(), 'holiday', 'delete');
     }
 }

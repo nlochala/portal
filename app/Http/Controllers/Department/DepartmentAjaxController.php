@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Department;
 use App\Helpers\Helpers;
@@ -131,7 +132,7 @@ class DepartmentAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Department::create($values), 'department', 'create');
     }
@@ -145,7 +146,7 @@ class DepartmentAjaxController extends Controller
      */
     public function update(Department $department, $values)
     {
-        $department = Helpers::dbAddAudit($department);
+        $department = DatabaseHelpers::dbAddAudit($department);
         $this->attemptAction($department->update($values), 'department', 'update');
 
         return $department;
@@ -164,7 +165,7 @@ class DepartmentAjaxController extends Controller
             return;
         }
 
-        $department = Helpers::dbAddAudit($department);
+        $department = DatabaseHelpers::dbAddAudit($department);
         $this->attemptAction($department->delete(), 'department', 'delete');
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\GradeScale;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +18,7 @@ class GradeScalesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('grade_scales')->truncate();
 
-        $grade_scales = Helpers::parseCsv('database/seeds/data/grade_scales.csv', false);
+        $grade_scales = FileHelpers::parseCsv('database/seeds/data/grade_scales.csv', false);
 
         foreach ($grade_scales as $scale) {
             $model = new GradeScale();
@@ -24,7 +26,7 @@ class GradeScalesTableSeeder extends Seeder
             $model->description = $scale[3];
             $model->is_percentage_based = $scale[4];
             $model->is_standards_based = $scale[5];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->is_protected = true;
             $model->save();
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Quarter;
 use App\Assignment;
@@ -76,7 +77,7 @@ class AssignmentGradeAjaxController extends Controller
     {
         $current_students = $class->currentStudents($quarter, 'current');
         $enrollment_array = $current_students->pluck('id')->toArray();
-        $create_array = Helpers::dbAddAudit([]);
+        $create_array = DatabaseHelpers::dbAddAudit([]);
 
         $grades = AssignmentGrade::isAssignment($assignment->id)->with($this->eagerLoad)->get();
         $grades_array = $grades->pluck('student.id')->toArray();
@@ -152,7 +153,7 @@ class AssignmentGradeAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         if ($grade = $this->attemptAction(AssignmentGrade::create($values), 'grade', 'create')) {
             event(new AssignmentGraded(
@@ -174,7 +175,7 @@ class AssignmentGradeAjaxController extends Controller
      */
     public function update(AssignmentGrade $grade, $values)
     {
-        $grade = Helpers::dbAddAudit($grade);
+        $grade = DatabaseHelpers::dbAddAudit($grade);
         if (isset($values['points_earned']) && $grade->date_completed === '--') {
             $values['date_completed'] = now()->format('Y-m-d');
         }
@@ -203,7 +204,7 @@ class AssignmentGradeAjaxController extends Controller
      */
     public function destroy(AssignmentGrade $grade)
     {
-        $grade = Helpers::dbAddAudit($grade);
+        $grade = DatabaseHelpers::dbAddAudit($grade);
         $this->attemptAction($grade->delete(), 'grade', 'delete');
     }
 }

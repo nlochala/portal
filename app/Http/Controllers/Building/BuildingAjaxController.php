@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Building;
 use App\Helpers\Helpers;
@@ -131,7 +132,7 @@ class BuildingAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Building::create($values), 'building', 'create');
     }
@@ -145,7 +146,7 @@ class BuildingAjaxController extends Controller
      */
     public function update(Building $building, $values)
     {
-        $building = Helpers::dbAddAudit($building);
+        $building = DatabaseHelpers::dbAddAudit($building);
         $this->attemptAction($building->update($values), 'building', 'update');
 
         return $building;
@@ -165,7 +166,7 @@ class BuildingAjaxController extends Controller
             return;
         }
 
-        $building = Helpers::dbAddAudit($building);
+        $building = DatabaseHelpers::dbAddAudit($building);
         $this->attemptAction($building->delete(), 'building', 'delete');
     }
 }

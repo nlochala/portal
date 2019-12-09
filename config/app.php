@@ -1,6 +1,7 @@
 <?php
 
 use Intervention\Image\Facades\Image;
+use Lab404\Impersonate\ImpersonateServiceProvider;
 
 return [
     /*
@@ -161,7 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        \Lab404\Impersonate\ImpersonateServiceProvider::class,
+        ImpersonateServiceProvider::class,
 
         /*
          * Package Service Providers...

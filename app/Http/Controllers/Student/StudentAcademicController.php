@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use Request;
 use App\Student;
 use App\GradeLevel;
@@ -39,10 +41,10 @@ class StudentAcademicController extends StudentController
      */
     public function storeOverview(Student $student)
     {
-        $values = Helpers::dbAddAudit(Request::all());
+        $values = DatabaseHelpers::dbAddAudit(Request::all());
         if (empty($values['end_date']) &&
             ($values['student_status_id'] === '4' || $values['student_status_id'] === '5')) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'An end date is required when changing a student\'s status to \"Former Student\" or \"Graduated\". Please try again.',
                 'fa fa-info-circle mr-1');
@@ -50,7 +52,7 @@ class StudentAcademicController extends StudentController
             return redirect()->back()->withInput();
         }
 
-        Helpers::flash($student->update($values), 'student academic overview', 'updated');
+       ViewHelpers::flash($student->update($values), 'student academic overview', 'updated');
 
         return redirect()->back();
     }

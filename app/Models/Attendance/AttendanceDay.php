@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\ReportHelpers;
 use Carbon\Carbon;
 use App\Helpers\Helpers;
 use Webpatser\Uuid\Uuid;
@@ -67,7 +68,7 @@ class AttendanceDay extends PortalBaseModel
      */
     public static function getStudentCount($attendance_type = 'absent or present', array $dates_array = null)
     {
-        $dates_array = $dates_array ?: Helpers::getPreviousWorkingDays(now()->format('Y-m-d'));
+        $dates_array = $dates_array ?: ReportHelpers::getPreviousWorkingDays(now()->format('Y-m-d'));
 
         $count_array = [];
         foreach ($dates_array as $date) {

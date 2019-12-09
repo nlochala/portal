@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Quarter;
 use App\Helpers\Helpers;
@@ -134,7 +135,7 @@ class GradeBehaviorQuarterAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(GradeBehaviorQuarter::create($values), 'item', 'create');
     }
@@ -148,7 +149,7 @@ class GradeBehaviorQuarterAjaxController extends Controller
      */
     public function update(GradeBehaviorQuarter $item, $values)
     {
-        $item = Helpers::dbAddAudit($item);
+        $item = DatabaseHelpers::dbAddAudit($item);
         if (isset($values['is_approved']) && $values['is_approved'] === '1') {
             $values['is_approved'] = true;
             $values['approved_on'] = now();
@@ -171,7 +172,7 @@ class GradeBehaviorQuarterAjaxController extends Controller
      */
     public function destroy(GradeBehaviorQuarter $item)
     {
-        $item = Helpers::dbAddAudit($item);
+        $item = DatabaseHelpers::dbAddAudit($item);
         $this->attemptAction($item->delete(), 'item', 'delete');
     }
 }

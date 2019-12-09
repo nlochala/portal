@@ -125,7 +125,7 @@
             @include('_tables.new-table',['id' => 'student-table', 'table_head' => ['#','Preferred Name - Gender','Today\'s Attendance', 'Birthday']])
         @endif
         @php
-            $i = 1;
+            $i = 1
         @endphp
         @if($class->canTakeAttendance())
             @foreach($enrollment as $student)
@@ -258,7 +258,7 @@
     ])
 
     @php
-        $i = 1;
+        $i = 1
     @endphp
 
     <!-- TABLE OF LOGINS -->

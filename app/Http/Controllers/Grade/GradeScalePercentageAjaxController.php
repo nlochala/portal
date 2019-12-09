@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\GradeScale;
 use App\Helpers\Helpers;
@@ -133,7 +134,7 @@ class GradeScalePercentageAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(GradeScalePercentage::create($values), 'percentage', 'create');
     }
@@ -147,7 +148,7 @@ class GradeScalePercentageAjaxController extends Controller
      */
     public function update(GradeScalePercentage $percentage, $values)
     {
-        $percentage = Helpers::dbAddAudit($percentage);
+        $percentage = DatabaseHelpers::dbAddAudit($percentage);
         $this->attemptAction($percentage->update($values), 'percentage', 'update');
 
         return $percentage;
@@ -167,7 +168,7 @@ class GradeScalePercentageAjaxController extends Controller
             return;
         }
 
-        $percentage = Helpers::dbAddAudit($percentage);
+        $percentage = DatabaseHelpers::dbAddAudit($percentage);
         $this->attemptAction($percentage->delete(), 'percentage', 'delete');
     }
 }

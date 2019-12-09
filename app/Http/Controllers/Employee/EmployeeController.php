@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Person;
 use App\Employee;
 use App\CourseClass;
@@ -76,7 +78,7 @@ class EmployeeController extends Controller
      */
     public function storeNewEmployee()
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $values['gender'] = Person::getGender($values['gender']);
         $values['title'] = Person::getTitle($values['title']);
         $person = Person::create($values);
@@ -87,10 +89,10 @@ class EmployeeController extends Controller
         $employee_values['start_date'] = $values['start_date'];
         $employee_values['end_date'] = $values['end_date'];
 
-        $values = Helpers::dbAddAudit($employee_values);
+        $values = DatabaseHelpers::dbAddAudit($employee_values);
         $employee = Employee::create($values);
 
-        Helpers::flash($employee, 'employee');
+       ViewHelpers::flash($employee, 'employee');
 
         if ($employee) {
             $employee->searchable();

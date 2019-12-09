@@ -88,8 +88,6 @@
                 'options' => ['class' => 'filepond', 'accept' => 'image/*']
             ])
         <br />
-            <br />
-            <br />
             <div class="block-content block-content-full block-content-sm bg-body-light text-right">
                 <button type="submit" id="image_upload_btn" class="btn btn-sm btn-outline-primary"
                         data-toggle="click-ripple" disabled>
@@ -118,35 +116,7 @@
 
     <script type="text/javascript">
 
-        FilePond.registerPlugin(
-            FilePondPluginFileValidateType,
-            FilePondPluginImageExifOrientation,
-            FilePondPluginImagePreview,
-            FilePondPluginImageCrop,
-            FilePondPluginImageResize,
-            FilePondPluginImageTransform,
-            FilePondPluginImageEdit
-        );
-
-        const upload = FilePond.create(
-            document.querySelector('#upload'),
-            {
-                labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-                imagePreviewHeight: 200,
-                stylePanelLayout: 'integrated',
-                styleLoadIndicatorPosition: 'center bottom',
-                styleProgressIndicatorPosition: 'right bottom',
-                styleButtonRemoveItemPosition: 'left bottom',
-                styleButtonProcessItemPosition: 'right bottom',
-
-                server: {
-                    process: '/api/store_file',
-                },
-
-                // Use Doka.js as image editor
-                imageEditEditor: Doka.create()
-            }
-        );
+        @include('layouts._forms._js_filepond', ['id' => 'upload'])
 
         jQuery(document).ready(function () {
 

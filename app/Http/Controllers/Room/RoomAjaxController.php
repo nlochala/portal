@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use App\Room;
 use Exception;
 use App\Helpers\Helpers;
@@ -131,7 +132,7 @@ class RoomAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Room::create($values), 'room', 'create');
     }
@@ -145,7 +146,7 @@ class RoomAjaxController extends Controller
      */
     public function update(Room $room, $values)
     {
-        $room = Helpers::dbAddAudit($room);
+        $room = DatabaseHelpers::dbAddAudit($room);
         $this->attemptAction($room->update($values), 'room', 'update');
 
         return $room;
@@ -165,7 +166,7 @@ class RoomAjaxController extends Controller
             return;
         }
 
-        $room = Helpers::dbAddAudit($room);
+        $room = DatabaseHelpers::dbAddAudit($room);
         $this->attemptAction($room->delete(), 'room', 'delete');
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\EmployeeBonusType;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +16,7 @@ class EmployeeBonusTypesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('employee_bonus_types')->truncate();
 
-        $employee_bonus_types = Helpers::parseCsv('database/seeds/data/employee_bonus_types.csv', false);
+        $employee_bonus_types = FileHelpers::parseCsv('database/seeds/data/employee_bonus_types.csv', false);
 
         foreach ($employee_bonus_types as $type) {
             $model = new EmployeeBonusType();
@@ -22,7 +24,7 @@ class EmployeeBonusTypesTableSeeder extends Seeder
             $model->description = $type[3];
             $model->amount = $type[4];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

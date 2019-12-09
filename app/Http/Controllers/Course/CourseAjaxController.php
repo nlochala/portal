@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Course;
 use App\Helpers\Helpers;
@@ -141,7 +142,7 @@ class CourseAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Course::create($values), 'course', 'create');
     }
@@ -155,7 +156,7 @@ class CourseAjaxController extends Controller
      */
     public function update(Course $course, $values)
     {
-        $course = Helpers::dbAddAudit($course);
+        $course = DatabaseHelpers::dbAddAudit($course);
         $this->attemptAction($course->update($values), 'course', 'update');
 
         return $course;
@@ -169,7 +170,7 @@ class CourseAjaxController extends Controller
      */
     public function destroy(Course $course)
     {
-        $course = Helpers::dbAddAudit($course);
+        $course = DatabaseHelpers::dbAddAudit($course);
         $this->attemptAction($course->delete(), 'course', 'delete');
     }
 }

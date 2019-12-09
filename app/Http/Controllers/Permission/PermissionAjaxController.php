@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Permission;
 use App\Helpers\Helpers;
@@ -131,7 +132,7 @@ class PermissionAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Permission::create($values), 'permission', 'create');
     }
@@ -145,7 +146,7 @@ class PermissionAjaxController extends Controller
      */
     public function update(Permission $permission, $values)
     {
-        $permission = Helpers::dbAddAudit($permission);
+        $permission = DatabaseHelpers::dbAddAudit($permission);
         $this->attemptAction($permission->update($values), 'permission', 'update');
 
         return $permission;
@@ -159,7 +160,7 @@ class PermissionAjaxController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        $permission = Helpers::dbAddAudit($permission);
+        $permission = DatabaseHelpers::dbAddAudit($permission);
         $this->attemptAction($permission->delete(), 'permission', 'delete');
     }
 }

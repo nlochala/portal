@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\Passport;
 use Illuminate\Http\RedirectResponse;
 
@@ -28,8 +30,8 @@ class PassportController extends Controller
     public function cancel(Passport $passport)
     {
         $passport->is_active = false;
-        $passport = Helpers::dbAddAudit($passport);
-        Helpers::flash($passport->save(), 'passport', 'cancelled');
+        $passport = DatabaseHelpers::dbAddAudit($passport);
+       ViewHelpers::flash($passport->save(), 'passport', 'cancelled');
         return redirect()->back();
     }
 
@@ -43,9 +45,9 @@ class PassportController extends Controller
     public function delete(Passport $passport)
     {
         $passport->is_active = false;
-        $passport = Helpers::dbAddAudit($passport);
+        $passport = DatabaseHelpers::dbAddAudit($passport);
         $passport->save();
-        Helpers::flash($passport->delete(), 'passport', 'deleted');
+       ViewHelpers::flash($passport->delete(), 'passport', 'deleted');
         return redirect()->back();
     }
 }

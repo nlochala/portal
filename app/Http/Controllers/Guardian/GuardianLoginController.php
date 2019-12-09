@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Guardian;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\Student;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -66,9 +68,9 @@ class GuardianLoginController extends Controller
         $guardians = Guardian::with('person')->isImported(false)->get();
 
         foreach ($guardians as $guardian) {
-            $guardian = Helpers::dbAddAudit($guardian);
+            $guardian = DatabaseHelpers::dbAddAudit($guardian);
             $guardian->is_imported = true;
-            Helpers::flash($guardian->save(), 'guardian', 'updated');
+           ViewHelpers::flash($guardian->save(), 'guardian', 'updated');
         }
 
         return redirect()->back();

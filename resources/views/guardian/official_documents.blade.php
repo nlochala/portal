@@ -42,7 +42,7 @@
                 <td><a href="{{ $document->file->downloadUrl() }}">
                         {{ $document->file->public_name }}.{{ $document->file->extension->name }}</a></td>
                 <td>{{ $document->file->extension->type }}</td>
-                <td>{{ \App\Helpers\Helpers::formatBytes($document->file->size) }}</td>
+                <td>{{ \App\Helpers\FileHelpers::formatBytes($document->file->size) }}</td>
                 <td>{{ strtoupper($document->file->driver) }}</td>
                 <td>{{ $document->file->created_at }}</td>
                 <td>

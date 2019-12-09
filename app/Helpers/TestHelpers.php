@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use App\File;
 
-class TestHelpers
+class TestHelpers extends Helpers
 {
     /**
      * Create sample images and return them.

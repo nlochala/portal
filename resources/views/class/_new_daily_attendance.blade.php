@@ -12,7 +12,7 @@
 @else
     @include('_tables.new-table',['id' => 'student-table', 'table_head' => ['#','Preferred Name - Gender','Today\'s Attendance']])
     @php
-        $i = 1;
+        $i = 1
     @endphp
     @foreach($enrollment as $student)
         <tr>

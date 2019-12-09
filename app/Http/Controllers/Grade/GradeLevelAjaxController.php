@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\GradeLevel;
 use App\Helpers\Helpers;
@@ -131,7 +132,7 @@ class GradeLevelAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(GradeLevel::create($values), 'grade_level', 'create');
     }
@@ -145,7 +146,7 @@ class GradeLevelAjaxController extends Controller
      */
     public function update(GradeLevel $grade_level, $values)
     {
-        $grade_level = Helpers::dbAddAudit($grade_level);
+        $grade_level = DatabaseHelpers::dbAddAudit($grade_level);
         $this->attemptAction($grade_level->update($values), 'grade_level', 'update');
 
         return $grade_level;
@@ -165,7 +166,7 @@ class GradeLevelAjaxController extends Controller
             return;
         }
 
-        $grade_level = Helpers::dbAddAudit($grade_level);
+        $grade_level = DatabaseHelpers::dbAddAudit($grade_level);
         $this->attemptAction($grade_level->delete(), 'grade_level', 'delete');
     }
 }

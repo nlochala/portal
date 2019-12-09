@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
+use App\Helpers\ViewHelpers;
 use Storage;
 use Carbon\Carbon;
 use App\Helpers\Helpers;
@@ -269,8 +272,8 @@ class File extends PortalBaseModel
     public static function validateImage(UploadedFile $file)
     {
         // Check Size
-        if (Helpers::getMaximumFileUploadSize() < $file->getSize()) {
-            Helpers::flashAlert(
+        if (FileHelpers::getMaximumFileUploadSize() < $file->getSize()) {
+            ViewHelpers::flashAlert(
                 'danger',
                 'The file you are uploading is too big. Please try again with a smaller file.',
                 'fa fa-info-circle mr-1');
@@ -279,7 +282,7 @@ class File extends PortalBaseModel
         }
         // Check Extension
         if (! FileExtension::isType('Graphics', $file)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'The file you are uploading does not match the type expected. Please upload an image file.',
                 'fa fa-info-circle mr-1');
@@ -313,7 +316,7 @@ class File extends PortalBaseModel
 
         /* @noinspection PhpUndefinedMethodInspection */
         if (! $extension = FileExtension::where('name', $extension)->first()) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'The type of file you are trying to upload is not recognized. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -329,7 +332,7 @@ class File extends PortalBaseModel
         $file_model->name = $local_name;
         $file_model->public_name = $filename;
         $file_model->driver = $driver;
-        $file_model = Helpers::dbAddAudit($file_model);
+        $file_model = DatabaseHelpers::dbAddAudit($file_model);
         if (! $file_model->save()) {
             return false;
         }
@@ -457,7 +460,7 @@ class File extends PortalBaseModel
         });
 
         if (! Storage::disk($driver)->put("$path/$new_name.".$file->extension->name, $img->encode($file->extension->name))) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'There was an issue processing your image. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -473,9 +476,9 @@ class File extends PortalBaseModel
         $file_model->public_name = $file->public_name;
         $file_model->driver = $driver;
         $file_model->original_file_id = $file->id;
-        $file_model = Helpers::dbAddAudit($file_model);
+        $file_model = DatabaseHelpers::dbAddAudit($file_model);
         if (! $file_model->save()) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'There was an issue saving the file database record. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -511,7 +514,7 @@ class File extends PortalBaseModel
         $resized_file = static::saveResizedImage($file, $path, $width, $height, $driver);
 
         if (! $resized_file) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'The file uploaded was not processed correctly. Please try again.',
                 'fa fa-info-circle mr-1');

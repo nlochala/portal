@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Person;
 use App\Employee;
 use App\Helpers\Helpers;
@@ -17,7 +19,7 @@ class EmployeeTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        $employees = Helpers::parseCsv('database/seeds/data/employees.csv', true);
+        $employees = FileHelpers::parseCsv('database/seeds/data/employees.csv', true);
 
         foreach ($employees as $employee) {
             $person = Person::where('email_school', $employee[2])->get();
@@ -38,7 +40,7 @@ class EmployeeTableSeeder extends Seeder
         $person->email_school = $employee[2];
         $person->family_name = $employee[1];
         $person->given_name = $employee[0];
-        $person = Helpers::dbAddAudit($person);
+        $person = DatabaseHelpers::dbAddAudit($person);
         $person->save();
 
         return $person;
@@ -57,7 +59,7 @@ class EmployeeTableSeeder extends Seeder
 
         $employee = new Employee();
         $employee->person_id = $person->id;
-        $employee = Helpers::dbAddAudit($employee);
+        $employee = DatabaseHelpers::dbAddAudit($employee);
         $employee->save();
 
         return $employee;

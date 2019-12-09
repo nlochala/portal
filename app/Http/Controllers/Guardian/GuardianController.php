@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Person;
 use App\Employee;
 use App\Guardian;
@@ -73,7 +75,7 @@ class GuardianController extends Controller
      */
     public function storeNewGuardian()
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
 
         if (isset($values['employee_id']) && ! empty($values['employee_id'])) {
             $person = Employee::findOrFail($values['employee_id'])->person;
@@ -87,10 +89,10 @@ class GuardianController extends Controller
         $guardian_values['person_id'] = $person->id;
         $guardian_values['guardian_type_id'] = $values['guardian_type_id'];
 
-        $values = Helpers::dbAddAudit($guardian_values);
+        $values = DatabaseHelpers::dbAddAudit($guardian_values);
         $guardian = Guardian::create($values);
 
-        Helpers::flash($guardian, 'guardian');
+       ViewHelpers::flash($guardian, 'guardian');
 
         if ($guardian) {
             $guardian->searchable();

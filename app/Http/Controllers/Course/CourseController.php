@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Quarter;
 use App\Year;
 use App\Course;
@@ -32,7 +34,7 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Factory|View
      */
     public function index()
     {
@@ -62,11 +64,11 @@ class CourseController extends Controller
      */
     public function store()
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $values['short_name'] = strtoupper($values['short_name']);
         $course = Course::create($values);
         if (! $course->gradeLevels()->sync($values['grade_levels'])) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not save grade levels. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -74,7 +76,7 @@ class CourseController extends Controller
             return redirect()->back();
         }
         unset($values['grade_levels']);
-        Helpers::flash($course, 'course');
+       ViewHelpers::flash($course, 'course');
 
         if ($course) {
             return redirect()->to('course/'.$course->uuid);
@@ -163,14 +165,14 @@ class CourseController extends Controller
      */
     public function storeCourseDisplayOptions(Course $course)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $expected_items = Course::$reportCardCheckbox;
 
         foreach ($expected_items as $item => $value) {
             $values[$item] = Arr::has($values, $item) ? true : false;
         }
 
-        Helpers::flash($course->update($values), 'course display options', 'updated');
+       ViewHelpers::flash($course->update($values), 'course display options', 'updated');
 
         return redirect()->back();
     }
@@ -183,9 +185,9 @@ class CourseController extends Controller
      */
     public function storeTranscriptOptions(Course $course)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
 
-        Helpers::flash($course->update($values), 'transcript options', 'updated');
+       ViewHelpers::flash($course->update($values), 'transcript options', 'updated');
 
         return redirect()->back();
     }
@@ -198,11 +200,11 @@ class CourseController extends Controller
      */
     public static function storeSchedulingOptions(Course $course)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
 
         if (! isset($values['grade_levels_scheduling']) ||
             ! $course->gradeLevels()->sync($values['grade_levels_scheduling'])) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not save grade levels. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -211,7 +213,7 @@ class CourseController extends Controller
         }
 
         unset($values['grade_levels_scheduling']);
-        Helpers::flash($course->update($values), 'scheduling options', 'update');
+       ViewHelpers::flash($course->update($values), 'scheduling options', 'update');
 
         return redirect()->back();
     }
@@ -225,10 +227,10 @@ class CourseController extends Controller
     public function storeRequiredMaterials(Course $course)
     {
         $values = request()->all();
-        $course = Helpers::dbAddAudit($course);
+        $course = DatabaseHelpers::dbAddAudit($course);
 
         $course->required_materials = $values['materials'];
-        Helpers::flash($course->save(), 'course required materials', 'updated');
+       ViewHelpers::flash($course->save(), 'course required materials', 'updated');
 
         return redirect()->back();
     }
@@ -271,7 +273,7 @@ class CourseController extends Controller
         $values['short_name'] = strtoupper($values['short_name']);
 
         if (! $course->gradeLevels()->sync($values['grade_levels'])) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not save grade levels. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -280,8 +282,8 @@ class CourseController extends Controller
         }
         unset($values['grade_levels']);
 
-        $course = Helpers::dbAddAudit($course);
-        Helpers::flash($course->update($values), 'course', 'updated');
+        $course = DatabaseHelpers::dbAddAudit($course);
+       ViewHelpers::flash($course->update($values), 'course', 'updated');
 
         return redirect()->to('course/index');
     }
@@ -297,7 +299,7 @@ class CourseController extends Controller
         $values = request()->all();
         $values['short_name'] = strtoupper($values['short_name']);
         if (! $course->gradeLevels()->sync($values['grade_levels'])) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not save grade levels. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -305,8 +307,8 @@ class CourseController extends Controller
             return redirect()->back();
         }
         unset($values['grade_levels']);
-        $course = Helpers::dbAddAudit($course);
-        Helpers::flash($course->update($values), 'course', 'updated');
+        $course = DatabaseHelpers::dbAddAudit($course);
+       ViewHelpers::flash($course->update($values), 'course', 'updated');
 
         return redirect()->back();
     }

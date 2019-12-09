@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Role;
 use App\Helpers\Helpers;
@@ -131,7 +132,7 @@ class RoleAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Role::create($values), 'role', 'create');
     }
@@ -145,7 +146,7 @@ class RoleAjaxController extends Controller
      */
     public function update(Role $role, $values)
     {
-        $role = Helpers::dbAddAudit($role);
+        $role = DatabaseHelpers::dbAddAudit($role);
         $this->attemptAction($role->update($values), 'role', 'update');
 
         return $role;
@@ -159,7 +160,7 @@ class RoleAjaxController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role = Helpers::dbAddAudit($role);
+        $role = DatabaseHelpers::dbAddAudit($role);
         $this->attemptAction($role->delete(), 'role', 'delete');
     }
 }

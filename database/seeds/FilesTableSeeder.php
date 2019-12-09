@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use App\File as ProjectFile;
 use Illuminate\Database\Seeder;
@@ -16,7 +18,7 @@ class FilesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('files')->truncate();
 
-        $file_extensions = Helpers::parseCsv('database/seeds/data/files.csv', false);
+        $file_extensions = FileHelpers::parseCsv('database/seeds/data/files.csv', false);
 
         foreach ($file_extensions as $type) {
             $model = new ProjectFile();
@@ -25,7 +27,7 @@ class FilesTableSeeder extends Seeder
             $model->name = $type[2];
             $model->driver = $type[3];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

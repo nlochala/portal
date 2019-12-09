@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\IdCard;
 use App\Guardian;
 use App\Helpers\Helpers;
@@ -65,7 +67,7 @@ class GuardianIdCardController extends GuardianController
      */
     public function store(Guardian $guardian)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $values['person_id'] = $guardian->person->id;
 
         $uploads = ['front' => $values['upload_front'], 'back' => $values['upload_back']];
@@ -79,7 +81,7 @@ class GuardianIdCardController extends GuardianController
         }
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Helpers::flash(IdCard::create($values), 'ID Card');
+       ViewHelpers::flash(IdCard::create($values), 'ID Card');
 
         return redirect()->to("/guardian/$guardian->uuid/id_card");
     }
@@ -115,7 +117,7 @@ class GuardianIdCardController extends GuardianController
      */
     public function update(Guardian $guardian, IdCard $id_card)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $uploads = [];
 
         ! isset($values['upload_front']) ?: $uploads['front'] = $values['upload_front'];
@@ -130,7 +132,7 @@ class GuardianIdCardController extends GuardianController
             $values[$key.'_image_file_id'] = $file_id;
         }
 
-        Helpers::flash($id_card->update($values), 'ID Card', 'updated');
+       ViewHelpers::flash($id_card->update($values), 'ID Card', 'updated');
 
         return redirect()->to("/guardian/$guardian->uuid/id_card");
     }
@@ -149,7 +151,7 @@ class GuardianIdCardController extends GuardianController
     protected function processImage($key, $value, $filename)
     {
         if (! request()->has("upload_$key")) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the ID Card. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -158,7 +160,7 @@ class GuardianIdCardController extends GuardianController
         }
 
         if (! $file = File::getFile($value)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not find the uploaded image. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -167,7 +169,7 @@ class GuardianIdCardController extends GuardianController
         }
 
         if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not resize the uploaded image. Please try again.',
                 'fa fa-info-circle mr-1');

@@ -72,7 +72,7 @@
                     $grade = $grades->where('class_id',$class->id)->first();
                 @endphp
                 @if(isset($grade))
-                    <td>{!! App\Helpers\Helpers::colorPercentages($grade->percentage, $grade->percentage.'% '.$grade->grade_name) !!}</td>
+                    <td>{!! App\Helpers\ViewHelpers::colorPercentages($grade->percentage, $grade->percentage.'% '.$grade->grade_name) !!}</td>
                 @else
                     <td>--</td>
                 @endif

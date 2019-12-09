@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Position;
 use App\PositionType;
 use App\EmployeeStatus;
@@ -61,8 +63,8 @@ class EmployeePositionController extends EmployeeController
      */
     public function storeOverview(Employee $employee)
     {
-        $values = Helpers::dbAddAudit(request()->all());
-        Helpers::flash($employee->update($values), 'position details', 'updated');
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
+       ViewHelpers::flash($employee->update($values), 'position details', 'updated');
 
         return redirect()->back();
     }
@@ -78,7 +80,7 @@ class EmployeePositionController extends EmployeeController
     public function addPosition(Employee $employee, Position $position)
     {
         $employee->positions()->attach($position->id);
-        Helpers::flashAlert(
+        ViewHelpers::flashAlert(
             'success',
             'The position has been successfully assigned.',
             'fa fa-check mr-1');
@@ -97,7 +99,7 @@ class EmployeePositionController extends EmployeeController
     public function removePosition(Employee $employee, Position $position)
     {
         $employee->positions()->detach($position->id);
-        Helpers::flashAlert(
+        ViewHelpers::flashAlert(
             'success',
             'The position has been successfully removed.',
             'fa fa-check mr-1');

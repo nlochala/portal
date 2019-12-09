@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use Illuminate\Http\RedirectResponse;
 
 class AddressController extends Controller
@@ -27,9 +29,9 @@ class AddressController extends Controller
      */
     public function delete(Address $address)
     {
-        $address = Helpers::dbAddAudit($address);
+        $address = DatabaseHelpers::dbAddAudit($address);
         $address->save();
-        Helpers::flash($address->delete(), 'address', 'deleted');
+        ViewHelpers::flash($address->delete(), 'address', 'deleted');
 
         return redirect()->back();
     }

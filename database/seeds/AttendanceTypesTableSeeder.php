@@ -3,6 +3,8 @@
 use App\AttendanceType;
 use App\ClassStatus;
 use App\CourseType;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +20,7 @@ class AttendanceTypesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('attendance_types')->truncate();
 
-        $types = Helpers::parseCsv('database/seeds/data/attendance_types.csv', false);
+        $types = FileHelpers::parseCsv('database/seeds/data/attendance_types.csv', false);
 
         foreach ($types as $type) {
             $model = new AttendanceType();
@@ -28,7 +30,7 @@ class AttendanceTypesTableSeeder extends Seeder
             $model->should_alert = $type[3];
             $model->is_present = $type[4];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\AttendanceDay;
 use App\AttendanceType;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
 use App\Events\AttendanceTaken;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -40,7 +41,7 @@ class UpdateDailyAttendance implements ShouldQueue
 //         If so, update the existing record.
         if ($record) {
             $record->attendance_type_id = $type_id;
-            $record = Helpers::dbAddAudit($record);
+            $record = DatabaseHelpers::dbAddAudit($record);
             $record->user_updated_id = $event->attendance->user_updated_id;
             $record->save();
 
@@ -53,7 +54,7 @@ class UpdateDailyAttendance implements ShouldQueue
         $record->quarter_id = $event->attendance->quarter_id;
         $record->student_id = $event->attendance->student_id;
         $record->attendance_type_id = $type_id;
-        $record = Helpers::dbAddAudit($record);
+        $record = DatabaseHelpers::dbAddAudit($record);
         $record->user_created_id = $event->attendance->user_created_id;
         $record->save();
     }

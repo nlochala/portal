@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\CourseClass;
 use App\Employee;
 use App\Guardian;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\Notifications\ParentMessageSent;
 use App\ParentMessage;
 use App\Quarter;
@@ -129,7 +131,7 @@ class ParentMessageController extends Controller
             }
         }
 
-        Helpers::flash(true, 'message', 'sent');
+       ViewHelpers::flash(true, 'message', 'sent');
 
         return redirect()->to('g_guardian/guardian');
     }
@@ -147,7 +149,7 @@ class ParentMessageController extends Controller
     {
         $employee = Employee::find(1);
 
-        $message = Helpers::dbAddAudit(new ParentMessage());
+        $message = DatabaseHelpers::dbAddAudit(new ParentMessage());
         $message->to_model = 'employee';
         $message->to_id = $employee->id;
         $message->from_model = 'guardian';

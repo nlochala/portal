@@ -1,6 +1,8 @@
 <?php
 
 use App\GradeScalePercentage;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +18,7 @@ class GradeScalePercentagesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('grade_scale_percentages')->truncate();
 
-        $grade_scale_percentages = Helpers::parseCsv('database/seeds/data/grade_scale_percentages.csv', false);
+        $grade_scale_percentages = FileHelpers::parseCsv('database/seeds/data/grade_scale_percentages.csv', false);
 
         foreach ($grade_scale_percentages as $item) {
             $model = new GradeScalePercentage();
@@ -25,7 +27,7 @@ class GradeScalePercentagesTableSeeder extends Seeder
             $model->to = $item[2];
             $model->result = $item[3];
             $model->equivalent_standard_id = $item[6];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->is_protected = true;
             $model->save();
         }

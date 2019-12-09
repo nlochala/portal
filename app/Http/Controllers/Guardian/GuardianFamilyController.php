@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Family;
 use App\Guardian;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
@@ -31,9 +33,9 @@ class GuardianFamilyController extends GuardianController
      */
     public function addToExistingFamily(Guardian $guardian, Family $family)
     {
-        $guardian = Helpers::dbAddAudit($guardian);
+        $guardian = DatabaseHelpers::dbAddAudit($guardian);
         $guardian->family_id = $family->id;
-        Helpers::flash($guardian->save(), 'guardian', 'added');
+       ViewHelpers::flash($guardian->save(), 'guardian', 'added');
 
         return redirect()->to('family/'.$family->uuid);
     }
@@ -47,11 +49,11 @@ class GuardianFamilyController extends GuardianController
     public function createNewFamily(Guardian $guardian)
     {
         $values = [];
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
         $family = Family::create($values);
 
         $guardian->family_id = $family->id;
-        Helpers::flash($guardian->save(), 'guardian', 'added');
+       ViewHelpers::flash($guardian->save(), 'guardian', 'added');
 
         return redirect()->to('family/'.$family->uuid);
     }

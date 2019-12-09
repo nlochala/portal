@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use App\Year;
 use Illuminate\Database\Seeder;
@@ -14,7 +16,7 @@ class YearsTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('years')->truncate();
 
-        $years = Helpers::parseCsv('database/seeds/data/years.csv', false);
+        $years = FileHelpers::parseCsv('database/seeds/data/years.csv', false);
 
         foreach ($years as $year) {
             $model = new Year();
@@ -22,7 +24,7 @@ class YearsTableSeeder extends Seeder
             $model->year_end = $year[3];
             $model->start_date = $year[4];
             $model->end_date = $year[5];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->is_protected = true;
             $model->save();
         }

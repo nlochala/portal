@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
+use App\Helpers\ViewHelpers;
+use Illuminate\Contracts\View\Factory;
 use View;
 use App\File;
 use App\Person;
@@ -21,7 +25,7 @@ class GuardianProfileController extends GuardianController
      *
      * @param Guardian $guardian
      *
-     * @return View
+     * @return Factory|\Illuminate\View\View
      */
     public function profile(Guardian $guardian)
     {
@@ -41,10 +45,10 @@ class GuardianProfileController extends GuardianController
 
         if ($guardian->person->image) {
             $image_data = $guardian->person->image->renderImage();
-            $image_size = Helpers::formatBytes($guardian->person->image->size);
+            $image_size = FileHelpers::formatBytes($guardian->person->image->size);
             $image_created = $guardian->person->image->created_at;
 
-            $original_image_size = Helpers::formatBytes($guardian->person->image->originalFile->size);
+            $original_image_size = FileHelpers::formatBytes($guardian->person->image->originalFile->size);
             $original_image_url = '/download_file/'.$guardian->person->image->originalFile->uuid;
         }
 
@@ -77,7 +81,7 @@ class GuardianProfileController extends GuardianController
         $values = request()->all();
 
         if (! request()->has('family_name') && ! request()->has('upload')) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'An image was not selected. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -86,17 +90,17 @@ class GuardianProfileController extends GuardianController
         }
 
         if (request()->has('upload')) {
-            Helpers::flash($this->processImage(json_decode($values['upload']), $guardian), 'image');
+           ViewHelpers::flash($this->processImage(json_decode($values['upload']), $guardian), 'image');
 
             return redirect()->to('/guardian/'.$guardian->uuid.'/profile');
         }
 
         $values['title'] = Person::getTitle($values['title']);
         $values['user_created_id'] = auth()->id();
-        $values['user_created_ip'] = Helpers::getUserIp();
+        $values['user_created_ip'] = DatabaseHelpers::getUserIp();
         $values['gender'] = Person::getGender($values['gender']);
 
-        Helpers::flash($guardian->person->update($values), 'guardian profile', 'updated');
+       ViewHelpers::flash($guardian->person->update($values), 'guardian profile', 'updated');
         $guardian->searchable();
 
         if ($guardian->person->employee) {

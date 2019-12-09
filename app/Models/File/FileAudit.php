@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -136,7 +137,7 @@ class FileAudit extends PortalBaseModel
         $audit->file_id = $file->id;
         $audit->person_id = auth()->user()->person->id;
         $audit->download_date = now();
-        $audit = Helpers::dbAddAudit($audit);
+        $audit = DatabaseHelpers::dbAddAudit($audit);
         if ($audit->save()) {
             return true;
         }

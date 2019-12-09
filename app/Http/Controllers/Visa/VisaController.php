@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\Visa;
 use Illuminate\Http\RedirectResponse;
 
@@ -28,8 +30,8 @@ class VisaController extends Controller
     public function cancel(Visa $visa)
     {
         $visa->is_active = false;
-        $visa = Helpers::dbAddAudit($visa);
-        Helpers::flash($visa->save(), 'visa', 'cancelled');
+        $visa = DatabaseHelpers::dbAddAudit($visa);
+       ViewHelpers::flash($visa->save(), 'visa', 'cancelled');
 
         return redirect()->back();
     }
@@ -44,9 +46,9 @@ class VisaController extends Controller
     public function delete(Visa $visa)
     {
         $visa->is_active = false;
-        $visa = Helpers::dbAddAudit($visa);
+        $visa = DatabaseHelpers::dbAddAudit($visa);
         $visa->save();
-        Helpers::flash($visa->delete(), 'visa', 'deleted');
+       ViewHelpers::flash($visa->delete(), 'visa', 'deleted');
 
         return redirect()->back();
     }

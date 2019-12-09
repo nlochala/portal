@@ -148,7 +148,7 @@
         @foreach($report_card_checkbox as $name => $description)
             <div class="custom-control custom-switch mb-2">
                 <input type="checkbox" class="custom-control-input" id="{{ $name }}"
-                       name="{{ $name }}" {{ \App\Helpers\Helpers::isChecked($course->$name) }}>
+                       name="{{ $name }}" {{ \App\Helpers\ViewHelpers::isChecked($course->$name) }}>
                 <label class="custom-control-label" for="{{ $name }}">{{ $description }}</label>
             </div>
         @endforeach

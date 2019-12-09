@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Guardian;
 use App\Helpers\Helpers;
@@ -131,7 +132,7 @@ class GuardianAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Guardian::create($values), 'guardian', 'create');
     }
@@ -145,7 +146,7 @@ class GuardianAjaxController extends Controller
      */
     public function update(Guardian $guardian, $values)
     {
-        $guardian = Helpers::dbAddAudit($guardian);
+        $guardian = DatabaseHelpers::dbAddAudit($guardian);
         $this->attemptAction($guardian->update($values), 'guardian', 'update');
 
         return $guardian;
@@ -159,7 +160,7 @@ class GuardianAjaxController extends Controller
      */
     public function destroy(Guardian $guardian)
     {
-        $guardian = Helpers::dbAddAudit($guardian);
+        $guardian = DatabaseHelpers::dbAddAudit($guardian);
         $this->attemptAction($guardian->delete(), 'guardian', 'delete');
     }
 }

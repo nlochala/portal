@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Language;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
@@ -16,12 +18,12 @@ class LanguagesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('languages')->truncate();
 
-        $languages = Helpers::parseCsv('database/seeds/data/languages.csv', true);
+        $languages = FileHelpers::parseCsv('database/seeds/data/languages.csv', true);
 
         foreach ($languages as $language) {
             $model = new Language();
             $model->name = $language[1];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->is_protected = true;
             $model->save();
         }

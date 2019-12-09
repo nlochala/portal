@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Family;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Student;
 use App\Helpers\Helpers;
 use Illuminate\View\View;
@@ -31,9 +33,9 @@ class StudentFamilyController extends StudentController
      */
     public function addToExistingFamily(Student $student, Family $family)
     {
-        $student = Helpers::dbAddAudit($student);
+        $student = DatabaseHelpers::dbAddAudit($student);
         $student->family_id = $family->id;
-        Helpers::flash($student->save(), 'student', 'added');
+       ViewHelpers::flash($student->save(), 'student', 'added');
 
         return redirect()->to('family/'.$family->uuid);
     }
@@ -47,11 +49,11 @@ class StudentFamilyController extends StudentController
     public function createNewFamily(Student $student)
     {
         $values = [];
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
         $family = Family::create($values);
 
         $student->family_id = $family->id;
-        Helpers::flash($student->save(), 'student', 'added');
+       ViewHelpers::flash($student->save(), 'student', 'added');
 
         return redirect()->to('family/'.$family->uuid);
     }

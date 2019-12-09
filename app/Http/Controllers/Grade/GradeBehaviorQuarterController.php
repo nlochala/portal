@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Quarter;
 use App\GradeScale;
 use App\CourseClass;
@@ -112,15 +114,15 @@ class GradeBehaviorQuarterController extends Controller
 //            dd($insert_values)
 
             if ($grade = GradeBehaviorQuarter::where('student_id', $student_id)->where('quarter_id', $quarter->id)->first()) {
-                $grade = Helpers::dbAddAudit($grade);
+                $grade = DatabaseHelpers::dbAddAudit($grade);
                 $grade->update($insert_values);
             } else {
-                $insert_values = Helpers::dbAddAudit($insert_values);
+                $insert_values = DatabaseHelpers::dbAddAudit($insert_values);
                 GradeBehaviorQuarter::create($insert_values);
             }
         }
 
-        Helpers::flash(true, 'student grade', 'updated');
+       ViewHelpers::flash(true, 'student grade', 'updated');
 
         return redirect()->back();
     }

@@ -1,6 +1,8 @@
 <?php
 
 use App\FileExtension;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +18,7 @@ class FileExtensionsTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('file_extensions')->truncate();
 
-        $file_extensions = Helpers::parseCsv('database/seeds/data/file_extensions.csv', false);
+        $file_extensions = FileHelpers::parseCsv('database/seeds/data/file_extensions.csv', false);
 
         foreach ($file_extensions as $type) {
             $model = new FileExtension();
@@ -26,7 +28,7 @@ class FileExtensionsTableSeeder extends Seeder
             $model->description = $type[3];
             $model->type = $type[4];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

@@ -1,6 +1,8 @@
 <?php
 
 use App\CourseTranscriptType;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -16,14 +18,14 @@ class CourseTranscriptTypesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('course_transcript_types')->truncate();
 
-        $course_transcript_types = Helpers::parseCsv('database/seeds/data/course_transcript_types.csv', false);
+        $course_transcript_types = FileHelpers::parseCsv('database/seeds/data/course_transcript_types.csv', false);
 
         foreach ($course_transcript_types as $item) {
             $model = new CourseTranscriptType();
             $model->name = $item[2];
             $model->description = $item[3];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

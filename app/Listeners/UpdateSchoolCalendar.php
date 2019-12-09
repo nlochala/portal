@@ -3,8 +3,10 @@
 namespace App\Listeners;
 
 use App\Day;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
 use App\Events\SchoolDaysChanged;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UpdateSchoolCalendar implements ShouldQueue
@@ -32,9 +34,9 @@ class UpdateSchoolCalendar implements ShouldQueue
 
         // Loop Through Quarters
         foreach ($quarters as $quarter) {
-            $start_date = Helpers::parseDate($quarter->start_date);
-            $date = Helpers::parseDate($quarter->start_date);
-            $end_date = Helpers::parseDate($quarter->end_date);
+            $start_date = Carbon::parse($quarter->start_date);
+            $date = Carbon::parse($quarter->start_date);
+            $end_date = Carbon::parse($quarter->end_date);
 
             while ($date <= $end_date) {
                 $formatted = $date->format('Y-m-d');
@@ -55,7 +57,7 @@ class UpdateSchoolCalendar implements ShouldQueue
                             'month' => $m,
                             'year' => $y,
                         ];
-                        $insert_array = Helpers::dbAddAudit($insert_array);
+                        $insert_array = DatabaseHelpers::dbAddAudit($insert_array);
 
                         Day::create($insert_array);
                     }
@@ -69,9 +71,9 @@ class UpdateSchoolCalendar implements ShouldQueue
         // Update days and change from is_school true to false. Make special note of is_staff_workday.
         foreach ($quarters as $quarter) {
             foreach ($quarter->holidays as $holiday) {
-                $start_date = Helpers::parseDate($holiday->start_date);
-                $date = Helpers::parseDate($holiday->start_date);
-                $end_date = Helpers::parseDate($holiday->end_date);
+                $start_date = Carbon::parse($holiday->start_date);
+                $date = Carbon::parse($holiday->start_date);
+                $end_date = Carbon::parse($holiday->end_date);
 
                 if ($holiday->is_staff_workday) {
                     continue;
@@ -81,7 +83,7 @@ class UpdateSchoolCalendar implements ShouldQueue
                     $formatted = $date->format('Y-m-d');
                     if ($date->isWeekday()) {
                         $day = Day::where('date', $formatted)->firstOrFail();
-                        $day = Helpers::dbAddAudit($day);
+                        $day = DatabaseHelpers::dbAddAudit($day);
                         $day->description = $holiday->name;
                         $day->is_school_day = false;
                         $day->save();

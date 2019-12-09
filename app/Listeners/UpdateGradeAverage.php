@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\GradeAverage;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
 use App\GradeQuarterAverage;
 use App\Events\AssignmentGraded;
@@ -65,7 +66,7 @@ class UpdateGradeAverage implements ShouldQueue
             }
 
             if ($average = GradeAverage::isStudent($event->student->id)->isQuarter($event->quarter->id)->isClass($event->class->id)->isAssignmentType($assignment_type_id)->first()) {
-                $average = Helpers::dbAddAudit($average);
+                $average = DatabaseHelpers::dbAddAudit($average);
                 $average->max_points = $item['max_points'];
                 $average->points_earned = $item['points_earned'];
                 $average->save();
@@ -74,7 +75,7 @@ class UpdateGradeAverage implements ShouldQueue
             }
 
             $average = new GradeAverage();
-            $average = Helpers::dbAddAudit($average);
+            $average = DatabaseHelpers::dbAddAudit($average);
             $average->quarter_id = $event->quarter->id;
             $average->student_id = $event->student->id;
             $average->class_id = $event->class->id;
@@ -111,7 +112,7 @@ class UpdateGradeAverage implements ShouldQueue
         }
 
         if ($quarter_average = GradeQuarterAverage::isStudent($event->student->id)->isQuarter($event->quarter->id)->isClass($event->class->id)->first()) {
-            $quarter_average = Helpers::dbAddAudit($quarter_average);
+            $quarter_average = DatabaseHelpers::dbAddAudit($quarter_average);
             $quarter_average->percentage = round($percentage);
             $quarter_average->grade_name = $name;
             $quarter_average->save();
@@ -120,7 +121,7 @@ class UpdateGradeAverage implements ShouldQueue
         }
 
         $quarter_average = new GradeQuarterAverage();
-        $quarter_average = Helpers::dbAddAudit($quarter_average);
+        $quarter_average = DatabaseHelpers::dbAddAudit($quarter_average);
         $quarter_average->percentage = round($percentage);
         $quarter_average->grade_name = $name;
         $quarter_average->quarter_id = $event->quarter->id;

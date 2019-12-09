@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Visa;
 use App\Country;
 use App\Employee;
@@ -80,13 +82,13 @@ class EmployeePassportVisaController extends EmployeeController
     public function updatePassport(Employee $employee, Passport $passport)
     {
         $values = request()->all();
-        $passport = Helpers::dbAddAudit($passport);
+        $passport = DatabaseHelpers::dbAddAudit($passport);
 
         if (request()->has('upload')) {
             $filename = Str::slug('passport '.$employee->person->fullName(true));
 
             if (! $file = File::getFile($values['upload'])) {
-                Helpers::flashAlert(
+                ViewHelpers::flashAlert(
                     'danger',
                     'Could not find the uploaded image. Please try again.',
                     'fa fa-info-circle mr-1');
@@ -95,7 +97,7 @@ class EmployeePassportVisaController extends EmployeeController
             }
 
             if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
-                Helpers::flashAlert(
+                ViewHelpers::flashAlert(
                     'danger',
                     'Could not resize the uploaded image. Please try again.',
                     'fa fa-info-circle mr-1');
@@ -106,7 +108,7 @@ class EmployeePassportVisaController extends EmployeeController
         }
 
         if ($passport->update($values)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'success',
                 'The passport has been successfully updated.',
                 'fa fa-check mr-1');
@@ -114,7 +116,7 @@ class EmployeePassportVisaController extends EmployeeController
             return redirect()->to("/employee/$employee->uuid/passports_visas");
         }
 
-        Helpers::flashAlert(
+        ViewHelpers::flashAlert(
             'danger',
             'There was a problem updating your passport. Please try again.',
             'fa fa-info-circle mr-1');
@@ -154,11 +156,11 @@ class EmployeePassportVisaController extends EmployeeController
      */
     public function storePassport(Employee $employee)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $filename = Str::slug('passport '.$employee->person->fullName(true));
 
         if (! request()->has('upload')) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the passport. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -167,7 +169,7 @@ class EmployeePassportVisaController extends EmployeeController
         }
 
         if (! $file = File::getFile($values['upload'])) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not find the uploaded image. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -176,7 +178,7 @@ class EmployeePassportVisaController extends EmployeeController
         }
 
         if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not resize the uploaded image. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -188,7 +190,7 @@ class EmployeePassportVisaController extends EmployeeController
         $values['person_id'] = $employee->person->id;
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Helpers::flash(Passport::create($values), 'passport');
+       ViewHelpers::flash(Passport::create($values), 'passport');
 
         return redirect()->to('/employee/'.$employee->uuid.'/passports_visas');
     }
@@ -205,7 +207,7 @@ class EmployeePassportVisaController extends EmployeeController
      */
     public function storeVisa(Employee $employee, Passport $passport)
     {
-        $old_values = Helpers::dbAddAudit(request()->all());
+        $old_values = DatabaseHelpers::dbAddAudit(request()->all());
         $filename = Str::slug('visa '.$employee->person->fullName(true));
         $values = [];
 
@@ -214,7 +216,7 @@ class EmployeePassportVisaController extends EmployeeController
         }
 
         if (! request()->has('upload')) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the visa. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -223,7 +225,7 @@ class EmployeePassportVisaController extends EmployeeController
         }
 
         if (! $file = File::getFile($values['upload'])) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not find the uploaded image. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -232,7 +234,7 @@ class EmployeePassportVisaController extends EmployeeController
         }
 
         if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not resize the uploaded image. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -244,7 +246,7 @@ class EmployeePassportVisaController extends EmployeeController
         $values['passport_id'] = $passport->id;
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Helpers::flash(Visa::create($values), 'visa');
+       ViewHelpers::flash(Visa::create($values), 'visa');
 
         return redirect()->back();
     }
@@ -266,7 +268,7 @@ class EmployeePassportVisaController extends EmployeeController
 
         if (request()->has('upload_1')) {
             if (! $file = File::getFile($values['upload_1'])) {
-                Helpers::flashAlert(
+                ViewHelpers::flashAlert(
                     'danger',
                     'Could not find the uploaded image. Please try again.',
                     'fa fa-info-circle mr-1');
@@ -275,7 +277,7 @@ class EmployeePassportVisaController extends EmployeeController
             }
 
             if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
-                Helpers::flashAlert(
+                ViewHelpers::flashAlert(
                     'danger',
                     'Could not resize the uploaded image. Please try again.',
                     'fa fa-info-circle mr-1');
@@ -293,8 +295,8 @@ class EmployeePassportVisaController extends EmployeeController
         $visa->number = $values['number'];
         $visa->entry_duration = $values['entry_duration'];
 
-        $visa = Helpers::dbAddAudit($visa);
-        Helpers::flash($visa->save(), 'visa', 'updated');
+        $visa = DatabaseHelpers::dbAddAudit($visa);
+       ViewHelpers::flash($visa->save(), 'visa', 'updated');
 
         return redirect()->back();
     }

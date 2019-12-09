@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use App\PersonType;
 use Illuminate\Database\Seeder;
@@ -14,13 +16,13 @@ class PersonTypesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('person_types')->truncate();
 
-        $person_types = Helpers::parseCsv('database/seeds/data/person_types.csv', false);
+        $person_types = FileHelpers::parseCsv('database/seeds/data/person_types.csv', false);
 
         foreach ($person_types as $type) {
             $model = new PersonType();
             $model->name = $type[2];
             $model->description = $type[3];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->is_protected = true;
             $model->save();
         }

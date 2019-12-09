@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Employee;
 use App\Helpers\Helpers;
@@ -138,7 +139,7 @@ class EmployeeAjaxController extends EmployeeController
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Employee::create($values), 'employee', 'create');
     }
@@ -152,7 +153,7 @@ class EmployeeAjaxController extends EmployeeController
      */
     public function update(Employee $employee, $values)
     {
-        $employee = Helpers::dbAddAudit($employee);
+        $employee = DatabaseHelpers::dbAddAudit($employee);
         $this->attemptAction($employee->update($values), 'employee', 'update');
 
         return $employee;
@@ -166,7 +167,7 @@ class EmployeeAjaxController extends EmployeeController
      */
     public function destroy(Employee $employee)
     {
-        $employee = Helpers::dbAddAudit($employee);
+        $employee = DatabaseHelpers::dbAddAudit($employee);
         $this->attemptAction($employee->delete(), 'employee', 'delete');
     }
 }

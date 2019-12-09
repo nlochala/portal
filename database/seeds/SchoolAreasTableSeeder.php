@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use App\SchoolArea;
 use Illuminate\Database\Seeder;
@@ -14,14 +16,14 @@ class SchoolAreasTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('school_areas')->truncate();
 
-        $school_areas = Helpers::parseCsv('database/seeds/data/school_areas.csv', false);
+        $school_areas = FileHelpers::parseCsv('database/seeds/data/school_areas.csv', false);
 
         foreach ($school_areas as $item) {
             $model = new SchoolArea();
             $model->name = $item[2];
             $model->description = $item[3];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

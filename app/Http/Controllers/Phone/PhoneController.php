@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\Phone;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -31,7 +33,7 @@ class PhoneController extends Controller
     public function destroy(Phone $phone)
     {
         $phone->user_updated_id = auth()->id();
-        $phone->user_updated_ip = Helpers::getUserIp();
+        $phone->user_updated_ip = DatabaseHelpers::getUserIp();
 
         if ($phone->save()) {
             return $phone->delete();
@@ -52,14 +54,14 @@ class PhoneController extends Controller
     public function profileDestroy(Phone $phone)
     {
         if ($this->destroy($phone)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'success',
                 'The phone number has been successfully deleted.',
                 'fa fa-check mr-1');
 
             return redirect()->back();
         }
-        Helpers::flashAlert(
+        ViewHelpers::flashAlert(
             'danger',
             'There was a problem deleting the phone. Please try again.',
             'fa fa-info-circle mr-1');

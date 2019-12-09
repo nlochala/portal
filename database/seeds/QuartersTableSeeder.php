@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use App\Quarter;
 use Illuminate\Database\Seeder;
@@ -14,7 +16,7 @@ class QuartersTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('quarters')->truncate();
 
-        $quarters = Helpers::parseCsv('database/seeds/data/quarters.csv', false);
+        $quarters = FileHelpers::parseCsv('database/seeds/data/quarters.csv', false);
 
         foreach ($quarters as $quarter) {
             $model = new Quarter();
@@ -22,7 +24,7 @@ class QuartersTableSeeder extends Seeder
             $model->year_id = $quarter[1];
             $model->start_date = $quarter[2];
             $model->end_date = $quarter[3];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->is_protected = true;
             $model->save();
         }

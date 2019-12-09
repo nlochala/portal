@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Phone;
 use App\Address;
 use App\Country;
@@ -65,15 +67,15 @@ class EmployeeContactController extends EmployeeController
         $values = request()->all();
         $person = $employee->person;
         $values['user_created_id'] = auth()->id();
-        $values['user_created_ip'] = Helpers::getUserIp();
+        $values['user_created_ip'] = DatabaseHelpers::getUserIp();
         $person->update($values)
             ?
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'success',
                 'The email addresses have been successfully saved/updated.',
                 'fa fa-check mr-1')
             :
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'The email address changes did not save correctly. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -92,18 +94,18 @@ class EmployeeContactController extends EmployeeController
     {
         $values = request()->all();
         $values['user_created_id'] = auth()->id();
-        $values['user_created_ip'] = Helpers::getUserIp();
+        $values['user_created_ip'] = DatabaseHelpers::getUserIp();
         $values['person_id'] = $employee->person->id;
         $values['country_id'] = $values['country_id_phone'];
         /* @noinspection PhpUndefinedMethodInspection */
         Phone::create($values)
             ?
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'success',
                 'The phone number has been successfully saved.',
                 'fa fa-check mr-1')
             :
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'The phone number did not save correctly. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -122,17 +124,17 @@ class EmployeeContactController extends EmployeeController
     {
         $values = request()->all();
         $values['user_created_id'] = auth()->id();
-        $values['user_created_ip'] = Helpers::getUserIp();
+        $values['user_created_ip'] = DatabaseHelpers::getUserIp();
         $values['person_id'] = $employee->person->id;
         /* @noinspection PhpUndefinedMethodInspection */
         Address::create($values)
             ?
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'success',
                 'The address number has been successfully saved.',
                 'fa fa-check mr-1')
             :
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'The address number did not save correctly. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -152,12 +154,12 @@ class EmployeeContactController extends EmployeeController
     {
         $values = request()->all();
         $address->user_updated_id = auth()->id();
-        $address->user_updated_ip = Helpers::getUserIp();
+        $address->user_updated_ip = DatabaseHelpers::getUserIp();
         $address->country_id = $values['country_id_'.$address->id];
         $address->address_type_id = $values['address_type_id_'.$address->id];
         $address->update($values);
 
-        Helpers::flash($address->update($values), 'address', 'updated');
+       ViewHelpers::flash($address->update($values), 'address', 'updated');
 
         return redirect()->to('/employee/'.$employee->uuid.'/contact');
     }

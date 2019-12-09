@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Quarter;
 use App\Assignment;
@@ -135,7 +136,7 @@ class AssignmentAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(Assignment::create($values), 'assignment', 'create');
     }
@@ -149,7 +150,7 @@ class AssignmentAjaxController extends Controller
      */
     public function update(Assignment $assignment, $values)
     {
-        $assignment = Helpers::dbAddAudit($assignment);
+        $assignment = DatabaseHelpers::dbAddAudit($assignment);
         $this->attemptAction($assignment->update($values), 'assignment', 'update');
 
         return $assignment;
@@ -163,7 +164,7 @@ class AssignmentAjaxController extends Controller
      */
     public function destroy(Assignment $assignment)
     {
-        $assignment = Helpers::dbAddAudit($assignment);
+        $assignment = DatabaseHelpers::dbAddAudit($assignment);
 
         if (! $assignment->grades->isEmpty()) {
             $message = 'Can not delete the assignment because grades have already been taken on it.';

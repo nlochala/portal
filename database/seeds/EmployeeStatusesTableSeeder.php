@@ -1,6 +1,8 @@
 <?php
 
 use App\EmployeeStatus;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +16,7 @@ class EmployeeStatusesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('employee_statuses')->truncate();
 
-        $employee_statuses = Helpers::parseCsv('database/seeds/data/employee_statuses.csv', false);
+        $employee_statuses = FileHelpers::parseCsv('database/seeds/data/employee_statuses.csv', false);
 
         foreach ($employee_statuses as $type) {
             $model = new EmployeeStatus();
@@ -22,7 +24,7 @@ class EmployeeStatusesTableSeeder extends Seeder
             $model->description = $type[1];
             $model->is_protected = true;
             $model->base_weight = $type[2];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

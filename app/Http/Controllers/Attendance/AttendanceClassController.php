@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\AttendanceType;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ReportHelpers;
+use App\Helpers\ViewHelpers;
 use App\Quarter;
 use App\Student;
 use Carbon\Carbon;
@@ -49,11 +52,11 @@ class AttendanceClassController extends Controller
 
         $absent_students = AttendanceDay::date($date->format('Y-m-d'))->absent()->with('student.person', 'type', 'student.gradeLevel')->get();
         $absent_stats = implode(',',
-            AttendanceDay::getStudentCount('absent', Helpers::getPreviousWorkingDays($date->format('Y-m-d'), 15)));
+            AttendanceDay::getStudentCount('absent', ReportHelpers::getPreviousWorkingDays($date->format('Y-m-d'), 15)));
 
         $present_count = AttendanceDay::date($date->format('Y-m-d'))->present()->count();
         $present_stats = implode(',',
-            AttendanceDay::getStudentCount('present', Helpers::getPreviousWorkingDays($date->format('Y-m-d'), 15)));
+            AttendanceDay::getStudentCount('present', ReportHelpers::getPreviousWorkingDays($date->format('Y-m-d'), 15)));
 
         $current_student_count = Student::current()->count();
 
@@ -104,12 +107,12 @@ class AttendanceClassController extends Controller
                 'quarter_id' => $quarter->id,
             ];
 
-            $insert_array = Helpers::dbAddAudit($insert_array);
+            $insert_array = DatabaseHelpers::dbAddAudit($insert_array);
             if ($attendance = AttendanceClass::create($insert_array)) {
                 event(new AttendanceTaken($attendance));
             }
         }
-        Helpers::flash(true, 'class attendance');
+       ViewHelpers::flash(true, 'class attendance');
 
         return redirect()->to('class/'.$class->uuid);
     }
@@ -135,7 +138,7 @@ class AttendanceClassController extends Controller
                 'quarter_id' => $quarter->id,
             ];
 
-            $update_array = Helpers::dbAddAudit($update_array);
+            $update_array = DatabaseHelpers::dbAddAudit($update_array);
             if ($attendance = AttendanceClass::where('student_id', '=', $id)
                 ->where('date', '=', $date)
                 ->where('class_id', '=', $class->id)
@@ -150,7 +153,7 @@ class AttendanceClassController extends Controller
             }
         }
 
-        Helpers::flash(true, 'class attendance', 'updated');
+       ViewHelpers::flash(true, 'class attendance', 'updated');
 
         return redirect()->to('class/'.$class->uuid);
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Student;
 use App\Helpers\Helpers;
 use Illuminate\View\View;
@@ -63,9 +65,9 @@ class StudentLoginController extends Controller
         $students = Student::with('person')->current()->isImported(false)->get();
 
         foreach ($students as $student) {
-            $student = Helpers::dbAddAudit($student);
+            $student = DatabaseHelpers::dbAddAudit($student);
             $student->is_imported = true;
-            Helpers::flash($student->save(), 'student', 'updated');
+           ViewHelpers::flash($student->save(), 'student', 'updated');
         }
 
         return redirect()->back();

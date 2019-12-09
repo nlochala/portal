@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Helpers\ViewHelpers;
 use App\Quarter;
 use App\Student;
 use App\Guardian;
@@ -122,7 +123,7 @@ class PPGuardianController extends Controller
                     $grades_summary_array[$class->fullName][$q->name]['badge'] = '--';
                     $grades_summary_array[$class->fullName][$q->name]['link'] = null;
                 } elseif ($grade = $grades->where('class_id', $class->id)->first()) {
-                    $grades_summary_array[$class->fullName][$q->name]['badge'] = Helpers::colorPercentages($grade->percentage, $grade->percentage.'% '.$grade->grade_name);
+                    $grades_summary_array[$class->fullName][$q->name]['badge'] = ViewHelpers::colorPercentages($grade->percentage, $grade->percentage.'% '.$grade->grade_name);
                     $grades_summary_array[$class->fullName][$q->name]['link'] = "<a href=\"/g_student/report/grades/$class->uuid/$q->uuid/$student->uuid\">view</a>";
                 }else{
                     $grades_summary_array[$class->fullName][$q->name]['badge'] = '--';

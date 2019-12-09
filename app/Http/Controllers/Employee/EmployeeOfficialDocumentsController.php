@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\Employee;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\OfficialDocument;
 use Illuminate\View\View;
 use App\OfficialDocumentType;
@@ -41,10 +43,10 @@ class EmployeeOfficialDocumentsController extends EmployeeController
      */
     public function store(Employee $employee)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
 
         if (! request()->has('upload')) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Please upload an official document. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -53,7 +55,7 @@ class EmployeeOfficialDocumentsController extends EmployeeController
         }
 
         if (! $file = File::getFile($values['upload'])) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not find the uploaded document. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -62,7 +64,7 @@ class EmployeeOfficialDocumentsController extends EmployeeController
         }
 
         if (! $file->saveFile()) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'There was an issue saving your document. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -74,7 +76,7 @@ class EmployeeOfficialDocumentsController extends EmployeeController
         $values['person_id'] = $employee->person->id;
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Helpers::flash(OfficialDocument::create($values), 'document');
+       ViewHelpers::flash(OfficialDocument::create($values), 'document');
 
         return redirect()->back();
     }
@@ -89,8 +91,8 @@ class EmployeeOfficialDocumentsController extends EmployeeController
      */
     public function delete(Employee $employee, OfficialDocument $document)
     {
-        $document = Helpers::dbAddAudit($document);
-        Helpers::flash($document->delete(), 'document', 'deleted');
+        $document = DatabaseHelpers::dbAddAudit($document);
+       ViewHelpers::flash($document->delete(), 'document', 'deleted');
 
         return redirect()->back();
     }

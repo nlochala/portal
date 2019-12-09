@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Carbon\Carbon;
 use Exception;
 use App\Quarter;
@@ -132,7 +133,7 @@ class QuarterAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
         $values['name'] = Quarter::getName($values['name']);
         dd($values);
 
@@ -155,7 +156,7 @@ class QuarterAjaxController extends Controller
      */
     public function update(Quarter $quarter, $values)
     {
-        $quarter = Helpers::dbAddAudit($quarter);
+        $quarter = DatabaseHelpers::dbAddAudit($quarter);
         $values['name'] = Quarter::getName($values['name']);
 
         $start = Carbon::parse($values['start_date']);
@@ -179,7 +180,7 @@ class QuarterAjaxController extends Controller
      */
     public function destroy(Quarter $quarter)
     {
-        $quarter = Helpers::dbAddAudit($quarter);
+        $quarter = DatabaseHelpers::dbAddAudit($quarter);
         $this->attemptAction($quarter->delete(), 'quarter', 'delete');
     }
 }

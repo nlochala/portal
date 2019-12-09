@@ -112,35 +112,7 @@
 
     <script type="text/javascript">
 
-        FilePond.registerPlugin(
-            FilePondPluginFileValidateType,
-            FilePondPluginImageExifOrientation,
-            FilePondPluginImagePreview,
-            FilePondPluginImageCrop,
-            FilePondPluginImageResize,
-            FilePondPluginImageTransform,
-            FilePondPluginImageEdit
-        );
-
-        const upload = FilePond.create(
-            document.querySelector('#upload'),
-            {
-                labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-                imagePreviewHeight: 200,
-                stylePanelLayout: 'integrated',
-                styleLoadIndicatorPosition: 'center bottom',
-                styleProgressIndicatorPosition: 'right bottom',
-                styleButtonRemoveItemPosition: 'left bottom',
-                styleButtonProcessItemPosition: 'right bottom',
-
-                server: {
-                    process: '/api/store_file',
-                },
-
-                // Use Doka.js as image editor
-                imageEditEditor: Doka.create()
-            }
-        );
+        @include('layouts._forms._js_filepond', ['id' => 'upload'])
 
         jQuery(document).ready(function () {
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\Position;
 use App\PositionType;
 use App\School;
@@ -65,11 +67,11 @@ class PositionController extends Controller
      */
     public function store()
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
 
         /** @noinspection PhpUndefinedMethodInspection */
         $position = Position::create($values);
-        Helpers::flash($position, 'position', 'created');
+       ViewHelpers::flash($position, 'position', 'created');
 
         if ($position) {
             return redirect()->to("position/$position->uuid");
@@ -124,10 +126,10 @@ class PositionController extends Controller
     public function update(Position $position)
     {
         $values = request()->all();
-        $position = Helpers::dbAddAudit($position);
+        $position = DatabaseHelpers::dbAddAudit($position);
 
         $position->update($values);
-        Helpers::flash($position, 'position', 'updated');
+       ViewHelpers::flash($position, 'position', 'updated');
 
         if ($position) {
             return redirect()->to("position/$position->uuid");
@@ -145,9 +147,9 @@ class PositionController extends Controller
      */
     public function archive(Position $position)
     {
-        $position = Helpers::dbAddAudit($position);
+        $position = DatabaseHelpers::dbAddAudit($position);
         $position->delete();
-        Helpers::flash($position, 'position', 'archived');
+       ViewHelpers::flash($position, 'position', 'archived');
 
         return redirect()->to('position/index');
     }

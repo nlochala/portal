@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\CourseClass;
 use App\AssignmentType;
@@ -132,7 +133,7 @@ class AssignmentTypeAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(AssignmentType::create($values), 'type', 'create');
     }
@@ -146,7 +147,7 @@ class AssignmentTypeAjaxController extends Controller
      */
     public function update(AssignmentType $type, $values)
     {
-        $type = Helpers::dbAddAudit($type);
+        $type = DatabaseHelpers::dbAddAudit($type);
 
         $this->attemptAction($type->update($values), 'type', 'update');
 
@@ -161,7 +162,7 @@ class AssignmentTypeAjaxController extends Controller
      */
     public function destroy(AssignmentType $type)
     {
-        $type = Helpers::dbAddAudit($type);
+        $type = DatabaseHelpers::dbAddAudit($type);
 
         $message = 'Could not delete this assignment type. The reason is because there are assignments already created with this type. ';
         $message .= 'Please change the assigned type on those assignments and try again.';

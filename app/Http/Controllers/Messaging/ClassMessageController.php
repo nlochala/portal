@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\CourseClass;
 use App\Employee;
 use App\Guardian;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\Notifications\ParentMessageSent;
 use App\ParentMessage;
 use App\Quarter;
@@ -75,7 +77,7 @@ class ClassMessageController extends Controller
      */
     public function saveMessage(CourseClass $class)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $relationship = Quarter::now()->getClassRelationship();
         $class->load($relationship.'.person');
 
@@ -98,7 +100,7 @@ class ClassMessageController extends Controller
             }
         }
 
-        Helpers::flash(true, 'messages', 'sent');
+       ViewHelpers::flash(true, 'messages', 'sent');
         return redirect()->back();
     }
 
@@ -113,7 +115,7 @@ class ClassMessageController extends Controller
      */
     public function sendMessage(Guardian $guardian, Employee $employee, CourseClass $class, $values)
     {
-        $message = Helpers::dbAddAudit(new ParentMessage());
+        $message = DatabaseHelpers::dbAddAudit(new ParentMessage());
         $message->from_model = 'employee';
         $message->from_id = $employee->id;
         $message->to_model = 'guardian';

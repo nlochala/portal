@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\File;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\IdCard;
 use App\Employee;
 use App\Helpers\Helpers;
@@ -64,7 +66,7 @@ class EmployeeIdCardController extends EmployeeController
      */
     public function store(Employee $employee)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $values['person_id'] = $employee->person->id;
 
         $uploads = ['front' => $values['upload_front'], 'back' => $values['upload_back']];
@@ -78,7 +80,7 @@ class EmployeeIdCardController extends EmployeeController
         }
 
         /* @noinspection PhpUndefinedMethodInspection */
-        Helpers::flash(IdCard::create($values), 'ID Card');
+       ViewHelpers::flash(IdCard::create($values), 'ID Card');
 
         return redirect()->to("/employee/$employee->uuid/id_card");
     }
@@ -114,7 +116,7 @@ class EmployeeIdCardController extends EmployeeController
      */
     public function update(Employee $employee, IdCard $id_card)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $uploads = [];
 
         ! isset($values['upload_front']) ?: $uploads['front'] = $values['upload_front'];
@@ -129,7 +131,7 @@ class EmployeeIdCardController extends EmployeeController
             $values[$key.'_image_file_id'] = $file_id;
         }
 
-        Helpers::flash($id_card->update($values), 'ID Card', 'updated');
+       ViewHelpers::flash($id_card->update($values), 'ID Card', 'updated');
 
         return redirect()->to("/employee/$employee->uuid/id_card");
     }
@@ -148,7 +150,7 @@ class EmployeeIdCardController extends EmployeeController
     protected function processImage($key, $value, $filename)
     {
         if (! request()->has("upload_$key")) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Please upload a scanned image of the ID Card. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -157,7 +159,7 @@ class EmployeeIdCardController extends EmployeeController
         }
 
         if (! $file = File::getFile($value)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not find the uploaded image. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -166,7 +168,7 @@ class EmployeeIdCardController extends EmployeeController
         }
 
         if (! $resized_file = File::saveAndResizeImage($file, $filename)) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Could not resize the uploaded image. Please try again.',
                 'fa fa-info-circle mr-1');

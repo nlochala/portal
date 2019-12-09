@@ -1,6 +1,8 @@
 <?php
 
 use App\Ethnicity;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -16,13 +18,13 @@ class EthnicitiesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('ethnicities')->truncate();
 
-        $ethnicities = Helpers::parseCsv('database/seeds/data/ethnicities.csv', true);
+        $ethnicities = FileHelpers::parseCsv('database/seeds/data/ethnicities.csv', true);
 
         foreach ($ethnicities as $type) {
             $model = new Ethnicity();
             $model->name = $type[0];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

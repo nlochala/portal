@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use Carbon\Carbon;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
@@ -84,7 +85,7 @@ class GradeQuarterAverage extends Model
             return $average;
         }
 
-        return Helpers::colorPercentages($average->percentage, $average->percentage.'% '.$average->grade_name);
+        return ViewHelpers::colorPercentages($average->percentage, $average->percentage.'% '.$average->grade_name);
     }
 
     /*

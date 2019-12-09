@@ -1,6 +1,8 @@
 <?php
 
 use App\EmployeeClassification;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +16,7 @@ class EmployeeClassificationsTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('employee_classifications')->truncate();
 
-        $employee_classifications = Helpers::parseCsv('database/seeds/data/employee_classifications.csv', false);
+        $employee_classifications = FileHelpers::parseCsv('database/seeds/data/employee_classifications.csv', false);
 
         foreach ($employee_classifications as $classification) {
             $model = new EmployeeClassification();
@@ -26,7 +28,7 @@ class EmployeeClassificationsTableSeeder extends Seeder
             $model->social_insurance_allowance = $classification[7];
             $model->medical_covered = $classification[8];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\IdCard;
 use Illuminate\Http\RedirectResponse;
 
@@ -28,8 +30,8 @@ class IdCardController extends Controller
     public function cancel(IdCard $id_card)
     {
         $id_card->is_active = false;
-        $id_card = Helpers::dbAddAudit($id_card);
-        Helpers::flash($id_card->save(), 'ID Card', 'cancelled');
+        $id_card = DatabaseHelpers::dbAddAudit($id_card);
+       ViewHelpers::flash($id_card->save(), 'ID Card', 'cancelled');
 
         return redirect()->back();
     }
@@ -44,9 +46,9 @@ class IdCardController extends Controller
     public function delete(IdCard $id_card)
     {
         $id_card->is_active = false;
-        $id_card = Helpers::dbAddAudit($id_card);
+        $id_card = DatabaseHelpers::dbAddAudit($id_card);
         $id_card->save();
-        Helpers::flash($id_card->delete(), 'ID Card', 'deleted');
+       ViewHelpers::flash($id_card->delete(), 'ID Card', 'deleted');
 
         return redirect()->back();
     }

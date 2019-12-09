@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\ViewHelpers;
 use App\Room;
 use App\Year;
 use App\Course;
@@ -88,9 +90,9 @@ class ClassController extends Controller
      */
     public function store()
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $class = CourseClass::create($values);
-        Helpers::flash($class, 'class');
+       ViewHelpers::flash($class, 'class');
 
         return $class
             ? redirect()->to('class/'.$class->uuid.'/edit_overview')
@@ -129,9 +131,9 @@ class ClassController extends Controller
      */
     public function storeUpdate(CourseClass $class)
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $result = $class->update($values);
-        Helpers::flash($result, 'class');
+       ViewHelpers::flash($result, 'class');
 
         return $result
             ? redirect()->to('class/'.$class->uuid)

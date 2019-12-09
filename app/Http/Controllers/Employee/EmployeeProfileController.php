@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
+use App\Helpers\ViewHelpers;
+use Illuminate\Contracts\View\Factory;
 use View;
 use App\File;
 use App\Person;
@@ -21,7 +25,7 @@ class EmployeeProfileController extends EmployeeController
      *
      * @param Employee $employee
      *
-     * @return View
+     * @return Factory|\Illuminate\View\View
      */
     public function profile(Employee $employee)
     {
@@ -41,10 +45,10 @@ class EmployeeProfileController extends EmployeeController
 
         if ($employee->person->image) {
             $image_data = $employee->person->image->renderImage();
-            $image_size = Helpers::formatBytes($employee->person->image->size);
+            $image_size = FileHelpers::formatBytes($employee->person->image->size);
             $image_created = $employee->person->image->created_at;
 
-            $original_image_size = Helpers::formatBytes($employee->person->image->originalFile->size);
+            $original_image_size = FileHelpers::formatBytes($employee->person->image->originalFile->size);
             $original_image_url = '/download_file/'.$employee->person->image->originalFile->uuid;
         }
 
@@ -77,7 +81,7 @@ class EmployeeProfileController extends EmployeeController
         $values = request()->all();
 
         if (! request()->has('dob') && ! request()->has('upload')) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'An image was not selected. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -86,18 +90,18 @@ class EmployeeProfileController extends EmployeeController
         }
 
         if (request()->has('upload')) {
-            Helpers::flash($this->processImage(json_decode($values['upload']), $employee), 'image', 'created');
+           ViewHelpers::flash($this->processImage(json_decode($values['upload']), $employee), 'image', 'created');
 
             return redirect()->to('/employee/'.$employee->uuid.'/profile');
         }
 
         $values['dob'] = Carbon::createFromFormat('Y-m-d', $values['dob']);
         $values['user_created_id'] = auth()->id();
-        $values['user_created_ip'] = Helpers::getUserIp();
+        $values['user_created_ip'] = DatabaseHelpers::getUserIp();
         $values['title'] = Person::getTitle($values['title']);
         $values['gender'] = Person::getGender($values['gender']);
 
-        Helpers::flash($employee->person->update($values), 'employee profile', 'updated');
+       ViewHelpers::flash($employee->person->update($values), 'employee profile', 'updated');
         $employee->searchable();
 
         if ($employee->person->guardian) {

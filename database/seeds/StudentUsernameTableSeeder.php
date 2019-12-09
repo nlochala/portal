@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\FileHelpers;
 use App\Student;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
@@ -15,7 +16,7 @@ class StudentUsernameTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        $students = Helpers::parseCsv('database/seeds/data/student_passwords.csv', false);
+        $students = FileHelpers::parseCsv('database/seeds/data/student_passwords.csv', false);
 
         foreach ($students as $student) {
             $username = explode('@', $student[0])[0];

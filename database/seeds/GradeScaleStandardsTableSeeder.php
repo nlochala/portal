@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use App\GradeScaleStandard;
 use Illuminate\Database\Seeder;
@@ -16,7 +18,7 @@ class GradeScaleStandardsTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('grade_scale_standards')->truncate();
 
-        $grade_scale_standards = Helpers::parseCsv('database/seeds/data/grade_scale_standards.csv', false);
+        $grade_scale_standards = FileHelpers::parseCsv('database/seeds/data/grade_scale_standards.csv', false);
 
         foreach ($grade_scale_standards as $item) {
             $model = new GradeScaleStandard();
@@ -24,7 +26,7 @@ class GradeScaleStandardsTableSeeder extends Seeder
             $model->name = $item[2];
             $model->description = $item[3];
             $model->grade_scale_id = $item[4];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->is_protected = true;
             $model->save();
         }

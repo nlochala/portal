@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ViewHelpers;
 use App\Quarter;
 use App\CourseClass;
 use App\Helpers\Helpers;
@@ -81,7 +82,7 @@ class ClassEnrollmentController extends ClassController
 
         foreach ($values['quarters'] as $quarter) {
             $relationship = Quarter::find($quarter)->getClassRelationship();
-            Helpers::flash($class->$relationship()->sync($values['students']), 'enrollment', 'updated');
+           ViewHelpers::flash($class->$relationship()->sync($values['students']), 'enrollment', 'updated');
         }
 
         return redirect()->back();
@@ -104,7 +105,7 @@ class ClassEnrollmentController extends ClassController
         }
 
         $relationship = $quarter->getClassRelationship();
-        Helpers::flash($class->$relationship()->sync($values['students']), 'enrollment', 'updated');
+       ViewHelpers::flash($class->$relationship()->sync($values['students']), 'enrollment', 'updated');
 
         return redirect()->back();
     }

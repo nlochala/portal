@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\Employee;
 use App\Ethnicity;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use App\Language;
 use App\Person;
 use App\PersonType;
@@ -56,14 +58,14 @@ class PersonController extends Controller
      */
     public function store()
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $values['title'] = Person::getTitle($values['title']);
         $values['gender'] = Person::getGender($values['gender']);
         /** @noinspection PhpUndefinedMethodInspection */
         $person = Person::create($values);
 
         if (!$person) {
-            Helpers::flashAlert('danger', 'There was a problem saving your form. Please try again.', 'fa fa-info-circle mr-1');
+            ViewHelpers::flashAlert('danger', 'There was a problem saving your form. Please try again.', 'fa fa-info-circle mr-1');
 
             return redirect()->back();
         }
@@ -81,15 +83,15 @@ class PersonController extends Controller
                     'user_created_ip' => $values['user_created_ip'],
                 ]);
                 if (!$employee) {
-                    Helpers::flashAlert('danger', 'There was a problem saving your form. Please try again.', 'fa fa-info-circle mr-1');
+                    ViewHelpers::flashAlert('danger', 'There was a problem saving your form. Please try again.', 'fa fa-info-circle mr-1');
 
                     return redirect()->back();
                 }
-                Helpers::flashAlert('success', 'The employee has been successfully created.', 'fa fa-check mr-1');
+                ViewHelpers::flashAlert('success', 'The employee has been successfully created.', 'fa fa-check mr-1');
 
                 return redirect()->to('employee/'.$employee->uuid.'/profile');
             default:
-                Helpers::flashAlert('danger', 'Not sure what type of person you are trying to create... Please try again.', 'fa fa-info-circle mr-1');
+                ViewHelpers::flashAlert('danger', 'Not sure what type of person you are trying to create... Please try again.', 'fa fa-info-circle mr-1');
 
                 return redirect()->back();
         }

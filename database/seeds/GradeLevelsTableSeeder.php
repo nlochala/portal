@@ -1,6 +1,8 @@
 <?php
 
 use App\GradeLevel;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +18,7 @@ class GradeLevelsTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('grade_levels')->truncate();
 
-        $grade_levels = Helpers::parseCsv('database/seeds/data/grade_levels.csv', false);
+        $grade_levels = FileHelpers::parseCsv('database/seeds/data/grade_levels.csv', false);
 
         foreach ($grade_levels as $level) {
             $model = new GradeLevel();
@@ -25,7 +27,7 @@ class GradeLevelsTableSeeder extends Seeder
             $model->year_id = $level[4];
             $model->school_id = $level[5];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

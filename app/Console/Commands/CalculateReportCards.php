@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\DatabaseHelpers;
 use App\Quarter;
 use App\Student;
 use App\GradeLevel;
@@ -22,7 +23,7 @@ class CalculateReportCards extends Command
      *
      * @var string
      */
-    protected $signature = 'portal:calculate-report-cards 
+    protected $signature = 'portal:calculate-report-cards
     {grade-level-id* : The ID/s of the grade-levels you wish to process. (You can pass multiple IDs separated by a space.)}
     {--quarter= : What is the quarter_id to process?}';
 
@@ -89,7 +90,7 @@ class CalculateReportCards extends Command
                             } else {
                                 $card = new ReportCardPercentage();
                             }
-                            $card = Helpers::dbAddAudit($card);
+                            $card = DatabaseHelpers::dbAddAudit($card);
                             $card->student_id = $student->id;
                             $card->quarter_id = $quarter->id;
                             $card->grade_behavior_quarter_id = $behavior ? $behavior->id : null;
@@ -110,7 +111,7 @@ class CalculateReportCards extends Command
                                 $existing_class_report = ReportCardPercentageClass::where('report_card_percentage_id', $card->id)
                                     ->where('class_id', $class->id)->first();
                                 $class_card = $existing_class_report ?: new ReportCardPercentageClass();
-                                $class_card = Helpers::dbAddAudit($class_card);
+                                $class_card = DatabaseHelpers::dbAddAudit($class_card);
                                 $class_card->report_card_percentage_id = $card->id;
                                 $class_card->class_id = $class->id;
                                 $class_card->grade = $grade;

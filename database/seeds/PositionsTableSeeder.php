@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use App\Position;
 use App\PositionType;
@@ -17,7 +19,7 @@ class PositionsTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('positions')->truncate();
 
-        $positions = Helpers::parseCsv('database/seeds/data/positions.csv', false);
+        $positions = FileHelpers::parseCsv('database/seeds/data/positions.csv', false);
 
         foreach ($positions as $position) {
             $model = new Position();
@@ -28,7 +30,7 @@ class PositionsTableSeeder extends Seeder
             $model->supervisor_position_id = $position[4];
 //            $model->stipend = $position[6];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\Quarter;
 use App\Student;
@@ -168,10 +169,10 @@ class AttendanceUpdateAjaxController extends Controller
         $values['student_id'] = $student->id;
         $values['date'] = $date;
         $values['quarter_id'] = Quarter::getQuarter($date)->id;
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         if ($attendance = AttendanceDay::date($date)->isStudent($student->id)->first()) {
-            $attendance = Helpers::dbAddAudit($attendance);
+            $attendance = DatabaseHelpers::dbAddAudit($attendance);
             $attendance->attendance_type_id = $values['attendance_type_id'];
             $attendance->save();
 
@@ -199,7 +200,7 @@ class AttendanceUpdateAjaxController extends Controller
      */
     public function destroy(AttendanceDay $day)
     {
-        $day = Helpers::dbAddAudit($day);
+        $day = DatabaseHelpers::dbAddAudit($day);
         $this->attemptAction($day->delete(), 'day', 'delete');
     }
 }

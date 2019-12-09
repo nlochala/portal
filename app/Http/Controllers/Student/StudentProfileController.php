@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
+use App\Helpers\ViewHelpers;
+use Illuminate\Contracts\View\Factory;
 use View;
 use App\File;
 use App\Person;
@@ -21,7 +25,7 @@ class StudentProfileController extends StudentController
      *
      * @param Student $student
      *
-     * @return View
+     * @return Factory|\Illuminate\View\View
      */
     public function profile(Student $student)
     {
@@ -41,10 +45,10 @@ class StudentProfileController extends StudentController
 
         if ($student->person->image) {
             $image_data = $student->person->image->renderImage();
-            $image_size = Helpers::formatBytes($student->person->image->size);
+            $image_size = FileHelpers::formatBytes($student->person->image->size);
             $image_created = $student->person->image->created_at;
 
-            $original_image_size = Helpers::formatBytes($student->person->image->originalFile->size);
+            $original_image_size = FileHelpers::formatBytes($student->person->image->originalFile->size);
             $original_image_url = '/download_file/'.$student->person->image->originalFile->uuid;
         }
 
@@ -77,7 +81,7 @@ class StudentProfileController extends StudentController
         $values = request()->all();
 
         if (! request()->has('dob') && ! request()->has('upload')) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'An image was not selected. Please try again.',
                 'fa fa-info-circle mr-1');
@@ -86,17 +90,17 @@ class StudentProfileController extends StudentController
         }
 
         if (request()->has('upload')) {
-            Helpers::flash($this->processImage(json_decode($values['upload']), $student), 'image');
+           ViewHelpers::flash($this->processImage(json_decode($values['upload']), $student), 'image');
 
             return redirect()->to('/student/'.$student->uuid.'/profile');
         }
 
         $values['dob'] = Carbon::createFromFormat('Y-m-d', $values['dob']);
         $values['user_created_id'] = auth()->id();
-        $values['user_created_ip'] = Helpers::getUserIp();
+        $values['user_created_ip'] = DatabaseHelpers::getUserIp();
         $values['gender'] = Person::getGender($values['gender']);
 
-        Helpers::flash($student->person->update($values), 'student profile', 'updated');
+       ViewHelpers::flash($student->person->update($values), 'student profile', 'updated');
         $student->searchable();
 
         return redirect()->to('/student/'.$student->uuid.'/profile');

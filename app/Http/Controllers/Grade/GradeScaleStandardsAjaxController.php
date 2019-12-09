@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use Exception;
 use App\GradeScale;
 use App\Helpers\Helpers;
@@ -133,7 +134,7 @@ class GradeScaleStandardsAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
 
         return $this->attemptAction(GradeScaleStandard::create($values), 'standard', 'create');
     }
@@ -147,7 +148,7 @@ class GradeScaleStandardsAjaxController extends Controller
      */
     public function update(GradeScaleStandard $standard, $values)
     {
-        $standard = Helpers::dbAddAudit($standard);
+        $standard = DatabaseHelpers::dbAddAudit($standard);
         $this->attemptAction($standard->update($values), 'standard', 'update');
 
         return $standard;
@@ -167,7 +168,7 @@ class GradeScaleStandardsAjaxController extends Controller
             return;
         }
 
-        $standard = Helpers::dbAddAudit($standard);
+        $standard = DatabaseHelpers::dbAddAudit($standard);
         $this->attemptAction($standard->delete(), 'standard', 'delete');
     }
 }

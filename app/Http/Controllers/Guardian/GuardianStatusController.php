@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\GuardianStatus;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class GuardianStatusController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -20,7 +21,7 @@ class GuardianStatusController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -30,8 +31,8 @@ class GuardianStatusController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -41,8 +42,8 @@ class GuardianStatusController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\GuardianStatus  $guardianStatus
-     * @return \Illuminate\Http\Response
+     * @param GuardianStatus $guardianStatus
+     * @return Response
      */
     public function show(GuardianStatus $guardianStatus)
     {
@@ -52,8 +53,8 @@ class GuardianStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\GuardianStatus  $guardianStatus
-     * @return \Illuminate\Http\Response
+     * @param GuardianStatus $guardianStatus
+     * @return Response
      */
     public function edit(GuardianStatus $guardianStatus)
     {
@@ -63,9 +64,9 @@ class GuardianStatusController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\GuardianStatus  $guardianStatus
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param GuardianStatus $guardianStatus
+     * @return Response
      */
     public function update(Request $request, GuardianStatus $guardianStatus)
     {
@@ -75,8 +76,8 @@ class GuardianStatusController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\GuardianStatus  $guardianStatus
-     * @return \Illuminate\Http\Response
+     * @param GuardianStatus $guardianStatus
+     * @return Response
      */
     public function destroy(GuardianStatus $guardianStatus)
     {

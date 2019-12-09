@@ -1,6 +1,8 @@
 <?php
 
 use App\Department;
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
@@ -16,14 +18,14 @@ class DepartmentsTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('departments')->truncate();
 
-        $departments = Helpers::parseCsv('database/seeds/data/departments.csv', false);
+        $departments = FileHelpers::parseCsv('database/seeds/data/departments.csv', false);
 
         foreach ($departments as $department) {
             $model = new Department();
             $model->name = $department[2];
             $model->description = $department[3];
             $model->is_protected = true;
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->save();
         }
 

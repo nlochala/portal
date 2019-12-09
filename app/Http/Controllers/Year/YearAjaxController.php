@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DatabaseHelpers;
 use App\Year;
 use Exception;
 use App\Helpers\Helpers;
@@ -131,7 +132,7 @@ class YearAjaxController extends Controller
      */
     public function store($values)
     {
-        $values = Helpers::dbAddAudit($values);
+        $values = DatabaseHelpers::dbAddAudit($values);
         return $this->attemptAction(Year::create($values), 'year', 'create');
     }
 
@@ -144,7 +145,7 @@ class YearAjaxController extends Controller
      */
     public function update(Year $year, $values)
     {
-        $year = Helpers::dbAddAudit($year);
+        $year = DatabaseHelpers::dbAddAudit($year);
         $this->attemptAction($year->update($values), 'year', 'update');
 
         return $year;
@@ -163,7 +164,7 @@ class YearAjaxController extends Controller
             return;
         }
 
-        $year = Helpers::dbAddAudit($year);
+        $year = DatabaseHelpers::dbAddAudit($year);
         $this->attemptAction($year->delete(), 'year', 'delete');
     }
 }

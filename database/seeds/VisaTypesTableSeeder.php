@@ -1,5 +1,7 @@
 <?php
 
+use App\Helpers\DatabaseHelpers;
+use App\Helpers\FileHelpers;
 use App\VisaType;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
@@ -16,7 +18,7 @@ class VisaTypesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('visa_types')->truncate();
 
-        $visa_types = Helpers::parseCsv('database/seeds/data/visa_types.csv', true);
+        $visa_types = FileHelpers::parseCsv('database/seeds/data/visa_types.csv', true);
 
         foreach ($visa_types as $type) {
             $model = new VisaType();
@@ -24,7 +26,7 @@ class VisaTypesTableSeeder extends Seeder
             $model->name = $type[1];
             $model->description = $type[2];
             $model->residency = $type[3];
-            $model = Helpers::dbAddAudit($model);
+            $model = DatabaseHelpers::dbAddAudit($model);
             $model->is_protected = true;
             $model->save();
         }

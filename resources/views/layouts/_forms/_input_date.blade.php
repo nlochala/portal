@@ -8,7 +8,7 @@ $required = bool
 --}}
 @if(!isset($selected))
     @php
-    $selected = null;
+    $selected = null
     @endphp
 @endif
 

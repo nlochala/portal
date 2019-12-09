@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -55,7 +56,7 @@ class RemoveAttendanceDuplicates extends Command
             $end_date = Carbon::parse($this->option('end_date'))->format('Y-m-d');
         }
 
-        $result_array = Helpers::checkDuplicateAttendance($start_date, $end_date);
+        $result_array = DatabaseHelpers::checkDuplicateAttendance($start_date, $end_date);
         $this->line(\GuzzleHttp\json_encode($result_array));
     }
 }

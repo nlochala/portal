@@ -22,24 +22,24 @@
 @can('employees.update.government_documents')
 @if($passport->is_active)
     <button type="button" dusk="btn-new-passport"
-            class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/create_passport") !!}>
+            class="btn btn-outline-success mr-1 mb-3" {!! \App\Helpers\ViewHelpers::onClick("/employee/$employee->uuid/create_passport") !!}>
         <i class="fa fa-plus fa-plus mr-1"></i> Add New Passport
     </button>
 @endif
 
 <button type="button" dusk="btn-update-passport-{{ $passport->id }}"
-        class="btn btn-outline-primary mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/employee/$employee->uuid/passport/$passport->uuid/update_passport") !!}>
+        class="btn btn-outline-primary mr-1 mb-3" {!! \App\Helpers\ViewHelpers::onClick("/employee/$employee->uuid/passport/$passport->uuid/update_passport") !!}>
     <i class="fa fa-fw fa-pen mr-1"></i> Update Passport
 </button>
 
 @if($passport->is_active)
     <button type="button" dusk="btn-cancel-passport-{{ $passport->id }}"
-            class="btn btn-outline-dark mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/passport/$passport->uuid/cancel") !!}>
+            class="btn btn-outline-dark mr-1 mb-3" {!! \App\Helpers\ViewHelpers::onClick("/passport/$passport->uuid/cancel") !!}>
         <i class="fa fa-pause-circle mr-1"></i> Cancel Passport
     </button>
 @else
     <button type="button" dusk="btn-delete-passport-{{ $passport->id }}"
-            class="btn btn-outline-danger mr-1 mb-3" {!! \App\Helpers\Helpers::onClick("/passport/$passport->uuid/delete") !!}>
+            class="btn btn-outline-danger mr-1 mb-3" {!! \App\Helpers\ViewHelpers::onClick("/passport/$passport->uuid/delete") !!}>
         <i class="fa fa-trash mr-1"></i> Delete Passport
     </button>
 @endif
@@ -68,7 +68,7 @@
 <tr>
     <td><strong>Expiration Date: </strong></td>
     <td>{{ $passport->expiration_date->format('Y-m-d') }} <br/>
-        {!! \App\Helpers\Helpers::getExpirationBadge($passport->expiration_date, 'Passport') !!}
+        {!! \App\Helpers\ViewHelpers::getExpirationBadge($passport->expiration_date, 'Passport') !!}
     </td>
 </tr>
 @include('_tables.end-new-table')
@@ -80,13 +80,13 @@
     <div class="options-overlay bg-black-75" style="width: 75%; margin: auto;">
         <div class="options-overlay-content">
             <h3 class="h4 text-white mb-2">Passport Image</h3>
-            <h4 class="h6 text-white-75 mb-3">File Size: {{ \App\Helpers\Helpers::formatBytes($passport->image->size) }}
+            <h4 class="h6 text-white-75 mb-3">File Size: {{ \App\Helpers\FileHelpers::formatBytes($passport->image->size) }}
                 <br/>
                 Upload Date: {{ $passport->image->created_at }}</h4>
             <br/>
             <a class="btn btn-sm btn-primary" href="{{ $passport->image->originalFile->downloadUrl() }}">
                 <i class="si si-cloud-download mr-1"></i> Download
-                ({{ \App\Helpers\Helpers::formatBytes($passport->image->originalFile->size) }})
+                ({{ \App\Helpers\FileHelpers::formatBytes($passport->image->originalFile->size) }})
             </a>
         </div>
     </div>
@@ -122,7 +122,7 @@
             </td>
             <td>{{ $visa->issue_date->format('Y-m-d') }}</td>
             <td>{{ $visa->expiration_date->format('Y-m-d') }}<br/>
-                {!! \App\Helpers\Helpers::getExpirationBadge($visa->expiration_date,null,30,180) !!}
+                {!! \App\Helpers\ViewHelpers::getExpirationBadge($visa->expiration_date,null,30,180) !!}
             </td>
             <td>
                 @can('employees.update.government_documents')

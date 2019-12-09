@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\GradeScale;
 use App\GradeScaleStandard;
+use App\Helpers\DatabaseHelpers;
 use App\Helpers\Helpers;
+use App\Helpers\ViewHelpers;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
@@ -39,11 +41,11 @@ class GradeScaleController extends Controller
      */
     public function store()
     {
-        $values = Helpers::dbAddAudit(request()->all());
+        $values = DatabaseHelpers::dbAddAudit(request()->all());
         $values = GradeScale::setScaleType($values);
 
         $grade_scale = GradeScale::create($values);
-        Helpers::flash($grade_scale, 'grade scale', 'created');
+       ViewHelpers::flash($grade_scale, 'grade scale', 'created');
 
         if (! $grade_scale) {
             return redirect()->to('grade_scale/index');
@@ -61,9 +63,9 @@ class GradeScaleController extends Controller
     public function update(GradeScale $grade_scale)
     {
         $values = request()->all();
-        $grade_scale = Helpers::dbAddAudit($grade_scale);
+        $grade_scale = DatabaseHelpers::dbAddAudit($grade_scale);
 
-        Helpers::flash($grade_scale->update($values), 'grade scale', 'updated');
+       ViewHelpers::flash($grade_scale->update($values), 'grade scale', 'updated');
         return redirect()->to('grade_scale/'.$grade_scale->uuid);
     }
 
@@ -92,15 +94,15 @@ class GradeScaleController extends Controller
     public function delete(GradeScale $grade_scale)
     {
         if ($grade_scale->is_protected) {
-            Helpers::flashAlert(
+            ViewHelpers::flashAlert(
                 'danger',
                 'Can not delete the grade scale. It is protected.',
                 'fa fa-info-circle mr-1');
             return redirect()->back();
         }
 
-        $grade_scale = Helpers::dbAddAudit($grade_scale);
-        Helpers::flash($grade_scale->delete(), 'grade scale', 'deleted');
+        $grade_scale = DatabaseHelpers::dbAddAudit($grade_scale);
+       ViewHelpers::flash($grade_scale->delete(), 'grade scale', 'deleted');
 
         return redirect()->back();
     }

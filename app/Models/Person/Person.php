@@ -2,8 +2,8 @@
 
 namespace App;
 
+use App\Helpers\ViewHelpers;
 use Carbon\Carbon;
-use App\Helpers\Helpers;
 use Webpatser\Uuid\Uuid;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -197,7 +197,7 @@ class Person extends PortalBaseModel
                 : File::find(8);
         }
 
-        return '<img dusk="profile-image" width="'.$width.'" 
+        return '<img dusk="profile-image" width="'.$width.'"
             class="img-fluid options-item rounded border border-2x border-dark" src="'.$image->renderImage().'" alt="">';
     }
 
@@ -213,9 +213,9 @@ class Person extends PortalBaseModel
         $emails .= "<strong>Primary Email:</strong> <a href='mailto:$email'>
             $email</a>";
 
-        ! $this->email_secondary ?: $emails .= "<br /><strong>Secondary Email:</strong> 
+        ! $this->email_secondary ?: $emails .= "<br /><strong>Secondary Email:</strong>
             <a href='mailto:$this->email_secondary'>$this->email_secondary</a>";
-        ! $this->email_school ?: $emails .= "<br /><strong>School Email:</strong> 
+        ! $this->email_school ?: $emails .= "<br /><strong>School Email:</strong>
             <a href='mailto:$this->email_school'>$this->email_school</a>";
 
         return $emails;
@@ -267,7 +267,7 @@ class Person extends PortalBaseModel
     {
         $dob = Carbon::parse($this->dob);
 
-        return Helpers::getAge($dob);
+        return ViewHelpers::getAge($dob);
     }
 
     /**
