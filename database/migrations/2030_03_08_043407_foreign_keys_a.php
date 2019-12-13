@@ -106,7 +106,7 @@ class ForeignKeysA extends Migration
         | TABLE: ROLES_USERS_PIVOT_TABLE
         |--------------------------------------------------------------------------
         */
-        Schema::table('roles_users_pivot_table', function (Blueprint $table) {
+        Schema::table('roles_users_pivot', function (Blueprint $table) {
             $table->foreign('role_id')
                 ->references('id')->on('roles');
             $table->foreign('user_id')
@@ -115,10 +115,10 @@ class ForeignKeysA extends Migration
 
         /*
         |--------------------------------------------------------------------------
-        | TABLE: PERMISSIONS_ROLES_PIVOT_TABLE
+        | TABLE: PERMISSIONS_ROLES_PIVOT
         |--------------------------------------------------------------------------
         */
-        Schema::table('permissions_roles_pivot_table', function (Blueprint $table) {
+        Schema::table('permissions_roles_pivot', function (Blueprint $table) {
             $table->foreign('permission_id')
                 ->references('id')->on('permissions');
             $table->foreign('role_id')

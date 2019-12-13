@@ -109,7 +109,7 @@ class Permission extends PortalBaseModel
     public function roles()
     {
         // belongsToMany('class','pivot_table','current_models_id','foreign_id')->withTimestamps()
-        return $this->belongsToMany('App\Role', 'permissions_roles_pivot_table',
+        return $this->belongsToMany('App\Role', 'permissions_roles_pivot',
             'permission_id', 'role_id')->withTimestamps();
     }
 

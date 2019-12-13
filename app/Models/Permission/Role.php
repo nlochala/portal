@@ -109,7 +109,7 @@ class Role extends PortalBaseModel
     public function users()
     {
         // belongsToMany('class','pivot_table','current_models_id','foreign_id')->withTimestamps()
-        return $this->belongsToMany('App\User', 'roles_users_pivot_table', 'role_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany('App\User', 'roles_users_pivot', 'role_id', 'user_id')->withTimestamps();
     }
 
     /**
@@ -120,7 +120,7 @@ class Role extends PortalBaseModel
     public function permissions()
     {
         // belongsToMany('class','pivot_table','current_models_id','foreign_id')->withTimestamps()
-        return $this->belongsToMany('App\Permission', 'permissions_roles_pivot_table', 'role_id', 'permission_id')->withTimestamps();
+        return $this->belongsToMany('App\Permission', 'permissions_roles_pivot', 'role_id', 'permission_id')->withTimestamps();
     }
 
     /**

@@ -141,7 +141,7 @@ class User extends Authenticatable
     public function roles()
     {
         // belongsToMany('class','pivot_table','current_models_id','foreign_id')->withTimestamps()
-        return $this->belongsToMany('App\Role', 'roles_users_pivot_table', 'user_id', 'role_id')->withTimestamps();
+        return $this->belongsToMany('App\Role', 'roles_users_pivot', 'user_id', 'role_id')->withTimestamps();
     }
 
     /**

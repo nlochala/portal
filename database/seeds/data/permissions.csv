@@ -60,3 +60,6 @@ years.create.years,Create Years
 years.delete.years,Delete Years
 years.show.years,Show Years
 years.update.years,Update Years
+student-only,This is a student account. Restricted Access.
+guardian-only,This is a guardian account. Restricted Access.
+employee-only,This is an employee. Restricted Access.

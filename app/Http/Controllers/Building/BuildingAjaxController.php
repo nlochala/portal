@@ -85,6 +85,14 @@ class BuildingAjaxController extends Controller
         $data = $values['data'];
         $return_array = [];
 
+        if ($action == 'remove') {
+            foreach ($data as $id => $form_data) {
+                $this->destroy(Building::find($id));
+            }
+
+            return $return_array;
+        }
+
         foreach ($data as $id => $form_data) {
             $this->validation->checkForm($this->request, $form_data);
 
@@ -102,12 +110,6 @@ class BuildingAjaxController extends Controller
             if ($action == 'create') {
                 $building = $this->store($data[$id]);
                 $return_array['data'][] = $building->load($this->eagerLoad);
-            }
-        }
-
-        if ($action == 'remove') {
-            foreach ($data as $id => $form_data) {
-                $this->destroy(Building::find($id));
             }
         }
 

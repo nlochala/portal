@@ -13,7 +13,7 @@ class RolesUsersPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles_users_pivot_table', function (Blueprint $table) {
+        Schema::create('roles_users_pivot', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('role_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
@@ -28,6 +28,6 @@ class RolesUsersPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles_users_pivot_table');
+        Schema::dropIfExists('roles_users_pivot');
     }
 }

@@ -13,7 +13,7 @@ class PermissionsRolesPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('permissions_roles_pivot_table', function (Blueprint $table) {
+        Schema::create('permissions_roles_pivot', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('permission_id')->nullable();
             $table->unsignedBigInteger('role_id')->nullable();
@@ -28,6 +28,6 @@ class PermissionsRolesPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions_roles_pivot_table');
+        Schema::dropIfExists('permissions_roles_pivot');
     }
 }

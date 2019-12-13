@@ -10,3 +10,7 @@ portal-positions-rw,View and Modify Position Information
 portal-students-rw,View and Modify Student Information
 portal-admin,Control All Aspects of the Portal
 portal-teacher,View and Manage Students and Classes
+portal-office,Manage Students and Guardians
+student,The student can view their own information.
+guardian,"The guardian can view their own and their students' information."
+employee,This is a generic employee.

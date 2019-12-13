@@ -2,7 +2,7 @@
 
 use App\GuardianType;
 use App\Helpers\DatabaseHelpers;
-use App\Helpers\File\App\Helpers\FileHelpers;
+use App\Helpers\FileHelpers;
 use App\Helpers\Helpers;
 use Illuminate\Database\Seeder;
 
