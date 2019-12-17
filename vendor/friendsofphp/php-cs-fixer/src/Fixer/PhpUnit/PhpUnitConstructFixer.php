@@ -19,6 +19,7 @@ use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverRootless;
 use PhpCsFixer\FixerConfiguration\FixerOptionBuilder;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 
@@ -133,7 +134,6 @@ $this->assertNotSame(null, $d);
     }
 
     /**
-     * @param Tokens $tokens
      * @param int    $index
      * @param string $method
      *
@@ -151,7 +151,6 @@ $this->assertNotSame(null, $d);
     }
 
     /**
-     * @param Tokens $tokens
      * @param int    $index
      * @param string $method
      *
@@ -170,7 +169,6 @@ $this->assertNotSame(null, $d);
 
     /**
      * @param array<string, string> $map
-     * @param Tokens                $tokens
      * @param int                   $index
      * @param string                $method
      *
@@ -178,6 +176,8 @@ $this->assertNotSame(null, $d);
      */
     private function fixAssert(array $map, Tokens $tokens, $index, $method)
     {
+        $functionsAnalyzer = new FunctionsAnalyzer();
+
         $sequence = $tokens->findSequence(
             [
                 [T_STRING, $method],
@@ -191,13 +191,7 @@ $this->assertNotSame(null, $d);
         }
 
         $sequenceIndexes = array_keys($sequence);
-        $operatorIndex = $tokens->getPrevMeaningfulToken($sequenceIndexes[0]);
-        $referenceIndex = $tokens->getPrevMeaningfulToken($operatorIndex);
-        if (
-            !($tokens[$operatorIndex]->equals([T_OBJECT_OPERATOR, '->']) && $tokens[$referenceIndex]->equals([T_VARIABLE, '$this']))
-            && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STRING, 'self']))
-            && !($tokens[$operatorIndex]->equals([T_DOUBLE_COLON, '::']) && $tokens[$referenceIndex]->equals([T_STATIC, 'static']))
-        ) {
+        if (!$functionsAnalyzer->isTheSameClassCall($tokens, $sequenceIndexes[0])) {
             return null;
         }
 

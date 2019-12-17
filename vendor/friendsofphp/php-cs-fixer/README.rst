@@ -46,7 +46,7 @@ or with specified version:
 
 .. code-block:: bash
 
-    $ wget https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.15.3/php-cs-fixer.phar -O php-cs-fixer
+    $ wget https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.16.1/php-cs-fixer.phar -O php-cs-fixer
 
 or with curl:
 
@@ -134,7 +134,7 @@ You can update ``php-cs-fixer`` through this command:
     $ brew upgrade php-cs-fixer
 
 Locally (PHIVE)
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -264,7 +264,7 @@ Choose from the list of available rules:
 
   Each element of an array must be indented exactly once.
 
-* **array_syntax** [@PhpCsFixer]
+* **array_syntax** [@Symfony, @PhpCsFixer]
 
   PHP arrays should be declared using the configured syntax.
 
@@ -404,6 +404,10 @@ Choose from the list of available rules:
 
   *Risky rule: risky as new docblocks might mean more, e.g. a Doctrine entity might have a new column in database.*
 
+  Configuration options:
+
+  - ``ignored_tags`` (``array``): list of ignored tags; defaults to ``[]``
+
 * **compact_nullable_typehint** [@PhpCsFixer]
 
   Remove extra spaces in a nullable typehint.
@@ -416,6 +420,16 @@ Choose from the list of available rules:
 
   - ``spacing`` (``'none'``, ``'one'``): spacing to apply around concatenation operator;
     defaults to ``'none'``
+
+* **constant_case** [@PSR2, @Symfony, @PhpCsFixer]
+
+  The PHP constants ``true``, ``false``, and ``null`` MUST be written using the
+  correct casing.
+
+  Configuration options:
+
+  - ``case`` (``'lower'``, ``'upper'``): whether to use the ``upper`` or ``lower`` case
+    syntax; defaults to ``'lower'``
 
 * **date_time_immutable**
 
@@ -663,6 +677,16 @@ Choose from the list of available rules:
   - ``consider-absent-docblock-as-internal-class`` (``bool``): should classes
     without any DocBlock be fixed to final?; defaults to ``false``
 
+* **final_public_method_for_abstract_class**
+
+  All ``public`` methods of ``abstract`` classes should be ``final``.
+
+  *Risky rule: risky when overriding ``public`` methods of ``abstract`` classes.*
+
+* **final_static_access**
+
+  Converts ``static`` access to ``self`` access in ``final`` classes.
+
 * **fopen_flag_order** [@Symfony:risky, @PhpCsFixer:risky]
 
   Order the flags in ``fopen`` calls, ``b`` and ``t`` must be last.
@@ -724,6 +748,19 @@ Choose from the list of available rules:
 
   - ``annotations`` (``array``): list of annotations to remove, e.g. ``["author"]``;
     defaults to ``[]``
+
+* **global_namespace_import**
+
+  Imports or fully qualifies global classes/functions/constants.
+
+  Configuration options:
+
+  - ``import_classes`` (``false``, ``null``, ``true``): whether to import, not import or
+    ignore global classes; defaults to ``true``
+  - ``import_constants`` (``false``, ``null``, ``true``): whether to import, not import or
+    ignore global constants; defaults to ``null``
+  - ``import_functions`` (``false``, ``null``, ``true``): whether to import, not import or
+    ignore global functions; defaults to ``null``
 
 * **hash_to_slash_comment**
 
@@ -817,9 +854,10 @@ Choose from the list of available rules:
 
   Cast should be written in lower case.
 
-* **lowercase_constants** [@PSR2, @Symfony, @PhpCsFixer]
+* **lowercase_constants**
 
   The PHP constants ``true``, ``false``, and ``null`` MUST be in lower case.
+  DEPRECATED: use ``constant_case`` instead.
 
 * **lowercase_keywords** [@PSR2, @Symfony, @PhpCsFixer]
 
@@ -1065,7 +1103,8 @@ Choose from the list of available rules:
 
 * **no_null_property_initialization** [@PhpCsFixer]
 
-  Properties MUST not be explicitly initialized with ``null``.
+  Properties MUST not be explicitly initialized with ``null`` except when
+  they have a type declaration (PHP 7.4).
 
 * **no_php4_constructor**
 
@@ -1109,7 +1148,7 @@ Choose from the list of available rules:
 
   Replaces superfluous ``elseif`` with ``if``.
 
-* **no_superfluous_phpdoc_tags**
+* **no_superfluous_phpdoc_tags** [@Symfony, @PhpCsFixer]
 
   Removes ``@param`` and ``@return`` tags that don't provide any useful
   information.
@@ -1118,6 +1157,10 @@ Choose from the list of available rules:
 
   - ``allow_mixed`` (``bool``): whether type ``mixed`` without description is allowed
     (``true``) or considered superfluous (``false``); defaults to ``false``
+  - ``allow_unused_params`` (``bool``): whether ``param`` annontation without actual
+    signature is allowed (``true``) or considered superfluous (``false``);
+    defaults to ``false``
+  - ``remove_inheritdoc`` (``bool``): remove ``@inheritDoc`` tags; defaults to ``false``
 
 * **no_trailing_comma_in_list_call** [@Symfony, @PhpCsFixer]
 
@@ -1169,7 +1212,7 @@ Choose from the list of available rules:
 
   Properties should be set to ``null`` instead of using ``unset``.
 
-  *Risky rule: changing variables to ``null`` instead of unsetting them will mean they still show up when looping over class variables.*
+  *Risky rule: changing variables to ``null`` instead of unsetting them will mean they still show up when looping over class variables. With PHP 7.4, this rule might introduce ``null`` assignments to property whose type declaration does not allow it.*
 
 * **no_unused_imports** [@Symfony, @PhpCsFixer]
 
@@ -1222,6 +1265,17 @@ Choose from the list of available rules:
 
   Logical NOT operators (``!``) should have one trailing whitespace.
 
+* **nullable_type_declaration_for_default_null_value**
+
+  Adds or removes ``?`` before type declarations for parameters with a
+  default ``null`` value.
+
+  Configuration options:
+
+  - ``use_nullable_type_declaration`` (``bool``): whether to add or remove ``?``
+    before type declarations for parameters with a default ``null`` value;
+    defaults to ``true``
+
 * **object_operator_without_whitespace** [@Symfony, @PhpCsFixer]
 
   There should not be space before or after object ``T_OBJECT_OPERATOR``
@@ -1249,7 +1303,7 @@ Choose from the list of available rules:
   - ``sortAlgorithm`` (``'alpha'``, ``'none'``): how multiple occurrences of same type
     statements should be sorted; defaults to ``'none'``
 
-* **ordered_imports** [@PhpCsFixer]
+* **ordered_imports** [@Symfony, @PhpCsFixer]
 
   Ordering ``use`` statements.
 
@@ -1483,9 +1537,10 @@ Choose from the list of available rules:
   Configuration options:
 
   - ``align`` (``'left'``, ``'vertical'``): align comments; defaults to ``'vertical'``
-  - ``tags`` (a subset of ``['param', 'property', 'return', 'throws', 'type',
-    'var', 'method']``): the tags that should be aligned; defaults to
-    ``['param', 'return', 'throws', 'type', 'var']``
+  - ``tags`` (a subset of ``['param', 'property', 'property-read',
+    'property-write', 'return', 'throws', 'type', 'var', 'method']``): the
+    tags that should be aligned; defaults to ``['param', 'return', 'throws',
+    'type', 'var']``
 
 * **phpdoc_annotation_without_dot** [@Symfony, @PhpCsFixer]
 
@@ -1498,6 +1553,20 @@ Choose from the list of available rules:
 * **phpdoc_inline_tag** [@Symfony, @PhpCsFixer]
 
   Fix PHPDoc inline tags, make ``@inheritdoc`` always inline.
+
+* **phpdoc_line_span**
+
+  Changes doc blocks from single to multi line, or reversed. Works for
+  class constants, properties and methods only.
+
+  Configuration options:
+
+  - ``const`` (``'multi'``, ``'single'``): whether const blocks should be single or
+    multi line; defaults to ``'multi'``
+  - ``method`` (``'multi'``, ``'single'``): whether method doc blocks should be single
+    or multi line; defaults to ``'multi'``
+  - ``property`` (``'multi'``, ``'single'``): whether property doc blocks should be
+    single or multi line; defaults to ``'multi'``
 
 * **phpdoc_no_access** [@Symfony, @PhpCsFixer]
 
@@ -1513,7 +1582,7 @@ Choose from the list of available rules:
     ones; defaults to ``['property-read' => 'property', 'property-write' =>
     'property', 'type' => 'var', 'link' => 'see']``
 
-* **phpdoc_no_empty_return** [@Symfony, @PhpCsFixer]
+* **phpdoc_no_empty_return** [@PhpCsFixer]
 
   ``@return void`` and ``@return null`` annotations should be omitted from
   PHPDoc.
@@ -1573,6 +1642,18 @@ Choose from the list of available rules:
 
   Docblocks should only be used on structural elements.
 
+* **phpdoc_to_param_type**
+
+  EXPERIMENTAL: Takes ``@param`` annotations of non-mixed types and adjusts
+  accordingly the function signature. Requires PHP >= 7.0.
+
+  *Risky rule: [1] This rule is EXPERIMENTAL and is not covered with backward compatibility promise. [2] ``@param`` annotation is mandatory for the fixer to make changes, signatures of methods without it (no docblock, inheritdocs) will not be fixed. [3] Manual actions are required if inherited signatures are not properly documented.*
+
+  Configuration options:
+
+  - ``scalar_types`` (``bool``): fix also scalar types; may have unexpected
+    behaviour due to PHP bad type coercion system; defaults to ``true``
+
 * **phpdoc_to_return_type**
 
   EXPERIMENTAL: Takes ``@return`` annotation of non-mixed types and adjusts
@@ -1590,7 +1671,7 @@ Choose from the list of available rules:
   PHPDoc should start and end with content, excluding the very first and
   last line of the docblocks.
 
-* **phpdoc_trim_consecutive_blank_line_separation** [@PhpCsFixer]
+* **phpdoc_trim_consecutive_blank_line_separation** [@Symfony, @PhpCsFixer]
 
   Removes extra blank lines after summary and after description in PHPDoc.
 
@@ -1635,7 +1716,7 @@ Choose from the list of available rules:
   Pre incrementation/decrementation should be used if possible.
   DEPRECATED: use ``increment_style`` instead.
 
-* **protected_to_private** [@Symfony, @PhpCsFixer]
+* **protected_to_private** [@PhpCsFixer]
 
   Converts ``protected`` variables and methods to ``private`` where possible.
 
@@ -1691,6 +1772,11 @@ Choose from the list of available rules:
   class name itself.
 
   *Risky rule: risky when using dynamic calls like get_called_class() or late static binding.*
+
+* **self_static_accessor**
+
+  Inside a ``final`` class or anonymous class ``self`` should be preferred to
+  ``static``.
 
 * **semicolon_after_instruction** [@Symfony, @PhpCsFixer]
 
@@ -1761,6 +1847,10 @@ Choose from the list of available rules:
 
   - ``comment_types`` (a subset of ``['asterisk', 'hash']``): list of comment types
     to fix; defaults to ``['asterisk', 'hash']``
+
+* **single_line_throw** [@Symfony]
+
+  Throwing exception must be done in single line.
 
 * **single_quote** [@Symfony, @PhpCsFixer]
 
@@ -1864,7 +1954,7 @@ Choose from the list of available rules:
 
 * **void_return** [@PHP71Migration:risky]
 
-  Add void return type to functions with missing or empty return
+  Add ``void`` return type to functions with missing or empty return
   statements, but priority is given to ``@return`` annotations. Requires
   PHP >= 7.1.
 
@@ -1903,7 +1993,7 @@ Config file
 
 Instead of using command line options to customize the rule, you can save the
 project configuration in a ``.php_cs.dist`` file in the root directory of your project.
-The file must return an instance of `PhpCsFixer\\ConfigInterface <https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/v2.15.3/src/ConfigInterface.php>`_
+The file must return an instance of `PhpCsFixer\\ConfigInterface <https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/v2.16.1/src/ConfigInterface.php>`_
 which lets you configure the rules, the files and directories that
 need to be analyzed. You may also create ``.php_cs`` file, which is
 the local configuration that will be used instead of the project configuration. It
@@ -1933,6 +2023,7 @@ The example below will add two rules to the default list of PSR2 set rules:
     ;
 
 **NOTE**: ``exclude`` will work only for directories, so if you need to exclude file, try ``notPath``.
+Both ``exclude`` and ``notPath`` methods accept only relative paths to the ones defined with the ``in`` method.
 
 See `Symfony\\Finder <https://symfony.com/doc/current/components/finder.html>`_
 online documentation for other `Finder` methods.
@@ -2035,7 +2126,7 @@ Exit code is built using following bit flags:
 * 32 - Configuration error of a Fixer.
 * 64 - Exception raised within the application.
 
-(Applies to exit code of the `fix` command only)
+(Applies to exit code of the ``fix`` command only)
 
 Helpers
 -------

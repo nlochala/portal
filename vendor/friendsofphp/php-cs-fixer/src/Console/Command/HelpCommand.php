@@ -41,7 +41,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class HelpCommand extends BaseHelpCommand
 {
-    const COMMAND_NAME = 'help';
+    protected static $defaultName = 'help';
 
     /**
      * Returns help-copy suitable for console output.
@@ -179,6 +179,7 @@ The example below will add two rules to the default list of PSR2 set rules:
     ?>
 
 **NOTE**: ``exclude`` will work only for directories, so if you need to exclude file, try ``notPath``.
+Both ``exclude`` and ``notPath`` methods accept only relative paths to the ones defined with the ``in`` method.
 
 See `Symfony\Finder` (<url>https://symfony.com/doc/current/components/finder.html</url>)
 online documentation for other `Finder` methods.
@@ -273,7 +274,7 @@ Exit code is built using following bit flags:
 * 32 - Configuration error of a Fixer.
 * 64 - Exception raised within the application.
 
-(Applies to exit code of the `fix` command only)
+(Applies to exit code of the ``fix`` command only)
 EOF
         ;
 
@@ -284,7 +285,7 @@ EOF
             ),
             '%%%CI_INTEGRATION%%%' => implode("\n", array_map(
                 static function ($line) { return '    $ '.$line; },
-                \array_slice(file(__DIR__.'/../../../dev-tools/ci-integration.sh', FILE_IGNORE_NEW_LINES), 3)
+                \array_slice(file(__DIR__.'/../../../ci-integration.sh', FILE_IGNORE_NEW_LINES), 3)
             )),
             '%%%FIXERS_DETAILS%%%' => self::getFixersHelp(),
         ]);
@@ -333,8 +334,6 @@ EOF
 
     /**
      * Returns the allowed values of the given option that can be converted to a string.
-     *
-     * @param FixerOptionInterface $option
      *
      * @return null|array
      */

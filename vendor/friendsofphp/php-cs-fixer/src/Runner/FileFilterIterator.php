@@ -13,9 +13,9 @@
 namespace PhpCsFixer\Runner;
 
 use PhpCsFixer\Cache\CacheManagerInterface;
+use PhpCsFixer\Event\Event;
 use PhpCsFixer\FileReader;
 use PhpCsFixer\FixerFileProcessedEvent;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -97,7 +97,6 @@ final class FileFilterIterator extends \FilterIterator
 
     /**
      * @param string $name
-     * @param Event  $event
      */
     private function dispatchEvent($name, Event $event)
     {

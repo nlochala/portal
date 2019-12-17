@@ -150,10 +150,7 @@ final class ConfigurationResolver
     private $fixerFactory;
 
     /**
-     * @param ConfigInterface   $config
-     * @param array             $options
-     * @param string            $cwd
-     * @param ToolInfoInterface $toolInfo
+     * @param string $cwd
      */
     public function __construct(
         ConfigInterface $config,
@@ -305,11 +302,15 @@ final class ConfigurationResolver
     {
         if (null === $this->directory) {
             $path = $this->getCacheFile();
-            $filesystem = new Filesystem();
+            if (null === $path) {
+                $absolutePath = $this->cwd;
+            } else {
+                $filesystem = new Filesystem();
 
-            $absolutePath = $filesystem->isAbsolutePath($path)
-                ? $path
-                : $this->cwd.\DIRECTORY_SEPARATOR.$path;
+                $absolutePath = $filesystem->isAbsolutePath($path)
+                    ? $path
+                    : $this->cwd.\DIRECTORY_SEPARATOR.$path;
+            }
 
             $this->directory = new Directory(\dirname($absolutePath));
         }
@@ -706,8 +707,6 @@ final class ConfigurationResolver
     }
 
     /**
-     * @param array $rules
-     *
      * @throws InvalidConfigurationException
      */
     private function validateRules(array $rules)
