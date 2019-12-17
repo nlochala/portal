@@ -85,6 +85,14 @@ class YearAjaxController extends Controller
         $data = $values['data'];
         $return_array = [];
 
+        if ($action == 'remove') {
+            foreach ($data as $id => $form_data) {
+                $this->destroy(Year::find($id));
+            }
+
+            return $return_array;
+        }
+
         foreach ($data as $id => $form_data) {
             $this->validation->checkForm($this->request, $form_data);
 
@@ -102,12 +110,6 @@ class YearAjaxController extends Controller
             if ($action == 'create') {
                 $year = $this->store($data[$id]);
                 $return_array['data'][] = $year->load($this->eagerLoad);
-            }
-        }
-
-        if ($action == 'remove') {
-            foreach ($data as $id => $form_data) {
-                $this->destroy(Year::find($id));
             }
         }
 
@@ -160,7 +162,8 @@ class YearAjaxController extends Controller
     public function destroy(Year $year)
     {
         if ($year->is_protected) {
-            $this->attemptAction(false, 'year', 'delete', 'Can not delete. This year is protected.');
+            $this->attemptAction(false, 'year', 'delete',
+                'Can not delete. This year is protected.');
             return;
         }
 
