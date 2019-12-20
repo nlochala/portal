@@ -2,14 +2,19 @@
 
 @section('content')
     @include('layouts._breadcrumbs', [
-    'title' => 'Behavior Standards',
+    'title' => $standard->name,
+    'subtitle' => $standard->description,
     'breadcrumbs' => [
         [
             'page_name' => 'Portal',
             'page_uri'  => '/'
         ],
         [
-            'page_name' => 'Behavior Standards',
+            'page_name' => 'Behavior Standards - Index',
+            'page_uri'  => '/behavior/standard/index'
+        ],
+        [
+            'page_name' => $standard->name,
             'page_uri'  => request()->getRequestUri()
         ]
     ]
@@ -34,15 +39,16 @@
     |--------------||--------------|
 
 -->
+    @include('behavior._standard_update_form')
     @include('layouts._panels_start_row',['has_uniform_length' => true])
-    @include('layouts._panels_start_column', ['size' => 10])
+    @include('layouts._panels_start_column', ['size' => 12])
     <!-------------------------------------------------------------------------------->
     <!----------------------------------New Panel ------------------------------------>
-    @include('layouts._panels_start_panel', ['title' => 'Standards', 'with_block' => false])
+    @include('layouts._panels_start_panel', ['title' => 'Standard Items', 'with_block' => false])
     {{-- START BLOCK OPTIONS panel.block --}}
     @include('layouts._panels_start_content')
 
-    <!-- TABLE OF Standards -->@include('_tables.new-table',['id' => 'standard_table', 'table_head' => ['ID', 'Name', 'Description', 'Actions']])
+    <!-- TABLE OF Grade Scale Items -->@include('_tables.new-table',['id' => 'item_table', 'table_head' => ['ID', 'Name', 'Description', 'Value']])
     @include('_tables.end-new-table')
 
 
@@ -58,17 +64,14 @@
 
 @section('js_after')
 
-    <!-- Add Form Validation v.blade -->
+    {!! JsValidator::formRequest('\App\Http\Requests\StoreBehaviorStandardRequest','#standard-form') !!}
 
     <script type="text/javascript">
-
-        // Add Filepond initializer form.js.file
-
         jQuery(document).ready(function () {
 
-            var editorstandard = new $.fn.dataTable.Editor({
-                ajax: "{{ url('api/behavior/standard/ajaxstorestandard') }}",
-                table: "#standard_table",
+            var editoritem = new $.fn.dataTable.Editor({
+                ajax: "{{ url('api/behavior/standard/'.$standard->uuid.'/ajaxstoreitem') }}",
+                table: "#item_table",
                 idSrc: 'id',
                 fields: [{
                     label: "Name:",
@@ -76,32 +79,28 @@
                 }, {
                     label: "Description:",
                     name: "description"
+                }, {
+                    label: "Numeric Value (Number between 1 and 4):",
+                    name: "value",
+                }, {
+                    type: 'hidden',
+                    name: 'behavior_standard_id',
+                    default: '{{ $standard->id }}'
                 }
                 ]
             });
 
-            var tablestandard = $('#standard_table').DataTable({
+            var tableitem = $('#item_table').DataTable({
                 dom: "Bfrtip",
                 select: true,
                 paging: true,
                 pageLength: 50,
-                ajax: {"url": "{{ url('api/behavior/standard/ajaxshowstandard') }}", "dataSrc": ""},
+                ajax: {"url": "{{ url('api/behavior/standard/'.$standard->uuid.'/ajaxshowitem') }}", "dataSrc": ""},
                 columns: [
                     {data: "id"},
                     {data: "name"},
                     {data: "description"},
-                    {
-                        data: "uuid",
-                        render: function (data, type, row) {
-                            let $return_string = '';
-                            $return_string = "    <div class=\"btn-group\">\n" +
-                                "            <button dusk=\"btn-show-" + data + "\" type=\"button\" class=\"btn btn-sm btn-outline-info\" data-toggle=\"tooltip\" title=\"View Standard \"\n" +
-                                "                    onclick=\"window.location.href='/behavior/standard/" + data + "'\">\n" +
-                                "                <i class=\"si si-magnifier\"></i>\n" +
-                                "            </button></div>";
-                            return $return_string;
-                        }
-                    },
+                    {data: "value"},
                 ],
                 buttons: [
                     {
@@ -128,12 +127,13 @@
                             this.disable();
                         }
                     },
-                    {extend: "create", editor: editorstandard, className: 'btn-sm btn-hero-primary'},
-                    {extend: "edit", editor: editorstandard, className: 'btn-sm btn-hero-primary'},
-                    {extend: "remove", editor: editorstandard, className: 'btn-sm btn-hero-danger'},
+                    {extend: "create", editor: editoritem, className: 'btn-sm btn-hero-primary'},
+                    {extend: "edit", editor: editoritem, className: 'btn-sm btn-hero-primary'},
+                    {extend: "remove", editor: editoritem, className: 'btn-sm btn-hero-danger'},
 
                 ]
             });
+
 
         });
     </script>

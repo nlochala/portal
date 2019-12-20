@@ -407,6 +407,25 @@ class Student extends PortalBaseModel
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
+    /**
+     *  This student has many behaviorAssessments
+     *
+     * @return HasMany
+     */
+    public function behaviorAssessmentAverages()
+    {
+        return $this->hasMany('App\BehaviorAssessmentAverage','student_id');
+    }
+
+    /**
+     *  This student has many behaviorAssessments
+     *
+     * @return HasMany
+     */
+    public function behaviorAssessments()
+    {
+        return $this->hasMany('App\BehaviorAssessment','student_id');
+    }
 
     /**
      *  This student has many reportCardPercentages.

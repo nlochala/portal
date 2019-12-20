@@ -96,12 +96,13 @@ trait ModelCrud
      *
      * @param $class_name
      * @param $parameters
+     * @param array $factory_override
      * @return array
      */
-    protected function prepareCreatePostValues($class_name, $parameters)
+    protected function prepareCreatePostValues($class_name, $parameters, $factory_override = [])
     {
         $values_array = [];
-        $model = factory($class_name)->make();
+        $model = factory($class_name)->make($factory_override);
 
         foreach($parameters as $parameter) {
             $values_array[$parameter] = $model->$parameter;
@@ -116,12 +117,13 @@ trait ModelCrud
      * @param $class_name
      * @param $parameters
      * @param $model_id
+     * @param array $factory_override
      * @return array
      */
-    protected function prepareUpdatePostValues($class_name, $parameters, $model_id)
+    protected function prepareUpdatePostValues($class_name, $parameters, $model_id, $factory_override = [])
     {
         $values_array = [];
-        $model = factory($class_name)->make();
+        $model = factory($class_name)->make($factory_override);
 
         foreach($parameters as $parameter) {
             $values_array[$model_id][$parameter] = $model->$parameter;

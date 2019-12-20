@@ -48,15 +48,31 @@ h.item
 ])
 @include('layouts._horizontal_menu_item_end')
 
-{{--@include('layouts._horizontal_menu_item_start')--}}
-{{--@include('layouts._horizontal_menu_item', [--}}
-{{--    'url' => 'class/' . $class->uuid . '/'.$quarter->uuid.'/gradebook/modify_assignment',--}}
-{{--    'icon' => 'fa fa-highlighter',--}}
-{{--    'title' => 'Modify and Grade',--}}
-{{--    'badge_number' => null,--}}
-{{--    'badge_color' => null--}}
-{{--])--}}
-{{--@include('layouts._horizontal_menu_item_end')--}}
+@include('layouts._horizontal_menu_item_start')
+@include('layouts._horizontal_menu_submenu_start',[
+    'icon' => 'fa fa-hand-holding-heart',
+    'title' => 'Behavior'
+])
+@include('layouts._horizontal_menu_item_start')
+@include('layouts._horizontal_menu_item', [
+    'url' => 'class/' . $class->uuid . '/'.$quarter->uuid.'/gradebook/behavior',
+    'icon' => 'fa fa-check',
+    'title' => 'Student Behavior',
+    'badge_number' => null,
+    'badge_color' => null
+])
+@include('layouts._horizontal_menu_item_end')
+@include('layouts._horizontal_menu_item_start')
+@include('layouts._horizontal_menu_item', [
+    'url' => 'class/' . $class->uuid . '/'.$quarter->uuid.'/gradebook/behavior/rubric',
+    'icon' => 'fa fa-table',
+    'title' => 'Assessment Rubric',
+    'badge_number' => null,
+    'badge_color' => null
+])
+@include('layouts._horizontal_menu_item_end')
+@include('layouts._horizontal_menu_submenu_end')
+
 @include('layouts._horizontal_menu_item_start')
 @include('layouts._horizontal_menu_submenu_start',[
     'icon' => 'fa fa-calendar-alt',

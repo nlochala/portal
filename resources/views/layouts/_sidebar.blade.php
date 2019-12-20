@@ -115,10 +115,6 @@
 'section_icon' => 'fa fa-book-reader',
 'submenu_array' =>
     [
- //       [
- //           'title' => 'Dashboard',
- //           'uri'   => '/course/dashboard'
- //       ],
         [
             'title' => 'Index',
             'uri'   => '/course/index'
@@ -130,13 +126,20 @@
 'section_icon' => 'fa fa-chalkboard-teacher',
 'submenu_array' =>
     [
- //       [
- //           'title' => 'Dashboard',
- //           'uri'   => '/course/dashboard'
- //       ],
         [
             'title' => 'Index',
             'uri'   => '/class/index'
+        ],
+    ]
+])
+@include('layouts._sidebar_menu_nested_submenu', [
+'section_title' => 'Behavior',
+'section_icon' => 'fa fa-hand-holding-heart',
+'submenu_array' =>
+    [
+        [
+            'title' => 'Standards',
+            'uri'   => '/behavior/standard/index'
         ],
     ]
 ])
@@ -211,10 +214,6 @@
         [
             'title' => 'Print Report Cards',
             'uri'   => '/report/report_cards/'.\App\Year::currentYear()->uuid.'/print_form'
-        ],
-        [
-            'title' => 'Behavior Approvals',
-            'uri'   => '/report/behavior/approve/'.\App\Quarter::now()->uuid,
         ],
         [
             'title' => 'Academic Danger',

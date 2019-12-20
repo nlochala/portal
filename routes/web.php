@@ -779,6 +779,29 @@ Route::get('api/course/{course}/ajaxshowequivalent', 'CourseEquivalentAjaxContro
 
 /*
 |--------------------------------------------------------------------------
+| BEHAVIOR
+|--------------------------------------------------------------------------
+*/
+// Standard
+Route::get('behavior/standard/index', 'BehaviorStandardController@index')
+    ->middleware('can:employee-only');
+Route::get('api/behavior/standard/ajaxshowstandard', 'BehaviorStandardAjaxController@ajaxShow')
+    ->middleware('can:employee-only');
+Route::post('api/behavior/standard/ajaxstorestandard', 'BehaviorStandardAjaxController@ajaxStore')
+    ->middleware('can:employee-only');
+
+// Standard Item
+Route::get('behavior/standard/{standard}', 'BehaviorStandardController@showStandard')
+    ->middleware('can:employee-only');
+Route::patch('behavior/standard/{standard}', 'BehaviorStandardController@update')
+    ->middleware('can:employee-only');
+Route::get('api/behavior/standard/{standard}/ajaxshowitem', 'BehaviorStandardItemAjaxController@ajaxShow')
+    ->middleware('can:employee-only');
+Route::post('api/behavior/standard/{standard}/ajaxstoreitem', 'BehaviorStandardItemAjaxController@ajaxStore')
+    ->middleware('can:employee-only');
+
+/*
+|--------------------------------------------------------------------------
 | GRADEBOOK
 |--------------------------------------------------------------------------
 */
@@ -799,6 +822,13 @@ Route::get('class/{class}/{quarter}/gradebook/assignment/{assignment}', 'Assignm
 Route::get('api/class/{class}/{quarter}/gradebook/assignment/{assignment}/ajaxshowassessment', 'AssignmentGradeAjaxController@ajaxShow')
     ->middleware('can:employee-only');
 Route::post('api/class/{class}/{quarter}/gradebook/assignment/{assignment}/ajaxstoreassessment', 'AssignmentGradeAjaxController@ajaxStore')
+    ->middleware('can:employee-only');
+//Behavior Evaluation
+Route::get('class/{class}/{quarter}/gradebook/behavior', 'BehaviorAssessmentController@grade')
+    ->middleware('can:employee-only');
+Route::post('class/{class}/{quarter}/gradebook/behavior', 'BehaviorAssessmentController@store')
+    ->middleware('can:employee-only');
+Route::get('class/{class}/{quarter}/gradebook/behavior/rubric', 'BehaviorAssessmentController@rubric')
     ->middleware('can:employee-only');
 
 /*

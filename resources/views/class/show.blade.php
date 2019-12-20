@@ -175,12 +175,6 @@
                 <i class="fa fa-user-check"></i> Update Attendance
             </button>
         @endif
-        @if(substr($class->room->buildingNumber,0,1) === 'C')
-            <button type="button" dusk="btn-modal-block-attendance" class="btn btn-outline-primary mb-3 w-100"
-                    onclick="window.location.href='/report/behavior/{{ $class->uuid }}/{{$quarter->uuid}}'">
-                <i class="fa fa-hands"></i> {{ $quarter_name }} Behavior Assessment
-            </button>
-        @endif
     @endif
     @if($class->course->gradeScale->is_percentage_based)
         <button type="button" dusk="btn-modal-block-logins" class="btn btn-outline-primary mb-3 w-100"
