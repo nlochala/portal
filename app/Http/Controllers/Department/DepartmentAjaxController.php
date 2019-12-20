@@ -85,6 +85,14 @@ class DepartmentAjaxController extends Controller
         $data = $values['data'];
         $return_array = [];
 
+        if ($action == 'remove') {
+            foreach ($data as $id => $form_data) {
+                $this->destroy(Department::find($id));
+            }
+
+            return $return_array;
+        }
+
         foreach ($data as $id => $form_data) {
             $this->validation->checkForm($this->request, $form_data);
 
@@ -102,12 +110,6 @@ class DepartmentAjaxController extends Controller
             if ($action == 'create') {
                 $department = $this->store($data[$id]);
                 $return_array['data'][] = $department->load($this->eagerLoad);
-            }
-        }
-
-        if ($action == 'remove') {
-            foreach ($data as $id => $form_data) {
-                $this->destroy(Department::find($id));
             }
         }
 

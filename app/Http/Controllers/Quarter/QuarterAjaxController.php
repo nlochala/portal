@@ -86,6 +86,14 @@ class QuarterAjaxController extends Controller
         $data = $values['data'];
         $return_array = [];
 
+        if ($action == 'remove') {
+            foreach ($data as $id => $form_data) {
+                $this->destroy(Quarter::find($id));
+            }
+
+            return $return_array;
+        }
+
         foreach ($data as $id => $form_data) {
             $this->validation->checkForm($this->request, $form_data);
 
@@ -103,12 +111,6 @@ class QuarterAjaxController extends Controller
             if ($action === 'create') {
                 $quarter = $this->store($data[$id]);
                 $return_array['data'][] = $quarter->load($this->eagerLoad);
-            }
-        }
-
-        if ($action === 'remove') {
-            foreach ($data as $id => $form_data) {
-                $this->destroy(Quarter::find($id));
             }
         }
 
@@ -135,7 +137,6 @@ class QuarterAjaxController extends Controller
     {
         $values = DatabaseHelpers::dbAddAudit($values);
         $values['name'] = Quarter::getName($values['name']);
-        dd($values);
 
         $start = Carbon::parse($values['start_date']);
         $end = Carbon::parse($values['end_date']);
@@ -180,6 +181,12 @@ class QuarterAjaxController extends Controller
      */
     public function destroy(Quarter $quarter)
     {
+        if ($quarter->is_protected) {
+            $this->attemptAction(false, 'quarter', 'delete',
+                'Can not delete. This quarter is protected.');
+            return;
+        }
+
         $quarter = DatabaseHelpers::dbAddAudit($quarter);
         $this->attemptAction($quarter->delete(), 'quarter', 'delete');
     }
