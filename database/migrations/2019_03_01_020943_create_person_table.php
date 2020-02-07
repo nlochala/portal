@@ -22,7 +22,7 @@ class CreatePersonTable extends Migration
             $table->text('preferred_name')->nullable();
             $table->text('name_in_chinese')->nullable();
             $table->text('gender')->nullable();
-            $table->timestamp('dob')->nullable();
+            $table->dateTime('dob')->nullable();
             $table->text('email_school')->nullable();
             $table->text('email_primary')->nullable();
             $table->text('email_secondary')->nullable();
