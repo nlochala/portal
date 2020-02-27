@@ -28,8 +28,6 @@ class StoreEmployeeAddressRequest extends FormRequest
             'province' => 'required',
             'city' => 'required',
             'address_type_id' => 'required',
-            'address_line_1' => 'required',
-            'postal_code' => 'required',
         ];
     }
 

@@ -154,21 +154,25 @@
                 <td><h5>{{ $address->addressType->name }}</h5></td>
                 <td><a href="javascript:void(0)" data-html="true" data-toggle="popover" data-animation="true"
                        data-placement="top" title="Description" data-content="
+                   @if($address->address_line_1)
                    <strong>Street Address 1: {{ $address->address_line_1 }}<br />
+                   @endif
                    @if($address->address_line_2)
                             Street Address 2: {{ $address->address_line_2 }}<br />
                    @endif
-                            City: {{ $address->city }}<br />
+                   City: {{ $address->city }}<br />
                    Province/State: {{ $address->province }}<br />
                    Country: {{ $address->country->name }}<br />
-                   Postal Code: {{ $address->postal_code }}<br /> ">
+                   {{ $address->postal_code }}<br /> ">
                         {{ $address->address_line_1 }} <br/>
                         @if($address->address_line_2)
                             {{ $address->address_line_2 }} <br/>
                         @endif
                         {{ $address->city }}, {{ $address->province }} <br/>
                         {{ $address->country->name }} <br/>
-                        Postal Code: {{ $address->postal_code }}
+                        @if($address->postal_code)
+                            Postal Code: {{ $address->postal_code }}
+                        @endif
                     </a>
                 </td>
                 <td class="text-center">
